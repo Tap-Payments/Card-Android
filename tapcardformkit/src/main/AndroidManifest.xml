@@ -14,10 +14,6 @@
         <activity
             android:name=".open.web_wrapper.nfc_activity.NFCLauncherActivity"
             android:exported="false" />
-        <activity
-            android:name=".internal.webview.WebViewActivity"
-            android:exported="false"
-            android:theme="@style/DialogTheme" />
         <activity android:name=".open.web_wrapper.scanner_activity.ScannerActivity" />
     </application>
 

@@ -411,7 +411,7 @@ class TapCardKit(context: Context, attrs: AttributeSet?) : LinearLayout(context,
              * put buttomsheet in separate class
              */
 
-            threeDsBottomsheet = BottomSheetDialog(context)
+            threeDsBottomsheet = BottomSheetDialog(context,R.style.CustomBottomSheetDialog)
             threeDsBottomsheet.behavior.isFitToContents = false
             threeDsBottomsheet.behavior.maxHeight = resources.getDimensionPixelSize(com.intuit.sdp.R.dimen._450sdp)
             threeDsBottomsheet.behavior.peekHeight = (getScreenHeight() * 2 / 3) + 100
