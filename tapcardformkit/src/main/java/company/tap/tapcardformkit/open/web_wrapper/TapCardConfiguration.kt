@@ -19,27 +19,6 @@ import company.tap.tapuilibrary.themekit.ThemeManager
 class TapCardConfiguration {
 
     companion object {
-        fun setTapThemeAndLanguage(context: Context, language: TapLocal, themeMode: TapTheme) {
-            when (themeMode) {
-                TapTheme.light -> {
-                    DataConfiguration.setTheme(
-                        context, context.resources, null,
-                        R.raw.defaultlighttheme, TapTheme.light.name
-                    )
-                    ThemeManager.currentThemeName = TapTheme.light.name
-                }
-                TapTheme.dark -> {
-                    DataConfiguration.setTheme(
-                        context, context.resources, null,
-                        R.raw.defaultdarktheme, TapTheme.dark.name
-                    )
-                    ThemeManager.currentThemeName = TapTheme.dark.name
-                }
-                else -> {}
-            }
-
-            DataConfiguration.setLocale(context, language.name, null, context.resources, R.raw.lang)
-        }
         fun configureWithTapCardModelConfiguration(
             context: Context,
             tapCardInputViewWeb: TapCardKit?,

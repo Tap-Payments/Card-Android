@@ -104,6 +104,10 @@ object DataConfiguration {
         }
     }
 
+    fun setCustomer(customer: Customer) {
+        customerExample = customer
+    }
+
 
     fun setTapAuthentication(tapAuthentication: TapAuthentication) {
         authenticationExample = tapAuthentication

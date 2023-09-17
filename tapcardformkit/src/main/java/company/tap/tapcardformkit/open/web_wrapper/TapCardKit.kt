@@ -2,6 +2,7 @@ package company.tap.tapcardformkit.open.web_wrapper
 
 import TapCardConfigurations
 import TapCardEdges
+import TapLocal
 import TapTheme
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -36,6 +37,7 @@ import company.tap.tapcardformkit.open.web_wrapper.enums.CardFormWebStatus
 import company.tap.tapcardformkit.open.web_wrapper.model.ThreeDsResponse
 import company.tap.tapcardformkit.open.web_wrapper.scanner_activity.ScannerActivity
 import company.tap.taplocalizationkit.LocalizationManager
+import company.tap.tapuilibrary.themekit.ThemeManager
 import company.tap.tapuilibrary.uikit.atoms.*
 import company.tap.tapuilibrary.uikit.views.TapBrandView
 import java.net.URLEncoder
@@ -121,6 +123,12 @@ class TapCardKit(context: Context, attrs: AttributeSet?) : LinearLayout(context,
                             )
                         }"
                     )
+                    var url  = "${urlWebStarter}${
+                        encodeConfigurationToUrl(
+                            DataConfiguration.configurations
+                        )
+                    }"
+
                     cardWebview.loadUrl(
                         "${urlWebStarter}${
                             encodeConfigurationToUrl(
@@ -172,7 +180,7 @@ class TapCardKit(context: Context, attrs: AttributeSet?) : LinearLayout(context,
                         else -> {}
                     }
 
-                    TapCardConfiguration.setTapThemeAndLanguage(
+                  setTapThemeAndLanguage(
                         context,
                         TapLocal.valueOf(this?.locale?.name.toString()),
                         TapTheme.valueOf(this?.theme?.name.toString())
@@ -213,7 +221,7 @@ class TapCardKit(context: Context, attrs: AttributeSet?) : LinearLayout(context,
                     }
                 }
 
-                TapCardConfiguration.setTapThemeAndLanguage(
+              setTapThemeAndLanguage(
                     context,
                     TapLocal.valueOf(tapInterface["locale"].toString()),
                     TapTheme.valueOf(tapInterface["theme"].toString())
@@ -231,6 +239,28 @@ class TapCardKit(context: Context, attrs: AttributeSet?) : LinearLayout(context,
         findViewById<CardView>(R.id.card_lottie).visibility = View.VISIBLE
 
 
+    }
+
+    fun setTapThemeAndLanguage(context: Context, language: TapLocal, themeMode: TapTheme) {
+        when (themeMode) {
+            TapTheme.light -> {
+                DataConfiguration.setTheme(
+                    context, context.resources, null,
+                    R.raw.defaultlighttheme, TapTheme.light.name
+                )
+                ThemeManager.currentThemeName = TapTheme.light.name
+            }
+            TapTheme.dark -> {
+                DataConfiguration.setTheme(
+                    context, context.resources, null,
+                    R.raw.defaultdarktheme, TapTheme.dark.name
+                )
+                ThemeManager.currentThemeName = TapTheme.dark.name
+            }
+            else -> {}
+        }
+
+        DataConfiguration.setLocale(context, language.name, null, context.resources, R.raw.lang)
     }
 
     fun stopShimmer() {
@@ -446,8 +476,7 @@ class TapCardKit(context: Context, attrs: AttributeSet?) : LinearLayout(context,
             tapBrandView.backButtonLinearLayout.setOnClickListener {
                 threeDsBottomsheet.dismiss()
                 init(cardConfiguraton)
-                DataConfiguration.getTapCardStatusListener()
-                    ?.onError(resources.getString(R.string.user_cancell))
+                DataConfiguration.getTapCardStatusListener()?.onError(resources.getString(R.string.user_cancell))
 
             }
 
@@ -488,16 +517,6 @@ class TapCardKit(context: Context, attrs: AttributeSet?) : LinearLayout(context,
                 false -> {}
                 else -> {}
             }
-
-//            val queryParams = request?.url?.getQueryParameter(keyValueForAuthPayer).toString()
-//            Log.e("queryParam", queryParams.toString())
-
-//
-//            val intent = Intent()
-//            intent.putExtra(authDataPayerKey, queryParams)
-//            setResult(Activity.RESULT_OK, intent)
-//            finish()
-
             return true
 
         }

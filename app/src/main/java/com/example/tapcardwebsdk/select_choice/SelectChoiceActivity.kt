@@ -12,7 +12,6 @@ import Post
 import Refrence
 import Scope
 import TapAuthentication
-import TapMetadata
 import TapTheme
 import android.content.Intent
 import android.content.res.Configuration
@@ -34,6 +33,7 @@ import com.example.tapcardwebsdk.select_choice.adapter.DataModel
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.textfield.TextInputEditText
 import com.tap.commondatamodels.cardBrands.CardBrand
+import company.tap.cardformkit.activities.MerchantDialog
 import company.tap.tapcardformkit.getRandomNumbers
 import company.tap.tapcardformkit.getRandomTrx
 import company.tap.tapcardformkit.open.DataConfiguration
@@ -111,10 +111,10 @@ class SelectChoiceActivity : AppCompatActivity() {
         cardEges = findViewById(R.id.card_edges)
         cardDirection = findViewById(R.id.card_direction)
         findViewById<TextView>(R.id.merchant_tv).setOnClickListener {
-            //MerchantDialog(this).show()
+            MerchantDialog(this).show()
         }
         findViewById<TextView>(R.id.transaction).setOnClickListener {
-            //TransactionDialog(this).show()
+            TransactionDialog(this).show()
         }
       //  radioGroup7 = findViewById(R.id.radioGroup7)
         darkRadioButton = findViewById<AppCompatRadioButton>(R.id.theme_dark)

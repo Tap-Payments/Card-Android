@@ -31,6 +31,7 @@ import company.tap.tapcardformkit.open.TapCardStatusDelegate
 import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
 import company.tap.tapcardformkit.open.web_wrapper.TapCardConfiguration
 import `interface`
+import org.json.JSONArray
 
 class MainActivity : AppCompatActivity() {
 
@@ -82,6 +83,14 @@ class MainActivity : AppCompatActivity() {
         val contact = java.util.HashMap<String,Any>()
         contact.put("email","test@gmail.com")
         contact.put("phone",phone)
+        /**
+         * name
+         */
+        val name = java.util.HashMap<String,Any>()
+        name.put("lang","en")
+        name.put("first","Ahmed")
+        name.put("middle","test")
+        name.put("last","test")
 
         /**
          * customer
@@ -90,15 +99,17 @@ class MainActivity : AppCompatActivity() {
         customer.put("nameOnCard","test")
         customer.put("editable","true")
         customer.put("contact",contact)
-        customer.put("name","[{\"lang\":\"en\",\"first\":\"Ahmed\",\"last\":\"Sharkawy\",\"middle\":\"Mohamed\"}]")
+        customer.put("name", listOf(name))
+
+
+
 
         /**
          * acceptance
          */
-
         val acceptance = java.util.HashMap<String,Any>()
-        acceptance.put("supportedBrands","[${"VISA"},${"AMEX"}]")
-        acceptance.put("supportedCards","[\"CREDIT\",\"DEBIT\"]")
+        acceptance.put("supportedBrands", listOf("MADA","VISA","MASTERCARD","AMEX"))
+        acceptance.put("supportedCards",listOf("CREDIT","DEBIT"))
 
         /**
          * fields
@@ -110,11 +121,11 @@ class MainActivity : AppCompatActivity() {
          * addons
          */
         val addons = java.util.HashMap<String,Any>()
-        addons.put("loader","true")
-        addons.put("saveCard","true")
-        addons.put("displayPaymentBrands","true")
-        addons.put("scanner","true")
-        addons.put("nfc","true")
+        addons.put("loader",true)
+        addons.put("saveCard",true)
+        addons.put("displayPaymentBrands",true)
+        addons.put("scanner",true)
+        addons.put("nfc",true)
 
 
         /**
@@ -152,17 +163,16 @@ class MainActivity : AppCompatActivity() {
         interf.put("edges","curved")
         interf.put("direction","ltr")
 
-
-        request.put("publicKey","pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7")
+        request.put("acceptance",acceptance)
+        request.put("publicKey","pk_test_Vlk842B1EA7tDN5QbrfGjYzh")
         request.put("merchant",merchant)
         request.put("transaction",transaction)
         request.put("customer",customer)
         request.put("interface",interf)
         request.put("addons",addons)
-        request.put("acceptance",acceptance)
         request.put("fields",fields)
-        request.put("scope","Authenticate")
-        request.put("authentication",authentication)
+//        request.put("scope","Authenticate")
+//        request.put("authentication",authentication)
 
         TapCardConfiguration.configureWithTapCardDictionaryConfiguration(
             this,
