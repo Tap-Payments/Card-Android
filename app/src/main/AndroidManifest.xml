@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.tapcardwebsdk"
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
@@ -12,12 +13,12 @@
         android:theme="@style/Theme.TapCardWebSDK"
         tools:targetApi="31">
         <activity
-            android:name=".main_activity.MainActivity"
+            android:name="com.example.tapcardwebsdk.main_activity.MainActivity"
             android:exported="true">
         </activity>
 
         <activity
-            android:name=".select_choice.SelectChoiceActivity"
+            android:name="com.example.tapcardwebsdk.select_choice.SelectChoiceActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

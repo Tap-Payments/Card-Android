@@ -69,11 +69,9 @@ class TapCardKit(context: Context, attrs: AttributeSet?) : LinearLayout(context,
                 // There are no request codes
                 val data: Intent? = result?.data
                 val card = data?.getParcelableExtra<Card>(ScanCardIntent.RESULT_PAYCARDS_CARD)
-                Toast.makeText(
-                    context,
-                    "number " + card?.cardNumber.toString() + "exp. " + card?.expirationDate.toString(),
-                    Toast.LENGTH_LONG
-                ).show()
+
+                fillCardNumber(cardNumber = card?.cardNumber.toString(), cardHolderName =card?.cardHolderName ?: "" , cvv ="" , expiryDate =card?.expirationDate ?: "" )
+
 
 
             }
@@ -497,7 +495,17 @@ class TapCardKit(context: Context, attrs: AttributeSet?) : LinearLayout(context,
     }
 
     fun generateTapAuthenticate(authIdPayer: String) {
-        cardWebview.loadUrl("javascript:window.loadAuthentication('$authIdPayer')");
+        cardWebview.loadUrl("javascript:window.loadAuthentication('$authIdPayer')")
+    }
+    fun fillCardNumber(cardNumber:String,expiryDate:String,cvv:String,cardHolderName:String){
+        cardWebview.loadUrl("javascript:window.fillCardInputs({cardNumber:'$cardNumber',expiryDate:'$expiryDate',cvv:'$cvv',cardHolderName:'$cardHolderName'})")
+
+
+
+
+
+
+
     }
 
 
