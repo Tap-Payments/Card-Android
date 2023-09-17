@@ -1,0 +1,10 @@
+<resources>
+    <string name="card_not_supported">Card not supported</string>
+    <string name="user_cancell">User canceled 3ds</string>
+    <string name="enryptkey" translatable="false">-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC8AX++RtxPZFtns4XzXFlDIxPB
+h0umN4qRXZaKDIlb6a3MknaB7psJWmf2l+e4Cfh9b5tey/+rZqpQ065eXTZfGCAu
+BLt+fYLQBhLfjRpk8S6hlIzc1Kdjg65uqzMwcTd0p7I4KLwHk1I0oXzuEu53fU1L
+SZhWp4Mnd6wjVgXAsQIDAQAB
+-----END PUBLIC KEY-----</string>
+</resources>

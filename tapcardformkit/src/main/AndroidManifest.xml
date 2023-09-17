@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="company.tap.tapcardformkit">
+
+    <uses-permission android:name="android.permission.NFC" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application>
+        <activity
+            android:name=".open.web_wrapper.ThreeDsWebViewActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MyAnimTheme"
+            />
+        <activity
+            android:name=".open.web_wrapper.nfc_activity.NFCLauncherActivity"
+            android:exported="false" />
+        <activity
+            android:name=".internal.webview.WebViewActivity"
+            android:exported="false"
+            android:theme="@style/DialogTheme" />
+        <activity android:name=".open.web_wrapper.scanner_activity.ScannerActivity" />
+    </application>
+
+</manifest>
