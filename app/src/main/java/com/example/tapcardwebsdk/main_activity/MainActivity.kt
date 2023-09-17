@@ -171,8 +171,6 @@ class MainActivity : AppCompatActivity() {
         request.put("interface",interf)
         request.put("addons",addons)
         request.put("fields",fields)
-//        request.put("scope","Authenticate")
-//        request.put("authentication",authentication)
 
         TapCardConfiguration.configureWithTapCardDictionaryConfiguration(
             this,
