@@ -3,22 +3,46 @@ package company.tap.tapcardformkit.open.web_wrapper
 import Headers
 import Operator
 import TapCardConfigurations
+import TapLocal
+import TapTheme
 import android.content.Context
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import company.tap.tapcardformkit.R
 import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.open.DataConfiguration.configurationsAsHashMap
 import company.tap.tapcardformkit.open.TapCardStatusDelegate
 import company.tap.tapnetworkkit.connection.NetworkApp
 import company.tap.tapnetworkkit.utils.CryptoUtil
+import company.tap.tapuilibrary.themekit.ThemeManager
 
 
 class TapCardConfiguration {
+
     companion object {
+        fun setTapThemeAndLanguage(context: Context, language: TapLocal, themeMode: TapTheme) {
+            when (themeMode) {
+                TapTheme.light -> {
+                    DataConfiguration.setTheme(
+                        context, context.resources, null,
+                        R.raw.defaultlighttheme, TapTheme.light.name
+                    )
+                    ThemeManager.currentThemeName = TapTheme.light.name
+                }
+                TapTheme.dark -> {
+                    DataConfiguration.setTheme(
+                        context, context.resources, null,
+                        R.raw.defaultdarktheme, TapTheme.dark.name
+                    )
+                    ThemeManager.currentThemeName = TapTheme.dark.name
+                }
+                else -> {}
+            }
+
+            DataConfiguration.setLocale(context, language.name, null, context.resources, R.raw.lang)
+        }
         fun configureWithTapCardModelConfiguration(
             context: Context,
-            tapCardInputViewWeb: CustomWebViewWrapper?,
+            tapCardInputViewWeb: TapCardKit?,
             tapCardConfiguration: TapCardConfigurations,
             tapCardStatusDelegate: TapCardStatusDelegate? = null,
             ) {
@@ -35,7 +59,7 @@ class TapCardConfiguration {
 
         fun configureWithTapCardDictionaryConfiguration(
             context: Context,
-            tapCardInputViewWeb: CustomWebViewWrapper?,
+            tapCardInputViewWeb: TapCardKit?,
             tapMapConfiguration: java.util.HashMap<String, Any>,
             tapCardStatusDelegate: TapCardStatusDelegate? = null
         ) {
@@ -58,7 +82,7 @@ class TapCardConfiguration {
         }
 
         fun addOperatorHeaderField(
-            tapCardInputViewWeb: CustomWebViewWrapper?,
+            tapCardInputViewWeb: TapCardKit?,
             context: Context,
             modelConfiguration: CardConfiguraton,
             publicKey: String?

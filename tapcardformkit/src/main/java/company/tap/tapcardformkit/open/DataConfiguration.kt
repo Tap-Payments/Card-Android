@@ -4,6 +4,12 @@ import Customer
 import TapAuthentication
 import TapCardConfigurations
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.res.Resources
+import android.util.Log
+import company.tap.tapcardformkit.R
+import company.tap.taplocalizationkit.LocalizationManager
+import company.tap.tapuilibrary.themekit.ThemeManager
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -53,9 +59,51 @@ object DataConfiguration {
 
 
 
-    fun setCustomer(customer: Customer) {
-        customerExample = customer
+    fun setTheme(
+        context: Context?,
+        resources: Resources?,
+        urlString: String?,
+        urlPathLocal: Int?,
+        fileName: String?
+    ) {
+        if (resources != null && urlPathLocal != null) {
+            if (fileName != null && fileName.contains("dark")) {
+                if (urlPathLocal != null) {
+                    ThemeManager.loadTapTheme(resources, urlPathLocal, "darktheme")
+                }
+            } else {
+                if (urlPathLocal != null) {
+                    ThemeManager.loadTapTheme(resources, urlPathLocal, "lighttheme")
+                }
+            }
+        } else if (urlString != null) {
+            if (context != null) {
+                println("urlString>>>" + urlString)
+                ThemeManager.loadTapTheme(context, urlString, "lighttheme")
+            }
+        }
+
     }
+
+    fun setLocale(
+        context: Context,
+        languageString: String,
+        urlString: String?,
+        resources: Resources?,
+        urlPathLocal: Int?
+    ) {
+        LocalizationManager.setLocale(context, Locale(languageString))
+        if (resources != null && urlPathLocal != null) {
+            LocalizationManager.loadTapLocale(resources, R.raw.lang)
+        } else if (urlString != null) {
+            if (context != null) {
+                LocalizationManager.loadTapLocale(context, urlString)
+                Log.e("local", urlString.toString())
+
+            }
+        }
+    }
+
 
     fun setTapAuthentication(tapAuthentication: TapAuthentication) {
         authenticationExample = tapAuthentication

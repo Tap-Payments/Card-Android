@@ -7,14 +7,11 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Build
 import android.os.Handler
-import android.os.Parcelable
 import android.util.AttributeSet
-import android.util.DisplayMetrics
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
@@ -33,15 +30,14 @@ import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.card.MaterialCardView
 import com.google.gson.Gson
-import com.google.gson.internal.LinkedTreeMap
 import company.tap.tapcardformkit.*
 import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.enums.CardFormWebStatus
 import company.tap.tapcardformkit.open.web_wrapper.model.ThreeDsResponse
 import company.tap.tapcardformkit.open.web_wrapper.scanner_activity.ScannerActivity
+import company.tap.taplocalizationkit.LocalizationManager
 import company.tap.tapuilibrary.uikit.atoms.*
 import company.tap.tapuilibrary.uikit.views.TapBrandView
-import kotlinx.android.parcel.Parcelize
 import java.net.URLEncoder
 import java.util.*
 import kotlin.collections.HashMap
@@ -51,7 +47,7 @@ import kotlin.math.roundToInt
 
 @RequiresApi(Build.VERSION_CODES.N)
 @SuppressLint("ViewConstructor")
-class CustomWebViewWrapper(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs) {
+class TapCardKit(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs) {
     lateinit var cardWebview: WebView
     lateinit var hideableWebView: WebView
     lateinit var threeDsResponse: ThreeDsResponse
@@ -153,6 +149,7 @@ class CustomWebViewWrapper(context: Context, attrs: AttributeSet?) : LinearLayou
                             lottieAnimationView.setAnimation(
                                 context.getAssetFile("lottie_light")
                             )
+
                         }
                         TapTheme.dark -> {
                             lottieAnimationView.setAnimation(
@@ -174,6 +171,12 @@ class CustomWebViewWrapper(context: Context, attrs: AttributeSet?) : LinearLayou
                         }
                         else -> {}
                     }
+
+                    TapCardConfiguration.setTapThemeAndLanguage(
+                        context,
+                        TapLocal.valueOf(this?.locale?.name.toString()),
+                        TapTheme.valueOf(this?.theme?.name.toString())
+                    )
                 }
             }
             CardConfiguraton.MapConfigruation ->{
@@ -209,6 +212,12 @@ class CustomWebViewWrapper(context: Context, attrs: AttributeSet?) : LinearLayou
                         else -> {}
                     }
                 }
+
+                TapCardConfiguration.setTapThemeAndLanguage(
+                    context,
+                    TapLocal.valueOf(tapInterface["locale"].toString()),
+                    TapTheme.valueOf(tapInterface["theme"].toString())
+                )
             }
         }
 
@@ -401,6 +410,7 @@ class CustomWebViewWrapper(context: Context, attrs: AttributeSet?) : LinearLayou
             /**
              * put buttomsheet in separate class
              */
+
             threeDsBottomsheet = BottomSheetDialog(context)
             threeDsBottomsheet.behavior.isFitToContents = false
             threeDsBottomsheet.behavior.maxHeight = resources.getDimensionPixelSize(com.intuit.sdp.R.dimen._450sdp)
