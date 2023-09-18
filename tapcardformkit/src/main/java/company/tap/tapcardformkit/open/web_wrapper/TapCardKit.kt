@@ -15,6 +15,7 @@ import android.os.Handler
 import android.util.AttributeSet
 import android.util.Log
 import android.util.TypedValue
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
@@ -50,7 +51,6 @@ import kotlin.math.roundToInt
 @RequiresApi(Build.VERSION_CODES.N)
 @SuppressLint("ViewConstructor")
 class TapCardKit : LinearLayout {
-    lateinit var cardWebview: WebView
     lateinit var hideableWebView: WebView
     lateinit var threeDsResponse: ThreeDsResponse
     lateinit var threeDsBottomsheet: BottomSheetDialog
@@ -61,6 +61,15 @@ class TapCardKit : LinearLayout {
     lateinit var webViewFrame: FrameLayout
     lateinit var webFrame3ds: FrameLayout
     private var alreadyEvaluated = false
+
+    companion object{
+        lateinit var cardWebview: WebView
+        var card:Card?=null
+        fun fillCardNumber(cardNumber:String,expiryDate:String,cvv:String,cardHolderName:String){
+            cardWebview.loadUrl("javascript:window.fillCardInputs({cardNumber:'$cardNumber',expiryDate:'$expiryDate',cvv:'$cvv',cardHolderName:'$cardHolderName'})")
+        }
+
+    }
 
     /**
      * Simple constructor to use when creating a TapPayCardSwitch from code.
@@ -82,6 +91,7 @@ class TapCardKit : LinearLayout {
 //                val data: Intent? = result?.data
 //                val card = data?.getParcelableExtra<Card>(ScanCardIntent.RESULT_PAYCARDS_CARD)
 //
+//
 //                fillCardNumber(cardNumber = card?.cardNumber.toString(), cardHolderName =card?.cardHolderName ?: "" , cvv ="" , expiryDate =card?.expirationDate ?: "" )
 //
 //
@@ -91,11 +101,7 @@ class TapCardKit : LinearLayout {
 
 
     init {
-
-        View.inflate(context, R.layout.activity_card_web_wrapper, this)
-
-
-
+     LayoutInflater.from(context).inflate(R.layout.activity_card_web_wrapper, this)
         initWebView()
 
     }
@@ -378,7 +384,9 @@ class TapCardKit : LinearLayout {
                     /**
                      * navigate to Scanner Activity
                      */
-               //     resultLauncher.launch(Intent(context, ScannerActivity::class.java))
+                    val intent = Intent(context,ScannerActivity::class.java)
+                    (context).startActivity(intent)
+//                    resultLauncher.launch(Intent(context, ScannerActivity::class.java))
 
 
 
@@ -509,16 +517,7 @@ class TapCardKit : LinearLayout {
     fun generateTapAuthenticate(authIdPayer: String) {
         cardWebview.loadUrl("javascript:window.loadAuthentication('$authIdPayer')")
     }
-    fun fillCardNumber(cardNumber:String,expiryDate:String,cvv:String,cardHolderName:String){
-        cardWebview.loadUrl("javascript:window.fillCardInputs({cardNumber:'$cardNumber',expiryDate:'$expiryDate',cvv:'$cvv',cardHolderName:'$cardHolderName'})")
 
-
-
-
-
-
-
-    }
 
 
     inner class threeDsWebViewClient : WebViewClient() {

@@ -14,6 +14,8 @@ import company.tap.cardscanner.TapCard
 import company.tap.cardscanner.TapScannerCallback
 import company.tap.cardscanner.TapTextRecognitionCallBack
 import company.tap.cardscanner.TapTextRecognitionML
+import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
+import company.tap.tapcardformkit.open.web_wrapper.TapCardKit.Companion.fillCardNumber
 import java.lang.Exception
 
 private const val SCAN_CARD_ID = 101
@@ -62,6 +64,7 @@ class ScannerActivity : AppCompatActivity(), TapTextRecognitionCallBack, TapScan
             SCAN_CARD_ID -> if (resultCode == Activity.RESULT_OK) {
                 val card = data!!.getParcelableExtra<Card>(ScanCardIntent.RESULT_PAYCARDS_CARD)
                 if (card != null) {
+                    fillCardNumber(cardNumber = card?.cardNumber.toString(), cardHolderName =card?.cardHolderName ?: "" , cvv ="" , expiryDate =card?.expirationDate ?: "" )
                     setResult(Activity.RESULT_OK, data)
                     finish()
                 }
