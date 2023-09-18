@@ -1,5 +1,4 @@
 package com.example.tapcardwebsdk.main_activity
-
 import Acceptance
 import Addons
 import Authentication

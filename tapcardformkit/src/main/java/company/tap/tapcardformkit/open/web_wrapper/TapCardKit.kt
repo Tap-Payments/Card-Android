@@ -49,7 +49,7 @@ import kotlin.math.roundToInt
 
 @RequiresApi(Build.VERSION_CODES.N)
 @SuppressLint("ViewConstructor")
-class TapCardKit(context: Context, attrs: AttributeSet?) : LinearLayout(context, attrs) {
+class TapCardKit : LinearLayout {
     lateinit var cardWebview: WebView
     lateinit var hideableWebView: WebView
     lateinit var threeDsResponse: ThreeDsResponse
@@ -62,20 +62,32 @@ class TapCardKit(context: Context, attrs: AttributeSet?) : LinearLayout(context,
     lateinit var webFrame3ds: FrameLayout
     private var alreadyEvaluated = false
 
-    val resultLauncher =
+    /**
+     * Simple constructor to use when creating a TapPayCardSwitch from code.
+     *  @param context The Context the view is running in, through which it can
+     *  access the current theme, resources, etc.
+     **/
+    constructor(context: Context) : super(context)
 
-        (context as AppCompatActivity).registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                // There are no request codes
-                val data: Intent? = result?.data
-                val card = data?.getParcelableExtra<Card>(ScanCardIntent.RESULT_PAYCARDS_CARD)
-
-                fillCardNumber(cardNumber = card?.cardNumber.toString(), cardHolderName =card?.cardHolderName ?: "" , cvv ="" , expiryDate =card?.expirationDate ?: "" )
-
-
-
-            }
-        }
+    /**
+     *  @param context The Context the view is running in, through which it can
+     *  access the current theme, resources, etc.
+     *  @param attrs The attributes of the XML Button tag being used to inflate the view.
+     *
+     */
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
+//    val resultLauncher = (context as AppCompatActivity).registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+//            if (result.resultCode == Activity.RESULT_OK) {
+//                // There are no request codes
+//                val data: Intent? = result?.data
+//                val card = data?.getParcelableExtra<Card>(ScanCardIntent.RESULT_PAYCARDS_CARD)
+//
+//                fillCardNumber(cardNumber = card?.cardNumber.toString(), cardHolderName =card?.cardHolderName ?: "" , cvv ="" , expiryDate =card?.expirationDate ?: "" )
+//
+//
+//
+//            }
+//        }
 
 
     init {
@@ -366,7 +378,7 @@ class TapCardKit(context: Context, attrs: AttributeSet?) : LinearLayout(context,
                     /**
                      * navigate to Scanner Activity
                      */
-                    resultLauncher.launch(Intent(context, ScannerActivity::class.java))
+               //     resultLauncher.launch(Intent(context, ScannerActivity::class.java))
 
 
 
