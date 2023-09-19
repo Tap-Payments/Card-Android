@@ -132,8 +132,8 @@ class MainActivity : AppCompatActivity() {
          * refrence
          */
         val refrence = java.util.HashMap<String,Any>()
-        refrence.put("transaction","tck_LVL8sGmnTHMfUgG0AFkPhQO2Gi")
-        refrence.put("order","696646918313096350")
+        refrence.put("transaction","tck_LVL8sGmsTHMfUgG0SFkPhQO2Gi")
+        refrence.put("order","696646918313096313")
 
         /**
          * auth chanel
@@ -165,7 +165,7 @@ class MainActivity : AppCompatActivity() {
          */
         val interfacee = java.util.HashMap<String,Any>()
         interfacee.put("locale","en")
-        interfacee.put("theme","dark")
+        interfacee.put("theme","light")
         interfacee.put("edges","curved")
         interfacee.put("direction","ltr")
 

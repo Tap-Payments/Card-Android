@@ -17,21 +17,21 @@ import com.google.android.material.card.MaterialCardView
 import company.tap.tapcardformkit.R
 import company.tap.tapcardformkit.getScreenHeight
 import company.tap.tapcardformkit.open.DataConfiguration
+import company.tap.tapcardformkit.open.web_wrapper.TapCardKit.Companion.cardConfiguraton
 import company.tap.tapcardformkit.open.web_wrapper.TapCardKit.Companion.generateTapAuthenticate
-import company.tap.tapcardformkit.open.web_wrapper.TapCardKit.Companion.initializeAgain
 import company.tap.tapcardformkit.open.web_wrapper.TapCardKit.Companion.threeDsResponse
-import company.tap.tapcardformkit.open.web_wrapper.model.ThreeDsResponse
 import company.tap.tapcardformkit.twoThirdHeightView
 import company.tap.tapuilibrary.uikit.views.TapBrandView
 import kotlin.math.roundToInt
 
-class ThreeDsBottomSheet(context: Context,style:Int) : BottomSheetDialog(context,style) {
+class ThreeDsBottomSheet(context: Context, style: Int, var tapCardKit: TapCardKit) : BottomSheetDialog(context,style) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val view = LayoutInflater.from(context).inflate(R.layout.bottom_sheet_dialog, null)
         this.setContentView(view)
+        this.setCancelable(false)
 
         with(this){
             behavior.isFitToContents = false
@@ -55,17 +55,11 @@ class ThreeDsBottomSheet(context: Context,style:Int) : BottomSheetDialog(context
         webView.settings.loadWithOverviewMode = true
         webView.settings.useWideViewPort = true
         webView.settings.builtInZoomControls = true;
-
         webView.loadUrl(threeDsResponse.threeDsUrl)
-
-        this.setCancelable(false)
-
-
 
         tapBrandView.backButtonLinearLayout.setOnClickListener {
             this.dismiss()
-            //init(cardConfiguraton)
-            initializeAgain()
+            tapCardKit.init(cardConfiguraton)
             DataConfiguration.getTapCardStatusListener()?.onError("User canceled 3ds")
 
         }

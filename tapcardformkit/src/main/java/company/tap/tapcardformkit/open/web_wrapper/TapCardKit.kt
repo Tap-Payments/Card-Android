@@ -5,7 +5,6 @@ import TapCardEdges
 import TapLocal
 import TapTheme
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -23,13 +22,10 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.*
 import cards.pay.paycardsrecognizer.sdk.Card
 import com.airbnb.lottie.LottieAnimationView
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.card.MaterialCardView
 import com.google.gson.Gson
 import company.tap.tapcardformkit.*
 import company.tap.tapcardformkit.open.DataConfiguration
@@ -38,10 +34,8 @@ import company.tap.tapcardformkit.open.web_wrapper.model.ThreeDsResponse
 import company.tap.tapcardformkit.open.web_wrapper.scanner_activity.ScannerActivity
 import company.tap.tapuilibrary.themekit.ThemeManager
 import company.tap.tapuilibrary.uikit.atoms.*
-import company.tap.tapuilibrary.uikit.views.TapBrandView
 import java.net.URLEncoder
 import java.util.*
-import kotlin.math.roundToInt
 
 
 @RequiresApi(Build.VERSION_CODES.N)
@@ -49,7 +43,6 @@ import kotlin.math.roundToInt
 class TapCardKit : LinearLayout {
     lateinit var hideableWebView: WebView
     lateinit var threeDsBottomsheet: BottomSheetDialog
-    lateinit var cardConfiguraton: CardConfiguraton
     lateinit var lottieAnimationView: LottieAnimationView
     private var isRedirected = false
     lateinit var constraintLayout: ConstraintLayout
@@ -60,6 +53,8 @@ class TapCardKit : LinearLayout {
     companion object{
         lateinit var threeDsResponse: ThreeDsResponse
         lateinit var cardWebview: WebView
+        lateinit var cardConfiguraton: CardConfiguraton
+
         var card:Card?=null
         fun fillCardNumber(cardNumber:String,expiryDate:String,cvv:String,cardHolderName:String){
             cardWebview.loadUrl("javascript:window.fillCardInputs({cardNumber:'$cardNumber',expiryDate:'$expiryDate',cvv:'$cvv',cardHolderName:'$cardHolderName'})")
@@ -67,10 +62,6 @@ class TapCardKit : LinearLayout {
 
         fun generateTapAuthenticate(authIdPayer: String) {
             cardWebview.loadUrl("javascript:window.loadAuthentication('$authIdPayer')")
-        }
-
-        fun initializeAgain(){
-
         }
 
 
@@ -465,7 +456,7 @@ class TapCardKit : LinearLayout {
              * put buttomsheet in separate class
              */
 
-            threeDsBottomsheet = ThreeDsBottomSheet(context,R.style.CustomBottomSheetDialog)
+            threeDsBottomsheet = ThreeDsBottomSheet(context,R.style.CustomBottomSheetDialog,this@TapCardKit)
             threeDsBottomsheet.show()
 //            threeDsBottomsheet.behavior.isFitToContents = false
 //            threeDsBottomsheet.behavior.maxHeight = resources.getDimensionPixelSize(com.intuit.sdp.R.dimen._450sdp)
