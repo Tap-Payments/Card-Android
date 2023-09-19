@@ -14,7 +14,10 @@
         <activity
             android:name=".open.web_wrapper.nfc_activity.NFCLauncherActivity"
             android:exported="false" />
-        <activity android:name=".open.web_wrapper.scanner_activity.ScannerActivity" />
+        <activity
+            android:theme="@style/Theme.AppCompat"
+            android:name=".open.web_wrapper.scanner_activity.ScannerActivity"
+            />
     </application>
 
 </manifest>

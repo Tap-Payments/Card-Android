@@ -9,14 +9,11 @@ import androidx.appcompat.app.AppCompatActivity
 import cards.pay.paycardsrecognizer.sdk.Card
 import cards.pay.paycardsrecognizer.sdk.ScanCardIntent
 import cards.pay.paycardsrecognizer.sdk.ui.InlineViewCallback
-import cards.pay.paycardsrecognizer.sdk.ui.InlineViewFragment
 import company.tap.cardscanner.TapCard
 import company.tap.cardscanner.TapScannerCallback
 import company.tap.cardscanner.TapTextRecognitionCallBack
 import company.tap.cardscanner.TapTextRecognitionML
-import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
 import company.tap.tapcardformkit.open.web_wrapper.TapCardKit.Companion.fillCardNumber
-import java.lang.Exception
 
 private const val SCAN_CARD_ID = 101
 
@@ -57,6 +54,7 @@ class ScannerActivity : AppCompatActivity(), TapTextRecognitionCallBack, TapScan
         super.onRestart()
         finish()
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
