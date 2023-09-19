@@ -2,6 +2,7 @@ package company.tap.tapcardformkit
 
 import android.app.Activity
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.res.Resources
 import android.net.Uri
 import android.os.Build
@@ -155,7 +156,7 @@ fun Context.twoThirdHeightView(): Double {
 }
 fun Context.getDeviceSpecs(): Pair<Int, Int> {
     val displayMetrics = DisplayMetrics()
-    (this as Activity).windowManager.defaultDisplay.getMetrics(displayMetrics)
+    (this.getActivity())?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
     val height = displayMetrics.heightPixels
     val width = displayMetrics.widthPixels
     val pair: Pair<Int, Int> = Pair(height, width)
@@ -163,6 +164,13 @@ fun Context.getDeviceSpecs(): Pair<Int, Int> {
 }
 
 
+fun Context.getActivity(): Activity? {
+    return when (this) {
+        is Activity -> this
+        is ContextWrapper -> this.baseContext.getActivity()
+        else -> null
+    }
+}
 fun doAfterSpecificTime(time: Long = 1000L, execute: () -> Unit) =
     Handler(Looper.getMainLooper()).postDelayed(time) {
         execute.invoke()

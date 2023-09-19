@@ -18,6 +18,7 @@ import Transaction
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -41,13 +42,13 @@ class MainActivity : AppCompatActivity() {
         /**
          * case of passing a new Model
          */
-        getDataFromSelectChoice()
+        //getDataFromSelectChoice()
 
         /**
          * case of passing a hashmap
          */
 
-      // getDataFromHashMap()
+       getDataFromHashMap()
         findViewById<TextView>(R.id.tokenizeBtn).setOnClickListener {
             findViewById<TapCardKit>(R.id.tapCardForm).generateTapToken()
         }
@@ -131,45 +132,54 @@ class MainActivity : AppCompatActivity() {
          * refrence
          */
         val refrence = java.util.HashMap<String,Any>()
-        refrence.put("transaction","tck_LV02G1729746334Xj54695435")
-        refrence.put("order","77302326303711438")
+        refrence.put("transaction","tck_LVL8sGmnTHMfUgG0AFkPhQO2Gi")
+        refrence.put("order","696646918313096350")
 
         /**
-         * authchanel
+         * auth chanel
          */
         val auth = java.util.HashMap<String,Any>()
         auth.put("channel","PAYER_BROWSER")
         auth.put("purpose","PAYMENT_TRANSACTION")
 
-
         /**
-         * authentication
+         * invoic
          */
+        val invoice = java.util.HashMap<String,Any>()
+        invoice.put("id","")
+        /**
+         * post
+         */
+        val post = java.util.HashMap<String,Any>()
+        post.put("id","")
+
         val authentication = java.util.HashMap<String,Any>()
-        authentication.put("refrence",refrence)
+        authentication.put("description","description")
+        authentication.put("reference",refrence)
+        authentication.put("invoice",invoice)
         authentication.put("authentication",auth)
-
-
-
-
+        authentication.put("post",post)
 
         /**
          * interface
          */
-        val interf = java.util.HashMap<String,Any>()
-        interf.put("locale","en")
-        interf.put("theme","light")
-        interf.put("edges","curved")
-        interf.put("direction","ltr")
+        val interfacee = java.util.HashMap<String,Any>()
+        interfacee.put("locale","en")
+        interfacee.put("theme","dark")
+        interfacee.put("edges","curved")
+        interfacee.put("direction","ltr")
 
         request.put("acceptance",acceptance)
         request.put("publicKey","pk_test_Vlk842B1EA7tDN5QbrfGjYzh")
         request.put("merchant",merchant)
         request.put("transaction",transaction)
         request.put("customer",customer)
-        request.put("interface",interf)
+        request.put("interface",interfacee)
         request.put("addons",addons)
         request.put("fields",fields)
+        request.put("scope","Authenticate")
+        request.put("authentication",authentication)
+
 
         TapCardConfiguration.configureWithTapCardDictionaryConfiguration(
             this,
@@ -304,6 +314,7 @@ class MainActivity : AppCompatActivity() {
 
         )
 
+        Log.e("cardConf",tapCardConfig.toString())
         TapCardConfiguration.configureWithTapCardModelConfiguration(
             this,
             findViewById<TapCardKit>(R.id.tapCardForm),

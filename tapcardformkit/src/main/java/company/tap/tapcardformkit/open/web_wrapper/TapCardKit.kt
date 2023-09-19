@@ -20,15 +20,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
 import android.widget.*
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.*
 import cards.pay.paycardsrecognizer.sdk.Card
-import cards.pay.paycardsrecognizer.sdk.ScanCardIntent
 import com.airbnb.lottie.LottieAnimationView
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.card.MaterialCardView
 import com.google.gson.Gson
@@ -37,22 +36,18 @@ import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.enums.CardFormWebStatus
 import company.tap.tapcardformkit.open.web_wrapper.model.ThreeDsResponse
 import company.tap.tapcardformkit.open.web_wrapper.scanner_activity.ScannerActivity
-import company.tap.taplocalizationkit.LocalizationManager
 import company.tap.tapuilibrary.themekit.ThemeManager
 import company.tap.tapuilibrary.uikit.atoms.*
 import company.tap.tapuilibrary.uikit.views.TapBrandView
 import java.net.URLEncoder
 import java.util.*
-import kotlin.collections.HashMap
 import kotlin.math.roundToInt
-
 
 
 @RequiresApi(Build.VERSION_CODES.N)
 @SuppressLint("ViewConstructor")
 class TapCardKit : LinearLayout {
     lateinit var hideableWebView: WebView
-    lateinit var threeDsResponse: ThreeDsResponse
     lateinit var threeDsBottomsheet: BottomSheetDialog
     lateinit var cardConfiguraton: CardConfiguraton
     lateinit var lottieAnimationView: LottieAnimationView
@@ -63,11 +58,22 @@ class TapCardKit : LinearLayout {
     private var alreadyEvaluated = false
 
     companion object{
+        lateinit var threeDsResponse: ThreeDsResponse
         lateinit var cardWebview: WebView
         var card:Card?=null
         fun fillCardNumber(cardNumber:String,expiryDate:String,cvv:String,cardHolderName:String){
             cardWebview.loadUrl("javascript:window.fillCardInputs({cardNumber:'$cardNumber',expiryDate:'$expiryDate',cvv:'$cvv',cardHolderName:'$cardHolderName'})")
         }
+
+        fun generateTapAuthenticate(authIdPayer: String) {
+            cardWebview.loadUrl("javascript:window.loadAuthentication('$authIdPayer')")
+        }
+
+        fun initializeAgain(){
+
+        }
+
+
 
     }
 
@@ -106,7 +112,7 @@ class TapCardKit : LinearLayout {
 
     }
 
-    private fun initWebView() {
+     fun initWebView() {
         cardWebview = findViewById(R.id.webview)
         hideableWebView = findViewById(R.id.hideableWebView)
         webViewFrame = findViewById(R.id.webViewFrame)
@@ -459,44 +465,46 @@ class TapCardKit : LinearLayout {
              * put buttomsheet in separate class
              */
 
-            threeDsBottomsheet = BottomSheetDialog(context,R.style.CustomBottomSheetDialog)
-            threeDsBottomsheet.behavior.isFitToContents = false
-            threeDsBottomsheet.behavior.maxHeight = resources.getDimensionPixelSize(com.intuit.sdp.R.dimen._450sdp)
-            threeDsBottomsheet.behavior.peekHeight = (getScreenHeight() * 2 / 3) + 100
-            threeDsBottomsheet.behavior.isDraggable = false
+            threeDsBottomsheet = ThreeDsBottomSheet(context,R.style.CustomBottomSheetDialog)
+            threeDsBottomsheet.show()
+//            threeDsBottomsheet.behavior.isFitToContents = false
+//            threeDsBottomsheet.behavior.maxHeight = resources.getDimensionPixelSize(com.intuit.sdp.R.dimen._450sdp)
+//            threeDsBottomsheet.behavior.peekHeight = (getScreenHeight() * 2 / 3) + 100
+//            threeDsBottomsheet.behavior.isDraggable = false
+//
+
 
 
             // on below line we are inflating a layout file which we have created.
-            val view =
-                (context as Activity).layoutInflater.inflate(R.layout.bottom_sheet_dialog, null)
-            val tapBrandView = view.findViewById<TapBrandView>(R.id.tab_brand_view)
-            val cardview = view.findViewById<MaterialCardView>(R.id.card_view)
+//            val view = (context as Activity).layoutInflater.inflate(R.layout.bottom_sheet_dialog, null)
+//            val tapBrandView = view.findViewById<TapBrandView>(R.id.tab_brand_view)
+//            val cardview = view.findViewById<MaterialCardView>(R.id.card_view)
+//
+//
+//            val webView = view.findViewById<WebView>(R.id.webview3ds)
+//            webView.layoutParams = FrameLayout.LayoutParams(
+//                LinearLayout.LayoutParams.MATCH_PARENT,
+//                context.twoThirdHeightView().roundToInt()
+//            )
+//            webView.settings.javaScriptEnabled = true
+//            webView.webViewClient = threeDsWebViewClient()
+//            webView.settings.loadWithOverviewMode = true
+//            webView.settings.useWideViewPort = true
+//            webView.settings.builtInZoomControls = true;
 
-
-            val webView = view.findViewById<WebView>(R.id.webview3ds)
-            webView.layoutParams = FrameLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                context.twoThirdHeightView().roundToInt()
-            )
-            webView.settings.javaScriptEnabled = true
-            webView.webViewClient = threeDsWebViewClient()
-            webView.settings.loadWithOverviewMode = true
-            webView.settings.useWideViewPort = true
-            webView.settings.builtInZoomControls = true;
-
-            webView.loadUrl(threeDsResponse.threeDsUrl)
-
-            threeDsBottomsheet.setCancelable(false)
-            threeDsBottomsheet.setContentView(view)
-            threeDsBottomsheet.show()
-
-
-            tapBrandView.backButtonLinearLayout.setOnClickListener {
-                threeDsBottomsheet.dismiss()
-                init(cardConfiguraton)
-                DataConfiguration.getTapCardStatusListener()?.onError(resources.getString(R.string.user_cancell))
-
-            }
+//            webView.loadUrl(threeDsResponse.threeDsUrl)
+//
+//            threeDsBottomsheet.setCancelable(false)
+//            threeDsBottomsheet.setContentView(view)
+//            threeDsBottomsheet.show()
+//
+//
+//            tapBrandView.backButtonLinearLayout.setOnClickListener {
+//                threeDsBottomsheet.dismiss()
+//                init(cardConfiguraton)
+//                DataConfiguration.getTapCardStatusListener()?.onError(resources.getString(R.string.user_cancell))
+//
+//            }
 
 
         }
@@ -514,44 +522,44 @@ class TapCardKit : LinearLayout {
         cardWebview.loadUrl("javascript:window.generateTapToken()")
     }
 
-    fun generateTapAuthenticate(authIdPayer: String) {
-        cardWebview.loadUrl("javascript:window.loadAuthentication('$authIdPayer')")
-    }
+//    fun generateTapAuthenticate(authIdPayer: String) {
+//        cardWebview.loadUrl("javascript:window.loadAuthentication('$authIdPayer')")
+//    }
 
 
 
-    inner class threeDsWebViewClient : WebViewClient() {
-        @RequiresApi(Build.VERSION_CODES.O)
-        override fun shouldOverrideUrlLoading(
-            webView: WebView?,
-            request: WebResourceRequest?
-        ): Boolean {
-            Log.e("url3ds", request?.url.toString())
-            when (request?.url?.toString()?.contains(threeDsResponse.keyword)) {
-                true -> {
-                    if (::threeDsBottomsheet.isInitialized)
-                        threeDsBottomsheet.dismiss()
-                    generateTapAuthenticate(request?.url?.toString().toString())
-                }
-                false -> {}
-                else -> {}
-            }
-            return true
-
-        }
-
-        override fun onPageFinished(view: WebView, url: String) {
-
-        }
-
-        override fun onReceivedError(
-            view: WebView,
-            request: WebResourceRequest,
-            error: WebResourceError
-        ) {
-            super.onReceivedError(view, request, error)
-        }
-    }
+//    inner class threeDsWebViewClient : WebViewClient() {
+//        @RequiresApi(Build.VERSION_CODES.O)
+//        override fun shouldOverrideUrlLoading(
+//            webView: WebView?,
+//            request: WebResourceRequest?
+//        ): Boolean {
+//            Log.e("url3ds", request?.url.toString())
+//            when (request?.url?.toString()?.contains(threeDsResponse.keyword)) {
+//                true -> {
+//                    if (::threeDsBottomsheet.isInitialized)
+//                        threeDsBottomsheet.dismiss()
+//                    generateTapAuthenticate(request?.url?.toString().toString())
+//                }
+//                false -> {}
+//                else -> {}
+//            }
+//            return true
+//
+//        }
+//
+//        override fun onPageFinished(view: WebView, url: String) {
+//
+//        }
+//
+//        override fun onReceivedError(
+//            view: WebView,
+//            request: WebResourceRequest,
+//            error: WebResourceError
+//        ) {
+//            super.onReceivedError(view, request, error)
+//        }
+//    }
 }
 
 
