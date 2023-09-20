@@ -321,8 +321,9 @@ class TapCardKit : LinearLayout {
                  * listen for states of cardWebStatus of onReady , onValidInput .. etc
                  */
                 if (request?.url.toString().contains(CardFormWebStatus.onReady.name)) {
-                    DataConfiguration.getTapCardStatusListener()?.onReady()
                     stopShimmer()
+                    DataConfiguration.getTapCardStatusListener()?.onReady()
+
                 }
                 if (request?.url.toString().contains(CardFormWebStatus.onValidInput.name)) {
                     val validInputValue =

@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
@@ -13,6 +14,7 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.card.MaterialCardView
 import company.tap.tapcardformkit.R
 import company.tap.tapcardformkit.getScreenHeight
@@ -45,7 +47,7 @@ class ThreeDsBottomSheet(context: Context, style: Int, var tapCardKit: TapCardKi
 
         val webView = view.findViewById<WebView>(R.id.webview3ds)
 
-        webView.layoutParams = FrameLayout.LayoutParams(
+        webView.layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
             context.twoThirdHeightView().roundToInt()
         )
@@ -66,6 +68,8 @@ class ThreeDsBottomSheet(context: Context, style: Int, var tapCardKit: TapCardKi
 
 
     }
+
+
 
     inner class threeDsWebViewClient : WebViewClient() {
         @RequiresApi(Build.VERSION_CODES.O)
