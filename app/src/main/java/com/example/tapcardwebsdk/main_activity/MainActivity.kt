@@ -42,13 +42,13 @@ class MainActivity : AppCompatActivity() {
         /**
          * case of passing a new Model
          */
-        //getDataFromSelectChoice()
+        getDataFromSelectChoice()
 
         /**
          * case of passing a hashmap
          */
 
-       getDataFromHashMap()
+       //getDataFromHashMap()
         findViewById<TextView>(R.id.tokenizeBtn).setOnClickListener {
             findViewById<TapCardKit>(R.id.tapCardForm).generateTapToken()
         }
@@ -217,6 +217,10 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this@MainActivity, "onError", Toast.LENGTH_SHORT).show()
                 }
 
+                override fun onHeightChange(heightChange: String) {
+                    Log.e("heightChanged",heightChange.toString())
+                }
+
             })
 
     }
@@ -353,6 +357,10 @@ class MainActivity : AppCompatActivity() {
                 override fun onError(error: String) {
                     findViewById<TextView>(R.id.textView_Logs).text = ""
                     findViewById<TextView>(R.id.textView_Logs).append("onError $error")
+                }
+
+                override fun onHeightChange(heightChange: String) {
+                    Log.e("heightChanged",heightChange.toString())
                 }
 
             })

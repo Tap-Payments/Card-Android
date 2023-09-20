@@ -144,5 +144,7 @@ interface TapCardStatusDelegate {
 
     fun onError(error: String)
 
+    fun onHeightChange(heightChange:String)
+
 
 }

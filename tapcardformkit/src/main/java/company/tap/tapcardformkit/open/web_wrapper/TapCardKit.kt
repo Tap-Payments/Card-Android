@@ -347,15 +347,16 @@ class TapCardKit : LinearLayout {
 
                 }
                 if (request?.url.toString().contains(CardFormWebStatus.onSuccess.name)) {
-                    DataConfiguration.getTapCardStatusListener()
-                        ?.onSuccess(request?.url?.getQueryParameterFromUri(keyValueName).toString())
+                    DataConfiguration.getTapCardStatusListener()?.onSuccess(request?.url?.getQueryParameterFromUri(keyValueName).toString())
                 }
                 if (request?.url.toString().contains(CardFormWebStatus.onHeightChange.name)) {
                     val newHeight = request?.url?.getQueryParameter(keyValueName)
                     val params: ViewGroup.LayoutParams? = webViewFrame.layoutParams
-                    params?.height =
-                        webViewFrame.context.getDimensionsInDp(newHeight?.toInt() ?: 95)
+                    params?.height = webViewFrame.context.getDimensionsInDp(newHeight?.toInt() ?: 95)
                     webViewFrame.layoutParams = params
+
+                    DataConfiguration.getTapCardStatusListener()?.onHeightChange(newHeight.toString())
+
 
 
                 }

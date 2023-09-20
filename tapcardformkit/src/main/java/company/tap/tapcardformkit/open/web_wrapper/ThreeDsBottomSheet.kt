@@ -41,7 +41,6 @@ class ThreeDsBottomSheet(context: Context, style: Int, var tapCardKit: TapCardKi
         }
 
         val tapBrandView = view.findViewById<TapBrandView>(R.id.tab_brand_view)
-        val cardview = view.findViewById<MaterialCardView>(R.id.card_view)
 
 
         val webView = view.findViewById<WebView>(R.id.webview3ds)
