@@ -23,9 +23,11 @@ import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.*
+import androidx.fragment.app.FragmentActivity
 import cards.pay.paycardsrecognizer.sdk.Card
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.gson.Gson
 import company.tap.tapcardformkit.*
 import company.tap.tapcardformkit.open.DataConfiguration
@@ -42,7 +44,7 @@ import java.util.*
 @SuppressLint("ViewConstructor")
 class TapCardKit : LinearLayout {
     lateinit var hideableWebView: WebView
-    lateinit var threeDsBottomsheet: BottomSheetDialog
+    lateinit var threeDsBottomsheet: BottomSheetDialogFragment
     lateinit var lottieAnimationView: LottieAnimationView
     private var isRedirected = false
     lateinit var constraintLayout: ConstraintLayout
@@ -322,6 +324,7 @@ class TapCardKit : LinearLayout {
                  */
                 if (request?.url.toString().contains(CardFormWebStatus.onReady.name)) {
                     stopShimmer()
+                    Log.e("ready","onReady")
                     DataConfiguration.getTapCardStatusListener()?.onReady()
 
                 }
@@ -458,8 +461,9 @@ class TapCardKit : LinearLayout {
              * put buttomsheet in separate class
              */
 
-            threeDsBottomsheet = ThreeDsBottomSheet(context,R.style.CustomBottomSheetDialog,this@TapCardKit)
-            threeDsBottomsheet.show()
+            threeDsBottomsheet = ThreeDsBottomSheetFragment()
+            ThreeDsBottomSheetFragment.tapCardKit = this@TapCardKit
+            threeDsBottomsheet.show((context.getActivity() as FragmentActivity).supportFragmentManager,"")
 //            threeDsBottomsheet.behavior.isFitToContents = false
 //            threeDsBottomsheet.behavior.maxHeight = resources.getDimensionPixelSize(com.intuit.sdp.R.dimen._450sdp)
 //            threeDsBottomsheet.behavior.peekHeight = (getScreenHeight() * 2 / 3) + 100

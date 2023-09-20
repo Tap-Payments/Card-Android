@@ -70,7 +70,7 @@
     </style>
 
     <style name="CustomBottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/CustomBottomSheet</item>
+        <item name="bottomSheetStyle">@style/CustomBottomSheetDialogFrCustomBottomSheet</item>
         <item name="android:backgroundTint">@android:color/transparent</item>
         <item name="android:background">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -79,11 +79,28 @@
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowIsTranslucent">true</item>
 
+    </style>
 
+
+
+
+    <style name="CustomBottomSheetDialogFragment" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/CustomBottomSheetDialogFr</item>
+        <item name="shapeAppearanceOverlay">@style/CustomBottomSheetDialogFrCustomBottomSheetDialog</item>
+
+    </style>
+    <style name="CustomBottomSheetDialogFr" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
 
     </style>
 
-    <style name="CustomBottomSheet" parent="Widget.MaterialComponents.BottomSheet">
+
+
+    <style name="CustomBottomSheetDialogFrCustomBottomSheetDialog" parent="Widget.Design.BottomSheet.Modal">
+        <item name="shapeAppearanceOverlay">@style/CustomShapeAppearanceBottomSheetDialog</item>
+
+    </style>
+    <style name="CustomBottomSheetDialogFrCustomBottomSheet" parent="Widget.MaterialComponents.BottomSheet">
         <item name="shapeAppearanceOverlay">@style/CustomShapeAppearanceBottomSheetDialog</item>
 
     </style>

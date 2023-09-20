@@ -1,75 +1,79 @@
 package company.tap.tapcardformkit.open.web_wrapper
 
-import android.content.Context
 import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.FrameLayout
 import android.widget.LinearLayout
+import androidx.annotation.NonNull
+import androidx.annotation.Nullable
 import androidx.annotation.RequiresApi
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.card.MaterialCardView
 import company.tap.tapcardformkit.R
 import company.tap.tapcardformkit.getScreenHeight
 import company.tap.tapcardformkit.open.DataConfiguration
-import company.tap.tapcardformkit.open.web_wrapper.TapCardKit.Companion.cardConfiguraton
-import company.tap.tapcardformkit.open.web_wrapper.TapCardKit.Companion.generateTapAuthenticate
-import company.tap.tapcardformkit.open.web_wrapper.TapCardKit.Companion.threeDsResponse
 import company.tap.tapcardformkit.twoThirdHeightView
 import company.tap.tapuilibrary.uikit.views.TapBrandView
 import kotlin.math.roundToInt
 
-class ThreeDsBottomSheet(context: Context, style: Int, var tapCardKit: TapCardKit) : BottomSheetDialog(context,style) {
+class ThreeDsBottomSheetFragment : BottomSheetDialogFragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    companion object{
+        lateinit var tapCardKit: TapCardKit
+    }
 
-        val view = LayoutInflater.from(context).inflate(R.layout.bottom_sheet_dialog, null)
-        this.setContentView(view)
-        this.setCancelable(false)
 
-        with(this){
-            behavior.isFitToContents = false
-            behavior.maxHeight = context.resources.getDimensionPixelSize(com.intuit.sdp.R.dimen._450sdp)
-            behavior.peekHeight = (getScreenHeight() * 2 / 3) + 100
-            behavior.isDraggable = false
-        }
+    @Nullable
+    override fun onCreateView(
+        @NonNull inflater: LayoutInflater, @Nullable container: ViewGroup?,
+        @Nullable savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.bottom_sheet_dialog, container, false)
+
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val tapBrandView = view.findViewById<TapBrandView>(R.id.tab_brand_view)
-        tapBrandView.outerConstraint.setCardBackgroundColor(ColorStateList.valueOf(context.getColor(
-            company.tap.tapuilibrary.R.color.gray)))
+
 
 
 
         val webView = view.findViewById<WebView>(R.id.webview3ds)
 
-        webView.layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            context.twoThirdHeightView().roundToInt()
-        )
+        webView.layoutParams = context?.twoThirdHeightView()?.roundToInt()?.let {
+            LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                it
+            )
+        }
         webView.settings.javaScriptEnabled = true
         webView.webViewClient = threeDsWebViewClient()
         webView.settings.loadWithOverviewMode = true
         webView.settings.useWideViewPort = true
         webView.settings.builtInZoomControls = true;
-        webView.loadUrl(threeDsResponse.threeDsUrl)
+        webView.loadUrl(TapCardKit.threeDsResponse.threeDsUrl)
 
         tapBrandView.backButtonLinearLayout.setOnClickListener {
             this.dismiss()
-            tapCardKit.init(cardConfiguraton)
+            tapCardKit.init(TapCardKit.cardConfiguraton)
             DataConfiguration.getTapCardStatusListener()?.onError("User canceled 3ds")
 
         }
 
-
+    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(STYLE_NORMAL,R.style.CustomBottomSheetDialogFragment)
 
     }
 
@@ -82,10 +86,10 @@ class ThreeDsBottomSheet(context: Context, style: Int, var tapCardKit: TapCardKi
             request: WebResourceRequest?
         ): Boolean {
             Log.e("url3ds", request?.url.toString())
-            when (request?.url?.toString()?.contains(threeDsResponse.keyword)) {
+            when (request?.url?.toString()?.contains(TapCardKit.threeDsResponse.keyword)) {
                 true -> {
-                    this@ThreeDsBottomSheet.dismiss()
-                    generateTapAuthenticate(request.url?.toString().toString())
+                    this@ThreeDsBottomSheetFragment.dismiss()
+                    TapCardKit.generateTapAuthenticate(request.url?.toString().toString())
                 }
                 false -> {}
                 else -> {}
@@ -108,7 +112,7 @@ class ThreeDsBottomSheet(context: Context, style: Int, var tapCardKit: TapCardKi
     }
 
 
-    fun getTheme(): Int = R.style.CustomBottomSheetDialog
+    override fun getTheme(): Int = R.style.CustomBottomSheetDialogFragment
 
 
 
