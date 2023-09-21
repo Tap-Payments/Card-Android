@@ -105,7 +105,7 @@ class TapCardKit : LinearLayout {
 
     }
 
-     fun initWebView() {
+     private fun initWebView() {
         cardWebview = findViewById(R.id.webview)
         hideableWebView = findViewById(R.id.hideableWebView)
         webViewFrame = findViewById(R.id.webViewFrame)
@@ -124,7 +124,7 @@ class TapCardKit : LinearLayout {
     }
 
 
-    fun init(configuraton: CardConfiguraton) {
+     fun init(configuraton: CardConfiguraton) {
         cardConfiguraton = configuraton
         applyThemeForShimmer()
         startShimmer()

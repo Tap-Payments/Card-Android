@@ -33,9 +33,9 @@ import company.tap.tapcardformkit.open.web_wrapper.TapCardConfiguration
 import `interface`
 import org.json.JSONArray
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),TapCardStatusDelegate {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -52,6 +52,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.tokenizeBtn).setOnClickListener {
             findViewById<TapCardKit>(R.id.tapCardForm).generateTapToken()
         }
+
 
     }
 
@@ -179,49 +180,51 @@ class MainActivity : AppCompatActivity() {
         request.put("fields",fields)
         request.put("scope","Authenticate")
         request.put("authentication",authentication)
+        DataConfiguration.initializeSDK(activity = this, configurations = request, tapCardKit = findViewById(R.id.tapCardForm))
+        DataConfiguration.addTapCardStatusDelegate(this)
 
 
-        TapCardConfiguration.configureWithTapCardDictionaryConfiguration(
-            this,
-            findViewById<TapCardKit>(R.id.tapCardForm),
-            request,
-            object : TapCardStatusDelegate {
-                override fun onSuccess(data: String) {
-                    Toast.makeText(this@MainActivity, "onSuccess $data", Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onReady() {
-                    Toast.makeText(this@MainActivity, "onReady", Toast.LENGTH_SHORT).show()
-                    findViewById<TextView>(R.id.tokenizeBtn).visibility = View.VISIBLE
-
-                }
-
-                override fun onFocus() {
-                    Toast.makeText(this@MainActivity, "onFocus", Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onBindIdentification(data: String) {
-                    Toast.makeText(
-                        this@MainActivity,
-                        "on BindIdentification $data",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-
-                override fun onValidInput(isValid: String) {
-                    Toast.makeText(this@MainActivity, "onValidInput ${isValid}", Toast.LENGTH_SHORT)
-                        .show()
-                }
-
-                override fun onError(error: String) {
-                    Toast.makeText(this@MainActivity, "onError", Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onHeightChange(heightChange: String) {
-                    Log.e("heightChanged",heightChange.toString())
-                }
-
-            })
+//        TapCardConfiguration.configureWithTapCardDictionaryConfiguration(
+//            this,
+//            findViewById<TapCardKit>(R.id.tapCardForm),
+//            request,
+//            object : TapCardStatusDelegate {
+//                override fun onSuccess(data: String) {
+//                    Toast.makeText(this@MainActivity, "onSuccess $data", Toast.LENGTH_SHORT).show()
+//                }
+//
+//                override fun onReady() {
+//                    Toast.makeText(this@MainActivity, "onReady", Toast.LENGTH_SHORT).show()
+//                    findViewById<TextView>(R.id.tokenizeBtn).visibility = View.VISIBLE
+//
+//                }
+//
+//                override fun onFocus() {
+//                    Toast.makeText(this@MainActivity, "onFocus", Toast.LENGTH_SHORT).show()
+//                }
+//
+//                override fun onBindIdentification(data: String) {
+//                    Toast.makeText(
+//                        this@MainActivity,
+//                        "on BindIdentification $data",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                }
+//
+//                override fun onValidInput(isValid: String) {
+//                    Toast.makeText(this@MainActivity, "onValidInput ${isValid}", Toast.LENGTH_SHORT)
+//                        .show()
+//                }
+//
+//                override fun onError(error: String) {
+//                    Toast.makeText(this@MainActivity, "onError", Toast.LENGTH_SHORT).show()
+//                }
+//
+//                override fun onHeightChange(heightChange: String) {
+//                    Log.e("heightChanged",heightChange.toString())
+//                }
+//
+//            })
 
     }
 
@@ -375,6 +378,46 @@ class MainActivity : AppCompatActivity() {
         finish()
         startActivity(intent)
 
+    }
+
+    override fun onSuccess(data: String) {
+        findViewById<TextView>(R.id.textView_Logs).append("onSuccess $data")
+
+    }
+
+    override fun onReady() {
+        findViewById<TextView>(R.id.textView_Logs).text = ""
+        findViewById<TextView>(R.id.textView_Logs).append("onReady")
+        findViewById<TextView>(R.id.tokenizeBtn).visibility = View.VISIBLE
+
+
+    }
+
+    override fun onFocus() {
+        findViewById<TextView>(R.id.textView_Logs).text = ""
+        findViewById<TextView>(R.id.textView_Logs).append("onFocus")
+    }
+
+    override fun onBindIdentification(data: String) {
+        findViewById<TextView>(R.id.textView_Logs).text = ""
+        findViewById<TextView>(R.id.textView_Logs).append("on BindIdentification $data")
+
+    }
+
+    override fun onValidInput(isValid: String) {
+        findViewById<TextView>(R.id.textView_Logs).text = ""
+        findViewById<TextView>(R.id.textView_Logs).append("onValidInput $isValid")
+        DataConfiguration.generateToken(findViewById<TapCardKit>(R.id.tapCardForm))
+
+    }
+
+    override fun onError(error: String) {
+        findViewById<TextView>(R.id.textView_Logs).text = ""
+        findViewById<TextView>(R.id.textView_Logs).append("onError $error")
+    }
+
+    override fun onHeightChange(heightChange: String) {
+        Log.e("heightChanged",heightChange.toString())
     }
 
 }

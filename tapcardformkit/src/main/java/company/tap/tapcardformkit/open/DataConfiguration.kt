@@ -4,10 +4,15 @@ import Customer
 import TapAuthentication
 import TapCardConfigurations
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.res.Resources
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import company.tap.tapcardformkit.R
+import company.tap.tapcardformkit.open.web_wrapper.TapCardConfiguration
+import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
 import company.tap.taplocalizationkit.LocalizationManager
 import company.tap.tapuilibrary.themekit.ThemeManager
 import java.util.*
@@ -122,6 +127,15 @@ object DataConfiguration {
     fun getTapCardStatusListener(): TapCardStatusDelegate? {
         return tapCardStatusDelegate
     }
+
+    fun generateToken(tapCardKit: TapCardKit){
+        tapCardKit.generateTapToken()
+    }
+    fun initializeSDK(activity: Activity,configurations: HashMap<String,Any>,tapCardKit: TapCardKit){
+        TapCardConfiguration.configureWithTapCardDictionaryConfiguration(activity,tapCardKit,configurations)
+    }
+
+
 
 
 
