@@ -463,7 +463,7 @@ class TapCardKit : LinearLayout {
 
             threeDsBottomsheet = ThreeDsBottomSheetFragment()
             ThreeDsBottomSheetFragment.tapCardKit = this@TapCardKit
-            threeDsBottomsheet.show((context.getActivity() as FragmentActivity).supportFragmentManager,"")
+            threeDsBottomsheet.show((this@TapCardKit.context as FragmentActivity).supportFragmentManager,"")
 //            threeDsBottomsheet.behavior.isFitToContents = false
 //            threeDsBottomsheet.behavior.maxHeight = resources.getDimensionPixelSize(com.intuit.sdp.R.dimen._450sdp)
 //            threeDsBottomsheet.behavior.peekHeight = (getScreenHeight() * 2 / 3) + 100
