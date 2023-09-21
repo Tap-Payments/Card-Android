@@ -42,13 +42,13 @@ class MainActivity : AppCompatActivity() {
         /**
          * case of passing a new Model
          */
-        getDataFromSelectChoice()
+      //  getDataFromSelectChoice()
 
         /**
          * case of passing a hashmap
          */
 
-       //getDataFromHashMap()
+       getDataFromHashMap()
         findViewById<TextView>(R.id.tokenizeBtn).setOnClickListener {
             findViewById<TapCardKit>(R.id.tapCardForm).generateTapToken()
         }
@@ -97,7 +97,7 @@ class MainActivity : AppCompatActivity() {
          */
         val customer = java.util.HashMap<String,Any>()
         customer.put("nameOnCard","test")
-        customer.put("editable","true")
+        customer.put("editable",true)
         customer.put("contact",contact)
         customer.put("name", listOf(name))
 
@@ -115,7 +115,7 @@ class MainActivity : AppCompatActivity() {
          * fields
          */
         val fields = java.util.HashMap<String,Any>()
-        fields.put("cardHolder","true")
+        fields.put("cardHolder",true)
 
         /**
          * addons
@@ -132,8 +132,8 @@ class MainActivity : AppCompatActivity() {
          * refrence
          */
         val refrence = java.util.HashMap<String,Any>()
-        refrence.put("transaction","tck_LVL8sGmsTHMfUgG0SFkPhQO2Gi")
-        refrence.put("order","696646918313096313")
+        refrence.put("transaction","tck_LVL8sXysVSXfSgG0SFkPhQO1Gi")
+        refrence.put("order","695646918101292112")
 
         /**
          * auth chanel
