@@ -184,6 +184,8 @@ class MainActivity : AppCompatActivity(),TapCardStatusDelegate {
         DataConfiguration.addTapCardStatusDelegate(this)
 
 
+
+
 //        TapCardConfiguration.configureWithTapCardDictionaryConfiguration(
 //            this,
 //            findViewById<TapCardKit>(R.id.tapCardForm),
