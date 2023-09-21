@@ -44,7 +44,7 @@ import java.util.*
 @SuppressLint("ViewConstructor")
 class TapCardKit : LinearLayout {
     lateinit var hideableWebView: WebView
-    lateinit var threeDsBottomsheet: BottomSheetDialogFragment
+//    lateinit var threeDsBottomsheet: BottomSheetDialogFragment
     lateinit var lottieAnimationView: LottieAnimationView
     private var isRedirected = false
     lateinit var constraintLayout: ConstraintLayout
@@ -317,8 +317,8 @@ class TapCardKit : LinearLayout {
              */
             if (request?.url.toString().startsWith(CardWebUrlPrefix, ignoreCase = true)) {
 
-                if (::threeDsBottomsheet.isInitialized)
-                    threeDsBottomsheet.dismiss()
+//                if (::threeDsBottomsheet.isInitialized)
+//                    threeDsBottomsheet.dismiss()
                 /**
                  * listen for states of cardWebStatus of onReady , onValidInput .. etc
                  */
@@ -460,10 +460,12 @@ class TapCardKit : LinearLayout {
             /**
              * put buttomsheet in separate class
              */
+            val intent = Intent(context,ThreeDsWebViewActivity::class.java)
+            (context).startActivity(intent)
 
-            threeDsBottomsheet = ThreeDsBottomSheetFragment()
+//            threeDsBottomsheet = ThreeDsBottomSheetFragment()
             ThreeDsBottomSheetFragment.tapCardKit = this@TapCardKit
-            threeDsBottomsheet.show((this@TapCardKit.context as FragmentActivity).supportFragmentManager,"")
+//            threeDsBottomsheet.show((this@TapCardKit.context as FragmentActivity).supportFragmentManager,"")
 //            threeDsBottomsheet.behavior.isFitToContents = false
 //            threeDsBottomsheet.behavior.maxHeight = resources.getDimensionPixelSize(com.intuit.sdp.R.dimen._450sdp)
 //            threeDsBottomsheet.behavior.peekHeight = (getScreenHeight() * 2 / 3) + 100

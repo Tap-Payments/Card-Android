@@ -35,7 +35,7 @@ class ThreeDsBottomSheetFragment : BottomSheetDialogFragment() {
         @NonNull inflater: LayoutInflater, @Nullable container: ViewGroup?,
         @Nullable savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.bottom_sheet_dialog, container, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.bottom_sheet_dialog, null)
 
         return view
     }
@@ -65,6 +65,7 @@ class ThreeDsBottomSheetFragment : BottomSheetDialogFragment() {
 
         tapBrandView.backButtonLinearLayout.setOnClickListener {
             this.dismiss()
+            requireActivity().finish()
             tapCardKit.init(TapCardKit.cardConfiguraton)
             DataConfiguration.getTapCardStatusListener()?.onError("User canceled 3ds")
 
@@ -89,6 +90,7 @@ class ThreeDsBottomSheetFragment : BottomSheetDialogFragment() {
             when (request?.url?.toString()?.contains(TapCardKit.threeDsResponse.keyword)) {
                 true -> {
                     this@ThreeDsBottomSheetFragment.dismiss()
+                    requireActivity().finish()
                     TapCardKit.generateTapAuthenticate(request.url?.toString().toString())
                 }
                 false -> {}

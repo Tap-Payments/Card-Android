@@ -9,7 +9,7 @@
         <activity
             android:name=".open.web_wrapper.ThreeDsWebViewActivity"
             android:exported="false"
-            android:theme="@style/Theme.MyAnimTheme"
+            android:theme="@style/Theme.Transparent"
             />
         <activity
             android:name=".open.web_wrapper.nfc_activity.NFCLauncherActivity"
