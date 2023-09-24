@@ -8,6 +8,7 @@ We at [Tap Payments](https://www.tap.company/) strive to make your payments easi
 [![SDK Version](https://img.shields.io/badge/targetSdkVersion-33-informational.svg)](https://stuff.mit.edu/afs/sipb/project/android/docs/reference/packages.html)
 [![SDK Version](https://img.shields.io/badge/latestVersion-0.0.19-informational.svg)](https://stuff.mit.edu/afs/sipb/project/android/docs/reference/packages.html)
 
+# Demo
 ![Imgur](https://i.imgur.com/qLaQdN5.gif)
 
 # Requirements
@@ -165,7 +166,6 @@ You can create a model from our defined structure to pass it afterwards to our `
 You can create a Dictionary HashMap to pass the data to our sdk. The good part about this, is that you can generate the data from one of your apis. Whenever we have an update to the configurations, you can update your api. This will make sure, that you will not have to update your app on the Google Play Store.
 
 ```kotlin
-  val configuration = HashMap<String,Any>()
 
         /**
          * merchant
@@ -280,6 +280,11 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
         interfacee.put("edges","curved")
         interfacee.put("direction","ltr")
 
+        /**
+         * configuration request
+         */
+
+        val configuration = HashMap<String,Any>()
         configuration.put("acceptance",acceptance)
         configuration.put("publicKey","pk_test_Vlk842B1EA7tDN5QbrfGjYzh")
         configuration.put("merchant",merchant)
@@ -288,7 +293,7 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
         configuration.put("interface",interfacee)
         configuration.put("addons",addons)
         configuration.put("fields",fields)
-        configuration.put("scope","Authenticate")
+        configuration.put("scope","Authenticate")  // or  configuration.put("scope","Token") 
         configuration.put("authentication",authentication)
 
 ```
@@ -381,10 +386,14 @@ interface TapCardStatusDelegate {
      */
 
     fun onReady()
-    /// Will be fired whenever the card is rendered and loaded
+    /**
+     *  Will be fired whenever the card is rendered and loaded
+     */
 
     fun onFocus()
-    /// Will be fired once the user focuses any of the card fields
+    /**
+     *  Will be fired once the user focuses any of the card fields
+     */
 
  
     fun onBindIdentification(data: String)
@@ -404,17 +413,23 @@ interface TapCardStatusDelegate {
      }*     */
 
     fun onValidInput(isValid: String)
-    /// Will be fired whenever the validity of the card data changes.
-    /// - Parameter isValid: Will be true if the card data is valid and false otherwise.
+    /**
+     *  Will be fired whenever the validity of the card data changes.
+     *  Parameter isValid: Will be true if the card data is valid and false otherwise.
+     */
 
 
-    fun onError(error: String)
-  /// Will be fired whenever there is an error related to the card connectivity or apis
-    /// - Parameter data: includes a JSON format for the error description and error
+    fun onError(error: String)=
+   /**
+     *  Will be fired whenever there is an error related to the card connectivity or apis
+     *  Parameter data: includes a JSON format for the error description and error
+     */
 
     fun onHeightChange(heightChange:String)
- /// Will be fired whenever the card element changes its height for your convience
-    /// - Parameter height: The new needed height
+   /**
+     *  Will be fired whenever the card element changes its height for your convience
+     *   Parameter height: The new needed height
+     */
 
 }
 
