@@ -250,7 +250,7 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
         auth.put("purpose","PAYMENT_TRANSACTION")
 
         /**
-         * invoic
+         * invoice
          */
         val invoice = HashMap<String,Any>()
         invoice.put("id","")
@@ -273,11 +273,11 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
         /**
          * interface
          */
-        val interfacee = HashMap<String,Any>()
-        interfacee.put("locale","en")
-        interfacee.put("theme","light")
-        interfacee.put("edges","curved")
-        interfacee.put("direction","ltr")
+        val tapInterface = HashMap<String,Any>()
+        tapInterface.put("locale","en")
+        tapInterface.put("theme","light")
+        tapInterface.put("edges","curved")
+        tapInterface.put("direction","ltr")
 
         /**
          * configuration request
@@ -289,7 +289,7 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
         configuration.put("merchant",merchant)
         configuration.put("transaction",transaction)
         configuration.put("customer",customer)
-        configuration.put("interface",interfacee)
+        configuration.put("interface",tapInterface)
         configuration.put("addons",addons)
         configuration.put("fields",fields)
         configuration.put("scope","Authenticate")  // or  configuration.put("scope","Token") 
