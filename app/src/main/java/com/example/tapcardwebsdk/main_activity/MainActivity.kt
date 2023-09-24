@@ -58,6 +58,7 @@ class MainActivity : AppCompatActivity(),TapCardStatusDelegate {
 
     private fun getDataFromHashMap() {
 
+
         val request = java.util.HashMap<String,Any>()
 
         /**
