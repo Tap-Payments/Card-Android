@@ -150,9 +150,8 @@ You can create a model from our defined structure to pass it afterwards to our `
                     transaction = "transaction id",
                     order = "order id"
                 ),
-                invoice = Invoice(id = "f have an invoice id to attach"),
-                authentication = DataConfiguration.authenticationExample?.authentication
-                    ?: Authentication(
+                invoice = Invoice(id = "if have an invoice id to attach"),
+                authentication = Authentication(
                         channel = "PAYER_BROWSER",
                         purpose = "PAYMENT_TRANSACTION"
                     ),
