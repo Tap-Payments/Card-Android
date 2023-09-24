@@ -325,6 +325,11 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
  ```kotlin
        lateinit var tapCardKitView: TapCardKit
 
+       override fun onCreate(savedInstanceState: Bundle?){
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main) 
+
+
         val linearLayoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
         )
@@ -332,7 +337,11 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
         tapCardKitView  = TapCardKit(this)
         tapCardKitView.layoutParams = linearLayoutParams
         /** refrence to parent layout view **/  
-      this.findViewById<LinearLayout>(R.id.linear_layout).addView(tapCardKitView)
+        this.findViewById<LinearLayout>(R.id.linear_layout).addView(tapCardKitView)
+
+
+}
+        
 ```
 
 
