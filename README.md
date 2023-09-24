@@ -323,12 +323,13 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
 ```
 - or programmatically through code  as follows :
  ```kotlin
+       lateinit var tapCardKitView: TapCardKit
 
         val linearLayoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
         )
         /** create dynamic view of TapCardKit view **/ 
-        val tapCardKitView  = TapCardKit(this)
+        tapCardKitView  = TapCardKit(this)
         tapCardKitView.layoutParams = linearLayoutParams
         /** refrence to parent layout view **/  
       this.findViewById<LinearLayout>(R.id.linear_layout).addView(tapCardKitView)
