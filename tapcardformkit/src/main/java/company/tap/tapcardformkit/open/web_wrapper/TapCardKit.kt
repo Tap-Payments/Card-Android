@@ -34,6 +34,7 @@ import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.enums.CardFormWebStatus
 import company.tap.tapcardformkit.open.web_wrapper.model.ThreeDsResponse
 import company.tap.tapcardformkit.open.web_wrapper.scanner_activity.ScannerActivity
+import company.tap.taplocalizationkit.LocalizationManager
 import company.tap.tapuilibrary.themekit.ThemeManager
 import company.tap.tapuilibrary.uikit.atoms.*
 import java.net.URLEncoder
@@ -257,7 +258,6 @@ class TapCardKit : LinearLayout {
     }
 
     fun setTapThemeAndLanguage(context: Context, language: TapLocal, themeMode: TapTheme) {
-        Log.e("lanugage",language.name.toString())
         when (themeMode) {
             TapTheme.light -> {
                 DataConfiguration.setTheme(
@@ -275,8 +275,10 @@ class TapCardKit : LinearLayout {
             }
             else -> {}
         }
+        Log.e("lanugage ",language.name.toString())
 
-        DataConfiguration.setLocale(context, language.name, null, context.resources, R.raw.lang)
+  DataConfiguration.setLocale(context, language.name, null, context.resources, R.raw.lang)
+
     }
 
     fun stopShimmer() {
@@ -318,8 +320,6 @@ class TapCardKit : LinearLayout {
              */
             if (request?.url.toString().startsWith(CardWebUrlPrefix, ignoreCase = true)) {
 
-//                if (::threeDsBottomsheet.isInitialized)
-//                    threeDsBottomsheet.dismiss()
                 /**
                  * listen for states of cardWebStatus of onReady , onValidInput .. etc
                  */
@@ -389,9 +389,6 @@ class TapCardKit : LinearLayout {
                      */
                     val intent = Intent(context,ScannerActivity::class.java)
                     (context).startActivity(intent)
-//                    resultLauncher.launch(Intent(context, ScannerActivity::class.java))
-
-
 
                 }
                 if (request?.url.toString().contains(CardFormWebStatus.onNfcClick.name)) {
@@ -463,49 +460,7 @@ class TapCardKit : LinearLayout {
              */
             val intent = Intent(context,ThreeDsWebViewActivity::class.java)
             (context).startActivity(intent)
-
-//            threeDsBottomsheet = ThreeDsBottomSheetFragment()
             ThreeDsBottomSheetFragment.tapCardKit = this@TapCardKit
-//            threeDsBottomsheet.show((this@TapCardKit.context as FragmentActivity).supportFragmentManager,"")
-//            threeDsBottomsheet.behavior.isFitToContents = false
-//            threeDsBottomsheet.behavior.maxHeight = resources.getDimensionPixelSize(com.intuit.sdp.R.dimen._450sdp)
-//            threeDsBottomsheet.behavior.peekHeight = (getScreenHeight() * 2 / 3) + 100
-//            threeDsBottomsheet.behavior.isDraggable = false
-//
-
-
-
-            // on below line we are inflating a layout file which we have created.
-//            val view = (context as Activity).layoutInflater.inflate(R.layout.bottom_sheet_dialog, null)
-//            val tapBrandView = view.findViewById<TapBrandView>(R.id.tab_brand_view)
-//            val cardview = view.findViewById<MaterialCardView>(R.id.card_view)
-//
-//
-//            val webView = view.findViewById<WebView>(R.id.webview3ds)
-//            webView.layoutParams = FrameLayout.LayoutParams(
-//                LinearLayout.LayoutParams.MATCH_PARENT,
-//                context.twoThirdHeightView().roundToInt()
-//            )
-//            webView.settings.javaScriptEnabled = true
-//            webView.webViewClient = threeDsWebViewClient()
-//            webView.settings.loadWithOverviewMode = true
-//            webView.settings.useWideViewPort = true
-//            webView.settings.builtInZoomControls = true;
-
-//            webView.loadUrl(threeDsResponse.threeDsUrl)
-//
-//            threeDsBottomsheet.setCancelable(false)
-//            threeDsBottomsheet.setContentView(view)
-//            threeDsBottomsheet.show()
-//
-//
-//            tapBrandView.backButtonLinearLayout.setOnClickListener {
-//                threeDsBottomsheet.dismiss()
-//                init(cardConfiguraton)
-//                DataConfiguration.getTapCardStatusListener()?.onError(resources.getString(R.string.user_cancell))
-//
-//            }
-
 
         }
 
@@ -521,45 +476,6 @@ class TapCardKit : LinearLayout {
     fun generateTapToken() {
         cardWebview.loadUrl("javascript:window.generateTapToken()")
     }
-
-//    fun generateTapAuthenticate(authIdPayer: String) {
-//        cardWebview.loadUrl("javascript:window.loadAuthentication('$authIdPayer')")
-//    }
-
-
-
-//    inner class threeDsWebViewClient : WebViewClient() {
-//        @RequiresApi(Build.VERSION_CODES.O)
-//        override fun shouldOverrideUrlLoading(
-//            webView: WebView?,
-//            request: WebResourceRequest?
-//        ): Boolean {
-//            Log.e("url3ds", request?.url.toString())
-//            when (request?.url?.toString()?.contains(threeDsResponse.keyword)) {
-//                true -> {
-//                    if (::threeDsBottomsheet.isInitialized)
-//                        threeDsBottomsheet.dismiss()
-//                    generateTapAuthenticate(request?.url?.toString().toString())
-//                }
-//                false -> {}
-//                else -> {}
-//            }
-//            return true
-//
-//        }
-//
-//        override fun onPageFinished(view: WebView, url: String) {
-//
-//        }
-//
-//        override fun onReceivedError(
-//            view: WebView,
-//            request: WebResourceRequest,
-//            error: WebResourceError
-//        ) {
-//            super.onReceivedError(view, request, error)
-//        }
-//    }
 }
 
 

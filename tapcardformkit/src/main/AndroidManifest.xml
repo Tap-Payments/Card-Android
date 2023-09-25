@@ -5,7 +5,10 @@
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <application>
+    <application
+        android:supportsRtl="true"
+        >
+
         <activity
             android:name=".open.web_wrapper.ThreeDsWebViewActivity"
             android:exported="false"

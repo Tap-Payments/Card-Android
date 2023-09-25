@@ -98,6 +98,7 @@ object DataConfiguration {
         urlPathLocal: Int?
     ) {
         LocalizationManager.setLocale(context, Locale(languageString))
+        Log.e("lanugage local",LocalizationManager.getLocale(context).language.toString())
 
         if (resources != null && urlPathLocal != null) {
             LocalizationManager.loadTapLocale(resources, R.raw.lang)
@@ -108,6 +109,7 @@ object DataConfiguration {
 
             }
         }
+
     }
 
     fun setCustomer(customer: Customer) {
