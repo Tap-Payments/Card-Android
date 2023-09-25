@@ -6,7 +6,7 @@ We at [Tap Payments](https://www.tap.company/) strive to make your payments easi
 [![Documentation](https://img.shields.io/badge/documentation-100%25-bright%20green.svg)](https://tap-payments.github.io/goSellSDK-Android/)
 [![SDK Version](https://img.shields.io/badge/minSdkVersion-24-blue.svg)](https://stuff.mit.edu/afs/sipb/project/android/docs/reference/packages.html)
 [![SDK Version](https://img.shields.io/badge/targetSdkVersion-33-informational.svg)](https://stuff.mit.edu/afs/sipb/project/android/docs/reference/packages.html)
-[![SDK Version](https://img.shields.io/badge/latestVersion-0.0.19-informational.svg)](https://stuff.mit.edu/afs/sipb/project/android/docs/reference/packages.html)
+[![SDK Version](https://img.shields.io/badge/latestVersion-0.0.20-informational.svg)](https://stuff.mit.edu/afs/sipb/project/android/docs/reference/packages.html)
 
 # Demo
 ![Imgur](https://i.imgur.com/qLaQdN5.gif)
