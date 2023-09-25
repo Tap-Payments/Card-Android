@@ -97,70 +97,6 @@ Creates a configuration model to be passed to the SDK
 
 ## Initialization of the input
 
-### Initialize as a model
-You can create a model from our defined structure to pass it afterwards to our `TapCardSDK` as a configuration.
-```kotlin
- val tapCardConfig = TapCardConfigurations(
-            scope = Scope.Token /** or Scope.Authenticate **/,
-            publicKey = "pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7",
-            merchant = Merchant(id = ""),
-            transaction = Transaction(
-                amount = 1,
-                currency = "SAR"
-            ),
-            customer = Customer(
-                nameOnCard =  "test",
-                editable = true,
-                contact = Contact(
-                    email =  "test@gmail.com",
-                    phone = Phone( "+965",
-                        number =  "88888888"
-                    )
-                ),
-                name = mutableListOf<Name>(
-                    Name(
-                        lang = "en",
-                        first =  "Tap",
-                        last = "Payments",
-                        middle = ""
-                    )
-                )
-            ),
-            acceptance = Acceptance(
-                supportedBrands = mutableListOf(CardBrand.americanExpress,CardBrand.visa,CardBrand.masterCard),
-                supportedCards =  ["CREDIT","DEBIT"]
-            ),
-            addons = Addons(
-                loader = true,
-                saveCard = true,
-                displayPaymentBrands = true,
-                scanner = true,
-                nfc = true
-            ),
-            tapCardConfigurationInterface = `interface`(
-                locale = "en",
-                theme = "light",
-                edges = "curved",
-                direction = "dynamic",
-            ),
-            fields = Fields(cardHolder = true),
-            authentication = TapAuthentication(
-                description =  "Authentication description",
-                reference =  Refrence(
-                    transaction = "transaction id",
-                    order = "order id"
-                ),
-                invoice = Invoice(id = "if have an invoice id to attach"),
-                authentication = Authentication(
-                        channel = "PAYER_BROWSER",
-                        purpose = "PAYMENT_TRANSACTION"
-                    ),
-                post =  Post(url = "Your server webhook if needed")
-            )
-
-        )
-```
-
 ### Initialize as a  Dictionary HashMap 
 You can create a Dictionary HashMap to pass the data to our sdk. The good part about this, is that you can generate the data from one of your apis. Whenever we have an update to the configurations, you can update your api. This will make sure, that you will not have to update your app on the Google Play Store.
 
@@ -177,6 +113,9 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
         val transaction = HashMap<String,Any>()
         transaction.put("amount","1")
         transaction.put("currency","SAR")
+        transaction.put("description","description")
+        transaction.put("metadata","")
+        transaction.put("reference","refrence_id")
         /**
          * phone
          */
@@ -260,15 +199,7 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
         val post = HashMap<String,Any>()
         post.put("id","")
 
-        /**
-        * authentication 
-        */
-        val authentication = HashMap<String,Any>()
-        authentication.put("description","description")
-        authentication.put("reference",refrence)
-        authentication.put("invoice",invoice)
-        authentication.put("authentication",auth)
-        authentication.put("post",post)
+
 
         /**
          * interface
@@ -292,8 +223,11 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
         configuration.put("interface",tapInterface)
         configuration.put("addons",addons)
         configuration.put("fields",fields)
-        configuration.put("scope","Authenticate")  // or  configuration.put("scope","Token") 
-        configuration.put("authentication",authentication)
+        configuration.put("scope","Authenticate")  // or  configuration.put("scope","Token")
+        configuration.put("invoice",invoice)
+        configuration.put("order","order_id")
+        configuration.put("post",post)
+        configuration.put("purpose","PAYMENT_TRANSACTION")
 
 ```
 
@@ -323,28 +257,30 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
 ```
 - or programmatically through code  as follows :
  ```kotlin
+       lateinit var tapCardKitView: TapCardKit
+
+       override fun onCreate(savedInstanceState: Bundle?){
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main) 
+
 
         val linearLayoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
         )
         /** create dynamic view of TapCardKit view **/ 
-        val tapCardKitView  = TapCardKit(this)
+        tapCardKitView  = TapCardKit(this)
         tapCardKitView.layoutParams = linearLayoutParams
         /** refrence to parent layout view **/  
-      this.findViewById<LinearLayout>(R.id.linear_layout).addView(tapCardKitView)
+        this.findViewById<LinearLayout>(R.id.linear_layout).addView(tapCardKitView)
+
+
+}
+        
 ```
 
 
 ## Second Step : 2 - Code
 ```kotlin
- if Model configuration : 
-     TapCardConfiguration.configureWithTapCardModelConfiguration(
-            this /** context **/,
-            findViewById<TapCardKit>(R.id.tapCardForm) /** refrence to TapCardKit view **/,
-            tapCardConfig /** pass already defiend model for TapConfiguration **/,
-            this /** pass this of activity that will going to listen for callbacks  **/)
-
- if HashMapConfiguation configuration : 
      TapCardConfiguration.configureWithTapCardDictionaryConfiguration(
             this /** context **/,
             findViewById<TapCardKit>(R.id.tapCardForm) /** refrence to TapCardKit view **/,
