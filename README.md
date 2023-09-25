@@ -205,7 +205,7 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
         tapInterface.put("locale","en")
         tapInterface.put("theme","light")
         tapInterface.put("edges","curved")
-        tapInterface.put("direction","ltr")
+        tapInterface.put("direction","dynamic")
 
         /**
          * configuration request
