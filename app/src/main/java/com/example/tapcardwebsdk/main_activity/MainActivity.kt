@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
         /**
          * merchant
          */
-        val merchant = java.util.HashMap<String,Any>()
+        val merchant = HashMap<String,Any>()
         merchant.put("id",merchantIdKey ?: "")
 
         /**
@@ -89,6 +89,8 @@ class MainActivity : AppCompatActivity() {
         /**
          * transaction
          */
+        var order2= HashMap<String, Any>().put("id","")
+
         val transaction = java.util.HashMap<String,Any>()
         transaction.put("amount",amount.toString())
         transaction.put("currency",selectedCurrency)
