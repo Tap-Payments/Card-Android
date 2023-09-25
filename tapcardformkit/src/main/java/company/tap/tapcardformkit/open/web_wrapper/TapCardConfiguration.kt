@@ -19,22 +19,22 @@ import company.tap.tapuilibrary.themekit.ThemeManager
 class TapCardConfiguration {
 
     companion object {
-        fun configureWithTapCardModelConfiguration(
-            context: Context,
-            tapCardInputViewWeb: TapCardKit?,
-            tapCardConfiguration: TapCardConfigurations,
-            tapCardStatusDelegate: TapCardStatusDelegate? = null,
-            ) {
-            with(tapCardConfiguration) {
-                DataConfiguration.configurations = tapCardConfiguration
-                addOperatorHeaderField(
-                    tapCardInputViewWeb, context, CardConfiguraton.ModelConfiguration,
-                    publicKey
-                )
-                DataConfiguration.addTapCardStatusDelegate(tapCardStatusDelegate) //** Required **
-                tapCardInputViewWeb?.init(CardConfiguraton.ModelConfiguration)
-            }
-        }
+//       private fun configureWithTapCardModelConfiguration(
+//            context: Context,
+//            tapCardInputViewWeb: TapCardKit?,
+//            tapCardConfiguration: TapCardConfigurations,
+//            tapCardStatusDelegate: TapCardStatusDelegate? = null,
+//            ) {
+//            with(tapCardConfiguration) {
+//                DataConfiguration.configurations = tapCardConfiguration
+//                addOperatorHeaderField(
+//                    tapCardInputViewWeb, context, CardConfiguraton.ModelConfiguration,
+//                    publicKey
+//                )
+//                DataConfiguration.addTapCardStatusDelegate(tapCardStatusDelegate) //** Required **
+//                tapCardInputViewWeb?.init(CardConfiguraton.ModelConfiguration)
+//            }
+//        }
 
         fun configureWithTapCardDictionaryConfiguration(
             context: Context,

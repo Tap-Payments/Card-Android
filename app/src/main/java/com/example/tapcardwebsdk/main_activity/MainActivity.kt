@@ -2,6 +2,7 @@ package com.example.tapcardwebsdk.main_activity
 import Acceptance
 import Addons
 import Authentication
+import CardType
 import Contact
 import Customer
 import Fields
@@ -14,31 +15,39 @@ import Refrence
 import Scope
 import TapAuthentication
 import TapCardConfigurations
+import TapCardDirections
+import TapCardEdges
+import TapLocal
+import TapTheme
 import Transaction
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.tapcardwebsdk.R
 import com.example.tapcardwebsdk.select_choice.SelectChoiceActivity
 import com.tap.commondatamodels.cardBrands.CardBrand
 import com.tap.commondatamodels.currencies.GlobalCurrency
 import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.open.TapCardStatusDelegate
-import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
 import company.tap.tapcardformkit.open.web_wrapper.TapCardConfiguration
+import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
 import `interface`
-import org.json.JSONArray
 
 class MainActivity : AppCompatActivity(),TapCardStatusDelegate {
-
+    lateinit var tapCardKit: TapCardKit
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
+        findViewById<TextView>(R.id.tokenizeBtn).setOnClickListener {
+            findViewById<TapCardKit>(R.id.tapCardForm).generateTapToken()
+        }
         /**
          * case of passing a new Model
          */
@@ -48,18 +57,13 @@ class MainActivity : AppCompatActivity(),TapCardStatusDelegate {
          * case of passing a hashmap
          */
 
-       getDataFromHashMap()
-        findViewById<TextView>(R.id.tokenizeBtn).setOnClickListener {
-            findViewById<TapCardKit>(R.id.tapCardForm).generateTapToken()
-        }
-
-
+          getDataFromHashMap()
     }
 
     private fun getDataFromHashMap() {
 
 
-        val request = java.util.HashMap<String,Any>()
+        val configuration = LinkedHashMap<String,Any>()
 
         /**
          * merchant
@@ -67,11 +71,58 @@ class MainActivity : AppCompatActivity(),TapCardStatusDelegate {
         val merchant = java.util.HashMap<String,Any>()
         merchant.put("id","")
         /**
+         * refrence
+         */
+//        val refrence = java.util.HashMap<String,Any>()
+//        refrence.put("transaction","tck_LVL8sXysVSXfSgG0SFkPhQO1Gi")
+//        refrence.put("order","695646918101292112")
+
+//        /**
+//         * auth chanel
+//         */
+//        val auth = java.util.HashMap<String,Any>()
+//        auth.put("channel","PAYER_BROWSER")
+//        auth.put("purpose","PAYMENT_TRANSACTION")
+
+        /**
+         * invoic
+         */
+        val invoice = java.util.HashMap<String,Any>()
+        invoice.put("id","")
+        /**
+         * post
+         */
+        val post = java.util.HashMap<String,Any>()
+        post.put("url","")
+
+        /**
+         * metadata
+         */
+        val metada = HashMap<String,Any>()
+        metada.put("id","")
+
+
+//        /**
+//         * authenticate
+//         */
+//
+//        val authentication = java.util.HashMap<String,Any>()
+//        authentication.put("description","description")
+//        authentication.put("reference",refrence)
+//        authentication.put("invoice",invoice)
+//        authentication.put("authentication",auth)
+//        authentication.put("post",post)
+
+        /**
          * transaction
          */
         val transaction = java.util.HashMap<String,Any>()
         transaction.put("amount","1")
         transaction.put("currency","SAR")
+        transaction.put("description","description")
+        transaction.put("metadata",metada)
+        transaction.put("reference","tck_LVL8sXyzVSXfSgG0SFkPvQO1Ns")
+
         /**
          * phone
          */
@@ -116,13 +167,13 @@ class MainActivity : AppCompatActivity(),TapCardStatusDelegate {
         /**
          * fields
          */
-        val fields = java.util.HashMap<String,Any>()
+        val fields = HashMap<String,Any>()
         fields.put("cardHolder",true)
 
         /**
          * addons
          */
-        val addons = java.util.HashMap<String,Any>()
+        val addons = HashMap<String,Any>()
         addons.put("loader",true)
         addons.put("saveCard",true)
         addons.put("displayPaymentBrands",true)
@@ -131,103 +182,80 @@ class MainActivity : AppCompatActivity(),TapCardStatusDelegate {
 
 
         /**
-         * refrence
+         * order
          */
-        val refrence = java.util.HashMap<String,Any>()
-        refrence.put("transaction","tck_LVL8sXysVSXfSgG0SFkPhQO1Gi")
-        refrence.put("order","695646918101292112")
-
-        /**
-         * auth chanel
-         */
-        val auth = java.util.HashMap<String,Any>()
-        auth.put("channel","PAYER_BROWSER")
-        auth.put("purpose","PAYMENT_TRANSACTION")
-
-        /**
-         * invoic
-         */
-        val invoice = java.util.HashMap<String,Any>()
-        invoice.put("id","")
-        /**
-         * post
-         */
-        val post = java.util.HashMap<String,Any>()
-        post.put("id","")
-
-        val authentication = java.util.HashMap<String,Any>()
-        authentication.put("description","description")
-        authentication.put("reference",refrence)
-        authentication.put("invoice",invoice)
-        authentication.put("authentication",auth)
-        authentication.put("post",post)
-
+        val order = HashMap<String,Any>()
+        order.put("id","699246911101421132")
         /**
          * interface
          */
-        val interfacee = java.util.HashMap<String,Any>()
+        val interfacee = HashMap<String,Any>()
         interfacee.put("locale","en")
         interfacee.put("theme","light")
         interfacee.put("edges","curved")
         interfacee.put("direction","ltr")
-
-        request.put("acceptance",acceptance)
-        request.put("publicKey","pk_test_Vlk842B1EA7tDN5QbrfGjYzh")
-        request.put("merchant",merchant)
-        request.put("transaction",transaction)
-        request.put("customer",customer)
-        request.put("interface",interfacee)
-        request.put("addons",addons)
-        request.put("fields",fields)
-        request.put("scope","Authenticate")
-        request.put("authentication",authentication)
-        DataConfiguration.initializeSDK(activity = this, configurations = request, tapCardKit = findViewById(R.id.tapCardForm))
-        DataConfiguration.addTapCardStatusDelegate(this)
-
-
+        configuration.put("merchant",merchant)
+        configuration.put("transaction",transaction)
+        configuration.put("order",order)
+        configuration.put("invoice",invoice)
+        configuration.put("post",post)
+        configuration.put("purpose","PAYMENT_TRANSACTION")
+        configuration.put("fields",fields)
+        configuration.put("acceptance",acceptance)
+        configuration.put("addons",addons)
+        configuration.put("publicKey","pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7")
+        configuration.put("interface",interfacee)
+        configuration.put("scope","Authenticate")
+        configuration.put("customer",customer)
 
 
-//        TapCardConfiguration.configureWithTapCardDictionaryConfiguration(
-//            this,
-//            findViewById<TapCardKit>(R.id.tapCardForm),
-//            request,
-//            object : TapCardStatusDelegate {
-//                override fun onSuccess(data: String) {
-//                    Toast.makeText(this@MainActivity, "onSuccess $data", Toast.LENGTH_SHORT).show()
-//                }
-//
-//                override fun onReady() {
-//                    Toast.makeText(this@MainActivity, "onReady", Toast.LENGTH_SHORT).show()
-//                    findViewById<TextView>(R.id.tokenizeBtn).visibility = View.VISIBLE
-//
-//                }
-//
-//                override fun onFocus() {
-//                    Toast.makeText(this@MainActivity, "onFocus", Toast.LENGTH_SHORT).show()
-//                }
-//
-//                override fun onBindIdentification(data: String) {
-//                    Toast.makeText(
-//                        this@MainActivity,
-//                        "on BindIdentification $data",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                }
-//
-//                override fun onValidInput(isValid: String) {
-//                    Toast.makeText(this@MainActivity, "onValidInput ${isValid}", Toast.LENGTH_SHORT)
-//                        .show()
-//                }
-//
-//                override fun onError(error: String) {
-//                    Toast.makeText(this@MainActivity, "onError", Toast.LENGTH_SHORT).show()
-//                }
-//
-//                override fun onHeightChange(heightChange: String) {
-//                    Log.e("heightChanged",heightChange.toString())
-//                }
-//
-//            })
+        /**
+         * from settings we need to add Key :
+         */
+
+        TapCardConfiguration.configureWithTapCardDictionaryConfiguration(
+            this,
+            findViewById<TapCardKit>(R.id.tapCardForm),
+            configuration,
+            object : TapCardStatusDelegate {
+                override fun onSuccess(data: String) {
+                    Toast.makeText(this@MainActivity, "onSuccess $data", Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onReady() {
+                    Toast.makeText(this@MainActivity, "onReady", Toast.LENGTH_SHORT).show()
+                    findViewById<TextView>(R.id.tokenizeBtn).visibility = View.VISIBLE
+
+                }
+
+                override fun onFocus() {
+                    Toast.makeText(this@MainActivity, "onFocus", Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onBindIdentification(data: String) {
+                    Toast.makeText(
+                        this@MainActivity,
+                        "on BindIdentification $data",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                override fun onValidInput(isValid: String) {
+                    Toast.makeText(this@MainActivity, "onValidInput ${isValid}", Toast.LENGTH_SHORT)
+                        .show()
+                }
+
+                override fun onError(error: String) {
+                    Toast.makeText(this@MainActivity, "onError ${error}", Toast.LENGTH_SHORT).show()
+                }
+
+
+
+                override fun onHeightChange(heightChange: String) {
+                    Log.e("heightChanged",heightChange.toString())
+                }
+
+            })
 
     }
 
@@ -285,7 +313,7 @@ class MainActivity : AppCompatActivity(),TapCardStatusDelegate {
                 )
             ),
             acceptance = Acceptance(
-                supportedBrands = cardBrands?.map { CardBrand.valueOf(it) }?.toMutableList()!!,
+                supportedBrands = mutableListOf(CardBrand.americanExpress,CardBrand.visa,CardBrand.masterCard),
                 supportedCards = if (selectedCardType == CardType.ALL.name) mutableListOf(
                     CardType.DEBIT.name,
                     CardType.CREDIT.name
@@ -304,7 +332,7 @@ class MainActivity : AppCompatActivity(),TapCardStatusDelegate {
                 edges = TapCardEdges.valueOf(selectedCardEdge.toString()),
                 direction = TapCardDirections.valueOf(selectedCardDirection.toString()),
             ),
-            fields = Fields(showHideCardHolderName),
+            fields = Fields(cardHolder = showHideCardHolderName),
             authentication = TapAuthentication(
                 description = DataConfiguration.authenticationExample?.description
                     ?: "test Description",
@@ -324,52 +352,6 @@ class MainActivity : AppCompatActivity(),TapCardStatusDelegate {
 
         )
 
-        Log.e("cardConf",tapCardConfig.toString())
-        TapCardConfiguration.configureWithTapCardModelConfiguration(
-            this,
-            findViewById<TapCardKit>(R.id.tapCardForm),
-            tapCardConfig,
-            object : TapCardStatusDelegate {
-                override fun onSuccess(data: String) {
-                    findViewById<TextView>(R.id.textView_Logs).append("onSuccess $data")
-
-                }
-
-                override fun onReady() {
-                    findViewById<TextView>(R.id.textView_Logs).text = ""
-                    findViewById<TextView>(R.id.textView_Logs).append("onReady")
-                    findViewById<TextView>(R.id.tokenizeBtn).visibility = View.VISIBLE
-
-
-                }
-
-                override fun onFocus() {
-                    findViewById<TextView>(R.id.textView_Logs).text = ""
-                    findViewById<TextView>(R.id.textView_Logs).append("onFocus")
-                }
-
-                override fun onBindIdentification(data: String) {
-                    findViewById<TextView>(R.id.textView_Logs).text = ""
-                    findViewById<TextView>(R.id.textView_Logs).append("on BindIdentification $data")
-
-                }
-
-                override fun onValidInput(isValid: String) {
-                    findViewById<TextView>(R.id.textView_Logs).text = ""
-                    findViewById<TextView>(R.id.textView_Logs).append("onValidInput $isValid")
-
-                }
-
-                override fun onError(error: String) {
-                    findViewById<TextView>(R.id.textView_Logs).text = ""
-                    findViewById<TextView>(R.id.textView_Logs).append("onError $error")
-                }
-
-                override fun onHeightChange(heightChange: String) {
-                    Log.e("heightChanged",heightChange.toString())
-                }
-
-            })
 
 
     }
