@@ -237,7 +237,7 @@ class TapCardKit : LinearLayout {
                 }
 
               setTapThemeAndLanguage(
-                    context,
+                    this.context,
                     TapLocal.valueOf(tapInterface["locale"].toString()),
                     TapTheme.valueOf(tapInterface["theme"].toString())
                 )
@@ -257,6 +257,7 @@ class TapCardKit : LinearLayout {
     }
 
     fun setTapThemeAndLanguage(context: Context, language: TapLocal, themeMode: TapTheme) {
+        Log.e("lanugage",language.name.toString())
         when (themeMode) {
             TapTheme.light -> {
                 DataConfiguration.setTheme(

@@ -1,6 +1,5 @@
 package company.tap.tapcardformkit.open.web_wrapper
 
-import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -17,7 +16,6 @@ import androidx.annotation.Nullable
 import androidx.annotation.RequiresApi
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import company.tap.tapcardformkit.R
-import company.tap.tapcardformkit.getScreenHeight
 import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.twoThirdHeightView
 import company.tap.tapuilibrary.uikit.views.TapBrandView
@@ -44,9 +42,6 @@ class ThreeDsBottomSheetFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val tapBrandView = view.findViewById<TapBrandView>(R.id.tab_brand_view)
-
-
-
 
         val webView = view.findViewById<WebView>(R.id.webview3ds)
 

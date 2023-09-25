@@ -98,6 +98,7 @@ object DataConfiguration {
         urlPathLocal: Int?
     ) {
         LocalizationManager.setLocale(context, Locale(languageString))
+
         if (resources != null && urlPathLocal != null) {
             LocalizationManager.loadTapLocale(resources, R.raw.lang)
         } else if (urlString != null) {
