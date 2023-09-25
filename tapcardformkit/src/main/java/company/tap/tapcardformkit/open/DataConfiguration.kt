@@ -58,6 +58,13 @@ object DataConfiguration {
             field = value
         }
 
+    var lanuage: String? = null
+        get() = field
+        set(value) {
+            field = value
+        }
+
+
 
 
 
@@ -98,8 +105,7 @@ object DataConfiguration {
         urlPathLocal: Int?
     ) {
         LocalizationManager.setLocale(context, Locale(languageString))
-        Log.e("lanugage local",LocalizationManager.getLocale(context).language.toString())
-
+        lanuage = languageString
         if (resources != null && urlPathLocal != null) {
             LocalizationManager.loadTapLocale(resources, R.raw.lang)
         } else if (urlString != null) {

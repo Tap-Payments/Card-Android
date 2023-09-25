@@ -72,6 +72,7 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:layoutDirection">locale</item>
     </style>
 
 

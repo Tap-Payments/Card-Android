@@ -11,6 +11,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 import androidx.annotation.RequiresApi
@@ -19,6 +20,7 @@ import company.tap.tapcardformkit.R
 import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.twoThirdHeightView
 import company.tap.tapuilibrary.uikit.views.TapBrandView
+import java.util.*
 import kotlin.math.roundToInt
 
 class ThreeDsBottomSheetFragment : BottomSheetDialogFragment() {
@@ -34,6 +36,7 @@ class ThreeDsBottomSheetFragment : BottomSheetDialogFragment() {
         @Nullable savedInstanceState: Bundle?
     ): View? {
         val view = LayoutInflater.from(context).inflate(R.layout.bottom_sheet_dialog, null)
+
 
         return view
     }

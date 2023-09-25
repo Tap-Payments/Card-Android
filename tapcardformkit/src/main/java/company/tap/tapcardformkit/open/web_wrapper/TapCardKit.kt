@@ -7,6 +7,7 @@ import TapTheme
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Build
@@ -22,12 +23,10 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.os.ConfigurationCompat
 import androidx.core.view.*
-import androidx.fragment.app.FragmentActivity
 import cards.pay.paycardsrecognizer.sdk.Card
 import com.airbnb.lottie.LottieAnimationView
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.gson.Gson
 import company.tap.tapcardformkit.*
 import company.tap.tapcardformkit.open.DataConfiguration
@@ -160,6 +159,8 @@ class TapCardKit : LinearLayout {
                 )
                 var url  = "${urlWebStarter}${encodeConfigurationMapToUrl(DataConfiguration.configurationsAsHashMap)}"
                 cardWebview.loadUrl("${urlWebStarter}${encodeConfigurationMapToUrl(DataConfiguration.configurationsAsHashMap)}")
+
+
             }
         }
     }
@@ -275,9 +276,7 @@ class TapCardKit : LinearLayout {
             }
             else -> {}
         }
-        Log.e("lanugage ",language.name.toString())
-
-  DataConfiguration.setLocale(context, language.name, null, context.resources, R.raw.lang)
+        DataConfiguration.setLocale(this.context, language.name, null, this@TapCardKit.context.resources, R.raw.lang)
 
     }
 
@@ -458,6 +457,8 @@ class TapCardKit : LinearLayout {
             /**
              * put buttomsheet in separate class
              */
+
+
             val intent = Intent(context,ThreeDsWebViewActivity::class.java)
             (context).startActivity(intent)
             ThreeDsBottomSheetFragment.tapCardKit = this@TapCardKit

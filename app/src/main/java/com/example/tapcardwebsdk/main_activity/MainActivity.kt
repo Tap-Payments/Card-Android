@@ -19,6 +19,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var tapCardKit: TapCardKit
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
+
+
         setContentView(R.layout.activity_main)
 
 
