@@ -107,6 +107,25 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
          */
         val merchant = HashMap<String,Any>()
         merchant.put("id","")
+
+        /**
+         * invoice
+         */
+        val invoice = java.util.HashMap<String,Any>()
+        invoice.put("id","")
+        /**
+         * post
+         */
+        val post = java.util.HashMap<String,Any>()
+        post.put("url","")
+
+        /**
+         * metadata
+         */
+        val metada = HashMap<String,Any>()
+        metada.put("id","")
+
+
         /**
          * transaction
          */
@@ -114,7 +133,7 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
         transaction.put("amount","1")
         transaction.put("currency","SAR")
         transaction.put("description","description")
-        transaction.put("metadata","")
+        transaction.put("metadata",metadata)
         transaction.put("reference","refrence_id")
         /**
          * phone
@@ -173,33 +192,11 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
         addons.put("scanner",true)
         addons.put("nfc",true)
 
-
         /**
-         * refrence
+         * order
          */
-        val refrence = HashMap<String,Any>()
-        refrence.put("transaction","tck_LVL8sXysVSXfSgG0SFkPhQO1Gi")
-        refrence.put("order","695646918101292112")
-
-        /**
-         * auth chanel
-         */
-        val auth = HashMap<String,Any>()
-        auth.put("channel","PAYER_BROWSER")
-        auth.put("purpose","PAYMENT_TRANSACTION")
-
-        /**
-         * invoice
-         */
-        val invoice = HashMap<String,Any>()
-        invoice.put("id","")
-        /**
-         * post
-         */
-        val post = HashMap<String,Any>()
-        post.put("id","")
-
-
+        val order = HashMap<String,Any>()
+        order.put("id","order_id")
 
         /**
          * interface
@@ -214,20 +211,21 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
          * configuration request
          */
 
-        val configuration = HashMap<String,Any>()
-        configuration.put("acceptance",acceptance)
-        configuration.put("publicKey","pk_test_Vlk842B1EA7tDN5QbrfGjYzh")
+        val configuration = LinkedHashMap<String,Any>()
+   
         configuration.put("merchant",merchant)
         configuration.put("transaction",transaction)
-        configuration.put("customer",customer)
-        configuration.put("interface",tapInterface)
-        configuration.put("addons",addons)
-        configuration.put("fields",fields)
-        configuration.put("scope","Authenticate")  // or  configuration.put("scope","Token")
+        configuration.put("order",order)
         configuration.put("invoice",invoice)
-        configuration.put("order","order_id")
         configuration.put("post",post)
         configuration.put("purpose","PAYMENT_TRANSACTION")
+        configuration.put("fields",fields)
+        configuration.put("acceptance",acceptance)
+        configuration.put("addons",addons)
+        configuration.put("publicKey","pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7")
+        configuration.put("interface",interfacee) 
+        configuration.put("scope","Authenticate") // or  configuration.put("scope","Token")
+        configuration.put("customer",customer)
 
 ```
 
