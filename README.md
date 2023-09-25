@@ -62,11 +62,14 @@ Creates a configuration model to be passed to the SDK
 
 	- scope: The scope of the card sdk. Default is generating a tap token
 
-	- merchant: The Tap merchant details
-
+	- purpose: The intended purpose of using the generated token afterwards.
 	- transaction: The transaction details
 
-	- authenticate: The authentication data, needed only if scope is set to Authenticate
+	- order: The tap order id
+
+	- invoice: Link this token to an invoice
+
+	- merchant: The Tap merchant details
 
 	- customer: The Tap customer details
 
