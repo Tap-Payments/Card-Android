@@ -9,10 +9,12 @@ import androidx.appcompat.app.AppCompatActivity
 import cards.pay.paycardsrecognizer.sdk.Card
 import cards.pay.paycardsrecognizer.sdk.ScanCardIntent
 import cards.pay.paycardsrecognizer.sdk.ui.InlineViewCallback
+import company.tap.cardscanner.CameraFragment
 import company.tap.cardscanner.TapCard
 import company.tap.cardscanner.TapScannerCallback
 import company.tap.cardscanner.TapTextRecognitionCallBack
 import company.tap.cardscanner.TapTextRecognitionML
+import company.tap.tapcardformkit.R
 import company.tap.tapcardformkit.open.web_wrapper.TapCardKit.Companion.fillCardNumber
 
 private const val SCAN_CARD_ID = 101
@@ -27,32 +29,33 @@ class ScannerActivity : AppCompatActivity(), TapTextRecognitionCallBack, TapScan
         super.onCreate(savedInstanceState)
         setContentView(company.tap.tapcardformkit.R.layout.scanner_activity)
 
+        textRecognitionML = TapTextRecognitionML(this)
+        textRecognitionML?.addTapScannerCallback(this)
+
 //
 //        val chooseImageIntent = Intent(
 //            this,
 //            CameraActivity::class.java
 //        )
 //        startActivity(chooseImageIntent)
-        val intent = ScanCardIntent.Builder(this).build()
-        startActivityForResult(intent, SCAN_CARD_ID)
+      //  val intent = ScanCardIntent.Builder(this).build()
+      //  startActivityForResult(intent, SCAN_CARD_ID)
 
-//        supportFragmentManager
-//            .beginTransaction()
-//            .replace(company.tap.tapcardformkit.R.id.inline_container, InlineViewFragment())
-//            .commit()
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.inline_container, CameraFragment())
+            .commit()
 //        supportFragmentManager
 //            .beginTransaction()
 //            .replace(company.tap.tapcardformkit.R.id.inline_container, CameraFragment())
 //            .commit()
-//        textRecognitionML = TapTextRecognitionML(this)
-//        textRecognitionML?.addTapScannerCallback(this)
-//       textRecognitionML?.setFrameColor(Color.BLUE)
+//
 
     }
 
     override fun onRestart() {
         super.onRestart()
-        finish()
+      //  finish()
     }
 
 
@@ -74,6 +77,7 @@ class ScannerActivity : AppCompatActivity(), TapTextRecognitionCallBack, TapScan
 
 
     override fun onRecognitionSuccess(card: TapCard?) {
+        println("cardNumber>>>>"+card?.cardNumber)
         Toast.makeText(this@ScannerActivity, card?.cardNumber.toString(), Toast.LENGTH_LONG).show()
     }
 
