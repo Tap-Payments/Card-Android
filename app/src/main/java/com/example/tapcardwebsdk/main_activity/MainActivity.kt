@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -62,6 +63,13 @@ class MainActivity : AppCompatActivity() {
         val merchantIdKey = intent.getStringExtra("merchantId")
         val selectedCardDirection = intent.getStringExtra("selectedCardDirection")
 
+        val ordrId =  intent.getStringExtra("orderId")
+        val orderDescription =  intent.getStringExtra("orderDescription")
+        val transactionRefrence =  intent.getStringExtra("transactionRefrence")
+        val postUrl =  intent.getStringExtra("postUrl")
+        val invoiceId =  intent.getStringExtra("invoiceId")
+
+
         val configuration = LinkedHashMap<String,Any>()
 
         /**
@@ -73,13 +81,13 @@ class MainActivity : AppCompatActivity() {
         /**
          * invoice
          */
-        val invoice = java.util.HashMap<String,Any>()
-        invoice.put("id","")
+        val invoice = HashMap<String,Any>()
+        invoice.put("id",invoiceId.toString())
         /**
          * post
          */
-        val post = java.util.HashMap<String,Any>()
-        post.put("url","")
+        val post = HashMap<String,Any>()
+        post.put("url",postUrl.toString())
 
         /**
          * metadata
@@ -91,12 +99,11 @@ class MainActivity : AppCompatActivity() {
         /**
          * transaction
          */
-        var order2= HashMap<String, Any>().put("id","")
 
         val transaction = java.util.HashMap<String,Any>()
 
         transaction.put("metadata",metada)
-        transaction.put("reference",DataConfiguration.authenticationExample?.reference?.transaction ?:"tck_LVL8sXyzVSXfSgG0SFkPvQO1Ns")
+        transaction.put("reference",transactionRefrence ?:"tck_LVL8sXyzVSXfSgG0SFkPvQO1Ns")
 
         /**
          * phone
@@ -136,8 +143,6 @@ class MainActivity : AppCompatActivity() {
          * acceptance
          */
         val acceptance = java.util.HashMap<String,Any>()
-        //acceptance.put("supportedBrands", listOf("MADA","VISA","MASTERCARD","AMEX"))
-//        Log.e("listBrands",listOfBrands.toString())
         acceptance.put("supportedBrands", cardBrands?.toList()?: listOf(""))
         acceptance.put("supportedCards",if (selectedCardType == CardType.ALL.name) mutableListOf(
                     CardType.DEBIT.name,
@@ -165,10 +170,10 @@ class MainActivity : AppCompatActivity() {
          * order
          */
         val order = HashMap<String,Any>()
-        order.put("id",DataConfiguration.authenticationExample?.reference?.order ?: "699246911101421132")
+        order.put("id",ordrId.toString())
         order.put("amount",amount.toString())
         order.put("currency",selectedCurrency)
-        order.put("description","")
+        order.put("description",orderDescription.toString())
         /**
          * interface
          */
