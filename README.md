@@ -89,8 +89,8 @@ Creates a configuration model to be passed to the SDK
 | publicKey| This is the `Tap Key` that you will get after registering you bundle id. | True  | String| `var publicKey:String = "pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"` |
 | scope| Defines the intention of using the `TapCardSDK`. | True  | String| ` var scope:String = "Token" //This means you will get a Tap token to use afterwards` OR ` var scope:String = "Authenticate" //This means you will get an authenticated Tap token to use in our charge api right away`  |
 | purpose| Defines the intention of using the `Token` after generation. | True  | String| ` var purpose:String = "PAYMENT_TRANSACTION" //Using the token for a single charge.` OR ` var purpose:String = "RECURRING_TRANSACTION" //Using the token for multiple recurring charges.` OR ` var purpose:String = "INSTALLMENT_TRANSACTION" //Using the token for a charge that is a part of an installement plan.` OR ` var purpose:String = "ADD_CARD" //Using the token for a save a card for a customer.` OR ` var purpose:String = "CARDHOLDER_VERIFICATION" //Using the token for to verify the ownership of the card.` |
-| transaction| Needed to define the amount and the currency, if you are generating an authenticated token. | False  | `Dictionry`| ` var transaction = HashMap(String,Any) transaction.put("amount",1),transaction.put("currency","SAR"),transaction.put("description",""),transaction.put("reference","A reference to this transaciton in your system") ,transaction.put("metada",HashMapOf<String,Any>)` |
-| order| This is the `Tap order id` that you created before and want to attach this token to it if any. | False  | `Dictionary`| `var order = HashMap<String, Any>().put("id","")` |
+| transaction| Needed to define the refrence id if you are generating an authenticated token. | False  | `Dictionry`| ` var transaction = HashMap(String,Any) transaction.put("reference","A reference to this transaciton in your system") ,transaction.put("metada",HashMapOf<String,Any>)` |
+| order| This is the `Tap order id` that you created before and want to attach this token to it if any,also need to add amount , currency and description . | False  | `Dictionary`| `var order = HashMap<String, Any>() order.put("id","") order.put("amount",1),order.put("currency","SAR"),order.put("description","")` |
 | invoice| This is the `invoice id` that you want to link this token to if any. | False  | `Dictionary`| ` var invoice = HashMap<String,Any>.put("id","")` |
 | merchant| This is the `Merchant id` that you will get after registering you bundle id. | True  | `Dictionary`| ` var merchant = HashMap<String,Any>.put("id","")` |
 | customer| The customer details you want to attach to this tokenization process. | True  | `Dictionary`| ` var customer =  HashMap<String,Any> ,customer.put("id,""), customer.put("nameOnCard","Tap Payments"),customer.put("editable",true),) var name :HashMap<String,Any> = [["lang":"en","first":"TAP","middle":"","last":"PAYMENTS"]] "contact":["email":"tap@tap.company", "phone":["countryCode":"+965","number":"88888888"]]] customer.put("name",name) , customer.put("contact",contact)` |
@@ -135,9 +135,6 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
          * transaction
          */
         val transaction = HashMap<String,Any>()
-        transaction.put("amount","1")
-        transaction.put("currency","SAR")
-        transaction.put("description","description")
         transaction.put("metadata",metadata)
         transaction.put("reference","refrence_id")
         /**
@@ -202,6 +199,9 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
          */
         val order = HashMap<String,Any>()
         order.put("id","order_id")
+        order.put("amount","1")
+        order.put("currency","SAR")
+        order.put("description","description")
 
         /**
          * interface
