@@ -37,21 +37,12 @@ class NFCLaunchActivity : AppCompatActivity() {
         transaction.addToBackStack(null)
         transaction.commit()
 
-    /*    cardReadDisposable = tapNfcCardReader!!
-            .readCardRx2(intent)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                this::showCardInfo,
-                Consumer<Throwable> { throwable: Throwable ->
-                    displayError(
-                        throwable.message
-                    )
-                })*/
 
 }
 
 override fun onNewIntent(intent: Intent?) {
     // TODO Auto-generated method stub
+    super.onNewIntent(intent)
     // if this activity is in stack , this mwthod will be called
     handleNFCResult(intent)
 }
