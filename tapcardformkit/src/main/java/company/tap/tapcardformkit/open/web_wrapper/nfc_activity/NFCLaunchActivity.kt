@@ -81,6 +81,7 @@ private fun displayError(message: String?) {
     Toast.makeText(this, message.toString(), Toast.LENGTH_SHORT).show()
 }
     private fun convertDateString(emvCard: TapEmvCard) {
+        var expDateString :String?=null
         //  println("emvCard.getExpireDate()"+emvCard.getExpireDate())
         val dateParts: CharSequence? = DateFormat.format("M/y", emvCard.getExpireDate())
         println("dateparts" + dateParts?.length)
@@ -96,7 +97,9 @@ private fun displayError(message: String?) {
                         return
                     } else {
                         println("month>>" + month)
-                        var expDateString  = month.toString()+"/"+year.toString()
+
+                           if(month<10) expDateString=  "0"+month.toString()+"/"+year.toString()
+                          else expDateString = month.toString()+"/"+year.toString()
 
                             if (emvCard != null) {
                                 TapCardKit.fillCardNumber(
