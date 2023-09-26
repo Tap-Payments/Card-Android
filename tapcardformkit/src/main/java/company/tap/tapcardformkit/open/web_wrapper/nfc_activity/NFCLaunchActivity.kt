@@ -93,13 +93,12 @@ private fun displayError(message: String?) {
                     val month = (dateParts).substring(0, 1).toInt()
                     val year = (dateParts).substring(2, 4)
                     if (year.contains("/")) {
-                        println("retuu>>" + year)
+
                         return
                     } else {
-                        println("month>>" + month)
-
-                           if(month<10) expDateString=  "0"+month.toString()+"/"+year.toString()
-                          else expDateString = month.toString()+"/"+year.toString()
+                        
+                           if(month<10) expDateString= "0$month/$year"
+                          else expDateString = "$month/$year"
 
                             if (emvCard != null) {
                                 TapCardKit.fillCardNumber(
@@ -145,8 +144,8 @@ override fun onPause() {
     //if (tapCheckoutFragment.isNfcOpened) {
     cardReadDisposable.dispose()
     tapNfcCardReader?.disableDispatch()
+
     //  }
-//changed above condition ELSE of simply finish to check gpay and finish , otherwise it ws not calling onactivity result
 
 }
 
