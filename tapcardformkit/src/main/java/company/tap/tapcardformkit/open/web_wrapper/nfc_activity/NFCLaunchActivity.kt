@@ -1,6 +1,7 @@
 package company.tap.tapcardformkit.open.web_wrapper.nfc_activity
 
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
@@ -18,6 +19,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposables
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
 
 
 class NFCLaunchActivity : AppCompatActivity() {
@@ -64,7 +66,10 @@ fun handleNFCResult(intent: Intent?) {
             .subscribe({ emvCard: TapEmvCard? ->
                 if (emvCard != null) {
                     // tapCheckoutFragment.viewModel?.handleNFCScannedResult(emvCard)
-                    println("emvCard$emvCard")
+                    println("emvCard${emvCard}")
+                    println("emvCardexpireDate ${emvCard.expireDate}")
+                    convertDateString(emvCard)
+
                 }
             },
                 { throwable -> throwable.message?.let { println("error is nfc" + throwable.printStackTrace()) } })
@@ -75,6 +80,46 @@ fun handleNFCResult(intent: Intent?) {
 private fun displayError(message: String?) {
     Toast.makeText(this, message.toString(), Toast.LENGTH_SHORT).show()
 }
+    private fun convertDateString(emvCard: TapEmvCard) {
+        //  println("emvCard.getExpireDate()"+emvCard.getExpireDate())
+        val dateParts: CharSequence? = DateFormat.format("M/y", emvCard.getExpireDate())
+        println("dateparts" + dateParts?.length)
+        if (dateParts?.contains("/") == true) {
+            if (dateParts.length <= 3) {
+                return
+            } else {
+                if (dateParts.length >= 5 || dateParts.length >= 4) {
+                    val month = (dateParts).substring(0, 1).toInt()
+                    val year = (dateParts).substring(2, 4)
+                    if (year.contains("/")) {
+                        println("retuu>>" + year)
+                        return
+                    } else {
+                        println("month>>" + month)
+                        var expDateString  = month.toString()+"/"+year.toString()
+
+                            if (emvCard != null) {
+                                TapCardKit.fillCardNumber(
+                                    cardNumber = emvCard?.cardNumber.toString(),
+                                    cardHolderName = emvCard?.holderFirstname ?: "",
+                                    cvv = "",
+                                    expiryDate = expDateString ?: ""
+                                )
+                                //setResult(Activity.RESULT_OK, data)
+                                finish()
+                            }
+                          //  paymentInlineViewHolder.setNFCCardData(emvCard, month, year.toInt())
+
+
+
+                    }
+
+                }
+
+            }
+        }
+
+    }
 
 override fun onResume() {
     if (TapNfcUtils.isNfcAvailable(this)) {
