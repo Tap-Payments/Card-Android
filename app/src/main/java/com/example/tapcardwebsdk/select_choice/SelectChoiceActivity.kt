@@ -113,9 +113,9 @@ class SelectChoiceActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.merchant_tv).setOnClickListener {
             MerchantDialog(this).show()
         }
-        findViewById<TextView>(R.id.transaction).setOnClickListener {
-            TransactionDialog(this).show()
-        }
+//        findViewById<TextView>(R.id.transaction).setOnClickListener {
+//            TransactionDialog(this).show()
+//        }
       //  radioGroup7 = findViewById(R.id.radioGroup7)
         darkRadioButton = findViewById<AppCompatRadioButton>(R.id.theme_dark)
         lightRadioButton = findViewById<AppCompatRadioButton>(R.id.theme_light)
@@ -428,6 +428,14 @@ class SelectChoiceActivity : AppCompatActivity() {
             intent.putExtra("editDefaultHolderName", editDefaultHolderName)
             intent.putExtra("selectedCardEdge", selectedCardEdge)
             intent.putExtra("selectedCardDirection", selectedCardDirection)
+            /**
+             * new configs
+             */
+            intent.putExtra("orderId", findViewById<EditText>(R.id.order_id).text.toString())
+            intent.putExtra("orderDescription", findViewById<EditText>(R.id.order_description).text.toString())
+            intent.putExtra("transactionRefrence", findViewById<EditText>(R.id.trans_refrence).text.toString())
+            intent.putExtra("invoiceId", findViewById<EditText>(R.id.invoice_id).text.toString())
+            intent.putExtra("postUrl", findViewById<EditText>(R.id.post_url).text.toString())
 
             /**
              * added newly
@@ -479,25 +487,27 @@ class SelectChoiceActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
 
         R.id.action_generateRandom -> {
+            findViewById<EditText>(R.id.trans_refrence).setText(getRandomTrx())
+            findViewById<EditText>(R.id.order_id).setText(getRandomNumbers(17))
 
-            DataConfiguration.setTapAuthentication(
-                TapAuthentication(
-                    description =  "description",
-                    reference = Refrence(
-                        transaction = getRandomTrx(),
-                        order = getRandomNumbers(17)
-                    ),
-                    invoice = Invoice(
-                        id = ""
-
-                    ),
-                    authentication = Authentication(
-                        channel = "PAYER_BROWSER",
-                        purpose = "PAYMENT_TRANSACTION",
-                    ),
-                    post = Post("")
-                )
-            )
+//            DataConfiguration.setTapAuthentication(
+//                TapAuthentication(
+//                    description =  "description",
+//                    reference = Refrence(
+//                        transaction = getRandomTrx(),
+//                        order = getRandomNumbers(17)
+//                    ),
+//                    invoice = Invoice(
+//                        id = ""
+//
+//                    ),
+//                    authentication = Authentication(
+//                        channel = "PAYER_BROWSER",
+//                        purpose = "PAYMENT_TRANSACTION",
+//                    ),
+//                    post = Post("")
+//                )
+//            )
             Log.e("data",DataConfiguration.authenticationExample.toString())
             true
 

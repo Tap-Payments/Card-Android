@@ -65,4 +65,12 @@
     <string name="transaction_descr">Transaction Description</string>
     <string name="Authenticate">Authenticate</string>
     <string name="Token">Token</string>
+    <string name="currency">Currency</string>
+    <string name="order_id">Order id</string>
+    <string name="order_desc">Order Description</string>
+    <string name="trans_refrence">Trans. Refr.</string>
+    <string name="invoice">Invoice</string>
+    <string name="invoice_id">Invoice Id</string>
+    <string name="post">Post</string>
+    <string name="post_url">Post url</string>
 </resources>
