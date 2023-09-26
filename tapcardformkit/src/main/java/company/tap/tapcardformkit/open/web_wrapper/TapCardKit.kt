@@ -4,10 +4,10 @@ import TapCardConfigurations
 import TapCardEdges
 import TapLocal
 import TapTheme
+import android.animation.Animator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Build
@@ -23,7 +23,6 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.os.ConfigurationCompat
 import androidx.core.view.*
 import cards.pay.paycardsrecognizer.sdk.Card
 import com.airbnb.lottie.LottieAnimationView
@@ -34,7 +33,6 @@ import company.tap.tapcardformkit.open.web_wrapper.enums.CardFormWebStatus
 import company.tap.tapcardformkit.open.web_wrapper.model.ThreeDsResponse
 import company.tap.tapcardformkit.open.web_wrapper.nfc_activity.NFCLauncherActivity
 import company.tap.tapcardformkit.open.web_wrapper.scanner_activity.ScannerActivity
-import company.tap.taplocalizationkit.LocalizationManager
 import company.tap.tapuilibrary.themekit.ThemeManager
 import company.tap.tapuilibrary.uikit.atoms.*
 import java.net.URLEncoder
@@ -132,19 +130,11 @@ class TapCardKit : LinearLayout {
         when (configuraton) {
             CardConfiguraton.ModelConfiguration -> {
                 with(DataConfiguration.configurations) {
-                    Log.e(
-                        "urlToLoad", "${urlWebStarter}${
-                            encodeConfigurationToUrl(
-                                DataConfiguration.configurations
-                            )
-                        }"
-                    )
                     var url  = "${urlWebStarter}${
                         encodeConfigurationToUrl(
                             DataConfiguration.configurations
                         )
                     }"
-
                     cardWebview.loadUrl(
                         "${urlWebStarter}${
                             encodeConfigurationToUrl(
@@ -155,9 +145,6 @@ class TapCardKit : LinearLayout {
                 }
             }
             CardConfiguraton.MapConfigruation -> {
-                Log.e(
-                    "urlToLoad", "${urlWebStarter}${encodeConfigurationMapToUrl(DataConfiguration.configurationsAsHashMap)}"
-                )
                 var url  = "${urlWebStarter}${encodeConfigurationMapToUrl(DataConfiguration.configurationsAsHashMap)}"
                 cardWebview.loadUrl("${urlWebStarter}${encodeConfigurationMapToUrl(DataConfiguration.configurationsAsHashMap)}")
 
@@ -167,20 +154,22 @@ class TapCardKit : LinearLayout {
     }
 
     private fun applyThemeForShimmer() {
+        /**
+         * need to be refactored : mulitple copies of same code
+         */
         when(cardConfiguraton){
             CardConfiguraton.ModelConfiguration->{
                 with(DataConfiguration.configurations?.tapCardConfigurationInterface) {
+                    lottieAnimationView.setCacheComposition(true)
                     when (this?.theme) {
                         TapTheme.light -> {
-                            lottieAnimationView.setAnimation(
-                                context.getAssetFile("lottie_light")
-                            )
+                            setLottieAnimationAccordingToTheme(lightLottieUrlJson,lightLottieAssetName)
 
                         }
                         TapTheme.dark -> {
-                            lottieAnimationView.setAnimation(
-                                context.getAssetFile("lottie_dark")
-                            )
+                            setLottieAnimationAccordingToTheme(
+                                darkLottieUrlJson,
+                                darkLottieAssetName)
                         }
                         else -> {}
                     }
@@ -208,16 +197,15 @@ class TapCardKit : LinearLayout {
             CardConfiguraton.MapConfigruation ->{
                 val tapInterface = DataConfiguration.configurationsAsHashMap?.get("interface") as Map<*, *>
                 with(tapInterface["theme"].toString()) {
+                    lottieAnimationView.setCacheComposition(true)
                     when (this) {
                         TapTheme.light.name -> {
-                            lottieAnimationView.setAnimation(
-                                context.getAssetFile("lottie_light")
-                            )
+                            setLottieAnimationAccordingToTheme(lightLottieUrlJson,lightLottieAssetName)
                         }
                         TapTheme.dark.name -> {
-                            lottieAnimationView.setAnimation(
-                                context.getAssetFile("lottie_dark")
-                            )
+                            setLottieAnimationAccordingToTheme(
+                                darkLottieUrlJson,
+                                darkLottieAssetName)
                         }
                         else -> {}
                     }
@@ -250,8 +238,19 @@ class TapCardKit : LinearLayout {
 
     }
 
+    private fun setLottieAnimationAccordingToTheme(url:String,assetNameForFailure:String) {
+        lottieAnimationView.setAnimationFromUrl(url)
+        lottieAnimationView.setFailureListener { throwable ->
+            lottieAnimationView.setAnimation(
+                context.getAssetFile(assetNameForFailure)
+            )
+
+        }
+    }
+
 
     fun startShimmer() {
+
         lottieAnimationView.visibility = View.VISIBLE;
         cardWebview.visibility = View.GONE
         findViewById<CardView>(R.id.card_lottie).visibility = View.VISIBLE
@@ -259,7 +258,7 @@ class TapCardKit : LinearLayout {
 
     }
 
-    fun setTapThemeAndLanguage(context: Context, language: TapLocal, themeMode: TapTheme) {
+    private fun setTapThemeAndLanguage(context: Context, language: TapLocal, themeMode: TapTheme) {
         when (themeMode) {
             TapTheme.light -> {
                 DataConfiguration.setTheme(
@@ -281,7 +280,7 @@ class TapCardKit : LinearLayout {
 
     }
 
-    fun stopShimmer() {
+    private fun stopShimmer() {
         lottieAnimationView.visibility = View.GONE;
         cardWebview.visibility = View.VISIBLE
         findViewById<CardView>(R.id.card_lottie).visibility = View.GONE
@@ -290,7 +289,7 @@ class TapCardKit : LinearLayout {
 
 
 
-    fun encodeConfigurationToUrl(configuraton: TapCardConfigurations?): String? {
+    private fun encodeConfigurationToUrl(configuraton: TapCardConfigurations?): String? {
         val gson = Gson()
         val json: String = gson.toJson(configuraton)
 
@@ -298,7 +297,7 @@ class TapCardKit : LinearLayout {
         return encodedUrl
 
     }
-    fun encodeConfigurationMapToUrl(configuraton: HashMap<String,Any>?): String? {
+    private fun encodeConfigurationMapToUrl(configuraton: HashMap<String,Any>?): String? {
         val gson = Gson()
         val json: String = gson.toJson(configuraton)
 
@@ -425,18 +424,11 @@ class TapCardKit : LinearLayout {
             webView: WebView?,
             request: WebResourceRequest?
         ): Boolean {
-            Log.e("urlToLoad", webView?.url.toString())
-
             isRedirected = true;
             return false
         }
 
         override fun onPageFinished(view: WebView, url: String) {
-            Log.e("onfinishedLoading", url.toString())
-            Log.e("webviewProgress", cardWebview.progress.toString())
-            Log.e("onfinishedRedirection", isRedirected.toString())
-
-
             if (!alreadyEvaluated) {
                 alreadyEvaluated = true;
                 Handler().postDelayed({
