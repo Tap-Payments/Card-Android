@@ -15,6 +15,7 @@ import company.tap.cardscanner.TapScannerCallback
 import company.tap.cardscanner.TapTextRecognitionCallBack
 import company.tap.cardscanner.TapTextRecognitionML
 import company.tap.tapcardformkit.R
+import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
 import company.tap.tapcardformkit.open.web_wrapper.TapCardKit.Companion.fillCardNumber
 
 private const val SCAN_CARD_ID = 101
@@ -77,8 +78,18 @@ class ScannerActivity : AppCompatActivity(), TapTextRecognitionCallBack, TapScan
 
 
     override fun onRecognitionSuccess(card: TapCard?) {
-        println("cardNumber>>>>"+card?.cardNumber)
+        println("cardNumber>>>>"+card)
         Toast.makeText(this@ScannerActivity, card?.cardNumber.toString(), Toast.LENGTH_LONG).show()
+      //  if (card?.cardNumber != null && card.cardHolder != null && card.expirationDate != null) {
+        if (card?.cardNumber != null ) {
+            fillCardNumber(
+                cardNumber = card?.cardNumber.toString(),
+                cardHolderName = card?.cardHolder ?: "",
+                cvv = "",
+                expiryDate = card.expirationDate ?: ""
+            )
+          //  incrementalCount = 0
+        }
     }
 
     override fun onRecognitionFailure(error: String?) {
@@ -86,7 +97,19 @@ class ScannerActivity : AppCompatActivity(), TapTextRecognitionCallBack, TapScan
     }
 
     override fun onReadSuccess(card: TapCard?) {
+        println("cardNumber>>>>"+card)
         Toast.makeText(this@ScannerActivity, card?.cardNumber.toString(), Toast.LENGTH_LONG).show()
+        //  if (card?.cardNumber != null && card.cardHolder != null && card.expirationDate != null) {
+        if (card?.cardNumber != null && card.expirationDate !=null ) {
+            fillCardNumber(
+                cardNumber = card?.cardNumber.toString(),
+                cardHolderName = card?.cardHolder ?: "",
+                cvv = "",
+                expiryDate = card.expirationDate ?: ""
+            )
+            //  incrementalCount = 0
+        }
+        finish()
 
     }
 
