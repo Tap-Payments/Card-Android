@@ -19,7 +19,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposables
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
+import company.tap.taplocalizationkit.LocalizationManager
+import java.util.*
 
 
 class NFCLaunchActivity : AppCompatActivity() {
@@ -27,6 +30,7 @@ class NFCLaunchActivity : AppCompatActivity() {
     private var cardReadDisposable = Disposables.empty()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        LocalizationManager.setLocale(this, Locale(DataConfiguration.lanuage.toString()))
         setContentView(R.layout.activity_nfclaunch)
 
         tapNfcCardReader = TapNfcCardReader(this)
@@ -98,10 +102,8 @@ private fun displayError(message: String?) {
                                     cvv = "",
                                     expiryDate = expDateString ?: ""
                                 )
-                                //setResult(Activity.RESULT_OK, data)
                                 finish()
                             }
-                          //  paymentInlineViewHolder.setNFCCardData(emvCard, month, year.toInt())
 
 
 
@@ -129,6 +131,12 @@ override fun onResume() {
     }
     super.onResume();
 }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+
+    }
 
 override fun onPause() {
     super.onPause()

@@ -94,9 +94,7 @@ class MainActivity : AppCompatActivity() {
         var order2= HashMap<String, Any>().put("id","")
 
         val transaction = java.util.HashMap<String,Any>()
-        transaction.put("amount",amount.toString())
-        transaction.put("currency",selectedCurrency)
-        transaction.put("description","")
+
         transaction.put("metadata",metada)
         transaction.put("reference",DataConfiguration.authenticationExample?.reference?.transaction ?:"tck_LVL8sXyzVSXfSgG0SFkPvQO1Ns")
 
@@ -168,6 +166,9 @@ class MainActivity : AppCompatActivity() {
          */
         val order = HashMap<String,Any>()
         order.put("id",DataConfiguration.authenticationExample?.reference?.order ?: "699246911101421132")
+        order.put("amount",amount.toString())
+        order.put("currency",selectedCurrency)
+        order.put("description","")
         /**
          * interface
          */
