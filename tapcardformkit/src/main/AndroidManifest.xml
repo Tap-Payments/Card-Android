@@ -5,22 +5,20 @@
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <application
-        android:supportsRtl="true"
-        >
-
+    <application android:supportsRtl="true">
+        <activity
+            android:name=".open.web_wrapper.nfc_activity.NFCLaunchActivity"
+            android:exported="false" />
         <activity
             android:name=".open.web_wrapper.ThreeDsWebViewActivity"
             android:exported="false"
-            android:theme="@style/Theme.Transparent"
-            />
+            android:theme="@style/Theme.Transparent" />
         <activity
             android:name=".open.web_wrapper.nfc_activity.NFCLauncherActivity"
             android:exported="false" />
         <activity
-            android:theme="@style/Theme.AppCompat"
             android:name=".open.web_wrapper.scanner_activity.ScannerActivity"
-            />
+            android:theme="@style/Theme.AppCompat" />
     </application>
 
 </manifest>
