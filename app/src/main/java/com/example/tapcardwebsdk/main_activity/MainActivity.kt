@@ -69,7 +69,6 @@ class MainActivity : AppCompatActivity() {
         val postUrl =  intent.getStringExtra("postUrl")
         val invoiceId =  intent.getStringExtra("invoiceId")
 
-        Log.e("auth",ordrId.toString() + " " + orderDescription + transactionRefrence + " " + postUrl)
 
         val configuration = LinkedHashMap<String,Any>()
 
