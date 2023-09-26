@@ -1,5 +1,6 @@
 package company.tap.tapcardformkit.open.web_wrapper.nfc_activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.text.format.DateFormat
@@ -10,28 +11,60 @@ import company.tap.nfcreader.open.reader.TapEmvCard
 import company.tap.nfcreader.open.reader.TapNfcCardReader
 import company.tap.nfcreader.open.utils.TapCardUtils
 import company.tap.nfcreader.open.utils.TapNfcUtils
+import company.tap.tapuilibrary.uikit.fragment.NFCFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposables
-import io.reactivex.functions.Consumer
 
 
 class NFCLauncherActivity : AppCompatActivity() {
-    private var tapNfcCardReader: TapNfcCardReader? = null
+    private lateinit var tapNfcCardReader: TapNfcCardReader
     private var cardReadDisposable = Disposables.empty()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        tapNfcCardReader = TapNfcCardReader(this);
-        cardReadDisposable = tapNfcCardReader!!
-            .readCardRx2(intent)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                this::showCardInfo,
-                Consumer<Throwable> { throwable: Throwable ->
-                    displayError(
-                        throwable.message
-                    )
-                })
+
+      //  setContentView(R.layout.ac)
+
+        tapNfcCardReader = TapNfcCardReader(this)
+       /* supportFragmentManager
+        .beginTransaction()
+            .replace(R.id.nfccFragment,NFCFragment())
+            .commit()*/
+
+        /*    cardReadDisposable = tapNfcCardReader!!
+                .readCardRx2(intent)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    this::showCardInfo,
+                    Consumer<Throwable> { throwable: Throwable ->
+                        displayError(
+                            throwable.message
+                        )
+                    })*/
+
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        // TODO Auto-generated method stub
+        // if this activity is in stack , this mwthod will be called
+        handleNFCResult(intent)
+    }
+
+
+
+    fun handleNFCResult(intent: Intent?) {
+        if (tapNfcCardReader?.isSuitableIntent(intent)== true) {
+            cardReadDisposable = tapNfcCardReader
+                .readCardRx2(intent)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ emvCard: TapEmvCard? ->
+                    if (emvCard != null) {
+                       // tapCheckoutFragment.viewModel?.handleNFCScannedResult(emvCard)
+                        println("emvCard$emvCard")
+                    }
+                },
+                    { throwable -> throwable.message?.let { println("error is nfc" + throwable.printStackTrace()) } })
+        }
 
     }
 
@@ -45,14 +78,24 @@ class NFCLauncherActivity : AppCompatActivity() {
                 tapNfcCardReader?.enableDispatch();
                 //  scancardContent.setVisibility(View.VISIBLE);
             }
-            //else
-            //     enableNFC();
+           // else
+                // enableNFC();
         } else {
 //            scancardContent.setVisibility(View.GONE);
 //            cardreadContent.setVisibility(View.GONE);
 //            noNfcText.setVisibility(View.VISIBLE);
         }
         super.onResume();
+    }
+
+    override fun onPause() {
+        super.onPause()
+        //if (tapCheckoutFragment.isNfcOpened) {
+            cardReadDisposable.dispose()
+            tapNfcCardReader?.disableDispatch()
+      //  }
+//changed above condition ELSE of simply finish to check gpay and finish , otherwise it ws not calling onactivity result
+
     }
 
     private fun showCardInfo(emvCard: TapEmvCard) {

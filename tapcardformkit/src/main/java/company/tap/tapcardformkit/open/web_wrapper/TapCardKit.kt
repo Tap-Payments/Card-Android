@@ -32,11 +32,13 @@ import company.tap.tapcardformkit.*
 import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.enums.CardFormWebStatus
 import company.tap.tapcardformkit.open.web_wrapper.model.ThreeDsResponse
+import company.tap.tapcardformkit.open.web_wrapper.nfc_activity.NFCLaunchActivity
 import company.tap.tapcardformkit.open.web_wrapper.nfc_activity.NFCLauncherActivity
 import company.tap.tapcardformkit.open.web_wrapper.scanner_activity.ScannerActivity
 import company.tap.taplocalizationkit.LocalizationManager
 import company.tap.tapuilibrary.themekit.ThemeManager
 import company.tap.tapuilibrary.uikit.atoms.*
+import company.tap.tapuilibrary.uikit.fragment.NFCFragment
 import java.net.URLEncoder
 import java.util.*
 
@@ -395,9 +397,9 @@ class TapCardKit : LinearLayout {
                     /**
                      * navigate to NFC Activity
                      */
-                    val intent = Intent(context, NFCLauncherActivity::class.java)
+                   // resultLauncher.launch(Intent(context, NFCLauncherActivity::class.java))
+                    val intent = Intent(context,NFCLaunchActivity::class.java)
                     (context).startActivity(intent)
-
 
 
                 }
