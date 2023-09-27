@@ -56,7 +56,7 @@ class ScannerActivity : AppCompatActivity(), TapTextRecognitionCallBack, TapScan
 
     override fun onRestart() {
         super.onRestart()
-      //  finish()
+        //finish()
     }
 
 

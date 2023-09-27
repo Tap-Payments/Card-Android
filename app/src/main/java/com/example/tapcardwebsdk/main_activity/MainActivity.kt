@@ -1,6 +1,9 @@
 package com.example.tapcardwebsdk.main_activity
 import Scope
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -8,6 +11,8 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.example.tapcardwebsdk.R
 import com.example.tapcardwebsdk.select_choice.SelectChoiceActivity
 import com.tap.commondatamodels.cardBrands.CardBrand
@@ -15,16 +20,18 @@ import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.open.TapCardStatusDelegate
 import company.tap.tapcardformkit.open.web_wrapper.TapCardConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
+import java.util.ArrayList
 
 class MainActivity : AppCompatActivity() {
     lateinit var tapCardKit: TapCardKit
+    val REQUEST_ID_MULTIPLE_PERMISSIONS = 7
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
 
 
         setContentView(R.layout.activity_main)
 
-
+        checkAndroidVersion()
         findViewById<TextView>(R.id.tokenizeBtn).setOnClickListener {
             findViewById<TapCardKit>(R.id.tapCardForm).generateTapToken()
         }
@@ -334,6 +341,43 @@ class MainActivity : AppCompatActivity() {
         finish()
         startActivity(intent)
 
+    }
+    private fun checkAndroidVersion() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            checkAndRequestPermissions()
+        } else {
+            // code for lollipop and pre-lollipop devices
+        }
+    }
+
+    private fun checkAndRequestPermissions(): Boolean {
+        val camera = ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.CAMERA
+        )
+        val wtite =
+            ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        val read =
+            ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+        val listPermissionsNeeded: MutableList<String> = ArrayList()
+        if (wtite != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        }
+        if (camera != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.CAMERA)
+        }
+        if (read != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
+        if (!listPermissionsNeeded.isEmpty()) {
+            ActivityCompat.requestPermissions(
+                this,
+                listPermissionsNeeded.toTypedArray(),
+                REQUEST_ID_MULTIPLE_PERMISSIONS
+            )
+            return false
+        }
+        return true
     }
 
 }
