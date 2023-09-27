@@ -1,4 +1,4 @@
-# Tap-Card-Android-SDK
+# Card-SDK-Andriod
 
 We at [Tap Payments](https://www.tap.company/) strive to make your payments easier than ever. We as a PCI compliant company, provide you a from the self solution to process card payments in your Android app.
 
