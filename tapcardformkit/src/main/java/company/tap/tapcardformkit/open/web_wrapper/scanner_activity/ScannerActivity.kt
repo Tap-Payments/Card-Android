@@ -126,5 +126,10 @@ class ScannerActivity : AppCompatActivity(), TapTextRecognitionCallBack, TapScan
         Toast.makeText(this@ScannerActivity, card?.cardNumber.toString(), Toast.LENGTH_LONG).show()
 
     }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+
+    }
 
 }
