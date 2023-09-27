@@ -124,7 +124,7 @@ class SelectChoiceActivity : AppCompatActivity() {
         dataModel!!.add(DataModel(CardBrand.mada.name, true))
         dataModel!!.add(DataModel(CardBrand.visa.name, true))
         dataModel!!.add(DataModel(CardBrand.masterCard.name, true))
-        dataModel!!.add(DataModel(CardBrand.americanExpress.name, true))
+        dataModel!!.add(DataModel("AMEX", true))
         dataModel!!.add(DataModel(CardBrand.omanNet.name, true))
         dataModel!!.add(DataModel(CardBrand.meeza.name, true))
         adapter = CustomAdapter(dataModel!!, applicationContext)
@@ -433,7 +433,7 @@ class SelectChoiceActivity : AppCompatActivity() {
              */
             intent.putExtra("orderId", findViewById<EditText>(R.id.order_id).text.toString())
             intent.putExtra("orderDescription", findViewById<EditText>(R.id.order_description).text.toString())
-            intent.putExtra("transactionRefrence", findViewById<EditText>(R.id.trans_refrence).text.toString())
+            intent.putExtra("transactionRefrence",getRandomTrx())
             intent.putExtra("invoiceId", findViewById<EditText>(R.id.invoice_id).text.toString())
             intent.putExtra("postUrl", findViewById<EditText>(R.id.post_url).text.toString())
 

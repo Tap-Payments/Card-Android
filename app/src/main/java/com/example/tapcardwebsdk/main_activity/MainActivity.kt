@@ -170,8 +170,8 @@ class MainActivity : AppCompatActivity() {
          * order
          */
         val order = HashMap<String,Any>()
-        order.put("id",ordrId.toString())
-        order.put("amount",amount.toString())
+        order.put("id",ordrId ?: "")
+        order.put("amount", amount?.toInt() ?: 1)
         order.put("currency",selectedCurrency)
         order.put("description",orderDescription.toString())
         /**
