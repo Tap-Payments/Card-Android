@@ -21,183 +21,6 @@
             android:textColor="@color/black_color" />
 
 
-        
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/fields"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            />
-
-        <RadioGroup
-            android:id="@+id/radioGroup3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/margin_basic_10dp"
-            android:paddingRight="@dimen/margin_basic_10dp">
-
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/switchButton_cardHolderName"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="50"
-                android:text="@string/card_name"
-
-                />
-        </RadioGroup>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/addons"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            />
-        <RadioGroup
-            android:id="@+id/radioGroup9"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/margin_basic_10dp"
-            android:paddingRight="@dimen/margin_basic_10dp">
-
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/switchButton_showLoadingView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="50"
-                android:checked="true"
-                android:text="Show Loading state"
-
-                />
-        </RadioGroup>
-        <RadioGroup
-            android:id="@+id/radioGroup4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/margin_basic_10dp"
-            android:paddingRight="@dimen/margin_basic_10dp">
-
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/switchButton_cardBrands"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="50"
-                android:checked="true"
-                android:text="@string/display_payment_brands"
-
-                />
-        </RadioGroup>
-
-
-
-        <!--        <com.google.android.material.textfield.TextInputEditText-->
-<!--            android:id="@+id/editTextCardHolderName"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_margin="16dp"-->
-<!--            android:hint="Default CardHolder Name"-->
-<!--            android:inputType="textCapWords"-->
-<!--            android:visibility="gone" />-->
-
-        <!--        <RadioGroup-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:orientation="horizontal"-->
-        <!--            android:paddingLeft="@dimen/margin_basic_10dp"-->
-        <!--            android:paddingRight="@dimen/margin_basic_10dp"-->
-        <!--            android:id="@+id/radioGroup10"-->
-        <!--            android:layout_margin="@dimen/margin_basic_10dp">-->
-        <!--            <androidx.appcompat.widget.SwitchCompat-->
-        <!--                android:id="@+id/switchButton_editCardHolderName"-->
-        <!--                android:layout_width="0dp"-->
-        <!--                android:layout_weight="50"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:layout_gravity="center"-->
-        <!--                android:text="Editable/Not CardHolder Name"-->
-
-        <!--                />-->
-        <!--        </RadioGroup>-->
-
-
-        <RadioGroup
-            android:id="@+id/radioGroup5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/margin_basic_10dp"
-            android:paddingRight="@dimen/margin_basic_10dp">
-
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/switchButton_showHidescan"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="50"
-                android:checked="true"
-                android:text="@string/display_card_scanning"
-
-                />
-        </RadioGroup>
-
-        <RadioGroup
-            android:id="@+id/radioGroup12"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/margin_basic_10dp"
-            android:paddingRight="@dimen/margin_basic_10dp">
-
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/switchButton_showHidenfc"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="50"
-                android:checked="true"
-                android:text="@string/display_nfc"
-
-                />
-        </RadioGroup>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:text="@string/merchant"
-            android:textAllCaps="false"
-            android:id="@+id/merchant_tv"
-
-            />
-
-
-<!--        <Button-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginHorizontal="@dimen/_10sdp"-->
-<!--            android:layout_marginTop="@dimen/_10sdp"-->
-<!--            android:text="@string/edit_transaction_title"-->
-<!--            android:textAllCaps="false"-->
-<!--            android:id="@+id/transaction"-->
-
-<!--            />-->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -297,8 +120,219 @@
 
         </LinearLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/authentication"
+            android:textColor="@color/black" />
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/toggle_authentication"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            app:checkedButton="@+id/btn_auth"
+            app:selectionRequired="true"
+            app:singleSelection="true"
+
+            >
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_auth"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Authenticate" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_token"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Token" />
 
 
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/purpose"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            />
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/toggle_purpose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            app:checkedButton="@+id/btn_save_card"
+            app:selectionRequired="true"
+            app:singleSelection="true"
+
+            >
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_save_card"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save Card" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_payment_transaction"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PAYMENT_TRANSACTION" />
+
+
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/transaction"
+            android:textColor="@color/black"
+
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:weightSum="2">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:text="@string/trans_refrence"
+
+                />
+
+
+            <EditText
+                android:id="@+id/trans_refrence"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="tck_LVL8sXyzVSXfSgG0SFkPvQO1Ns"
+                android:textAlignment="center" />
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/order"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:weightSum="2">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:text="@string/order_id"
+
+                />
+
+
+            <EditText
+                android:id="@+id/order_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="number"
+                android:text=""
+                android:textAlignment="center" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:weightSum="2">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:text="@string/amount"
+
+                />
+
+
+            <EditText
+                android:id="@+id/amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="number"
+                android:maxLength="4"
+                android:text="1"
+                android:textAlignment="center" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:weightSum="2">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:text="@string/order_desc"
+
+                />
+
+
+            <EditText
+                android:id="@+id/order_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="text"
+                android:text="test"
+                android:textAlignment="center" />
+
+
+        </LinearLayout>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -349,169 +383,6 @@
         </com.google.android.material.button.MaterialButtonToggleGroup>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:weightSum="2">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:gravity="start"
-                android:text="@string/amount"
-
-                />
-
-
-            <EditText
-                android:id="@+id/amount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="number"
-                android:maxLength="4"
-                android:text="1"
-                android:textAlignment="center" />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:weightSum="2">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:gravity="start"
-                android:text="@string/merchant_id"
-
-                />
-
-
-            <EditText
-                android:id="@+id/merchant_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="number"
-                android:text="1124340"
-                android:textAlignment="center" />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:weightSum="2">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:gravity="start"
-                android:text="@string/order_id"
-
-                />
-
-
-            <EditText
-                android:id="@+id/order_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="number"
-                android:text=""
-                android:textAlignment="center" />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:weightSum="2">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:gravity="start"
-                android:text="@string/order_desc"
-
-                />
-
-
-            <EditText
-                android:id="@+id/order_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="text"
-                android:text="test"
-                android:textAlignment="center" />
-
-
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:text="@string/transaction"
-            android:textColor="@color/black"
-
-            />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:weightSum="2">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:gravity="start"
-                android:text="@string/trans_refrence"
-
-                />
-
-
-            <EditText
-                android:id="@+id/trans_refrence"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="tck_LVL8sXyzVSXfSgG0SFkPvQO1Ns"
-                android:textAlignment="center" />
-
-
-        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -553,15 +424,7 @@
         </LinearLayout>
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:text="@string/post"
-            android:textColor="@color/black"
 
-            />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -576,21 +439,176 @@
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:gravity="start"
-                android:text="@string/post_url"
+                android:text="@string/merchant_id"
 
                 />
 
 
             <EditText
-                android:id="@+id/post_url"
+                android:id="@+id/merchant_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:inputType="number"
                 android:text=""
                 android:textAlignment="center" />
 
 
         </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/merchant"
+            android:textAllCaps="false"
+            android:id="@+id/merchant_tv"
+
+            />
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/features"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            />
+        <RadioGroup
+            android:id="@+id/radioGroup9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/margin_basic_10dp"
+            android:paddingRight="@dimen/margin_basic_10dp">
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchButton_showLoadingView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="50"
+                android:checked="true"
+                android:text="loading"
+
+                />
+        </RadioGroup>
+        <RadioGroup
+            android:id="@+id/radioGroup4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/margin_basic_10dp"
+            android:paddingRight="@dimen/margin_basic_10dp">
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchButton_cardBrands"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="50"
+                android:checked="true"
+                android:text="@string/display_payment_brands"
+
+                />
+        </RadioGroup>
+        <RadioGroup
+            android:id="@+id/radioGroup5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/margin_basic_10dp"
+            android:paddingRight="@dimen/margin_basic_10dp">
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchButton_showHidescan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="50"
+                android:checked="true"
+                android:text="@string/display_card_scanning"
+
+                />
+        </RadioGroup>
+
+        <RadioGroup
+            android:id="@+id/radioGroup12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/margin_basic_10dp"
+            android:paddingRight="@dimen/margin_basic_10dp">
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchButton_showHidenfc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="50"
+                android:checked="true"
+                android:text="@string/display_nfc"
+
+                />
+        </RadioGroup>
+
+        <RadioGroup
+            android:id="@+id/rgSavedCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/margin_basic_10dp"
+            android:paddingRight="@dimen/margin_basic_10dp">
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchButton_savCard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="50"
+                android:checked="true"
+                android:text="@string/saveCard"
+
+                />
+        </RadioGroup>
+
+        <RadioGroup
+            android:id="@+id/rgAutoSavedCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/margin_basic_10dp"
+            android:paddingRight="@dimen/margin_basic_10dp">
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchButton_autoSavedCard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="50"
+                android:checked="true"
+                android:text="@string/autoSaveCard"
+
+                />
+        </RadioGroup>
+
+
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -634,6 +652,37 @@
 
         </com.google.android.material.button.MaterialButtonToggleGroup>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/supportedPaymentAuthentications"
+
+            />
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/toggleButtonAuthentication"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_5sdp"
+            app:checkedButton="@+id/btnAuth"
+            app:selectionRequired="true"
+            app:singleSelection="true">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAuth"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3ds" />
+
+
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -656,43 +705,55 @@
                 android:layout_weight="1" />
         </LinearLayout>
 
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/fields"
             android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:text="@string/authentication"
-            android:textColor="@color/black" />
+            />
 
-        <com.google.android.material.button.MaterialButtonToggleGroup
-            android:id="@+id/toggle_authentication"
-            android:layout_width="wrap_content"
+        <RadioGroup
+            android:id="@+id/radioGroup3"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            app:checkedButton="@+id/btn_auth"
-            app:selectionRequired="true"
-            app:singleSelection="true"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/margin_basic_10dp"
+            android:paddingRight="@dimen/margin_basic_10dp">
 
-            >
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_auth"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="wrap_content"
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchButton_cardHolderName"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/Authenticate" />
+                android:layout_gravity="center"
+                android:layout_weight="50"
+                android:text="@string/card_name"
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_token"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="wrap_content"
+                />
+        </RadioGroup>
+
+        <RadioGroup
+            android:id="@+id/rgCardCVV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/margin_basic_10dp"
+            android:paddingRight="@dimen/margin_basic_10dp">
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchButton_cardCVV"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/Token" />
+                android:layout_gravity="center"
+                android:layout_weight="50"
+                android:text="@string/card_cvv"
 
-
-        </com.google.android.material.button.MaterialButtonToggleGroup>
-
+                />
+        </RadioGroup>
 
 
         <TextView
@@ -849,53 +910,41 @@
 
         </RadioGroup>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/scanner_border_color"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:textColor="@color/black" />
-
-        <com.google.android.material.button.MaterialButtonToggleGroup
-            android:id="@+id/toggleButtonGroup3"
+        <RadioGroup
+            android:id="@+id/colorStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:gravity="center"
-            app:singleSelection="true"
+            android:layout_margin="@dimen/margin_basic_10dp"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
-            >
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnWhite"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="wrap_content"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="WHITE" />
+                android:layout_gravity="center"
+                android:layout_weight="50"
+                android:text="@string/colorStyle" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnRed"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="wrap_content"
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/colored"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="RED" />
+                android:layout_weight="50"
+                android:checked="true"
+                android:text="@string/colored" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnGreen"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="wrap_content"
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/monochrome"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="GREEN" />
+                android:layout_weight="50"
+                android:checked="false"
+                android:text="@string/monochrome"
+                />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnBlue"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="BLUE" />
+        </RadioGroup>
 
-        </com.google.android.material.button.MaterialButtonToggleGroup>
 
 
         <RadioGroup
@@ -919,26 +968,84 @@
                 />
         </RadioGroup>
 
-        <RadioGroup
-            android:id="@+id/radioGroupShowSavedBy"
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/redirect"
+            android:textColor="@color/black"
+
+            />
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_basic_10dp"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/margin_basic_10dp"
-            android:paddingRight="@dimen/margin_basic_10dp">
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:weightSum="2">
 
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/switchButton_showSavedBy"
-                android:layout_width="0dp"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="50"
-                android:checked="false"
-                android:text="@string/show_save"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:text="@string/redirect_url"
 
                 />
-        </RadioGroup>
+
+
+            <EditText
+                android:id="@+id/redirect_url"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=""
+                android:textAlignment="center" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/post"
+            android:textColor="@color/black"
+
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:weightSum="2">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:text="@string/post_url"
+
+                />
+
+
+            <EditText
+                android:id="@+id/post_url"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=""
+                android:textAlignment="center" />
+
+
+        </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="match_parent"
@@ -949,5 +1056,7 @@
             android:text="@string/done" />
 
     </LinearLayout>
+
+
 
 </androidx.core.widget.NestedScrollView>
