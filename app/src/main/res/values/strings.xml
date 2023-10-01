@@ -17,12 +17,12 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
-    <string name="card_name">Card Name</string>
+    <string name="card_name">Card Holder</string>
     <string name="addons">ADDONS</string>
     <string name="fields">Fields</string>
     <string name="display_payment_brands">Display Payment Brands</string>
-    <string name="display_card_scanning">Display Card Scanning</string>
-    <string name="display_nfc">Display NFC</string>
+    <string name="display_card_scanning">Scanner</string>
+    <string name="display_nfc">Nfc</string>
     <string name="operation">Operation</string>
     <string name="sandbox">SandBox</string>
     <string name="production">Production</string>
@@ -40,7 +40,7 @@
     <string name="card_edges">Card Edges:</string>
     <string name="curved">curved</string>
     <string name="straight">flat</string>
-    <string name="display_powerdby_logo">Display PowerdBy Logo</string>
+    <string name="display_powerdby_logo">powered</string>
     <string name="done">Done</string>
     <string name="production_key">Production Key</string>
     <string name="merchant_id">Merchant ID</string>
@@ -63,7 +63,7 @@
     <string name="editable">Editable</string>
     <string name="edit_transaction_title">Edit Transaction</string>
     <string name="transaction_descr">Transaction Description</string>
-    <string name="Authenticate">Authenticate</string>
+    <string name="Authenticate">AuthenticatedToken</string>
     <string name="Token">Token</string>
     <string name="currency">Currency</string>
     <string name="order_id">Order id</string>
@@ -73,4 +73,16 @@
     <string name="invoice_id">Invoice Id</string>
     <string name="post">Post</string>
     <string name="post_url">Post url</string>
+    <string name="purpose">Purpose</string>
+    <string name="order">Order</string>
+    <string name="features">Features</string>
+    <string name="redirect">Redirect</string>
+    <string name="card_cvv">CVV</string>
+    <string name="colored">colored</string>
+    <string name="monochrome">monochrome</string>
+    <string name="colorStyle">ColorStyle</string>
+    <string name="supportedPaymentAuthentications">supportedPaymentAuthentications</string>
+    <string name="redirect_url">Redirect url</string>
+    <string name="saveCard">Save Card</string>
+    <string name="autoSaveCard">Auto Save Card</string>
 </resources>

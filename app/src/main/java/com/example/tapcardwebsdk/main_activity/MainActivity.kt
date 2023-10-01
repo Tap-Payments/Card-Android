@@ -1,5 +1,5 @@
 package com.example.tapcardwebsdk.main_activity
-import Scope
+
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -11,8 +11,12 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+
+import androidx.appcompat.widget.SwitchCompat
+
 import com.example.tapcardwebsdk.R
 import com.example.tapcardwebsdk.select_choice.SelectChoiceActivity
 import com.tap.commondatamodels.cardBrands.CardBrand
@@ -20,7 +24,12 @@ import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.open.TapCardStatusDelegate
 import company.tap.tapcardformkit.open.web_wrapper.TapCardConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
+
 import java.util.ArrayList
+
+import company.tap.tapcardformkit.open.web_wrapper.enums.PaymentChannels
+import company.tap.tapcardformkit.open.web_wrapper.enums.TapScope
+
 
 class MainActivity : AppCompatActivity() {
     lateinit var tapCardKit: TapCardKit
@@ -55,14 +64,12 @@ class MainActivity : AppCompatActivity() {
         val selectedCardType: String = intent.getStringExtra("selectedCardType").toString()
         val showSaved = intent.getBooleanExtra("showSaveSwitch", false)
         val selectedCardEdge = intent.getStringExtra("selectedCardEdge")
-        val cardHolder: Boolean = intent.getBooleanExtra("selectedCardHolderName", true)
         val showCardBrands: Boolean = intent.getBooleanExtra("selectedCardBrand", true)
         val showHideScanner: Boolean = intent.getBooleanExtra("showHideScanner", true)
         val showHideNFC: Boolean = intent.getBooleanExtra("showHideNFC", true)
         val amount = intent.getStringExtra("amount")
         val cardBrands = intent.getStringArrayListExtra("cardBrands")
-        val scopeType: Scope =
-            intent.getSerializableExtra("authentication") as Scope
+        val scopeType: TapScope = intent.getSerializableExtra("authentication") as TapScope
         val powerdBy = intent.getBooleanExtra("showPowerdBy", false)
         val showLoadingState: Boolean = intent.getBooleanExtra("showLoadingState", true)
         val sandboxKey = intent.getStringExtra("sandboxKey")
@@ -76,8 +83,26 @@ class MainActivity : AppCompatActivity() {
         val postUrl =  intent.getStringExtra("postUrl")
         val invoiceId =  intent.getStringExtra("invoiceId")
 
+        /**
+         * new
+         */
+        val purpose =  intent.getStringExtra("purpose")
+        val saveCard =  intent.getBooleanExtra("saveCard",true)
+        val autoSaveCard =  intent.getBooleanExtra("autoSaveCard",true)
+        val redirectURL =  intent.getStringExtra("redirectURL")
+        val selectedColorStyle =  intent.getStringExtra("selectedColorStyle")
+        val cardHolder =  intent.getBooleanExtra("cardHolder",true)
+        val cvv =  intent.getBooleanExtra("cvv",true)
+
+        Log.e("newData","purpose ${purpose} , saveCard ${saveCard} ,autoSaveCard ${autoSaveCard} ,redirectURL ${redirectURL} ,selectedColorStyle ${selectedColorStyle} ,cardHolder ${cardHolder} , cvv ${cvv}")
 
         val configuration = LinkedHashMap<String,Any>()
+
+        /**
+         * merchant
+         */
+        val scope = HashMap<String,Any>()
+        scope.put("scope",scopeType.name ?: "")
 
         /**
          * merchant
@@ -95,6 +120,13 @@ class MainActivity : AppCompatActivity() {
          */
         val post = HashMap<String,Any>()
         post.put("url",postUrl.toString())
+
+
+        /**
+         * redirect
+         */
+        val redirect = HashMap<String,Any>()
+        redirect.put("url",redirectURL.toString())
 
         /**
          * metadata
@@ -150,35 +182,62 @@ class MainActivity : AppCompatActivity() {
          * acceptance
          */
         val acceptance = java.util.HashMap<String,Any>()
-        acceptance.put("supportedBrands", cardBrands?.toList()?: listOf(""))
-        acceptance.put("supportedCards",if (selectedCardType == CardType.ALL.name) mutableListOf(
+        acceptance.put("supportedSchemes", cardBrands?.toList()?: listOf(""))
+        acceptance.put("supportedFundSource",if (selectedCardType == CardType.ALL.name) mutableListOf(
                     CardType.DEBIT.name,
                     CardType.CREDIT.name
                 ) else mutableListOf(selectedCardType))
+        acceptance.put("supportedPaymentAuthentications", mutableListOf("3DS"))
 
         /**
          * fields
          */
         val fields = HashMap<String,Any>()
-        fields.put("cardHolder",cardHolder)
+        /**
+         * card
+         */
+        val card = HashMap<String,Any>()
+         card.put("cvv",cvv)
+         card.put("cardHolder",cardHolder)
+        fields.put("card",card)
+
+        /**
+         * customerCards
+         */
+        val customerCards = HashMap<String,Any>()
+        customerCards.put("saveCard",saveCard)
+        customerCards.put("autoSaveCard",autoSaveCard)
+
+        /**
+         * features
+         */
+        val features = HashMap<String,Any>()
+        features.put("scanner",showHideScanner)
+        features.put("nfc",showHideNFC)
+        features.put("acceptanceBadge",showCardBrands)
+        features.put("customerCards",customerCards)
+
+
 
         /**
          * addons
          */
         val addons = HashMap<String,Any>()
         addons.put("loader",showLoadingState)
-        addons.put("saveCard",showSaved)
-        addons.put("displayPaymentBrands",showCardBrands)
-        addons.put("scanner",showHideScanner)
-        addons.put("nfc",showHideNFC)
+
+        /**
+         * operator
+         */
+        val operator = HashMap<String,Any>()
+        operator.put("publicKey",sandboxKey.toString())
 
 
         /**
          * order
          */
         val order = HashMap<String,Any>()
-        order.put("id",ordrId.toString())
-        order.put("amount",amount.toString())
+        order.put("id",ordrId ?: "")
+        order.put("amount", amount?.toInt() ?: 1)
         order.put("currency",selectedCurrency)
         order.put("description",orderDescription.toString())
         /**
@@ -188,29 +247,28 @@ class MainActivity : AppCompatActivity() {
         interfacee.put("locale",selectedLanguage)
         interfacee.put("theme",selectedTheme)
         interfacee.put("edges",selectedCardEdge.toString())
-        interfacee.put("direction",selectedCardDirection.toString())
+        interfacee.put("cardDirection",selectedCardDirection.toString())
+        interfacee.put("powered",powerdBy)
+        interfacee.put("colorStyle",selectedColorStyle.toString())
 
 
-
-
-        configuration.put("merchant",merchant)
+        configuration.put("publicKey",sandboxKey.toString())
+        configuration.put("scope",scopeType)
+        configuration.put("purpose",purpose.toString())
         configuration.put("transaction",transaction)
         configuration.put("order",order)
         configuration.put("invoice",invoice)
-        configuration.put("post",post)
-        configuration.put("purpose","PAYMENT_TRANSACTION")
-        configuration.put("fields",fields)
-        configuration.put("acceptance",acceptance)
-        configuration.put("addons",addons)
-        configuration.put("publicKey",sandboxKey.toString())
-        configuration.put("interface",interfacee)
-        configuration.put("scope",scopeType)
+        configuration.put("merchant",merchant)
         configuration.put("customer",customer)
+        configuration.put("features",features)
+        configuration.put("acceptance",acceptance)
+        configuration.put("fields",fields)
+        configuration.put("addons",addons)
+        configuration.put("interface",interfacee)
+        configuration.put("redirect",redirect)
+        configuration.put("post",post)
 
 
-        /**
-         * from settings we need to add Key :
-         */
 
         TapCardConfiguration.configureWithTapCardDictionaryConfiguration(
             this,

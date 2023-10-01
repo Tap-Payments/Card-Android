@@ -1,4 +1,4 @@
-# Tap-Card-Android-SDK
+# Card-SDK-Andriod
 
 We at [Tap Payments](https://www.tap.company/) strive to make your payments easier than ever. We as a PCI compliant company, provide you a from the self solution to process card payments in your Android app.
 
@@ -6,7 +6,7 @@ We at [Tap Payments](https://www.tap.company/) strive to make your payments easi
 [![Documentation](https://img.shields.io/badge/documentation-100%25-bright%20green.svg)](https://tap-payments.github.io/goSellSDK-Android/)
 [![SDK Version](https://img.shields.io/badge/minSdkVersion-24-blue.svg)](https://stuff.mit.edu/afs/sipb/project/android/docs/reference/packages.html)
 [![SDK Version](https://img.shields.io/badge/targetSdkVersion-33-informational.svg)](https://stuff.mit.edu/afs/sipb/project/android/docs/reference/packages.html)
-[![SDK Version](https://img.shields.io/badge/latestVersion-0.0.20-informational.svg)](https://stuff.mit.edu/afs/sipb/project/android/docs/reference/packages.html)
+[![SDK Version](https://img.shields.io/badge/latestVersion-0.0.22-informational.svg)](https://stuff.mit.edu/afs/sipb/project/android/docs/reference/packages.html)
 
 # Demo
 ![Imgur](https://i.imgur.com/qLaQdN5.gif)
