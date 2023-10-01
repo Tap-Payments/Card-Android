@@ -73,7 +73,7 @@ class SelectChoiceActivity : AppCompatActivity() {
     private var showHideScanner: Boolean = false
     private var showHideNFC: Boolean = false
     private var showLoadingState: Boolean = true
-    private var showPowerdBy: Boolean = false
+    private var showPowerdBy: Boolean = true
   //  private var showSavedSwitch: Boolean = false
 
     private var defaultCardHolderName: String? = null
@@ -339,6 +339,7 @@ class SelectChoiceActivity : AppCompatActivity() {
         switchShowLoadingState.setOnCheckedChangeListener { _, isChecked ->
             showLoadingState = isChecked
         }
+        switchShowPowerdBy.isChecked = true
         switchShowPowerdBy.setOnCheckedChangeListener { _, isChecked ->
             showPowerdBy = isChecked
         }
