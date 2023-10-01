@@ -12,3 +12,7 @@ enum class PaymentChannels{
 enum class TapCardColorStyle {
     colored, monochrome
 }
+
+enum class TapScope {
+    AuthenticatedToken, Token
+}

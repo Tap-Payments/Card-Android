@@ -25,7 +25,7 @@ import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.*
 import cards.pay.paycardsrecognizer.sdk.Card
-import com.airbnb.lottie.LottieAnimationView
+//import com.airbnb.lottie.LottieAnimationView
 import com.google.gson.Gson
 import company.tap.tapcardformkit.*
 import company.tap.tapcardformkit.open.DataConfiguration
@@ -46,7 +46,7 @@ import java.util.*
 class TapCardKit : LinearLayout {
     lateinit var hideableWebView: WebView
 //    lateinit var threeDsBottomsheet: BottomSheetDialogFragment
-    lateinit var lottieAnimationView: LottieAnimationView
+//    lateinit var lottieAnimationView: LottieAnimationView
     private var isRedirected = false
     lateinit var constraintLayout: ConstraintLayout
     lateinit var webViewFrame: FrameLayout
@@ -112,23 +112,28 @@ class TapCardKit : LinearLayout {
         webViewFrame = findViewById(R.id.webViewFrame)
         webFrame3ds = findViewById(R.id.webViewFrame3ds)
         constraintLayout = findViewById(R.id.constraint)
-        lottieAnimationView = findViewById(R.id.shimmer_view)
+    //    lottieAnimationView = findViewById(R.id.shimmer_view)
         cardWebview.settings.javaScriptEnabled = true
         hideableWebView.settings.javaScriptEnabled = true
-        cardWebview.settings.cacheMode = WebSettings.LOAD_NO_CACHE;
-        cardWebview.settings.domStorageEnabled = true;
-        cardWebview.setBackgroundColor(Color.TRANSPARENT);
+//        cardWebview.settings.cacheMode = WebSettings.LOAD_NO_CACHE
+         cardWebview.settings.domStorageEnabled = true
+        cardWebview.setBackgroundColor(Color.TRANSPARENT)
         cardWebview.setLayerType(LAYER_TYPE_SOFTWARE, null)
+         cardWebview.settings.loadWithOverviewMode = true
+         cardWebview.settings.useWideViewPort = true
+         cardWebview.settings.setSupportMultipleWindows(true)
         cardWebview.webViewClient = MyWebViewClient()
         hideableWebView.webViewClient = HideableWebViewClient()
+        CookieManager.getInstance().setAcceptThirdPartyCookies(cardWebview,true);
 
-    }
+
+     }
 
 
      fun init(configuraton: CardConfiguraton) {
         cardConfiguraton = configuraton
         applyThemeForShimmer()
-        startShimmer()
+      //  startShimmer()
         when (configuraton) {
             CardConfiguraton.ModelConfiguration -> {
                 with(DataConfiguration.configurations) {
@@ -161,73 +166,73 @@ class TapCardKit : LinearLayout {
          */
         when(cardConfiguraton){
             CardConfiguraton.ModelConfiguration->{
-                with(DataConfiguration.configurations?.tapCardConfigurationInterface) {
-                    lottieAnimationView.setCacheComposition(true)
-                    when (this?.theme) {
-                        TapTheme.light -> {
-                            setLottieAnimationAccordingToTheme(lightLottieUrlJson,lightLottieAssetName)
-
-                        }
-                        TapTheme.dark -> {
-                            setLottieAnimationAccordingToTheme(
-                                darkLottieUrlJson,
-                                darkLottieAssetName)
-                        }
-                        else -> {}
-                    }
-
-                    when (this?.edges) {
-                        TapCardEdges.flat -> {}
-                        TapCardEdges.curved -> {
-                            val radius = TypedValue.applyDimension(
-                                TypedValue.COMPLEX_UNIT_DIP,
-                                10f,
-                                context.resources.displayMetrics
-                            )
-                            findViewById<CardView>(R.id.card_lottie).radius = radius
-                        }
-                        else -> {}
-                    }
-
-                  setTapThemeAndLanguage(
-                        context,
-                        TapLocal.valueOf(this?.locale?.name.toString()),
-                        TapTheme.valueOf(this?.theme?.name.toString())
-                    )
-                }
+//                with(DataConfiguration.configurations?.tapCardConfigurationInterface) {
+//                    lottieAnimationView.setCacheComposition(true)
+//                    when (this?.theme) {
+//                        TapTheme.light -> {
+//                            setLottieAnimationAccordingToTheme(lightLottieUrlJson,lightLottieAssetName)
+//
+//                        }
+//                        TapTheme.dark -> {
+//                            setLottieAnimationAccordingToTheme(
+//                                darkLottieUrlJson,
+//                                darkLottieAssetName)
+//                        }
+//                        else -> {}
+//                    }
+//
+//                    when (this?.edges) {
+//                        TapCardEdges.flat -> {}
+//                        TapCardEdges.curved -> {
+//                            val radius = TypedValue.applyDimension(
+//                                TypedValue.COMPLEX_UNIT_DIP,
+//                                10f,
+//                                context.resources.displayMetrics
+//                            )
+//                            findViewById<CardView>(R.id.card_lottie).radius = radius
+//                        }
+//                        else -> {}
+//                    }
+//
+//                  setTapThemeAndLanguage(
+//                        context,
+//                        TapLocal.valueOf(this?.locale?.name.toString()),
+//                        TapTheme.valueOf(this?.theme?.name.toString())
+//                    )
+//                }
             }
             CardConfiguraton.MapConfigruation ->{
                 val tapInterface = DataConfiguration.configurationsAsHashMap?.get("interface") as Map<*, *>
                 with(tapInterface["theme"].toString()) {
-                    lottieAnimationView.setCacheComposition(true)
+              //      lottieAnimationView.setCacheComposition(true)
                     when (this) {
                         TapTheme.light.name -> {
-                            setLottieAnimationAccordingToTheme(lightLottieUrlJson,lightLottieAssetName)
+                         //   setLottieAnimationAccordingToTheme(lightLottieUrlJson,lightLottieAssetName)
                         }
                         TapTheme.dark.name -> {
-                            setLottieAnimationAccordingToTheme(
-                                darkLottieUrlJson,
-                                darkLottieAssetName)
+//                            setLottieAnimationAccordingToTheme(
+//                                darkLottieUrlJson,
+//                                darkLottieAssetName)
                         }
                         else -> {}
                     }
 
 
                 }
-                with(tapInterface["edges"].toString()) {
-                    when (this) {
-                        TapCardEdges.flat.name -> {}
-                        TapCardEdges.curved.name -> {
-                            val radius = TypedValue.applyDimension(
-                                TypedValue.COMPLEX_UNIT_DIP,
-                                10f,
-                                context.resources.displayMetrics
-                            )
-                            findViewById<CardView>(R.id.card_lottie).radius = radius
-                        }
-                        else -> {}
-                    }
-                }
+//                with(tapInterface["edges"].toString()) {
+//                    when (this) {
+//                        TapCardEdges.flat.name -> {}
+//                        TapCardEdges.curved.name -> {
+//                            val radius = TypedValue.applyDimension(
+//                                TypedValue.COMPLEX_UNIT_DIP,
+//                                10f,
+//                                context.resources.displayMetrics
+//                            )
+//                            findViewById<CardView>(R.id.card_lottie).radius = radius
+//                        }
+//                        else -> {}
+//                    }
+//                }
 
               setTapThemeAndLanguage(
                     this.context,
@@ -239,26 +244,26 @@ class TapCardKit : LinearLayout {
 
 
     }
+//
+//    private fun setLottieAnimationAccordingToTheme(url:String,assetNameForFailure:String) {
+//        lottieAnimationView.setAnimationFromUrl(url)
+//        lottieAnimationView.setFailureListener { throwable ->
+//            lottieAnimationView.setAnimation(
+//                context.getAssetFile(assetNameForFailure)
+//            )
+//
+//        }
+//    }
 
-    private fun setLottieAnimationAccordingToTheme(url:String,assetNameForFailure:String) {
-        lottieAnimationView.setAnimationFromUrl(url)
-        lottieAnimationView.setFailureListener { throwable ->
-            lottieAnimationView.setAnimation(
-                context.getAssetFile(assetNameForFailure)
-            )
-
-        }
-    }
-
-
-    fun startShimmer() {
-
-        lottieAnimationView.visibility = View.VISIBLE;
-        cardWebview.visibility = View.GONE
-        findViewById<CardView>(R.id.card_lottie).visibility = View.VISIBLE
-
-
-    }
+//
+//    fun startShimmer() {
+//
+//        lottieAnimationView.visibility = View.VISIBLE;
+//        cardWebview.visibility = View.GONE
+//        findViewById<CardView>(R.id.card_lottie).visibility = View.VISIBLE
+//
+//
+//    }
 
     private fun setTapThemeAndLanguage(context: Context, language: TapLocal, themeMode: TapTheme) {
         when (themeMode) {
@@ -283,9 +288,9 @@ class TapCardKit : LinearLayout {
     }
 
     private fun stopShimmer() {
-        lottieAnimationView.visibility = View.GONE;
-        cardWebview.visibility = View.VISIBLE
-        findViewById<CardView>(R.id.card_lottie).visibility = View.GONE
+     //   lottieAnimationView.visibility = View.GONE;
+       // cardWebview.visibility = View.VISIBLE
+       // findViewById<CardView>(R.id.card_lottie).visibility = View.GONE
 
     }
 
@@ -320,13 +325,12 @@ class TapCardKit : LinearLayout {
              * main checker if url start with "tapCardWebSDK://"
              */
             if (request?.url.toString().startsWith(CardWebUrlPrefix, ignoreCase = true)) {
-
                 /**
                  * listen for states of cardWebStatus of onReady , onValidInput .. etc
                  */
                 if (request?.url.toString().contains(CardFormWebStatus.onReady.name)) {
-                    stopShimmer()
-                    Log.e("ready","onReady")
+                //    stopShimmer()
+
                     DataConfiguration.getTapCardStatusListener()?.onReady()
 
                 }
@@ -404,7 +408,8 @@ class TapCardKit : LinearLayout {
                 }
                 return true
 
-            } else return false
+            }
+        else return false
         }
 
         override fun onPageFinished(view: WebView, url: String) {

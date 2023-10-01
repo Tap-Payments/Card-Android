@@ -40,6 +40,7 @@ import company.tap.tapcardformkit.getRandomTrx
 import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.enums.PaymentChannels
 import company.tap.tapcardformkit.open.web_wrapper.enums.TapCardColorStyle
+import company.tap.tapcardformkit.open.web_wrapper.enums.TapScope
 import company.tap.tapuilibrary.themekit.ThemeManager
 
 class SelectChoiceActivity : AppCompatActivity() {
@@ -84,7 +85,7 @@ class SelectChoiceActivity : AppCompatActivity() {
     var toggleButtonGroup3: MaterialButtonToggleGroup? = null
     var selectedCurrency: String? = null
     var selectedCardType: String? = null
-    var selectAuthenticationType: Scope? = null
+    var selectAuthenticationType: TapScope? = null
     var defaultScannerBorder: Int? = Color.WHITE
     private var dataModel: ArrayList<DataModel>? = null
     private var dataModelChecked: ArrayList<String>? = arrayListOf()
@@ -174,14 +175,14 @@ class SelectChoiceActivity : AppCompatActivity() {
             }
         }
 
-        selectAuthenticationType = Scope.Authenticate
+        selectAuthenticationType = TapScope.AuthenticatedToken
         toggleAuthentication?.addOnButtonCheckedListener { _, checkedId, isChecked ->
 
             if (isChecked) {
                 when (checkedId) {
-                    R.id.btn_token -> selectAuthenticationType = Scope.Token
+                    R.id.btn_token -> selectAuthenticationType = TapScope.AuthenticatedToken
                     R.id.btn_auth -> selectAuthenticationType =
-                        Scope.Authenticate
+                        TapScope.Token
                 }
             } else {
                 if (toggleAuthentication!!.checkedButtonId == View.NO_ID) {

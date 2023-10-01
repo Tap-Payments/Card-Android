@@ -17,6 +17,7 @@ import company.tap.tapcardformkit.open.TapCardStatusDelegate
 import company.tap.tapcardformkit.open.web_wrapper.TapCardConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
 import company.tap.tapcardformkit.open.web_wrapper.enums.PaymentChannels
+import company.tap.tapcardformkit.open.web_wrapper.enums.TapScope
 
 class MainActivity : AppCompatActivity() {
     lateinit var tapCardKit: TapCardKit
@@ -55,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         val showHideNFC: Boolean = intent.getBooleanExtra("showHideNFC", true)
         val amount = intent.getStringExtra("amount")
         val cardBrands = intent.getStringArrayListExtra("cardBrands")
-        val scopeType: Scope = intent.getSerializableExtra("authentication") as Scope
+        val scopeType: TapScope = intent.getSerializableExtra("authentication") as TapScope
         val powerdBy = intent.getBooleanExtra("showPowerdBy", false)
         val showLoadingState: Boolean = intent.getBooleanExtra("showLoadingState", true)
         val sandboxKey = intent.getStringExtra("sandboxKey")

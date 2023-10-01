@@ -63,7 +63,7 @@
     <string name="editable">Editable</string>
     <string name="edit_transaction_title">Edit Transaction</string>
     <string name="transaction_descr">Transaction Description</string>
-    <string name="Authenticate">Authenticate</string>
+    <string name="Authenticate">AuthenticatedToken</string>
     <string name="Token">Token</string>
     <string name="currency">Currency</string>
     <string name="order_id">Order id</string>
