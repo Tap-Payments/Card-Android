@@ -21,6 +21,7 @@ import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.twoThirdHeightView
 import company.tap.tapuilibrary.uikit.views.TapBrandView
 import java.util.*
+import kotlin.collections.HashMap
 import kotlin.math.roundToInt
 
 class ThreeDsBottomSheetFragment : BottomSheetDialogFragment() {
@@ -43,8 +44,20 @@ class ThreeDsBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val tapBrandView = view.findViewById<TapBrandView>(R.id.tab_brand_view)
+
+        try {
+            val interfacee =  DataConfiguration.configurationsAsHashMap?.get("interface") as HashMap<*, *>
+            val powerd  = interfacee.get("powered") as Boolean
+
+            when(powerd){
+                false ->tapBrandView.poweredByImage.visibility = View.INVISIBLE
+                else -> {}
+            }
+        }catch (e:java.lang.Exception){
+            Log.e("excption",e.toString())
+        }
+
 
         val webView = view.findViewById<WebView>(R.id.webview3ds)
 

@@ -731,6 +731,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="50"
+                android:checked="true"
                 android:text="@string/card_name"
 
                 />
@@ -751,6 +752,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:checked="true"
                 android:layout_weight="50"
                 android:text="@string/card_cvv"
 
@@ -964,7 +966,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="50"
-                android:checked="false"
+                android:checked="true"
                 android:text="@string/display_powerdby_logo"
 
                 />
