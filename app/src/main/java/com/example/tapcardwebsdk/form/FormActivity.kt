@@ -25,6 +25,7 @@ class FormActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_form)
+
         initForm(formModel, formModel.pages[0].buildPageViewModel(formModel.storage).sections, 0)
 
     }
