@@ -96,12 +96,19 @@
 
     <style name="CustomBottomSheetDialogFragment" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/CustomBottomSheetDialogFr</item>
+        <item name="android:windowAnimationStyle">@style/DialogAnimations</item>
+
         <item name="shapeAppearanceOverlay">@style/CustomBottomSheetDialogFrCustomBottomSheetDialog</item>
 
     </style>
     <style name="CustomBottomSheetDialogFr" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@android:color/transparent</item>
 
+    </style>
+
+    <style name="DialogAnimations">
+        <item name="android:windowEnterAnimation">@anim/slide_up</item>
+        <item name="android:windowExitAnimation">@anim/bottom_down</item>
     </style>
 
 

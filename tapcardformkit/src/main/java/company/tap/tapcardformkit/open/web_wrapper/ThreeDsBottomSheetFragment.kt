@@ -85,6 +85,8 @@ class ThreeDsBottomSheetFragment : BottomSheetDialogFragment() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        this.dialog?.window?.attributes?.windowAnimations = R.style.DialogAnimations
+
         setStyle(STYLE_NORMAL,R.style.CustomBottomSheetDialogFragment)
 
     }
