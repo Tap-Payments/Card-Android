@@ -22,9 +22,6 @@ import company.tap.tapcardformkit.open.TapCardStatusDelegate
 import company.tap.tapcardformkit.open.web_wrapper.TapCardConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
 import java.util.ArrayList
-import company.tap.tapcardformkit.open.web_wrapper.enums.PaymentChannels
-import company.tap.tapcardformkit.open.web_wrapper.enums.TapScope
-
 class MainActivity : AppCompatActivity() {
     lateinit var tapCardKit: TapCardKit
     val REQUEST_ID_MULTIPLE_PERMISSIONS = 7
@@ -63,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         val showHideNFC: Boolean = intent.getBooleanExtra("showHideNFC", true)
         val amount = intent.getStringExtra("amount")
         val cardBrands = intent.getStringArrayListExtra("cardBrands")
-        val scopeType: TapScope = intent.getSerializableExtra("authentication") as TapScope
+        val scopeType: Scope = intent.getSerializableExtra("authentication") as Scope
         val powerdBy = intent.getBooleanExtra("showPowerdBy", false)
         val showLoadingState: Boolean = intent.getBooleanExtra("showLoadingState", true)
         val sandboxKey = intent.getStringExtra("sandboxKey")
@@ -88,7 +85,6 @@ class MainActivity : AppCompatActivity() {
         val cardHolder =  intent.getBooleanExtra("cardHolder",true)
         val cvv =  intent.getBooleanExtra("cvv",true)
 
-        Log.e("newData","purpose ${purpose} , saveCard ${saveCard} ,autoSaveCard ${autoSaveCard} ,redirectURL ${redirectURL} ,selectedColorStyle ${selectedColorStyle} ,cardHolder ${cardHolder} , cvv ${cvv}")
 
         val configuration = LinkedHashMap<String,Any>()
 
