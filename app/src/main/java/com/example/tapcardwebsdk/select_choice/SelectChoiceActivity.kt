@@ -121,7 +121,8 @@ class SelectChoiceActivity : AppCompatActivity() {
             spinner.onItemSelectedListener = object :
                 AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>,
-                                            view: View, position: Int, id: Long) {
+                                            view: View?, position: Int, id: Long) {
+
                     scopeChoosen = scopes[position]
                 }
 
@@ -138,7 +139,7 @@ class SelectChoiceActivity : AppCompatActivity() {
             spinnerPurpose.adapter = adapter
             spinnerPurpose.onItemSelectedListener = object :
                 AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                     purposeChosen = purposes[position]
                 }
 
@@ -314,9 +315,10 @@ class SelectChoiceActivity : AppCompatActivity() {
         themeRadioGroup.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { group, checkedId ->
 
             if (themeRadioGroup.checkedRadioButtonId == R.id.theme_dark) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 selectedUserTheme = TapTheme.dark.name
                 ThemeManager.currentThemeName = TapTheme.dark.name
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+
 
             }
             if (themeRadioGroup.checkedRadioButtonId == R.id.theme_light) {
@@ -404,6 +406,7 @@ class SelectChoiceActivity : AppCompatActivity() {
             showHideNFC = isChecked
         }
     }
+
 
     fun startTokenizationactivity(view: View) {
         if (::selectedUserLanguage.isInitialized && ::selectedUserTheme.isInitialized) {

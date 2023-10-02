@@ -68,7 +68,7 @@
     <string name="currency">Currency</string>
     <string name="order_id">Order id</string>
     <string name="order_desc">Order Description</string>
-    <string name="trans_refrence">Trans. Refr.</string>
+    <string name="trans_refrence">Reference</string>
     <string name="invoice">Invoice</string>
     <string name="invoice_id">Invoice Id</string>
     <string name="post">Post</string>
