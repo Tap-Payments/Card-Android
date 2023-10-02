@@ -81,6 +81,10 @@ class ThreeDsBottomSheetFragment : BottomSheetDialogFragment() {
             DataConfiguration.getTapCardStatusListener()?.onError("User canceled 3ds")
 
         }
+        this.dialog?.setOnDismissListener {
+            Toast.makeText(requireContext(),"onDismissed",Toast.LENGTH_SHORT).show()
+              requireActivity().finish()
+        }
 
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -102,8 +106,8 @@ class ThreeDsBottomSheetFragment : BottomSheetDialogFragment() {
             Log.e("url3ds", request?.url.toString())
             when (request?.url?.toString()?.contains(TapCardKit.threeDsResponse.keyword)) {
                 true -> {
-                    this@ThreeDsBottomSheetFragment.dismiss()
-                    requireActivity().finish()
+                    this@ThreeDsBottomSheetFragment.dialog?.dismiss()
+               //     requireActivity().finish()
                     TapCardKit.generateTapAuthenticate(request.url?.toString().toString())
                 }
                 false -> {}
