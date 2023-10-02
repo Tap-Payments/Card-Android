@@ -37,6 +37,7 @@ import company.tap.tapcardformkit.getRandomNumbers
 import company.tap.tapcardformkit.getRandomTrx
 import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapuilibrary.themekit.ThemeManager
+import java.text.Normalizer
 
 class SelectChoiceActivity : AppCompatActivity() {
 
@@ -94,6 +95,8 @@ class SelectChoiceActivity : AppCompatActivity() {
         setContentView(R.layout.activity_select_choice)
         initializeViews()
         saveTheSelectedValue()
+
+
     }
 
 

@@ -1061,6 +1061,9 @@
             android:onClick="startTokenizationactivity"
             android:text="@string/done" />
 
+
+
+
     </LinearLayout>
 
 
