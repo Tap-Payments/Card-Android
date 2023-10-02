@@ -43,7 +43,7 @@
     <string name="display_powerdby_logo">powered</string>
     <string name="done">Done</string>
     <string name="production_key">Production Key</string>
-    <string name="merchant_id">Merchant ID</string>
+    <string name="merchant_id">Merchant id</string>
     <string name="credit">CREDIT</string>
     <string name="debit">DEBIT</string>
     <string name="all">ALL</string>
@@ -70,7 +70,7 @@
     <string name="order_desc">Order Description</string>
     <string name="trans_refrence">Reference</string>
     <string name="invoice">Invoice</string>
-    <string name="invoice_id">Invoice Id</string>
+    <string name="invoice_id">Invoice id</string>
     <string name="post">Post</string>
     <string name="post_url">url</string>
     <string name="purpose">Purpose</string>

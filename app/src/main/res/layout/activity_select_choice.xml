@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:textStyle="bold"
+            android:textStyle="bold|italic"
             android:text="@string/operation"
 
             />
@@ -70,7 +70,8 @@
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/scope_title"
-            android:textStyle="bold"
+
+            android:textStyle="bold|italic"
 
             />
         <Spinner
@@ -114,14 +115,16 @@
 
 
         </com.google.android.material.button.MaterialButtonToggleGroup>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/purpose"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:textStyle="bold"
             android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/purpose"
+            android:textStyle="bold|italic"
             />
+
         <Spinner
             android:id="@+id/spinnerPurpose"
             android:layout_width="match_parent"
@@ -169,7 +172,7 @@
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/transaction"
-            android:textStyle="bold"
+            android:textStyle="bold|italic"
 
             />
         <LinearLayout
@@ -208,7 +211,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/order"
-            android:textStyle="bold"
+            android:textStyle="bold|italic"
             android:layout_marginHorizontal="@dimen/_10sdp"
             />
         <LinearLayout
@@ -314,7 +317,7 @@
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/currency"
-            android:textStyle="bold"
+            android:textStyle="bold|italic"
 
 
             />
@@ -367,7 +370,7 @@
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/invoice"
-            android:textStyle="bold"
+            android:textStyle="bold|italic"
 
 
             />
@@ -453,7 +456,7 @@
             android:text="@string/features"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:textStyle="bold"
+            android:textStyle="bold|italic"
 
             />
         <RadioGroup
@@ -595,7 +598,7 @@
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/acceptance"
-            android:textStyle="bold"
+            android:textStyle="bold|italic"
             />
 
         <TextView
@@ -604,7 +607,7 @@
             android:layout_marginHorizontal="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="supportedFundSource"
-            android:textStyle="bold"
+            android:textStyle="bold|italic"
             />
 
 
@@ -649,7 +652,7 @@
             android:layout_marginHorizontal="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/supportedPaymentAuthentications"
-            android:textStyle="bold"
+            android:textStyle="bold|italic"
 
 
             />
@@ -683,7 +686,7 @@
             android:layout_marginHorizontal="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/supported_brands"
-            android:textStyle="bold"
+            android:textStyle="bold|italic"
 
             />
 
@@ -705,7 +708,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/fields"
-            android:textStyle="bold"
+            android:textStyle="bold|italic"
 
             android:layout_marginHorizontal="@dimen/_10sdp"
             />
@@ -759,7 +762,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/interface_"
-            android:textStyle="bold"
+            android:textStyle="bold|italic"
 
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
@@ -977,7 +980,7 @@
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/redirect"
-            android:textStyle="bold"
+            android:textStyle="bold|italic"
 
             />
         <LinearLayout
@@ -1016,7 +1019,7 @@
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/post"
-            android:textStyle="bold"
+            android:textStyle="bold|italic"
 
 
             />
