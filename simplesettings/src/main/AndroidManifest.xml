@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright © Marc Auberer 2020-2022. All rights reserved
+  -->
+
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.chillibits.simplesettings">
+
+    <application>
+
+        <activity
+            android:name=".ui.SimpleSettingsActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/settingsStyle"/>
+
+        <activity
+            android:name="com.mikepenz.aboutlibraries.ui.LibsActivity"
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"/>
+    </application>
+</manifest>

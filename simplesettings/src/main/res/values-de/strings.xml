@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright © Marc Auberer 2020-2022. All rights reserved
+  -->
+
+<resources>
+    <string name="settings">Einstellungen</string>
+    <string name="libsPreferenceTitle">Genutzte Bibliotheken</string>
+    <string name="libsPreferenceSummary">Tippe hier, um alle genutzten Bibliotheken einzusehen</string>
+    <string name="resetSettings">Einstellungen zurücksetzen</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nein</string>
+</resources>

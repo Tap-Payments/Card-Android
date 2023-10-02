@@ -93,6 +93,7 @@ class SelectChoiceActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_select_choice)
         initializeViews()
+
         saveTheSelectedValue()
     }
 
