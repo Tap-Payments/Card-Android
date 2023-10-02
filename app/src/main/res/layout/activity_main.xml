@@ -12,7 +12,6 @@
     <company.tap.tapcardformkit.open.web_wrapper.TapCardKit
         android:id="@+id/tapCardForm"
         android:layout_marginVertical="@dimen/_10sdp"
-        android:layout_marginHorizontal="@dimen/_10sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

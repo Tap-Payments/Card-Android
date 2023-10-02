@@ -6,12 +6,12 @@
 
 package com.example.tapcardwebsdk.select_choice
 
-import Authentication
-import Invoice
-import Post
-import Refrence
+import CardType
+import PaymentChannels
 import Scope
-import TapAuthentication
+import TapCardColorStyle
+import TapCardDirections
+import TapCardEdges
 import TapTheme
 import android.content.Intent
 import android.content.res.Configuration
@@ -30,17 +30,12 @@ import com.example.tapcardwebsdk.R
 import com.example.tapcardwebsdk.main_activity.MainActivity
 import com.example.tapcardwebsdk.select_choice.adapter.CustomAdapter
 import com.example.tapcardwebsdk.select_choice.adapter.DataModel
-import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
-import com.google.android.material.textfield.TextInputEditText
 import com.tap.commondatamodels.cardBrands.CardBrand
 import company.tap.cardformkit.activities.MerchantDialog
 import company.tap.tapcardformkit.getRandomNumbers
 import company.tap.tapcardformkit.getRandomTrx
 import company.tap.tapcardformkit.open.DataConfiguration
-import company.tap.tapcardformkit.open.web_wrapper.enums.PaymentChannels
-import company.tap.tapcardformkit.open.web_wrapper.enums.TapCardColorStyle
-import company.tap.tapcardformkit.open.web_wrapper.enums.TapScope
 import company.tap.tapuilibrary.themekit.ThemeManager
 
 class SelectChoiceActivity : AppCompatActivity() {
@@ -85,7 +80,7 @@ class SelectChoiceActivity : AppCompatActivity() {
     var toggleButtonGroup3: MaterialButtonToggleGroup? = null
     var selectedCurrency: String? = null
     var selectedCardType: String? = null
-    var selectAuthenticationType: TapScope? = null
+    var selectAuthenticationType: Scope? = null
     var defaultScannerBorder: Int? = Color.WHITE
     private var dataModel: ArrayList<DataModel>? = null
     private var dataModelChecked: ArrayList<String>? = arrayListOf()
@@ -175,14 +170,14 @@ class SelectChoiceActivity : AppCompatActivity() {
             }
         }
 
-        selectAuthenticationType = TapScope.AuthenticatedToken
+        selectAuthenticationType = Scope.AuthenticatedToken
         toggleAuthentication?.addOnButtonCheckedListener { _, checkedId, isChecked ->
 
             if (isChecked) {
                 when (checkedId) {
-                    R.id.btn_token -> selectAuthenticationType = TapScope.AuthenticatedToken
+                    R.id.btn_token -> selectAuthenticationType = Scope.AuthenticatedToken
                     R.id.btn_auth -> selectAuthenticationType =
-                        TapScope.Token
+                        Scope.Token
                 }
             } else {
                 if (toggleAuthentication!!.checkedButtonId == View.NO_ID) {

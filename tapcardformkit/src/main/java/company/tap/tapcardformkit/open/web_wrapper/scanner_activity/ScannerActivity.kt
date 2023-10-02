@@ -98,7 +98,7 @@ class ScannerActivity : AppCompatActivity(), TapTextRecognitionCallBack, TapScan
 
     override fun onReadSuccess(card: TapCard?) {
         println("cardNumber>>>>"+card)
-        Toast.makeText(this@ScannerActivity, card?.cardNumber.toString(), Toast.LENGTH_LONG).show()
+//        Toast.makeText(this@ScannerActivity, card?.cardNumber.toString(), Toast.LENGTH_LONG).show()
         //  if (card?.cardNumber != null && card.cardHolder != null && card.expirationDate != null) {
         if (card?.cardNumber != null && card.expirationDate !=null ) {
             fillCardNumber(

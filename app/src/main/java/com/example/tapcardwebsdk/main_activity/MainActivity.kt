@@ -1,5 +1,6 @@
 package com.example.tapcardwebsdk.main_activity
 
+import Scope
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -17,6 +18,8 @@ import androidx.core.content.ContextCompat
 
 import androidx.appcompat.widget.SwitchCompat
 
+
+
 import com.example.tapcardwebsdk.R
 import com.example.tapcardwebsdk.select_choice.SelectChoiceActivity
 import com.tap.commondatamodels.cardBrands.CardBrand
@@ -27,8 +30,8 @@ import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
 
 import java.util.ArrayList
 
-import company.tap.tapcardformkit.open.web_wrapper.enums.PaymentChannels
-import company.tap.tapcardformkit.open.web_wrapper.enums.TapScope
+
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -69,7 +72,7 @@ class MainActivity : AppCompatActivity() {
         val showHideNFC: Boolean = intent.getBooleanExtra("showHideNFC", true)
         val amount = intent.getStringExtra("amount")
         val cardBrands = intent.getStringArrayListExtra("cardBrands")
-        val scopeType: TapScope = intent.getSerializableExtra("authentication") as TapScope
+        val scopeType: Scope = intent.getSerializableExtra("authentication") as Scope
         val powerdBy = intent.getBooleanExtra("showPowerdBy", false)
         val showLoadingState: Boolean = intent.getBooleanExtra("showLoadingState", true)
         val sandboxKey = intent.getStringExtra("sandboxKey")
@@ -94,7 +97,6 @@ class MainActivity : AppCompatActivity() {
         val cardHolder =  intent.getBooleanExtra("cardHolder",true)
         val cvv =  intent.getBooleanExtra("cvv",true)
 
-        Log.e("newData","purpose ${purpose} , saveCard ${saveCard} ,autoSaveCard ${autoSaveCard} ,redirectURL ${redirectURL} ,selectedColorStyle ${selectedColorStyle} ,cardHolder ${cardHolder} , cvv ${cvv}")
 
         val configuration = LinkedHashMap<String,Any>()
 
