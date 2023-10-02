@@ -23,15 +23,15 @@
     <string name="display_payment_brands">Display Payment Brands</string>
     <string name="display_card_scanning">Scanner</string>
     <string name="display_nfc">Nfc</string>
-    <string name="operation">Operation</string>
+    <string name="operation">Operator</string>
     <string name="sandbox">SandBox</string>
     <string name="production">Production</string>
-    <string name="sandbox_key">SandBox Key</string>
+    <string name="sandbox_key">Public Key</string>
     <string name="transaction">Transaction</string>
     <string name="amount">Amount</string>
     <string name="acceptance">Acceptance</string>
-    <string name="supported_brands">Supported Brands</string>
-    <string name="authentication">Authentication</string>
+    <string name="supported_brands">Supported scheme</string>
+    <string name="scope_title">Scope</string>
     <string name="interface_">Interface</string>
     <string name="scanner_border_color">Scanner Border Color</string>
     <string name="choose_language">Choose Language:</string>
@@ -53,7 +53,7 @@
     <string name="ltr">ltr</string>
     <string name="rtl">dynamic</string>
     <string name="card_directions">Card Direction</string>
-    <string name="merchant">Edit Merchant</string>
+    <string name="merchant">edit customer info</string>
     <string name="id">id</string>
     <string name="phone_number">Phone number</string>
     <string name="last_name">Last name</string>
@@ -72,7 +72,7 @@
     <string name="invoice">Invoice</string>
     <string name="invoice_id">Invoice Id</string>
     <string name="post">Post</string>
-    <string name="post_url">Post url</string>
+    <string name="post_url">url</string>
     <string name="purpose">Purpose</string>
     <string name="order">Order</string>
     <string name="features">Features</string>
@@ -82,7 +82,22 @@
     <string name="monochrome">monochrome</string>
     <string name="colorStyle">ColorStyle</string>
     <string name="supportedPaymentAuthentications">supportedPaymentAuthentications</string>
-    <string name="redirect_url">Redirect url</string>
+    <string name="redirect_url"> url </string>
     <string name="saveCard">Save Card</string>
     <string name="autoSaveCard">Auto Save Card</string>
+
+    <string-array name="ScopeList">
+        <item>Token</item>
+        <item>AuthenticatedToken</item>
+        <item>SaveToken</item>
+        <item>SaveAuthenticatedToken</item>
+    </string-array>
+
+    <string-array name="PurposeList">
+        <item>PAYMENT_TRANSACTION</item>
+        <item>RECURRING_TRANSACTION</item>
+        <item>INSTALLMENT_TRANSACTION</item>
+        <item>ADD_CARD</item>
+        <item>CARDHOLDER_VERIFICATION</item>
+    </string-array>
 </resources>

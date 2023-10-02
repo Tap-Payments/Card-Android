@@ -60,11 +60,10 @@ class MainActivity : AppCompatActivity() {
         val showHideNFC: Boolean = intent.getBooleanExtra("showHideNFC", true)
         val amount = intent.getStringExtra("amount")
         val cardBrands = intent.getStringArrayListExtra("cardBrands")
-        val scopeType: Scope = intent.getSerializableExtra("authentication") as Scope
+        val scopeType = intent.getStringExtra("scope")
         val powerdBy = intent.getBooleanExtra("showPowerdBy", false)
         val showLoadingState: Boolean = intent.getBooleanExtra("showLoadingState", true)
-        val sandboxKey = intent.getStringExtra("sandboxKey")
-        val productionKey = intent.getStringExtra("productionKey")
+        val sandboxKey = intent.getStringExtra("publicKey")
         val merchantIdKey = intent.getStringExtra("merchantId")
         val selectedCardDirection = intent.getStringExtra("selectedCardDirection")
 
@@ -85,14 +84,14 @@ class MainActivity : AppCompatActivity() {
         val cardHolder =  intent.getBooleanExtra("cardHolder",true)
         val cvv =  intent.getBooleanExtra("cvv",true)
 
-
+Log.e("data", scopeType + " " + purpose)
         val configuration = LinkedHashMap<String,Any>()
 
         /**
          * merchant
          */
         val scope = HashMap<String,Any>()
-        scope.put("scope",scopeType.name ?: "")
+        scope.put("scope",scopeType ?: "")
 
         /**
          * merchant
@@ -243,7 +242,7 @@ class MainActivity : AppCompatActivity() {
 
 
         configuration.put("publicKey",sandboxKey.toString())
-        configuration.put("scope",scopeType)
+        configuration.put("scope",scopeType.toString())
         configuration.put("purpose",purpose.toString())
         configuration.put("transaction",transaction)
         configuration.put("order",order)

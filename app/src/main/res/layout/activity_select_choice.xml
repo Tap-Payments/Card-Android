@@ -26,52 +26,25 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
+            android:textStyle="bold"
             android:text="@string/operation"
 
             />
 
-        <com.google.android.material.button.MaterialButtonToggleGroup
-            android:id="@+id/toggleOperation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            app:checkedButton="@+id/btnSandBox"
-            app:selectionRequired="true"
-            app:singleSelection="true">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnSandBox"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/sandbox" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnProduction"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/production" />
-
-
-        </com.google.android.material.button.MaterialButtonToggleGroup>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
             android:orientation="horizontal"
             android:weightSum="2">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="start"
+                android:textSize="14sp"
+                android:gravity="center"
                 android:text="@string/sandbox_key"
 
                 />
@@ -81,58 +54,40 @@
                 android:id="@+id/et_sandbox_key"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.8"
                 android:inputType="text"
+                android:textSize="14sp"
                 android:text="pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"
                 android:textAlignment="center" />
 
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:weightSum="2">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:gravity="start"
-                android:text="@string/production_key"
-
-                />
-
-
-            <EditText
-                android:id="@+id/et_production_key"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="text"
-                android:text="pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"
-                android:textAlignment="center" />
-
-
-        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:text="@string/authentication"
-            android:textColor="@color/black" />
+            android:text="@string/scope_title"
+            android:textStyle="bold"
+
+            />
+        <Spinner
+            android:id="@+id/spinnerScope"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_height="wrap_content"
+
+            />
 
         <com.google.android.material.button.MaterialButtonToggleGroup
             android:id="@+id/toggle_authentication"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:visibility="gone"
             android:layout_marginTop="5dp"
             app:checkedButton="@+id/btn_auth"
             app:selectionRequired="true"
@@ -142,6 +97,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_auth"
+
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -162,7 +118,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/purpose"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:textStyle="bold"
             android:layout_marginHorizontal="@dimen/_10sdp"
+            />
+        <Spinner
+            android:id="@+id/spinnerPurpose"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_height="wrap_content"
+
             />
 
         <com.google.android.material.button.MaterialButtonToggleGroup
@@ -170,6 +136,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:visibility="gone"
             android:layout_marginTop="5dp"
             app:checkedButton="@+id/btn_save_card"
             app:selectionRequired="true"
@@ -202,7 +169,7 @@
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/transaction"
-            android:textColor="@color/black"
+            android:textStyle="bold"
 
             />
         <LinearLayout
@@ -240,6 +207,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/order"
+            android:textStyle="bold"
             android:layout_marginHorizontal="@dimen/_10sdp"
             />
         <LinearLayout
@@ -341,6 +309,8 @@
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/currency"
+            android:textStyle="bold"
+
 
             />
 
@@ -392,7 +362,8 @@
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/invoice"
-            android:textColor="@color/black"
+            android:textStyle="bold"
+
 
             />
         <LinearLayout
@@ -477,6 +448,8 @@
             android:text="@string/features"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
+            android:textStyle="bold"
+
             />
         <RadioGroup
             android:id="@+id/radioGroup9"
@@ -617,7 +590,18 @@
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/acceptance"
-            android:textColor="@color/black" />
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="supportedFundSource"
+            android:textStyle="bold"
+            />
+
 
         <com.google.android.material.button.MaterialButtonToggleGroup
             android:id="@+id/toggleButtonGroup2"
@@ -657,9 +641,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginHorizontal="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/supportedPaymentAuthentications"
+            android:textStyle="bold"
+
 
             />
 
@@ -689,14 +675,16 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginHorizontal="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/supported_brands"
-            android:textColor="@color/black" />
+            android:textStyle="bold"
+
+            />
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginHorizontal="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_height="wrap_content">
 
@@ -712,6 +700,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/fields"
+            android:textStyle="bold"
+
             android:layout_marginHorizontal="@dimen/_10sdp"
             />
 
@@ -764,9 +754,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/interface_"
+            android:textStyle="bold"
+
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:textColor="@color/black" />
+
+            />
         <RadioGroup
             android:id="@+id/radioGroup"
             android:layout_width="match_parent"
@@ -979,7 +972,7 @@
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/redirect"
-            android:textColor="@color/black"
+            android:textStyle="bold"
 
             />
         <LinearLayout
@@ -1018,7 +1011,8 @@
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/post"
-            android:textColor="@color/black"
+            android:textStyle="bold"
+
 
             />
         <LinearLayout

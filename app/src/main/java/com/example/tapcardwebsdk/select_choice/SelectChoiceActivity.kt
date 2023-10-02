@@ -75,7 +75,7 @@ class SelectChoiceActivity : AppCompatActivity() {
     var toggleButtonGroup: MaterialButtonToggleGroup? = null
     var toggleButtonGroup2: MaterialButtonToggleGroup? = null
     var toggleAuthentication: MaterialButtonToggleGroup? = null
-    var toggleOperation: MaterialButtonToggleGroup? = null
+//    var toggleOperation: MaterialButtonToggleGroup? = null
 
     var toggleButtonGroup3: MaterialButtonToggleGroup? = null
     var selectedCurrency: String? = null
@@ -86,6 +86,9 @@ class SelectChoiceActivity : AppCompatActivity() {
     private var dataModelChecked: ArrayList<String>? = arrayListOf()
     private lateinit var listView: ListView
     private lateinit var adapter: CustomAdapter
+    private var scopeChoosen :String = ""
+    private var purposeChosen :String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_select_choice)
@@ -102,6 +105,50 @@ class SelectChoiceActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.merchant_tv).setOnClickListener {
             MerchantDialog(this).show()
         }
+        val spinner = findViewById<Spinner>(R.id.spinnerScope)
+        val spinnerPurpose = findViewById<Spinner>(R.id.spinnerPurpose)
+
+        val scopes = resources.getStringArray(R.array.ScopeList)
+        val purposes = resources.getStringArray(R.array.PurposeList)
+
+        if (spinner != null) {
+            val adapter = ArrayAdapter(
+                this,
+                android.R.layout.simple_spinner_dropdown_item,scopes
+            )
+            spinner.adapter = adapter
+
+            spinner.onItemSelectedListener = object :
+                AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>,
+                                            view: View, position: Int, id: Long) {
+                    scopeChoosen = scopes[position]
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {
+                    // write code to perform some action
+                }
+            }
+        }
+        if (spinnerPurpose != null) {
+            val adapter = ArrayAdapter(
+                this,
+                android.R.layout.simple_spinner_dropdown_item,purposes
+            )
+            spinnerPurpose.adapter = adapter
+            spinnerPurpose.onItemSelectedListener = object :
+                AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                    purposeChosen = purposes[position]
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {
+                    // write code to perform some action
+                }
+            }
+        }
+
+
         darkRadioButton = findViewById<AppCompatRadioButton>(R.id.theme_dark)
         lightRadioButton = findViewById<AppCompatRadioButton>(R.id.theme_light)
         listView = findViewById<View>(R.id.list_view_1) as ListView
@@ -131,7 +178,7 @@ class SelectChoiceActivity : AppCompatActivity() {
         toggleButtonGroup = findViewById(R.id.toggleButtonGroup)
         toggleButtonGroup2 = findViewById(R.id.toggleButtonGroup2)
         toggleAuthentication = findViewById(R.id.toggle_authentication)
-        toggleOperation = findViewById(R.id.toggleOperation)
+      //  toggleOperation = findViewById(R.id.toggleOperation)
 
 //        toggleButtonGroup3 = findViewById(R.id.toggleButtonGroup3)
       //  editTextCardHolderName = findViewById(R.id.editTextCardHolderName)
@@ -187,19 +234,19 @@ class SelectChoiceActivity : AppCompatActivity() {
         }
 
      //   selectedOperation = "SDKMODE.SANDBOX"
-        toggleOperation?.addOnButtonCheckedListener { _, checkedId, isChecked ->
-
-            if (isChecked) {
-                when (checkedId) {
-                 //   R.id.btnSandBox -> selectedOperation = "SDKMODE.SANDBOX"
-                  //  R.id.btnProduction -> selectedOperation = "SDKMODE.PRODUCTION"
-                }
-            } else {
-                if (toggleAuthentication!!.checkedButtonId == View.NO_ID) {
-                    showToast("Nothing Selected")
-                }
-            }
-        }
+//        toggleOperation?.addOnButtonCheckedListener { _, checkedId, isChecked ->
+//
+//            if (isChecked) {
+//                when (checkedId) {
+//                 //   R.id.btnSandBox -> selectedOperation = "SDKMODE.SANDBOX"
+//                  //  R.id.btnProduction -> selectedOperation = "SDKMODE.PRODUCTION"
+//                }
+//            } else {
+//                if (toggleAuthentication!!.checkedButtonId == View.NO_ID) {
+//                    showToast("Nothing Selected")
+//                }
+//            }
+//        }
 //        toggleButtonGroup3?.addOnButtonCheckedListener { _, checkedId, isChecked ->
 //
 //            if (isChecked) {
@@ -392,7 +439,7 @@ class SelectChoiceActivity : AppCompatActivity() {
             Log.e("cardBrands", dataModelChecked.toString())
             intent.putExtra("amount", findViewById<EditText>(R.id.amount).text.toString())
             intent.putStringArrayListExtra("cardBrands", dataModelChecked)
-            intent.putExtra("authentication", selectAuthenticationType)
+//            intent.putExtra("authentication", scopeChoosen)
             dataModel?.forEachIndexed { index, dataModel ->
                 if (dataModel.checked) {
                     Log.e(
@@ -404,14 +451,15 @@ class SelectChoiceActivity : AppCompatActivity() {
                 }
             }
             intent.putExtra("showPowerdBy", showPowerdBy)
-            intent.putExtra("sandboxKey", findViewById<EditText>(R.id.et_sandbox_key).text.toString())
-            intent.putExtra("productionKey", findViewById<EditText>(R.id.et_production_key).text.toString())
+            intent.putExtra("publicKey", findViewById<EditText>(R.id.et_sandbox_key).text.toString())
             intent.putExtra("merchantId", findViewById<EditText>(R.id.merchant_id).text.toString())
 
             /**
              * new config
              */
-            intent.putExtra("purpose", PaymentChannels.PAYMENT_TRANSACTION.name)
+            intent.putExtra("scope", scopeChoosen)
+
+            intent.putExtra("purpose", purposeChosen)
             intent.putExtra("saveCard", findViewById<SwitchCompat>(R.id.switchButton_savCard).isChecked)
             intent.putExtra("autoSaveCard", findViewById<SwitchCompat>(R.id.switchButton_autoSavedCard).isChecked)
             intent.putExtra("redirectURL", findViewById<EditText>(R.id.redirect_url).text.toString())
