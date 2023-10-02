@@ -406,7 +406,7 @@ class TapCardKit : LinearLayout {
                         (context).startActivity(intent)
                     }else
                     {
-                        //TODO:@ASLM check if u need any call back here if device doesnt support NFC
+                        //TODO:check if u need any other call back here if device doesn't support NFC
                         DataConfiguration.getTapCardStatusListener()?.onError("NFC is not supported on this device")
                     }
 
