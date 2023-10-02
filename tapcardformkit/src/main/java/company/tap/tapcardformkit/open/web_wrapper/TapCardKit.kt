@@ -27,6 +27,7 @@ import androidx.core.view.*
 import cards.pay.paycardsrecognizer.sdk.Card
 //import com.airbnb.lottie.LottieAnimationView
 import com.google.gson.Gson
+import company.tap.nfcreader.open.utils.TapNfcUtils
 import company.tap.tapcardformkit.*
 import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.enums.CardFormWebStatus
@@ -400,9 +401,15 @@ class TapCardKit : LinearLayout {
                     /**
                      * navigate to NFC Activity
                      */
+                    if (TapNfcUtils.isNfcAvailable(context)) {
+                        val intent = Intent(context,NFCLaunchActivity::class.java)
+                        (context).startActivity(intent)
+                    }else
+                    {
+                        //TODO:check if u need any other call back here if device doesn't support NFC
+                        DataConfiguration.getTapCardStatusListener()?.onError("NFC is not supported on this device")
+                    }
 
-                    val intent = Intent(context,NFCLaunchActivity::class.java)
-                    (context).startActivity(intent)
 
 
                 }
