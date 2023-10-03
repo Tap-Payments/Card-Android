@@ -78,7 +78,14 @@ class SettingsActivity : AppCompatActivity() {
                         "ADD_CARD",
                         "CARDHOLDER_VERIFICATION"
                     )
-                    entriesRes=R.array.PurposeList
+                    values = listOf(
+                        "PAYMENT_TRANSACTION",
+                        "RECURRING_TRANSACTION",
+                        "INSTALLMENT_TRANSACTION",
+                        "ADD_CARD",
+                        "CARDHOLDER_VERIFICATION"
+                    )
+
                     key="purposeKey"
                     defaultIndex=0
 
@@ -125,7 +132,7 @@ class SettingsActivity : AppCompatActivity() {
                 DropDownPref {
                     entries = listOf("KWD", "AED", "SAR", "BHD")
                     key="selectedCurrencyKey"
-                    summary
+                    defaultIndex=0
 
                 }
 
@@ -173,6 +180,7 @@ class SettingsActivity : AppCompatActivity() {
                     title = context.getString(R.string.supportedFundSource)
                     simpleSummaryProvider = true
                     entries = listOf("ALL", "CREDIT", "DEBIT")
+                    values = listOf("ALL", "CREDIT", "DEBIT")
                     defaultIndex = 0
 
 
@@ -246,6 +254,7 @@ class SettingsActivity : AppCompatActivity() {
                     title = context.getString(R.string.card_directions)
                     simpleSummaryProvider = true
                     entries = listOf("ltr", "dynamic")
+                    values = listOf("ltr", "dynamic")
                     defaultIndex = 1
                     key="selectedcardirectKey"
 

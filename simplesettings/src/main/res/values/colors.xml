@@ -7,10 +7,10 @@
     <color name="colorPrimaryVariant">#03DAC5</color>
     <color name="colorPrimaryDarkVariant">#3E3E3E</color>
     <color name="colorSecondaryVariant">#028175</color>
-    <color name="colorSurface">#FAFAFA</color>
-    <color name="colorOnPrimary">#03DAC5</color>
+    <color name="colorSurface">#03DAC5</color>
+    <color name="colorOnPrimary">#028175</color>
     <color name="colorOnSecondary">#03DAC5</color>
-    <color name="colorOnBackground">#FAFAFA</color>
+    <color name="colorOnBackground">#000000</color>
     <color name="colorOnError">#810000</color>
     <color name="colorOnSurface">#03DAC5</color>
 </resources>
