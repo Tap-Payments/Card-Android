@@ -17,6 +17,7 @@ import androidx.annotation.Nullable
 import androidx.annotation.RequiresApi
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import company.tap.tapcardformkit.R
+import company.tap.tapcardformkit.doAfterSpecificTime
 import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.twoThirdHeightView
 import company.tap.tapuilibrary.uikit.views.TapBrandView
@@ -82,8 +83,9 @@ class ThreeDsBottomSheetFragment : BottomSheetDialogFragment() {
 
         }
         this.dialog?.setOnDismissListener {
-            Toast.makeText(requireContext(),"onDismissed",Toast.LENGTH_SHORT).show()
-              requireActivity().finish()
+            doAfterSpecificTime {
+                requireActivity().finish()
+            }
         }
 
     }
