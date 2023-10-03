@@ -129,6 +129,7 @@ class SettingsActivity : AppCompatActivity() {
                 DropDownPref {
                     entries = listOf("KWD", "AED", "SAR", "BHD")
                     values = listOf("KWD", "AED", "SAR", "BHD")
+                    summary="KWD"
                     key="selectedCurrencyKey"
                     defaultIndex=0
 
