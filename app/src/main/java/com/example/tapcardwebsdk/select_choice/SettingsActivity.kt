@@ -22,7 +22,7 @@ import company.tap.tapcardformkit.getRandomTrx
 import company.tap.tapcardformkit.open.DataConfiguration
 
 class SettingsActivity : AppCompatActivity() {
-    private var dataModelChecked: ArrayList<String>? = arrayListOf()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.settings_activity)
@@ -178,9 +178,9 @@ class SettingsActivity : AppCompatActivity() {
                 ListPref {
                     title = context.getString(R.string.supportedFundSource)
                     simpleSummaryProvider = true
-                    entries = listOf("ALL", "CREDIT", "DEBIT")
+                    entries = listOf("All", "Credit", "Debit")
                     values = listOf("ALL", "CREDIT", "DEBIT")
-                    defaultIndex = 0
+                    defaultIndex=2
                     key="supportedFundSourceKey"
 
 
@@ -235,7 +235,7 @@ class SettingsActivity : AppCompatActivity() {
                 ListPref {
                     title = context.getString(R.string.choose_theme)
                     simpleSummaryProvider = true
-                    entries = listOf("dark", "light", "dynamic")
+                    entries = listOf("Dark", "Light", "Dynamic")
                     values = listOf("dark", "light", "dynamic")
                     defaultIndex = 1
                     key="selectedthemeKey"
@@ -245,7 +245,7 @@ class SettingsActivity : AppCompatActivity() {
                 ListPref {
                     title = context.getString(R.string.card_edges)
                     simpleSummaryProvider = true
-                    entries = listOf("curved", "flat")
+                    entries = listOf("Curved", "Flat")
                     values = listOf("curved", "flat")
                     defaultIndex = 1
                     key="selectedcardedgeKey"
@@ -254,7 +254,7 @@ class SettingsActivity : AppCompatActivity() {
                 ListPref {
                     title = context.getString(R.string.card_directions)
                     simpleSummaryProvider = true
-                    entries = listOf("ltr", "dynamic")
+                    entries = listOf("LTR", "Dynamic")
                     values = listOf("ltr", "dynamic")
                     defaultIndex = 1
                     key="selectedcardirectKey"
@@ -263,7 +263,7 @@ class SettingsActivity : AppCompatActivity() {
                 ListPref {
                     title = context.getString(R.string.colorStyle)
                     simpleSummaryProvider = true
-                    entries = listOf("colored", "monochrome")
+                    entries = listOf("Colored", "Monochrome")
                     values = listOf("colored", "monochrome")
                     defaultIndex = 0
                     key="selectedcolorstyleKey"
@@ -332,7 +332,7 @@ class SettingsActivity : AppCompatActivity() {
     }
     fun startTokenizationactivity(view: View) {
 
-        getPrefObserver(this@SettingsActivity, "selectedCurrencyKey", Observer<String> { value ->
+        getPrefObserver(this@SettingsActivity, "amountKey", Observer<String> { value ->
             println("vall"+value)
         })
             val intent = Intent(this, MainActivity::class.java)
@@ -363,10 +363,10 @@ class SettingsActivity : AppCompatActivity() {
             /**
              * added newly
              */
-           // Log.e("cardBrands", dataModelChecked.toString())
+
             Log.e("cardBrands",  getPrefs().getStringSet("selectedBrandsKey",null).toString())
             intent.putExtra("amount", getPrefStringValue("amountKey"))
-          //  intent.putStringArrayListExtra("cardBrands", getPrefStringValue("selectedBrandsKey") as ArrayList<String>)
+
         val cardBrandArrayList: ArrayList<String> = ArrayList<String>(getPrefs().getStringSet("selectedBrandsKey",null))
 
         intent.putStringArrayListExtra("cardBrands", cardBrandArrayList)
@@ -398,9 +398,7 @@ class SettingsActivity : AppCompatActivity() {
 
     }
 
-    fun getPrefValue(prefString: String){
 
-    }
 
 
 

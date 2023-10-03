@@ -203,7 +203,7 @@ internal class SimpleSettingsFragment : PreferenceFragmentCompat() {
         entries = sp.entries.toTypedArray()
        // entryValues = (sp.entries.indices).map { it.toString() }.toTypedArray()
         entryValues =  sp.values.toTypedArray()
-        setDefaultValue(sp.entries.toString())
+        setDefaultValue(sp.defaultIndex.toString())
     }
 
     private fun genMSListPref(sp: SimpleMSListPreference) = MultiSelectListPreference(requireContext()).apply {

@@ -88,6 +88,7 @@ internal class SimpleSettingsActivity : AppCompatActivity() {
         super.onBackPressed()
         if (config.pendingTransitionEnterAnim !== null && config.pendingTransitionExitAnim !== null)
             overridePendingTransition(config.pendingTransitionEnterAnim!!, config.pendingTransitionExitAnim!!)
+
     }
 
     private fun initSettingsFragment() {
