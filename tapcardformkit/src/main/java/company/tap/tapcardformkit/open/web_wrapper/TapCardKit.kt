@@ -52,9 +52,10 @@ class TapCardKit : LinearLayout {
     lateinit var constraintLayout: ConstraintLayout
     lateinit var webViewFrame: FrameLayout
     lateinit var webFrame3ds: FrameLayout
-    private var alreadyEvaluated = false
 
     companion object{
+         var alreadyEvaluated = false
+
         lateinit var threeDsResponse: ThreeDsResponse
         lateinit var cardWebview: WebView
         lateinit var cardConfiguraton: CardConfiguraton

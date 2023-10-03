@@ -47,7 +47,7 @@ dependencies {
    implementation project(path: ':tapcardformkit')
     implementation "androidx.activity:activity-ktx:1.5.1"
     implementation 'com.android.support:multidex:1.0.3'
-  //  implementation 'com.github.Tap-Payments:Tap-Card-SDK-Android:0.0.20'
+ //   implementation 'com.github.Tap-Payments:Card-Android:0.0.25'
 
 
 
