@@ -128,6 +128,7 @@ class SettingsActivity : AppCompatActivity() {
                 title = context.getString(R.string.currency)
                 DropDownPref {
                     entries = listOf("KWD", "AED", "SAR", "BHD")
+                    values = listOf("KWD", "AED", "SAR", "BHD")
                     key="selectedCurrencyKey"
                     defaultIndex=0
 
@@ -233,8 +234,8 @@ class SettingsActivity : AppCompatActivity() {
                 ListPref {
                     title = context.getString(R.string.choose_theme)
                     simpleSummaryProvider = true
-                    entries = listOf("Dark", "Light", "Dynamic")
-                    values = listOf("Dark", "Light", "Dynamic")
+                    entries = listOf("dark", "light", "dynamic")
+                    values = listOf("dark", "light", "dynamic")
                     defaultIndex = 1
                     key="selectedthemeKey"
 

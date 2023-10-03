@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.appcompat.widget.SwitchCompat
 import com.example.tapcardwebsdk.R
 import com.example.tapcardwebsdk.select_choice.SelectChoiceActivity
+import com.example.tapcardwebsdk.select_choice.SettingsActivity
 import com.tap.commondatamodels.cardBrands.CardBrand
 import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.open.TapCardStatusDelegate
@@ -385,7 +386,8 @@ Log.e("data", scopeType + " " + purpose)
 
     override fun onBackPressed() {
         super.onBackPressed()
-        val intent = Intent(this, SelectChoiceActivity::class.java)
+       // val intent = Intent(this, SelectChoiceActivity::class.java)
+        val intent = Intent(this, SettingsActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         finish()
         startActivity(intent)
