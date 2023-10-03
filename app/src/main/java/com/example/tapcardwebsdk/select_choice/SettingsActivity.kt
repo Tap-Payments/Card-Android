@@ -1,6 +1,7 @@
 package com.example.tapcardwebsdk.select_choice
 
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -10,6 +11,8 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.preference.PreferenceFragmentCompat
+import com.chillibits.simplesettings.clicklistener.LibsClickListener
+import com.chillibits.simplesettings.clicklistener.PlayStoreClickListener
 import com.chillibits.simplesettings.core.SimpleSettings
 import com.chillibits.simplesettings.tool.getPrefBooleanValue
 import com.chillibits.simplesettings.tool.getPrefObserver
@@ -32,7 +35,8 @@ class SettingsActivity : AppCompatActivity() {
                 .replace(R.id.settings, SettingsFragment())
                 .commit()
         }*/
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        supportActionBar?.setHomeButtonEnabled(false)
         SimpleSettings(this).show {
             Section {
                 title = context.getString(R.string.operation)
@@ -298,6 +302,7 @@ class SettingsActivity : AppCompatActivity() {
             }
 
 
+
         }
 
 
@@ -331,6 +336,7 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
     fun startTokenizationactivity(view: View) {
+
 
         getPrefObserver(this@SettingsActivity, "amountKey", Observer<String> { value ->
             println("vall"+value)
@@ -389,14 +395,15 @@ class SettingsActivity : AppCompatActivity() {
             intent.putExtra("cardHolder",  getPrefBooleanValue("displayHoldernameKey",true))
             intent.putExtra("cvv",getPrefBooleanValue("displayCVVKey",true))
 
-
-
+        
             finish()
             startActivity(intent)
 
 
 
     }
+
+
 
 
 

@@ -10,6 +10,7 @@
     <color name="colorSecondaryVariant">#028175</color>
     <color name="colorSurface">#03DAC5</color>
     <string name="cancel">Cancel</string>
+    <string name="done">DONE</string>
     <string name="libsPreferenceSummary">Tap to see view all libraries in use</string>
     <string name="libsPreferenceTitle">Used Libs</string>
     <string name="no">No</string>
@@ -18,7 +19,7 @@
     <string name="settings">Settings</string>
     <string name="yes">Yes</string>
     <style name="settingsStyle" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        
+        <!-- MaterialComponents colors -->
         <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
         <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
         <item name="colorSurface">@color/colorSurface</item>

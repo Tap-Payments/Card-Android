@@ -320,6 +320,7 @@ internal class SimpleSettingsFragment : PreferenceFragmentCompat() {
             if(sp.icon != 0) setIcon(sp.icon)
             isIconSpaceReserved = sp.iconSpaceReserved
             onPreferenceClickListener = sp.onClick
+
         }
     }
 }

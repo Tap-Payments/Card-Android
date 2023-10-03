@@ -4,6 +4,7 @@
 
 package com.chillibits.simplesettings.ui
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.XmlResourceParser
 import android.os.Build
@@ -21,6 +22,7 @@ import com.chillibits.simplesettings.exception.SettingsResetException
 import com.chillibits.simplesettings.tool.Constants
 import com.chillibits.simplesettings.tool.getPrefs
 import com.chillibits.simplesettings.tool.toCamelCase
+
 
 /**
  * Main UI element of the library. This activity gets displayed when the show method of the
@@ -40,6 +42,8 @@ internal class SimpleSettingsActivity : AppCompatActivity() {
         // Initialize toolbar
         setSupportActionBar(binding.toolbar)
         supportActionBar?.title = config.activityTitle ?: getString(R.string.settings)
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        supportActionBar?.setHomeButtonEnabled(false)
 
         // Set window insets
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -52,7 +56,7 @@ internal class SimpleSettingsActivity : AppCompatActivity() {
         }
 
         // DisplayHomeAsUpEnabled
-        if(config.displayHomeAsUpEnabled) supportActionBar?.setDisplayHomeAsUpEnabled(true)
+      //  if(config.displayHomeAsUpEnabled) supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // Initialize header
         val headers = SimpleSettings.sections.filterIsInstance(PreferenceHeader::class.java)
@@ -86,8 +90,8 @@ internal class SimpleSettingsActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        if (config.pendingTransitionEnterAnim !== null && config.pendingTransitionExitAnim !== null)
-            overridePendingTransition(config.pendingTransitionEnterAnim!!, config.pendingTransitionExitAnim!!)
+       // if (config.pendingTransitionEnterAnim !== null && config.pendingTransitionExitAnim !== null)
+        //    overridePendingTransition(config.pendingTransitionEnterAnim!!, config.pendingTransitionExitAnim!!)
 
     }
 
@@ -146,4 +150,8 @@ internal class SimpleSettingsActivity : AppCompatActivity() {
             }
         }
     }
+
+
+
+
 }

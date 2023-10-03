@@ -36,6 +36,7 @@ id settingsFragment
 id toolbar
 layout activity_simple_settings
 string cancel
+string done
 string libsPreferenceSummary
 string libsPreferenceTitle
 string no

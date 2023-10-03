@@ -35,6 +35,7 @@ int id settingsFragment 0x0
 int id toolbar 0x0
 int layout activity_simple_settings 0x0
 int string cancel 0x0
+int string done 0x0
 int string libsPreferenceSummary 0x0
 int string libsPreferenceTitle 0x0
 int string no 0x0
