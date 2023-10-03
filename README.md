@@ -79,7 +79,7 @@ It is always recommended, that you generate this `HashMap dictionary` from your 
 
 |Configuration|Description | Required | Type| Sample
 |--|--|--| --|--|
-| operator| This is the ` Key` that you will get after registering you package name. | True  | String| `var operator=HashMap<String,Any>(),operator.put("publicKey","pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7")` |
+| operator| This is the `Key` that you will get after registering you package name. | True  | String| `var operator=HashMap<String,Any>(),operator.put("publicKey","pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7")` |
 | scope| Defines the intention of using the `Card-Android`. | True  | String| ` var scope:String = "Token" ` |
 | purpose| Defines the intention of using the `Token` after generation. | True  | String| ` var purpose:String = "PAYMENT_TRANSACTION" ` |
 | transaction| Needed to define transaction metadata and reference, if you are generating an authenticated token. | False  | `Dictionry`| ` var transaction = HashMap(String,Any) = transaction.put("metadata":HashmapOf("example":"value"), "reference":"A reference to this transaciton in your system"],"paymentAgreement":["id":"", "contract":["id":"If you created a contract id with the client to save his card, pass its is here. Otherwise, we will create one for you."]]` |
