@@ -76,13 +76,7 @@ class SettingsActivity : AppCompatActivity() {
                         "ADD_CARD",
                         "CARDHOLDER_VERIFICATION"
                     )
-                    values=listOf(
-                        "PAYMENT_TRANSACTION",
-                        "RECURRING_TRANSACTION",
-                        "INSTALLMENT_TRANSACTION",
-                        "ADD_CARD",
-                        "CARDHOLDER_VERIFICATION"
-                    )
+                    entriesRes=R.array.PurposeList
                     key="purposeKey"
                     defaultIndex=0
 
@@ -199,8 +193,7 @@ class SettingsActivity : AppCompatActivity() {
             }
             Section {
                 title = context.getString(R.string.fields)
-
-                    SwitchPref {
+                SwitchPref {
                         title =
                            context.getString(R.string.display_holdername)
                         defaultValue = true
