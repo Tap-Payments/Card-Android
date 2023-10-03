@@ -33,7 +33,9 @@ class MainActivity : AppCompatActivity() {
 
         checkAndroidVersion()
         findViewById<TextView>(R.id.tokenizeBtn).setOnClickListener {
-            findViewById<TapCardKit>(R.id.tapCardForm).generateTapToken()
+        //    findViewById<TapCardKit>(R.id.tapCardForm).generateTapToken()
+            DataConfiguration.generateToken(findViewById<TapCardKit>(R.id.tapCardForm))
+
         }
         /**
          * case of passing a new Model
@@ -86,6 +88,12 @@ class MainActivity : AppCompatActivity() {
 
 Log.e("data", scopeType + " " + purpose)
         val configuration = LinkedHashMap<String,Any>()
+
+        /**
+         * operator
+         */
+        val operator = HashMap<String,Any>()
+        operator.put("publicKey",sandboxKey.toString())
 
         /**
          * merchant
@@ -215,13 +223,6 @@ Log.e("data", scopeType + " " + purpose)
         addons.put("loader",showLoadingState)
 
         /**
-         * operator
-         */
-        val operator = HashMap<String,Any>()
-        operator.put("publicKey",sandboxKey.toString())
-
-
-        /**
          * order
          */
         val order = HashMap<String,Any>()
@@ -241,7 +242,7 @@ Log.e("data", scopeType + " " + purpose)
         interfacee.put("colorStyle",selectedColorStyle.toString())
 
 
-        configuration.put("publicKey",sandboxKey.toString())
+        configuration.put("operator",operator)
         configuration.put("scope",scopeType.toString())
         configuration.put("purpose",purpose.toString())
         configuration.put("transaction",transaction)
@@ -257,7 +258,8 @@ Log.e("data", scopeType + " " + purpose)
         configuration.put("redirect",redirect)
         configuration.put("post",post)
 
-
+//        DataConfiguration.initializeSDK(this,configuration,findViewById<TapCardKit>(R.id.tapCardForm))
+//        DataConfiguration.addTapCardStatusDelegate(this)
 
         TapCardConfiguration.configureWithTapCardDictionaryConfiguration(
             this,
@@ -426,6 +428,31 @@ Log.e("data", scopeType + " " + purpose)
         }
         return true
     }
+
+//    override fun onSuccess(data: String) {
+//
+//    }
+
+//    override fun onReady() {
+//        findViewById<TextView>(R.id.tokenizeBtn).visibility = View.VISIBLE
+//
+//    }
+//
+//    override fun onFocus() {
+//    }
+//
+//    override fun onBindIdentification(data: String) {
+//    }
+//
+//    override fun onValidInput(isValid: String) {
+//
+//    }
+//
+//    override fun onError(error: String) {
+//    }
+//
+//    override fun onHeightChange(heightChange: String) {
+//    }
 
 }
 

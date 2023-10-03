@@ -83,20 +83,20 @@ class TapCardConfiguration {
                     tapCardInputViewWeb?.context?.resources?.getString(R.string.enryptkey)
                 )
             )
-            val operator = Operator(
-                publicKey
-            )
+//            val operator = Operator(
+//                publicKey
+//            )
 
             when (modelConfiguration) {
                 CardConfiguraton.ModelConfiguration -> {
-                    DataConfiguration.configurations?.operatorData = operator
+                 //   DataConfiguration.configurations?.operatorData = operator
                     DataConfiguration.configurations?.headersData = headers
 
                 }
                 CardConfiguraton.MapConfigruation -> {
-                    val hashMapOperator = HashMap<String, Any>()
-                    hashMapOperator[publicKeyToGet] = publicKey.toString()
-                    configurationsAsHashMap?.put(operatorKey, hashMapOperator)
+                    //val hashMapOperator = HashMap<String, Any>()
+                   // hashMapOperator[publicKeyToGet] = publicKey.toString()
+                 //   configurationsAsHashMap?.put(operatorKey, hashMapOperator)
                     val hashMapHeader = HashMap<String, Any>()
                     hashMapHeader[HeadersMdn] = headers.mdn.toString()
                     hashMapHeader[HeadersApplication] = headers.application.toString()
