@@ -230,6 +230,11 @@ It is always recommended, that you generate this `HashMap dictionary` from your 
 You can create a Dictionary HashMap to pass the data to our sdk. The good part about this, is that you can generate the data from one of your apis. Whenever we have an update to the configurations, you can update your api. This will make sure, that you will not have to update your app on the Google Play Store.
 
 ```kotlin
+     /**
+       * operator
+       */
+      val operator = HashMap<String,Any>()
+        operator.put("publicKey","pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7")
 
         /**
          * merchant
@@ -384,7 +389,7 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
         configuration.put("redirect",redirect)
         configuration.put("acceptance",acceptance)
         configuration.put("addons",addons)
-        configuration.put("publicKey","pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7")
+        configuration.put("operator",operator)
         configuration.put("interface",tapInterface) 
         configuration.put("scope","Authenticate") // or  configuration.put("scope","Token")
         configuration.put("customer",customer)
