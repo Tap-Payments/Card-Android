@@ -16,5 +16,6 @@
         <item name="colorOnSurface">@color/colorOnSurface</item>
         <item name="android:statusBarColor">@color/colorPrimaryDarkVariant</item>
         <item name="colorControlNormal">@color/colorOnPrimary</item>
+        <item name="colorControlNormal">@color/colorOnPrimary</item>
     </style>
 </resources>

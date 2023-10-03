@@ -11,5 +11,5 @@ import android.content.Context
  */
 abstract class PreferenceElement(
         val context: Context,
-        val iconSpaceReserved: Boolean
+        val iconSpaceReserved: Boolean = false
 )

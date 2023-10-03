@@ -10,13 +10,10 @@ plugins {
 
 android {
     compileSdk 32
-    buildToolsVersion "32.0.0"
-
     defaultConfig {
         minSdk 21
-        targetSdk 31
-        versionCode 1
-        versionName 1
+        targetSdk 32
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
     }
@@ -30,8 +27,8 @@ android {
         viewBinding true
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     // specify the artifactId as module-name for kotlin
@@ -64,9 +61,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
 
-dokkaHtml.configure {
-    dokkaSourceSets {}
-}
+
 
 if (project.hasProperty('pushall') || project.hasProperty('library_only')) {
     apply from: '../gradle-release.gradle'

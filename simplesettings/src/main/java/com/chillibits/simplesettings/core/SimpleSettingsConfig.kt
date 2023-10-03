@@ -22,7 +22,7 @@ class SimpleSettingsConfig {
     var preferenceCallback: PreferenceCallback? = null
     var displayHomeAsUpEnabled = true
     var showResetOption = false
-    var iconSpaceReservedByDefault = true
+    var iconSpaceReservedByDefault = false
     var enableMSListPreferenceSummaryProvider = true
     @AnimRes var pendingTransitionEnterAnim: Int? = null
     @AnimRes var pendingTransitionExitAnim: Int? = null

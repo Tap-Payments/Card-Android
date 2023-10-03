@@ -82,8 +82,7 @@ class PreferenceSection(
      * List preference, which shows a list for the user to choose one item from.
      * More information: https://github.com/marcauberer/simple-settings/wiki/SimpleListPreference
      */
-    fun ListPref(func: SimpleListPreference.() -> Unit)
-            = SimpleListPreference(context, iconSpaceReserved).apply {
+    fun ListPref(func: SimpleListPreference.() -> Unit) = SimpleListPreference(context, iconSpaceReserved).apply {
         func()
         items.add(this)
     }

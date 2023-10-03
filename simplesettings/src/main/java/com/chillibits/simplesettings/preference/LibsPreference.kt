@@ -62,22 +62,22 @@ class LibsPreference: Preference {
     }
 
     private fun getAttrs(attrs: AttributeSet) {
-        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ColorPickerPreference)
+       /* val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ColorPickerPreference)
         try {
             setTypeArray(typedArray)
         } finally {
             typedArray.recycle()
-        }
+        }*/
     }
 
     private fun getAttrs(attrs: AttributeSet, defStyle: Int) {
-        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ColorPickerPreference,
+   /*     val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ColorPickerPreference,
                 defStyle, 0)
         try {
             setTypeArray(typedArray)
         } finally {
             typedArray.recycle()
-        }
+        }*/
     }
 
     private fun setTypeArray(typedArray: TypedArray) {
@@ -110,7 +110,7 @@ class LibsPreference: Preference {
         libsBuilder = LibsBuilder().apply {
             activityTitle = this@LibsPreference.activityTitle
             edgeToEdge = this@LibsPreference.edgeToEdge
-            aboutAppName = this@LibsPreference.aboutAppName ?: context.getString(R.string.app_name)
+            aboutAppName = "app"
             aboutAppSpecial1 = this@LibsPreference.aboutAppSpecial1
             aboutAppSpecial1Description = this@LibsPreference.aboutAppSpecial1Description
             aboutAppSpecial2 = this@LibsPreference.aboutAppSpecial2

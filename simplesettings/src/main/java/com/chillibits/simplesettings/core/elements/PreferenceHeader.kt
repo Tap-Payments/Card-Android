@@ -13,7 +13,7 @@ import androidx.annotation.LayoutRes
  */
 class PreferenceHeader(
         context: Context,
-        iconSpaceReservedByDefault: Boolean
+        iconSpaceReservedByDefault: Boolean =false
 ): PreferenceElement(context, iconSpaceReservedByDefault) {
 
     // Attributes
