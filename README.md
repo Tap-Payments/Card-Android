@@ -377,7 +377,7 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
          */
 
         val configuration = LinkedHashMap<String,Any>()
-   
+        configuration.put("operator", operator)
         configuration.put("merchant",merchant)
         configuration.put("transaction",transaction)
         configuration.put("order",order)
@@ -389,7 +389,6 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
         configuration.put("redirect",redirect)
         configuration.put("acceptance",acceptance)
         configuration.put("addons",addons)
-        configuration.put("operator",operator)
         configuration.put("interface",tapInterface) 
         configuration.put("scope","Authenticate") // or  configuration.put("scope","Token")
         configuration.put("customer",customer)
