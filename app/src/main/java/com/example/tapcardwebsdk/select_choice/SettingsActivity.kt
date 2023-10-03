@@ -1,6 +1,5 @@
 package com.example.tapcardwebsdk.select_choice
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -8,12 +7,9 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SwitchCompat
 import androidx.lifecycle.Observer
 import androidx.preference.PreferenceFragmentCompat
-import com.chillibits.simplesettings.clicklistener.LibsClickListener
 import com.chillibits.simplesettings.core.SimpleSettings
 import com.chillibits.simplesettings.tool.getPrefBooleanValue
 import com.chillibits.simplesettings.tool.getPrefObserver
@@ -24,7 +20,6 @@ import com.example.tapcardwebsdk.main_activity.MainActivity
 import company.tap.tapcardformkit.getRandomNumbers
 import company.tap.tapcardformkit.getRandomTrx
 import company.tap.tapcardformkit.open.DataConfiguration
-import java.util.ArrayList
 
 class SettingsActivity : AppCompatActivity() {
     private var dataModelChecked: ArrayList<String>? = arrayListOf()
@@ -115,8 +110,9 @@ class SettingsActivity : AppCompatActivity() {
                 }
                 InputPref {
                     title = context.getString(R.string.amount)
-                    summary = "10"
+                    summary = "2"
                     key="amountKey"
+                    defaultValue="2"
 
 
                 }
@@ -124,6 +120,7 @@ class SettingsActivity : AppCompatActivity() {
                     title = context.getString(R.string.order_desc)
                     summary = "test"
                     key="orderDescKey"
+                    defaultValue="test"
 
                 }
             }
@@ -182,6 +179,7 @@ class SettingsActivity : AppCompatActivity() {
                     entries = listOf("ALL", "CREDIT", "DEBIT")
                     values = listOf("ALL", "CREDIT", "DEBIT")
                     defaultIndex = 0
+                    key="supportedFundSourceKey"
 
 
                 }
@@ -189,6 +187,7 @@ class SettingsActivity : AppCompatActivity() {
                     title = context.getString(R.string.supportedPaymentAuthentications)
                     simpleSummaryProvider = true
                     entries = listOf("3DS")
+                    values = listOf("3DS")
                     defaultIndex = 0
 
                 }
@@ -341,7 +340,7 @@ class SettingsActivity : AppCompatActivity() {
             intent.putExtra("showHideScanner", getPrefBooleanValue("displayScannerKey",true))
             intent.putExtra("showHideNFC", getPrefBooleanValue("displayNFCKey",true))
             intent.putExtra("selectedCurrency", getPrefStringValue("selectedCurrencyKey"))
-          //  intent.putExtra("selectedCardType", selectedCardType)
+            intent.putExtra("selectedCardType", getPrefStringValue("supportedFundSourceKey"))
            // intent.putExtra("setdefaultHolderName", setdefaultHolderName)
           //  intent.putExtra("defaultCardHolderName", defaultCardHolderName)
           //  intent.putExtra("defaultColorScanner", defaultScannerBorder)
@@ -365,18 +364,12 @@ class SettingsActivity : AppCompatActivity() {
            // Log.e("cardBrands", dataModelChecked.toString())
             Log.e("cardBrands",  getPrefs().getStringSet("selectedBrandsKey",null).toString())
             intent.putExtra("amount", getPrefStringValue("amountKey"))
-           // intent.putStringArrayListExtra("cardBrands", getPrefStringValue("selectedBrandsKey") as ArrayList<String>)
+          //  intent.putStringArrayListExtra("cardBrands", getPrefStringValue("selectedBrandsKey") as ArrayList<String>)
+        val cardBrandArrayList: ArrayList<String> = ArrayList<String>(getPrefs().getStringSet("selectedBrandsKey",null))
 
-           /* dataModel?.forEachIndexed { index, dataModel ->
-                if (dataModel.checked) {
-                    Log.e(
-                        "cardBrands",
-                        dataModel.name.toString() + " " + dataModel.checked.toString()
-                    )
+        intent.putStringArrayListExtra("cardBrands", cardBrandArrayList)
 
-                    dataModelChecked?.add(dataModel.name.toString())
-                }
-            }*/
+
             intent.putExtra("showPowerdBy", getPrefBooleanValue("displayPoweredByKey",true))
             intent.putExtra("publicKey", getPrefStringValue("publicKey"))
             intent.putExtra("merchantId", getPrefStringValue("merchantIdKey"))
