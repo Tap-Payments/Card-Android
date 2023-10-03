@@ -169,7 +169,52 @@ class SettingsActivity : AppCompatActivity() {
 
                 }
 
+                ListPref {
+                    title = context.getString(R.string.card_edges)
+                    simpleSummaryProvider = true
+                    entries = listOf("curved","flat")
+                    defaultIndex = 1
+
+                }
+                ListPref {
+                    title = context.getString(R.string.card_directions)
+                    simpleSummaryProvider = true
+                    entries = listOf("ltr","dynamic")
+                    defaultIndex = 1
+
+                }
+                ListPref {
+                    title = context.getString(R.string.colorStyle)
+                    simpleSummaryProvider = true
+                    entries = listOf("colored","monochrome")
+                    defaultIndex = 0
+
+                }
+                SwitchPref {
+                    title = context.getString(R.string.display_powerdby_logo)
+                    defaultValue = true
+                }
+
             }
+            Section {
+                title = context.getString(R.string.redirect)
+                InputPref {
+                        title = context.getString(R.string.redirect_url)
+
+
+                    }
+
+            }
+            Section {
+                title = context.getString(R.string.post)
+                InputPref {
+                    title = context.getString(R.string.post_url)
+
+
+                }
+
+            }
+
 
         }
     }
