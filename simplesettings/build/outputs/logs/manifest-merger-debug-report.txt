@@ -1,0 +1,41 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/akazi/Documents/TapProjects/Tap-Card-SDK-Android/simplesettings/src/main/AndroidManifest.xml:6:1-21:12
+INJECTED from /Users/akazi/Documents/TapProjects/Tap-Card-SDK-Android/simplesettings/src/main/AndroidManifest.xml:6:1-21:12
+INJECTED from /Users/akazi/Documents/TapProjects/Tap-Card-SDK-Android/simplesettings/src/main/AndroidManifest.xml:6:1-21:12
+	package
+		ADDED from /Users/akazi/Documents/TapProjects/Tap-Card-SDK-Android/simplesettings/src/main/AndroidManifest.xml:8:5-44
+		INJECTED from /Users/akazi/Documents/TapProjects/Tap-Card-SDK-Android/simplesettings/src/main/AndroidManifest.xml
+		INJECTED from /Users/akazi/Documents/TapProjects/Tap-Card-SDK-Android/simplesettings/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/akazi/Documents/TapProjects/Tap-Card-SDK-Android/simplesettings/src/main/AndroidManifest.xml:7:5-63
+application
+ADDED from /Users/akazi/Documents/TapProjects/Tap-Card-SDK-Android/simplesettings/src/main/AndroidManifest.xml:10:5-20:19
+activity#com.chillibits.simplesettings.ui.SimpleSettingsActivity
+ADDED from /Users/akazi/Documents/TapProjects/Tap-Card-SDK-Android/simplesettings/src/main/AndroidManifest.xml:12:9-15:51
+	android:configChanges
+		ADDED from /Users/akazi/Documents/TapProjects/Tap-Card-SDK-Android/simplesettings/src/main/AndroidManifest.xml:14:13-74
+	android:theme
+		ADDED from /Users/akazi/Documents/TapProjects/Tap-Card-SDK-Android/simplesettings/src/main/AndroidManifest.xml:15:13-49
+	android:name
+		ADDED from /Users/akazi/Documents/TapProjects/Tap-Card-SDK-Android/simplesettings/src/main/AndroidManifest.xml:13:13-54
+activity#com.mikepenz.aboutlibraries.ui.LibsActivity
+ADDED from /Users/akazi/Documents/TapProjects/Tap-Card-SDK-Android/simplesettings/src/main/AndroidManifest.xml:17:9-19:83
+	android:theme
+		ADDED from /Users/akazi/Documents/TapProjects/Tap-Card-SDK-Android/simplesettings/src/main/AndroidManifest.xml:19:13-81
+	android:name
+		ADDED from /Users/akazi/Documents/TapProjects/Tap-Card-SDK-Android/simplesettings/src/main/AndroidManifest.xml:18:13-71
+uses-sdk
+INJECTED from /Users/akazi/Documents/TapProjects/Tap-Card-SDK-Android/simplesettings/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/akazi/Documents/TapProjects/Tap-Card-SDK-Android/simplesettings/src/main/AndroidManifest.xml
+INJECTED from /Users/akazi/Documents/TapProjects/Tap-Card-SDK-Android/simplesettings/src/main/AndroidManifest.xml
+INJECTED from /Users/akazi/Documents/TapProjects/Tap-Card-SDK-Android/simplesettings/src/main/AndroidManifest.xml
+INJECTED from /Users/akazi/Documents/TapProjects/Tap-Card-SDK-Android/simplesettings/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/akazi/Documents/TapProjects/Tap-Card-SDK-Android/simplesettings/src/main/AndroidManifest.xml
+		ADDED from /Users/akazi/Documents/TapProjects/Tap-Card-SDK-Android/simplesettings/src/main/AndroidManifest.xml
+		INJECTED from /Users/akazi/Documents/TapProjects/Tap-Card-SDK-Android/simplesettings/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/akazi/Documents/TapProjects/Tap-Card-SDK-Android/simplesettings/src/main/AndroidManifest.xml
+		ADDED from /Users/akazi/Documents/TapProjects/Tap-Card-SDK-Android/simplesettings/src/main/AndroidManifest.xml
+		INJECTED from /Users/akazi/Documents/TapProjects/Tap-Card-SDK-Android/simplesettings/src/main/AndroidManifest.xml
