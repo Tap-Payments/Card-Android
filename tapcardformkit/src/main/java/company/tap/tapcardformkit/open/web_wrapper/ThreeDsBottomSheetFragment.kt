@@ -17,6 +17,7 @@ import androidx.annotation.Nullable
 import androidx.annotation.RequiresApi
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import company.tap.tapcardformkit.R
+import company.tap.tapcardformkit.doAfterSpecificTime
 import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.twoThirdHeightView
 import company.tap.tapuilibrary.uikit.views.TapBrandView
@@ -81,10 +82,17 @@ class ThreeDsBottomSheetFragment : BottomSheetDialogFragment() {
             DataConfiguration.getTapCardStatusListener()?.onError("User canceled 3ds")
 
         }
+        this.dialog?.setOnDismissListener {
+            doAfterSpecificTime {
+                requireActivity().finish()
+            }
+        }
 
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        this.dialog?.window?.attributes?.windowAnimations = R.style.DialogAnimations
+
         setStyle(STYLE_NORMAL,R.style.CustomBottomSheetDialogFragment)
 
     }
@@ -100,8 +108,8 @@ class ThreeDsBottomSheetFragment : BottomSheetDialogFragment() {
             Log.e("url3ds", request?.url.toString())
             when (request?.url?.toString()?.contains(TapCardKit.threeDsResponse.keyword)) {
                 true -> {
-                    this@ThreeDsBottomSheetFragment.dismiss()
-                    requireActivity().finish()
+                    this@ThreeDsBottomSheetFragment.dialog?.dismiss()
+               //     requireActivity().finish()
                     TapCardKit.generateTapAuthenticate(request.url?.toString().toString())
                 }
                 false -> {}
