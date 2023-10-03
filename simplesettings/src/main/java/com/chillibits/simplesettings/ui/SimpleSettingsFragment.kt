@@ -201,8 +201,9 @@ internal class SimpleSettingsFragment : PreferenceFragmentCompat() {
         if(sp.dialogLayoutRes != 0) dialogLayoutResource = sp.dialogLayoutRes
         if(sp.simpleSummaryProvider) summary = SimplePreference.SUMMARY_VALUE
         entries = sp.entries.toTypedArray()
-        entryValues = (sp.entries.indices).map { it.toString() }.toTypedArray()
-        setDefaultValue(sp.defaultIndex.toString())
+       // entryValues = (sp.entries.indices).map { it.toString() }.toTypedArray()
+        entryValues =  sp.values.toTypedArray()
+        setDefaultValue(sp.entries.toString())
     }
 
     private fun genMSListPref(sp: SimpleMSListPreference) = MultiSelectListPreference(requireContext()).apply {
@@ -218,7 +219,8 @@ internal class SimpleSettingsFragment : PreferenceFragmentCompat() {
         if(sp.simpleSummaryProvider) summaryProvider =
             SimpleMSListPreferenceSummaryProvider()
         entries = sp.entries.toTypedArray()
-        entryValues = (sp.entries.indices).map { it.toString() }.toTypedArray()
+       // entryValues = (sp.entries.indices).map { it.toString() }.toTypedArray()
+        entryValues = sp.entries.toTypedArray()
         setDefaultValue(sp.defaultIndex)
     }
 
@@ -226,7 +228,8 @@ internal class SimpleSettingsFragment : PreferenceFragmentCompat() {
         initializeGeneralAttributes(sp, this)
         if(sp.simpleSummaryProvider) summary = SimplePreference.SUMMARY_VALUE
         entries = sp.entries.toTypedArray()
-        entryValues = (sp.entries.indices).map { it.toString() }.toTypedArray()
+      //  entryValues = (sp.entries.indices).map { it.toString() }.toTypedArray()
+        entryValues =  sp.entries.toTypedArray()
         setDefaultValue(sp.defaultIndex.toString())
     }
 

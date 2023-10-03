@@ -11,10 +11,12 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
+import androidx.lifecycle.Observer
 import androidx.preference.PreferenceFragmentCompat
 import com.chillibits.simplesettings.clicklistener.LibsClickListener
 import com.chillibits.simplesettings.core.SimpleSettings
 import com.chillibits.simplesettings.tool.getPrefBooleanValue
+import com.chillibits.simplesettings.tool.getPrefObserver
 import com.chillibits.simplesettings.tool.getPrefStringValue
 import com.chillibits.simplesettings.tool.getPrefs
 import com.example.tapcardwebsdk.R
@@ -122,9 +124,9 @@ class SettingsActivity : AppCompatActivity() {
                 title = context.getString(R.string.currency)
                 DropDownPref {
                     entries = listOf("KWD", "AED", "SAR", "BHD")
-                    summary = "KWD"
                     key="selectedCurrencyKey"
-                    defaultIndex=0
+                    summary
+
                 }
 
             }
@@ -216,6 +218,7 @@ class SettingsActivity : AppCompatActivity() {
                     title = context.getString(R.string.choose_language)
                     simpleSummaryProvider = true
                     entries = listOf("English", "العربية")
+                    values=  listOf("en", "ar")
                     defaultIndex = 0
                     key="selectedlangKey"
 
@@ -224,6 +227,7 @@ class SettingsActivity : AppCompatActivity() {
                     title = context.getString(R.string.choose_theme)
                     simpleSummaryProvider = true
                     entries = listOf("Dark", "Light", "Dynamic")
+                    values = listOf("Dark", "Light", "Dynamic")
                     defaultIndex = 1
                     key="selectedthemeKey"
 
@@ -233,6 +237,7 @@ class SettingsActivity : AppCompatActivity() {
                     title = context.getString(R.string.card_edges)
                     simpleSummaryProvider = true
                     entries = listOf("curved", "flat")
+                    values = listOf("curved", "flat")
                     defaultIndex = 1
                     key="selectedcardedgeKey"
 
@@ -249,6 +254,7 @@ class SettingsActivity : AppCompatActivity() {
                     title = context.getString(R.string.colorStyle)
                     simpleSummaryProvider = true
                     entries = listOf("colored", "monochrome")
+                    values = listOf("colored", "monochrome")
                     defaultIndex = 0
                     key="selectedcolorstyleKey"
 
@@ -316,7 +322,9 @@ class SettingsActivity : AppCompatActivity() {
     }
     fun startTokenizationactivity(view: View) {
 
-
+        getPrefObserver(this@SettingsActivity, "selectedCurrencyKey", Observer<String> { value ->
+            println("vall"+value)
+        })
             val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("languageSelected", getPrefStringValue("selectedlangKey"))
             intent.putExtra("themeSelected", getPrefStringValue("selectedthemeKey"))
@@ -383,6 +391,10 @@ class SettingsActivity : AppCompatActivity() {
             startActivity(intent)
 
 
+
+    }
+
+    fun getPrefValue(prefString: String){
 
     }
 

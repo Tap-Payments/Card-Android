@@ -134,5 +134,6 @@ class PreferenceSection(
             = SimpleColorPreference(context, iconSpaceReserved).apply {
         func()
         items.add(this)
+
     }
 }

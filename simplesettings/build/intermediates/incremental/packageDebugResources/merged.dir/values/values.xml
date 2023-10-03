@@ -2,8 +2,8 @@
 <resources>
     <color name="colorOnBackground">#FAFAFA</color>
     <color name="colorOnError">#810000</color>
-    <color name="colorOnPrimary">#FFFFFF</color>
-    <color name="colorOnSecondary">#FFFFFF</color>
+    <color name="colorOnPrimary">#03DAC5</color>
+    <color name="colorOnSecondary">#03DAC5</color>
     <color name="colorOnSurface">#03DAC5</color>
     <color name="colorPrimaryDarkVariant">#3E3E3E</color>
     <color name="colorPrimaryVariant">#03DAC5</color>
@@ -18,7 +18,7 @@
     <string name="settings">Settings</string>
     <string name="yes">Yes</string>
     <style name="settingsStyle" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- MaterialComponents colors -->
+        
         <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
         <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
         <item name="colorSurface">@color/colorSurface</item>

@@ -43,4 +43,8 @@ class SimpleListPreference(
     var entries: List<String> = emptyList()
     @ArrayRes var entriesRes = 0
         set(value) { entries = context.resources.getStringArray(value).toList() }
+
+    var values: List<String> = emptyList()
+    @ArrayRes var valuesRes = 0
+        set(value) { values = context.resources.getStringArray(value).toList() }
 }
