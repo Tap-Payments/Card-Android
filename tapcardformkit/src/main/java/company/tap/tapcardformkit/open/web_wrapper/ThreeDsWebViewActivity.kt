@@ -18,8 +18,7 @@ class ThreeDsWebViewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_three_ds_web_view)
         LocalizationManager.setLocale(this, Locale(DataConfiguration.lanuage.toString()))
-
-
+        TapCardKit.alreadyEvaluated = false
 
         threeDsBottomsheet = ThreeDsBottomSheetFragment()
         threeDsBottomsheet.show(supportFragmentManager,"")

@@ -6,7 +6,7 @@ We at [Tap Payments](https://www.tap.company/) strive to make your payments easi
 [![Documentation](https://img.shields.io/badge/documentation-100%25-bright%20green.svg)](https://tap-payments.github.io/goSellSDK-Android/)
 [![SDK Version](https://img.shields.io/badge/minSdkVersion-24-blue.svg)](https://stuff.mit.edu/afs/sipb/project/android/docs/reference/packages.html)
 [![SDK Version](https://img.shields.io/badge/targetSdkVersion-33-informational.svg)](https://stuff.mit.edu/afs/sipb/project/android/docs/reference/packages.html)
-[![SDK Version](https://img.shields.io/badge/latestVersion-0.0.25-informational.svg)](https://stuff.mit.edu/afs/sipb/project/android/docs/reference/packages.html)
+[![SDK Version](https://img.shields.io/badge/latestVersion-0.0.26-informational.svg)](https://stuff.mit.edu/afs/sipb/project/android/docs/reference/packages.html)
 
 # Demo
 ![Imgur](https://i.imgur.com/qLaQdN5.gif)
@@ -377,7 +377,7 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
          */
 
         val configuration = LinkedHashMap<String,Any>()
-   
+        configuration.put("operator", operator)
         configuration.put("merchant",merchant)
         configuration.put("transaction",transaction)
         configuration.put("order",order)
@@ -389,7 +389,6 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
         configuration.put("redirect",redirect)
         configuration.put("acceptance",acceptance)
         configuration.put("addons",addons)
-        configuration.put("operator",operator)
         configuration.put("interface",tapInterface) 
         configuration.put("scope","Authenticate") // or  configuration.put("scope","Token")
         configuration.put("customer",customer)

@@ -50,6 +50,7 @@ dependencies {
     implementation 'androidx.preference:preference:1.2.1'
     implementation 'com.google.android.material:material:1.4.0'
     //  implementation 'com.github.Tap-Payments:Tap-Card-SDK-Android:0.0.20'
+ //   implementation 'com.github.Tap-Payments:Card-Android:0.0.25'
 
 
 

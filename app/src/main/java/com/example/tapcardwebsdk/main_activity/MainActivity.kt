@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
         val cardHolder =  intent.getBooleanExtra("cardHolder",true)
         val cvv =  intent.getBooleanExtra("cvv",true)
 
-Log.e("data", scopeType + " " + purpose)
+        Log.e("data", scopeType + " " + purpose)
         val configuration = LinkedHashMap<String,Any>()
 
         /**
@@ -134,13 +134,28 @@ Log.e("data", scopeType + " " + purpose)
 
 
         /**
+         * contract
+         */
+        val contract = HashMap<String,Any>()
+        contract.put("id","")
+
+        /**
+         * paymentAgreement
+         */
+        val paymentAgreement = HashMap<String,Any>()
+        paymentAgreement.put("id","")
+        paymentAgreement.put("contract",contract)
+
+
+        /**
          * transaction
          */
 
-        val transaction = java.util.HashMap<String,Any>()
+        val transaction = HashMap<String,Any>()
 
         transaction.put("metadata",metada)
         transaction.put("reference",transactionRefrence ?:"tck_LVL8sXyzVSXfSgG0SFkPvQO1Ns")
+        transaction.put("paymentAgreement",paymentAgreement)
 
         /**
          * phone
@@ -244,6 +259,7 @@ Log.e("data", scopeType + " " + purpose)
 
 
         configuration.put("operator",operator)
+
         configuration.put("scope",scopeType.toString())
         configuration.put("purpose",purpose.toString())
         configuration.put("transaction",transaction)
