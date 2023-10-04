@@ -14,9 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import com.chillibits.simplesettings.clicklistener.LibsClickListener
-import com.chillibits.simplesettings.clicklistener.MainActivityClickListener
-import com.chillibits.simplesettings.clicklistener.PlayStoreClickListener
+
 import com.chillibits.simplesettings.core.SimpleSettings
 import com.chillibits.simplesettings.core.SimpleSettingsConfig
 import com.chillibits.simplesettings.tool.getPrefBooleanValue
@@ -36,12 +34,7 @@ class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.settings_activity)
         settings = findViewById(R.id.settings)
-       /* if (savedInstanceState == null) {
-            supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.settings, SettingsFragment())
-                .commit()
-        }*/
+
         val configuration = SimpleSettingsConfig.Builder()
             .setActivityTitle("Configuration")
             .displayHomeAsUpEnabled(false)
@@ -333,11 +326,7 @@ class SettingsActivity : AppCompatActivity() {
 
 
     }
-        class SettingsFragment : PreferenceFragmentCompat() {
-            override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-              //  setPreferencesFromResource(R.xml.root_preferences, rootKey)
-            }
-        }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater = menuInflater
