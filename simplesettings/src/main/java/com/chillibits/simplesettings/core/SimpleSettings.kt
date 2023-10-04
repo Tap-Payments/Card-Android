@@ -32,6 +32,8 @@ class SimpleSettings(
         context.startActivity(Intent(context, SimpleSettingsActivity::class.java))
     }
 
+
+
     /**
      * Build and show the preference screen
      */

@@ -15,8 +15,10 @@ import androidx.lifecycle.Observer
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.chillibits.simplesettings.clicklistener.LibsClickListener
+import com.chillibits.simplesettings.clicklistener.MainActivityClickListener
 import com.chillibits.simplesettings.clicklistener.PlayStoreClickListener
 import com.chillibits.simplesettings.core.SimpleSettings
+import com.chillibits.simplesettings.core.SimpleSettingsConfig
 import com.chillibits.simplesettings.tool.getPrefBooleanValue
 import com.chillibits.simplesettings.tool.getPrefObserver
 import com.chillibits.simplesettings.tool.getPrefStringValue
@@ -40,10 +42,13 @@ class SettingsActivity : AppCompatActivity() {
                 .replace(R.id.settings, SettingsFragment())
                 .commit()
         }*/
-        supportActionBar?.setDisplayHomeAsUpEnabled(false)
-        supportActionBar?.setHomeButtonEnabled(false)
+        val configuration = SimpleSettingsConfig.Builder()
+            .setActivityTitle("Configuration")
+            .displayHomeAsUpEnabled(false)
+            .build()
 
-            SimpleSettings(this).show {
+            SimpleSettings(this,configuration).show {
+
             Section {
                 title = context.getString(R.string.operation)
                 InputPref {
@@ -138,10 +143,13 @@ class SettingsActivity : AppCompatActivity() {
                 title = context.getString(R.string.currency)
                 DropDownPref {
                     entries = listOf("KWD", "AED", "SAR", "BHD")
+                    simpleSummaryProvider = true
+
                     values = listOf("KWD", "AED", "SAR", "BHD")
                     summary="KWD"
                     key="selectedCurrencyKey"
                     defaultIndex=0
+
 
                 }
 
@@ -239,6 +247,7 @@ class SettingsActivity : AppCompatActivity() {
                     entries = listOf("English", "العربية")
                     values=  listOf("en", "ar")
                     defaultIndex = 0
+
                     key="selectedlangKey"
 
                 }
@@ -307,16 +316,12 @@ class SettingsActivity : AppCompatActivity() {
 
             }
              Section {
-                    title = "DONE"
-                    InputPref {
-                        onClick = object:Preference.OnPreferenceClickListener{
-
-                            override fun onPreferenceClick(preference: Preference): Boolean {
-                                startActivity(Intent(this@SettingsActivity,MainActivity::class.java))
-                                Toast.makeText(this@SettingsActivity, "test", Toast.LENGTH_SHORT).show()
-                                return true
-                            }
-
+                    title = ""
+                    TextPref {
+                        title="Done"
+                        onClick = Preference.OnPreferenceClickListener {
+                        startTokenizationactivity()
+                            true
                         }
                     }
                 }
@@ -356,7 +361,7 @@ class SettingsActivity : AppCompatActivity() {
             super.onOptionsItemSelected(item)
         }
     }
-    fun startTokenizationactivity(view: View?) {
+    fun startTokenizationactivity() {
 
 
         getPrefObserver(this@SettingsActivity, "amountKey", Observer<String> { value ->
@@ -370,12 +375,7 @@ class SettingsActivity : AppCompatActivity() {
             intent.putExtra("showHideNFC", getPrefBooleanValue("displayNFCKey",true))
             intent.putExtra("selectedCurrency", getPrefStringValue("selectedCurrencyKey"))
             intent.putExtra("selectedCardType", getPrefStringValue("supportedFundSourceKey"))
-           // intent.putExtra("setdefaultHolderName", setdefaultHolderName)
-          //  intent.putExtra("defaultCardHolderName", defaultCardHolderName)
-          //  intent.putExtra("defaultColorScanner", defaultScannerBorder)
-          //  intent.putExtra("setHeaderView", setHeaderView)
             intent.putExtra("showLoadingState", getPrefBooleanValue("showLoadingKey",true))
-         //   intent.putExtra("editDefaultHolderName", editDefaultHolderName)
             intent.putExtra("selectedCardEdge", getPrefStringValue("selectedcardedgeKey"))
             intent.putExtra("selectedCardDirection", getPrefStringValue("selectedcardirectKey"))
             /**

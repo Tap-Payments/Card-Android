@@ -44,7 +44,6 @@ abstract class SimplePreference(
     var iconSpaceReserved = iconSpaceReservedByDefault
 
     var onClick: Preference.OnPreferenceClickListener? = null
-    var onClickListner: OnClickListener? = null
 
     companion object {
         const val SUMMARY_VALUE = "%s"
