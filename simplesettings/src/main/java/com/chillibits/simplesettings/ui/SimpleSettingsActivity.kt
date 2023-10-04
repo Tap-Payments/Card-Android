@@ -14,6 +14,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.chillibits.simplesettings.R
+import com.chillibits.simplesettings.clicklistener.DialogClickListener
 import com.chillibits.simplesettings.core.SimpleSettings
 import com.chillibits.simplesettings.core.elements.PreferenceHeader
 import com.chillibits.simplesettings.core.elements.PreferenceSection
@@ -33,6 +34,7 @@ internal class SimpleSettingsActivity : AppCompatActivity() {
     // Variables as objects
     private val config = SimpleSettings.config
     private lateinit var binding: ActivitySimpleSettingsBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

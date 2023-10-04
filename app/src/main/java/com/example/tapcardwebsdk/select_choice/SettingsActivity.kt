@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.preference.PreferenceFragmentCompat
@@ -25,10 +26,12 @@ import company.tap.tapcardformkit.getRandomTrx
 import company.tap.tapcardformkit.open.DataConfiguration
 
 class SettingsActivity : AppCompatActivity() {
+    lateinit var settings:FrameLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.settings_activity)
+        settings = findViewById(R.id.settings)
        /* if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
@@ -37,7 +40,8 @@ class SettingsActivity : AppCompatActivity() {
         }*/
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
         supportActionBar?.setHomeButtonEnabled(false)
-        SimpleSettings(this).show {
+
+            SimpleSettings(this).show {
             Section {
                 title = context.getString(R.string.operation)
                 InputPref {
@@ -306,6 +310,7 @@ class SettingsActivity : AppCompatActivity() {
         }
 
 
+
     }
         class SettingsFragment : PreferenceFragmentCompat() {
             override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -335,7 +340,7 @@ class SettingsActivity : AppCompatActivity() {
             super.onOptionsItemSelected(item)
         }
     }
-    fun startTokenizationactivity(view: View) {
+    fun startTokenizationactivity(view: View?) {
 
 
         getPrefObserver(this@SettingsActivity, "amountKey", Observer<String> { value ->
@@ -402,10 +407,6 @@ class SettingsActivity : AppCompatActivity() {
 
 
     }
-
-
-
-
 
 
 
