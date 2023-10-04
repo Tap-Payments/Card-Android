@@ -9,8 +9,10 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
 import android.widget.FrameLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.chillibits.simplesettings.clicklistener.LibsClickListener
 import com.chillibits.simplesettings.clicklistener.PlayStoreClickListener
@@ -304,6 +306,20 @@ class SettingsActivity : AppCompatActivity() {
                 }
 
             }
+             Section {
+                    title = "DONE"
+                    InputPref {
+                        onClick = object:Preference.OnPreferenceClickListener{
+
+                            override fun onPreferenceClick(preference: Preference): Boolean {
+                                startActivity(Intent(this@SettingsActivity,MainActivity::class.java))
+                                Toast.makeText(this@SettingsActivity, "test", Toast.LENGTH_SHORT).show()
+                                return true
+                            }
+
+                        }
+                    }
+                }
 
 
 

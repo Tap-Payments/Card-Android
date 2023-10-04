@@ -5,6 +5,7 @@
 package com.chillibits.simplesettings.item
 
 import android.content.Context
+import android.view.View.OnClickListener
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.preference.Preference
@@ -43,6 +44,7 @@ abstract class SimplePreference(
     var iconSpaceReserved = iconSpaceReservedByDefault
 
     var onClick: Preference.OnPreferenceClickListener? = null
+    var onClickListner: OnClickListener? = null
 
     companion object {
         const val SUMMARY_VALUE = "%s"
