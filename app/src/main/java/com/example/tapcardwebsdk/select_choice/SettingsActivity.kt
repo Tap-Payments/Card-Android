@@ -239,8 +239,8 @@ class SettingsActivity : AppCompatActivity() {
                     simpleSummaryProvider = true
                     entries = listOf("English", "العربية")
                     values=  listOf("en", "ar")
+                   // entries=  listOf("en", "ar")
                     defaultIndex = 0
-
                     key="selectedlangKey"
 
                 }
@@ -356,32 +356,34 @@ class SettingsActivity : AppCompatActivity() {
         getPrefObserver(this@SettingsActivity, "amountKey", Observer<String> { value ->
             println("vall"+value)
         })
+
+        println("vall ss"+getPrefs().getString("selectedlangKey","en"))
             val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("languageSelected", getPrefStringValue("selectedlangKey"))
-            intent.putExtra("themeSelected", getPrefStringValue("selectedthemeKey"))
+            intent.putExtra("languageSelected", getPrefStringValue("selectedlangKey", default = "en"))
+            intent.putExtra("themeSelected", getPrefStringValue("selectedthemeKey","light"))
             intent.putExtra("selectedCardBrand", getPrefBooleanValue("displayPymtBrndKey",true))
             intent.putExtra("showHideScanner", getPrefBooleanValue("displayScannerKey",true))
             intent.putExtra("showHideNFC", getPrefBooleanValue("displayNFCKey",true))
-            intent.putExtra("selectedCurrency", getPrefStringValue("selectedCurrencyKey"))
-            intent.putExtra("selectedCardType", getPrefStringValue("supportedFundSourceKey"))
+            intent.putExtra("selectedCurrency", getPrefStringValue("selectedCurrencyKey","KWD"))
+            intent.putExtra("selectedCardType", getPrefStringValue("supportedFundSourceKey","ALL"))
             intent.putExtra("showLoadingState", getPrefBooleanValue("showLoadingKey",true))
-            intent.putExtra("selectedCardEdge", getPrefStringValue("selectedcardedgeKey"))
-            intent.putExtra("selectedCardDirection", getPrefStringValue("selectedcardirectKey"))
+            intent.putExtra("selectedCardEdge", getPrefStringValue("selectedcardedgeKey","flat"))
+            intent.putExtra("selectedCardDirection", getPrefStringValue("selectedcardirectKey","dynamic"))
             /**
              * new configs
              */
-            intent.putExtra("orderId", getPrefStringValue("orderIdKey"))
-            intent.putExtra("orderDescription", getPrefStringValue("orderDescKey"))
+            intent.putExtra("orderId", getPrefStringValue("orderIdKey",""))
+            intent.putExtra("orderDescription", getPrefStringValue("orderDescKey","test"))
             intent.putExtra("transactionRefrence",getRandomTrx())
-            intent.putExtra("invoiceId",getPrefStringValue("invoiceIdKey"))
-            intent.putExtra("postUrl", getPrefStringValue("posturlKey"))
+            intent.putExtra("invoiceId",getPrefStringValue("invoiceIdKey",""))
+            intent.putExtra("postUrl", getPrefStringValue("posturlKey",""))
 
             /**
              * added newly
              */
 
             Log.e("cardBrands",  getPrefs().getStringSet("selectedBrandsKey",null).toString())
-            intent.putExtra("amount", getPrefStringValue("amountKey"))
+            intent.putExtra("amount", getPrefStringValue("amountKey","1"))
 
         val cardBrandArrayList: ArrayList<String> = ArrayList<String>(getPrefs().getStringSet("selectedBrandsKey",null))
 
@@ -389,19 +391,19 @@ class SettingsActivity : AppCompatActivity() {
 
 
             intent.putExtra("showPowerdBy", getPrefBooleanValue("displayPoweredByKey",true))
-            intent.putExtra("publicKey", getPrefStringValue("publicKey"))
-            intent.putExtra("merchantId", getPrefStringValue("merchantIdKey"))
+            intent.putExtra("publicKey", getPrefStringValue("publicKey","pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"))
+            intent.putExtra("merchantId", getPrefStringValue("merchantIdKey",""))
 
             /**
              * new config
              */
-            intent.putExtra("scope", getPrefStringValue("scopeKey"))
+            intent.putExtra("scope", getPrefStringValue("scopeKey","Token"))
 
-            intent.putExtra("purpose", getPrefStringValue("purposeKey"))
+            intent.putExtra("purpose", getPrefStringValue("purposeKey","PAYMENT_TRANSACTION"))
             intent.putExtra("saveCard", getPrefBooleanValue("displaySaveCardKey",true))
             intent.putExtra("autoSaveCard", getPrefBooleanValue("displayAutosaveCardKey",true))
-            intent.putExtra("redirectURL", getPrefStringValue("redirectUrlKey"))
-            intent.putExtra("selectedColorStyle", getPrefStringValue("selectedcolorstyleKey"))
+            intent.putExtra("redirectURL", getPrefStringValue("redirectUrlKey",""))
+            intent.putExtra("selectedColorStyle", getPrefStringValue("selectedcolorstyleKey","colored"))
             intent.putExtra("cardHolder",  getPrefBooleanValue("displayHoldernameKey",true))
             intent.putExtra("cvv",getPrefBooleanValue("displayCVVKey",true))
 

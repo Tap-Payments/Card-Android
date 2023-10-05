@@ -17,7 +17,7 @@ import me.ibrahimsn.library.LiveSharedPreferences
  * @param name Name of the preference
  * @param default Default value, if the pref does not exist yet
  */
-fun Context.getPrefStringValue(name: String, default: String = "") =
+fun Context.getPrefStringValue(name: String, default: String) =
         getPrefs().getString(name, default) ?: default
 
 /**

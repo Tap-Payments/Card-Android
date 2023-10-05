@@ -201,9 +201,17 @@ internal class SimpleSettingsFragment : PreferenceFragmentCompat() {
         if(sp.dialogLayoutRes != 0) dialogLayoutResource = sp.dialogLayoutRes
         if(sp.simpleSummaryProvider) summary = SimplePreference.SUMMARY_VALUE
         entries = sp.entries.toTypedArray()
-       // entryValues = (sp.entries.indices).map { it.toString() }.toTypedArray()
+       // entryValues = (sp.values.indices).map { it.toString() }.toTypedArray()
         entryValues =  sp.values.toTypedArray()
-        setDefaultValue(sp.defaultIndex.toString())
+        println("you default indez is"+entryValues[sp.defaultIndex].toString())
+        println("you default indez is"+sp.defaultIndex)
+        setValueIndex(sp.defaultIndex);
+        setDefaultValue(entryValues[sp.defaultIndex].toString())
+
+
+
+
+
     }
 
     private fun genMSListPref(sp: SimpleMSListPreference) = MultiSelectListPreference(requireContext()).apply {
