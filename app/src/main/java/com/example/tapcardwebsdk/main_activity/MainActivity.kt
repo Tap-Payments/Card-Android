@@ -255,23 +255,21 @@ class MainActivity : AppCompatActivity() {
 
 
         configuration.put("operator",operator)
-
         configuration.put("scope",scopeType.toString())
-        configuration.put("purpose",purpose.toString())
-        configuration.put("transaction",transaction)
         configuration.put("order",order)
-        configuration.put("invoice",invoice)
-        configuration.put("merchant",merchant)
         configuration.put("customer",customer)
-        configuration.put("features",features)
-        configuration.put("acceptance",acceptance)
-        configuration.put("fieldsVisibility",fieldsVisibility)
-        configuration.put("interface",interfacee)
-        configuration.put("redirect",redirect)
-        configuration.put("post",post)
 
-//        DataConfiguration.initializeSDK(this,configuration,findViewById<TapCardKit>(R.id.tapCardForm))
-//        DataConfiguration.addTapCardStatusDelegate(this)
+//        configuration.put("purpose",purpose.toString())
+//        configuration.put("transaction",transaction)
+//        configuration.put("invoice",invoice)
+//        configuration.put("merchant",merchant)
+//        configuration.put("features",features)
+//        configuration.put("acceptance",acceptance)
+//        configuration.put("fieldsVisibility",fieldsVisibility)
+//        configuration.put("interface",interfacee)
+//        configuration.put("redirect",redirect)
+//        configuration.put("post",post)
+
 
         TapCardConfiguration.configureWithTapCardDictionaryConfiguration(
             this,
@@ -287,18 +285,18 @@ class MainActivity : AppCompatActivity() {
                     findViewById<TextView>(R.id.tokenizeBtn).visibility = View.VISIBLE
 
                 }
+//                override fun onFocus() {
+//                    Toast.makeText(this@MainActivity, "onFocus", Toast.LENGTH_SHORT).show()
+//                }
 
-                override fun onFocus() {
-                    Toast.makeText(this@MainActivity, "onFocus", Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onBindIdentification(data: String) {
-                    Toast.makeText(
-                        this@MainActivity,
-                        "on BindIdentification $data",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+//
+//                override fun onBindIdentification(data: String) {
+//                    Toast.makeText(
+//                        this@MainActivity,
+//                        "on BindIdentification $data",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                }
 
                 override fun onValidInput(isValid: String) {
                     Toast.makeText(this@MainActivity, "onValidInput ${isValid}", Toast.LENGTH_SHORT)
@@ -311,9 +309,9 @@ class MainActivity : AppCompatActivity() {
 
 
 
-                override fun onHeightChange(heightChange: String) {
-                    Log.e("heightChanged",heightChange.toString())
-                }
+//                override fun onHeightChange(heightChange: String) {
+//                    Log.e("heightChanged",heightChange.toString())
+//                }
 
             })
 

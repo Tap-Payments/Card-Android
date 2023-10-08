@@ -209,8 +209,8 @@ class TapCardKit : LinearLayout {
 //                }
             }
             CardConfiguraton.MapConfigruation ->{
-                val tapInterface = DataConfiguration.configurationsAsHashMap?.get("interface") as Map<*, *>
-                with(tapInterface["theme"].toString()) {
+                val tapInterface = DataConfiguration.configurationsAsHashMap?.get("interface") as? Map<*, *>
+                with(tapInterface?.get("theme").toString()) {
               //      lottieAnimationView.setCacheComposition(true)
                     when (this) {
                         TapTheme.light.name -> {
@@ -243,9 +243,8 @@ class TapCardKit : LinearLayout {
 
               setTapThemeAndLanguage(
                     this.context,
-                    TapLocal.valueOf(tapInterface["locale"].toString()),
-                    TapTheme.valueOf(tapInterface["theme"].toString())
-                )
+                    TapLocal.valueOf(tapInterface?.get("locale")?.toString() ?: TapLocal.en.name),
+                  TapTheme.valueOf(tapInterface?.get("theme")?.toString() ?: TapTheme.light.name))
             }
         }
 
@@ -272,7 +271,7 @@ class TapCardKit : LinearLayout {
 //
 //    }
 
-    private fun setTapThemeAndLanguage(context: Context, language: TapLocal, themeMode: TapTheme) {
+    private fun setTapThemeAndLanguage(context: Context, language: TapLocal?, themeMode: TapTheme?) {
         when (themeMode) {
             TapTheme.light -> {
                 DataConfiguration.setTheme(
@@ -290,7 +289,7 @@ class TapCardKit : LinearLayout {
             }
             else -> {}
         }
-        DataConfiguration.setLocale(this.context, language.name, null, this@TapCardKit.context.resources, R.raw.lang)
+        DataConfiguration.setLocale(this.context, language?.name ?:"en", null, this@TapCardKit.context.resources, R.raw.lang)
 
     }
 

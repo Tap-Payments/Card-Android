@@ -157,18 +157,18 @@ interface TapCardStatusDelegate {
     fun onSuccess(data: String)
 
 
-    fun onReady()
+    fun onReady(){}
 
-    fun onFocus()
+    fun onFocus(){}
 
-    fun onBindIdentification(data: String)
+    fun onBindIdentification(data: String){}
 
     fun onValidInput(isValid: String)
 
 
     fun onError(error: String)
 
-    fun onHeightChange(heightChange:String)
+    fun onHeightChange(heightChange:String){}
 
 
 }
