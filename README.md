@@ -238,14 +238,14 @@ It is always recommended, that you generate this `HashMap dictionary` from your 
  - purpose:
 	 - Defines the intention of using the `Token` after generation.
 	 - Possible values:
-		 - `Transaction` .
-		 - `Save Card` .
-		 - `Verify Cardholder` .
-		 - `Order Transaction` .
-		 - `Subscription Transaction` .
-    		 - `Billing Transaction` .
-		 - `Installment Transaction` .
-		 - `Milestone Transaction` .
+		 - `Transaction` Using the token for a single charge.
+		 - `Milestone Transaction` Using the token for paying a part of a bigger order, when reaching a certain milestone.
+		 - `Installment Transaction` Using the token for a charge that is a part of an installement plan.
+		 - `Billing Transaction` Using the token for paying a bill.
+		 - `Subscription Transaction` Using the token for a recurring based transaction.
+		 - `Verify Cardholder` Using the token to verify the ownership of the card.
+		 - `Save Card` Using the token to save this card and link it to a certain customer.
+		 - `Maintain Card` Used to renew a saved card.
 
  - transaction:
 	 - Provides essential information about this transaction.
