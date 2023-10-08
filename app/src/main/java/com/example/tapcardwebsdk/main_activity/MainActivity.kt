@@ -256,16 +256,16 @@ class MainActivity : AppCompatActivity() {
         configuration.put("scope",scopeType.toString())
         configuration.put("order",order)
         configuration.put("customer",customer)
-//        configuration.put("purpose",purpose.toString())
-//        configuration.put("transaction",transaction)
-//        configuration.put("invoice",invoice)
-//        configuration.put("merchant",merchant)
-//        configuration.put("features",features)
-//        configuration.put("acceptance",acceptance)
-//        configuration.put("fieldsVisibility",fieldsVisibility)
-//        configuration.put("interface",interfacee)
-//        configuration.put("redirect",redirect)
-//        configuration.put("post",post)
+        configuration.put("purpose",purpose.toString())
+        configuration.put("transaction",transaction)
+        configuration.put("invoice",invoice)
+        configuration.put("merchant",merchant)
+        configuration.put("features",features)
+        configuration.put("acceptance",acceptance)
+        configuration.put("fieldsVisibility",fieldsVisibility)
+        configuration.put("interface",interfacee)
+        configuration.put("redirect",redirect)
+        configuration.put("post",post)
 
 
         TapCardConfiguration.configureWithTapCardDictionaryConfiguration(
@@ -302,6 +302,8 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onError(error: String) {
                     Toast.makeText(this@MainActivity, "onError ${error}", Toast.LENGTH_SHORT).show()
+                    Log.e("test",error.toString())
+
                 }
 
 

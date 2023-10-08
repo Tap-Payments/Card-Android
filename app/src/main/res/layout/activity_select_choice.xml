@@ -476,7 +476,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="50"
                 android:checked="true"
-                android:text="loading"
+                android:text="loader"
 
                 />
         </RadioGroup>
