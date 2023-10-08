@@ -389,7 +389,6 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
         configuration.put("features",features)
         configuration.put("redirect",redirect)
         configuration.put("acceptance",acceptance)
-        configuration.put("addons",addons)
         configuration.put("interface",tapInterface) 
         configuration.put("scope","Authenticate") // or  configuration.put("scope","Token")
         configuration.put("customer",customer)
