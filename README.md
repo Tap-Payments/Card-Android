@@ -183,8 +183,8 @@ A protocol that allows integrators to get notified from events fired from the `C
     /// - Parameter valid: Will be true if the card data is valid and false otherwise.
     override fun  onValidInput(invalid: Bool) {
     }
-    /**
-        Will be fired whenever the card sdk finishes successfully the task assigned to it. Whether `TapToken` or `AuthenticatedToken`
+    
+     ///   Will be fired whenever the card sdk finishes successfully the task assigned to it. Whether `TapToken` or `AuthenticatedToken`
     override fun  onSuccess(data: String) {
      }
     /// Will be fired whenever there is an error related to the card connectivity or apis
@@ -197,7 +197,6 @@ A protocol that allows integrators to get notified from events fired from the `C
 # Advanced Integration
 
 ## Advanced Documentation
-
 
 ### Main input documentation
 To make our sdk as dynamic as possible, we accept the input in a form of a `HashMap dictionary` . We will provide you with a sample full one for reference.
