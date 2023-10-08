@@ -61,7 +61,7 @@ allprojects {
 Then get latest dependency  in your app module gradle
 ```kotlin
 dependencies {
-  implementation : 'com.github.Tap-Payments:Tap-Card-SDK-Android:{latest-tag-release}'
+  implementation : 'com.github.Tap-Payments:Card-Android:{latest-tag-release}'
 }
 ```
 
