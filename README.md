@@ -89,7 +89,7 @@ It is always recommended, that you generate this `HashMap dictionary` from your 
 | customer| The customer details you want to attach to this tokenization process. | True  | `Dictionary`| ` var customer =  HashMap<String,Any> ,customer.put("id,""), customer.put("nameOnCard","Tap Payments"),customer.put("editable",true),) var name :HashMap<String,Any> = [["lang":"en","first":"TAP","middle":"","last":"PAYMENTS"]] "contact":["email":"tap@tap.company", "phone":["countryCode":"+965","number":"88888888"]]] customer.put("name",name) , customer.put("contact",contact)` |
 | features| Some extra features that you can enable/disable based on the experience you want to provide.. | False  | `Dictionary`| ` var features=HashMap<String,Any> ,features.add("scanner":true), features.add("acceptanceBadge":true), features.add("customerCards":HashMapof("saveCard":false, "autoSaveCard":false)`|
 | acceptance| The acceptance details for the transaction. Including, which card brands and types you want to allow for the customer to tokenize. | False  | `Dictionary`| ` var acceptance = HashMap<String,Any> ,acceptance.put("supportedSchemes",["AMERICAN_EXPRESS","VISA","MASTERCARD","OMANNET","MADA"]),acceptance.put("supportedFundSource",["CREDIT","DEBIT"]),acceptance.put("supportedPaymentAuthentications",["3DS"])` |
-| fields| Needed to define visibility of the optional fields in the card form. | False  | `Dictionary`| ` var fields = HashMap<String,Any> ,fields.put("cardHolder",true)` |
+| fieldsVisibility| Needed to define visibility of the optional fieldsVisibility in the card form. | False  | `Dictionary`| ` var fieldsVisibility = HashMap<String,Any> ,fieldsVisibility.put("cardHolder",true)` |
 | addons| Needed to define the enabling of some extra features on top of the basic card form. | False  | `Dictionary`| ` var addons = HashMap<String,Any> , addons.put("loader",true) `|
 | interface| Needed to defines look and feel related configurations. | False  | `Dictionary`| ` var interface = HashMap<String,Any> ,interface.put("locale","en"), interface.put("theme","light"), interface.put("edges","curved"), interface.put("direction","dynamic"),interface.put(powered,true),interface.put("colorStyle","colored") // Allowed values for theme : light/dark. locale: en/ar, edges: curved/flat, direction:ltr/dynaimc,colorStyle:colored/monochrome` |
 | post| This is the `webhook` for your server, if you want us to update you server to server. | False  | `Dictionary`| ` var post = HashMap<String,Any>.put("url","")` |
@@ -322,7 +322,7 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
         /**
          * fields
          */
-        val fields = HashMap<String,Any>()
+        val fieldsVisibility = HashMap<String,Any>()
 
         /**
          * card
@@ -330,7 +330,7 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
         val card = HashMap<String,Any>()
          card.put("cvv",true)
          card.put("cardHolder",true)
-        fields.put("card",card)
+        fieldsVisibility.put("card",card)
 
         /**
          * customerCards
@@ -388,7 +388,7 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
         configuration.put("invoice",invoice)
         configuration.put("post",post)
         configuration.put("purpose","PAYMENT_TRANSACTION")
-        configuration.put("fields",fields)
+        configuration.put("fieldsVisibility",fields)
         configuration.put("features",features)
         configuration.put("redirect",redirect)
         configuration.put("acceptance",acceptance)
