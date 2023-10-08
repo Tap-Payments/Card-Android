@@ -1,10 +1,10 @@
 package company.tap.tapcardformkit.open.web_wrapper
 
+//import com.airbnb.lottie.LottieAnimationView
+
 import TapCardConfigurations
-import TapCardEdges
 import TapLocal
 import TapTheme
-import android.animation.Animator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
@@ -15,18 +15,14 @@ import android.os.Build
 import android.os.Handler
 import android.util.AttributeSet
 import android.util.Log
-import android.util.TypedValue
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
 import android.widget.*
 import androidx.annotation.RequiresApi
-import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.*
 import cards.pay.paycardsrecognizer.sdk.Card
-//import com.airbnb.lottie.LottieAnimationView
 import com.google.gson.Gson
 import company.tap.nfcreader.open.utils.TapNfcUtils
 import company.tap.tapcardformkit.*
@@ -34,11 +30,9 @@ import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.enums.CardFormWebStatus
 import company.tap.tapcardformkit.open.web_wrapper.model.ThreeDsResponse
 import company.tap.tapcardformkit.open.web_wrapper.nfc_activity.NFCLaunchActivity
-
 import company.tap.tapcardformkit.open.web_wrapper.scanner_activity.ScannerActivity
 import company.tap.tapuilibrary.themekit.ThemeManager
 import company.tap.tapuilibrary.uikit.atoms.*
-import company.tap.tapuilibrary.uikit.fragment.NFCFragment
 import java.net.URLEncoder
 import java.util.*
 
@@ -115,23 +109,25 @@ class TapCardKit : LinearLayout {
         webViewFrame = findViewById(R.id.webViewFrame)
         webFrame3ds = findViewById(R.id.webViewFrame3ds)
         constraintLayout = findViewById(R.id.constraint)
-    //    lottieAnimationView = findViewById(R.id.shimmer_view)
+         cardWebview.settings.cacheMode = WebSettings.LOAD_DEFAULT
         cardWebview.settings.javaScriptEnabled = true
-        hideableWebView.settings.javaScriptEnabled = true
-         cardWebview.settings.allowFileAccess = true
-         cardWebview.settings.allowContentAccess= true
-         cardWebview.settings.cacheMode = WebSettings.LOAD_DEFAULT;
+         cardWebview.settings.useWideViewPort = true
+         hideableWebView.settings.javaScriptEnabled = true
+//         cardWebview.settings.allowFileAccess = true
+//         cardWebview.settings.allowContentAccess= true
+//         cardWebview.settings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK;
 
-        // cardWebview.settings.cacheMode = WebSettings.LOAD_NO_CACHE
-         cardWebview.settings.domStorageEnabled = true
+//         cardWebview.settings.domStorageEnabled = true
         cardWebview.setBackgroundColor(Color.TRANSPARENT)
         cardWebview.setLayerType(LAYER_TYPE_SOFTWARE, null)
-         cardWebview.settings.loadWithOverviewMode = true
-         cardWebview.settings.useWideViewPort = true
-         cardWebview.settings.setSupportMultipleWindows(true)
-        cardWebview.webViewClient = MyWebViewClient()
-        hideableWebView.webViewClient = HideableWebViewClient()
-//        CookieManager.getInstance().setAcceptThirdPartyCookies(cardWebview,true);
+//         cardWebview.settings.loadWithOverviewMode = true
+//         cardWebview.settings.setSupportMultipleWindows(true)
+         cardWebview.webChromeClient = WebChromeClient()
+
+         cardWebview.webViewClient = MyWebViewClient()
+         cardWebview.settings.allowFileAccess = false
+
+         hideableWebView.webViewClient = HideableWebViewClient()
 
 
      }
@@ -335,7 +331,6 @@ class TapCardKit : LinearLayout {
                  * listen for states of cardWebStatus of onReady , onValidInput .. etc
                  */
                 if (request?.url.toString().contains(CardFormWebStatus.onReady.name)) {
-                //    stopShimmer()
 
                     DataConfiguration.getTapCardStatusListener()?.onReady()
 

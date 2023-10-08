@@ -13,6 +13,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.tapcardwebsdk.R
 import com.example.tapcardwebsdk.select_choice.SelectChoiceActivity
+import com.example.tapcardwebsdk.select_choice.SettingsActivity
 import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.open.TapCardStatusDelegate
 import company.tap.tapcardformkit.open.web_wrapper.TapCardConfiguration
@@ -23,6 +24,8 @@ class MainActivity : AppCompatActivity() {
     val REQUEST_ID_MULTIPLE_PERMISSIONS = 7
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
+        codeCacheDir.setReadOnly()
+
 
 
         setContentView(R.layout.activity_main)
@@ -46,8 +49,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getDataFromHashMap() {
-
-        val selectedLanguage: String = intent.getStringExtra("languageSelected").toString()
+        val lang = intent.getStringExtra("languageSelected").toString()
+        val selectedLanguage: String = lang.toString()
         val selectedCurrency: String = intent.getStringExtra("selectedCurrency").toString()
         val selectedTheme: String = intent.getStringExtra("themeSelected").toString()
         val selectedCardType: String = intent.getStringExtra("selectedCardType").toString()
@@ -321,7 +324,7 @@ class MainActivity : AppCompatActivity() {
         super.onBackPressed()
      //   val intent = Intent(this, SettingsActivity::class.java)
 
-        val intent = Intent(this, SelectChoiceActivity::class.java)
+        val intent = Intent(this, SettingsActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         finish()
         startActivity(intent)
