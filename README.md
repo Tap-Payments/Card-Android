@@ -174,11 +174,11 @@ Once you get notified that the `TapCardKit` now has a valid input from the deleg
 tapCardKitView.generateTapToken()
 ```
 
-## Simple TapCardViewDelegate
+## Simple TapCardStatusDelegate
 A protocol that allows integrators to get notified from events fired from the `Card-Android`. 
 
 ```kotlin
-    TapCardViewDelegate {
+    interface TapCardStatusDelegate {
     /// Will be fired whenever the validity of the card data changes.
     /// - Parameter valid: Will be true if the card data is valid and false otherwise.
     override fun  onValidInput(invalid: Bool) {
@@ -532,7 +532,7 @@ An interface that allows integrators to get notified from events fired from the 
 interface TapCardStatusDelegate {
 
 
-    fun onSuccess(data: String)
+    override fun onSuccess(data: String)
 /**
         Will be fired whenever the card sdk finishes successfully the task assigned to it. Whether `TapToken` or `AuthenticatedToken`
      - Parameter data: will include the data in JSON format. For `TapToken`:
@@ -568,18 +568,18 @@ interface TapCardStatusDelegate {
      }
      */
 
-    fun onReady()
+    override fun onReady()
     /**
      *  Will be fired whenever the card is rendered and loaded
      */
 
-    fun onFocus()
+    override fun onFocus()
     /**
      *  Will be fired once the user focuses any of the card fields
      */
 
  
-    fun onBindIdentification(data: String)
+    override fun onBindIdentification(data: String)
 /** - Parameter data: will include the data in JSON format. example :
      *{
         "bin": "424242",
@@ -595,20 +595,20 @@ interface TapCardStatusDelegate {
         "brand": "VISA"
      }*     */
 
-    fun onValidInput(isValid: String)
+    override fun onValidInput(isValid: String)
     /**
      *  Will be fired whenever the validity of the card data changes.
      *  Parameter isValid: Will be true if the card data is valid and false otherwise.
      */
 
 
-    fun onError(error: String)=
+    override fun onError(error: String)=
    /**
      *  Will be fired whenever there is an error related to the card connectivity or apis
      *  Parameter data: includes a JSON format for the error description and error
      */
 
-    fun onHeightChange(heightChange:String)
+    override fun onHeightChange(heightChange:String)
    /**
      *  Will be fired whenever the card element changes its height for your convience
      *   Parameter height: The new needed height
