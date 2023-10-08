@@ -167,7 +167,7 @@ You can initialize `Card-Android` in different ways
 
 ## Tokenize the card
 
-Once you get notified that the `TapCardView` now has a valid input from the delegate. You can start the tokenization process by calling the public interface:
+Once you get notified that the `TapCardKit` now has a valid input from the delegate. You can start the tokenization process by calling the public interface:
 
 ```kotlin
 ///  Wil start the process of generating a `TapToken` with the current card data
@@ -208,8 +208,8 @@ It is always recommended, that you generate this `HashMap dictionary` from your 
 | operator| This is the `Key` that you will get after registering you package name. | True  | String| `var operator=HashMap<String,Any>(),operator.put("publicKey","pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7")` |
 | scope| Defines the intention of using the `Card-Android`. | True  | String| ` var scope:String = "Token" ` |
 | purpose| Defines the intention of using the `Token` after generation. | True  | String| ` var purpose:String = "Transaction" ` |
-| transaction| Needed to define transaction `metadata`  | False  | `Dictionry`| ` var transaction = HashMap(String,Any) = transaction.put("paymentAgreement":["id":"", "contract":["id":"If you created a contract id with the client to save his card, pass its is here. Otherwise, we will create one for you.",transaction.put("metadata":HashmapOf<Key,Value>()]]` |
-| order| This is the `order id` that you created before or `amount` , `currency` , `transaction` to generate a new order .   It will be linked this token. | True  | `Dictionary`| ` var order = HashMap<String, Any>(), order.put("id","") order.put("amount",1),order.put("currency","SAR"),order.put("description",""), order.put("reference":"A reference to this transaciton in your system"))` |
+| transaction| Needed to define transaction data  | False  | `Dictionry`| ` var transaction = HashMap(String,Any) = transaction.put("paymentAgreement":["id":"", "contract":["id":"If you created a contract id with the client to save his card, pass its is here. Otherwise, we will create one for you."],"reference":""]` |
+| order| This is the `order id` that you created before or `amount` , `currency` , `transaction` to generate a new order .   It will be linked this token. | True  | `Dictionary`| ` var order = HashMap<String, Any>(), order.put("id","") order.put("amount",1),order.put("currency","SAR"),order.put("description",""), order.put("reference":"A reference to this order in your system"))` |
 | invoice| This is the `invoice id` that you want to link this token to if any. | False  | `Dictionary`| ` var invoice = HashMap<String,Any>.put("id","")` |
 | merchant| This is the `Merchant id` that you will get after registering you bundle id. | True  | `Dictionary`| ` var merchant = HashMap<String,Any>.put("id","")` |
 | customer| The customer details you want to attach to this tokenization process. | True  | `Dictionary`| ` var customer =  HashMap<String,Any> ,customer.put("id,""), customer.put("nameOnCard","Tap Payments"),customer.put("editable",true),) var name :HashMap<String,Any> = [["lang":"en","first":"TAP","middle":"","last":"PAYMENTS"]] "contact":["email":"tap@tap.company", "phone":["countryCode":"+965","number":"88888888"]]] customer.put("name",name) , customer.put("contact",contact)` |
@@ -249,8 +249,9 @@ It is always recommended, that you generate this `HashMap dictionary` from your 
 
  - transaction:
 	 - Provides essential information about this transaction.
-- transaction.metadata:
-	 - It is a key-value based parameter. You can pass it to attach any miscellaneous data with this transaction for your own convenience.
+ - transaction.reference:
+	 - Pass this value if you want to link this transaction to the a one you have within your system.
+
  - transaction.paymentAgreement.id:
 	 - The id the payment agreement you created using our Apis.
 	 - This is an agreement between you and your client to allow saving his card for further payments.
@@ -270,7 +271,7 @@ It is always recommended, that you generate this `HashMap dictionary` from your 
  - order.description:
 	 - Optional string to put some clarifications about the order if needed.
  - order.reference:
-	 - Pass this value if you want to link this transaction to the a one you have within your system.
+	 - Pass this value if you want to link this order to the a one you have within your system.
 
  - invoice.id:
 	 - Optional string to pass an invoice id, that you want to link to this token afterwards.
@@ -309,7 +310,7 @@ It is always recommended, that you generate this `HashMap dictionary` from your 
 	 - A boolean to indicate whether or not you want to display the scan card icon.
 	 - Make sure you have access to camera usage, before enabling the scanner function.
  - features.alternativeCardInput.cardNFC
-
+	- A boolean to indicate whether or not you want to display the NFC icon.
 - acceptance:
 	- List of configurations that control the payment itself.
 - acceptance.supportedSchemes:
@@ -326,9 +327,9 @@ It is always recommended, that you generate this `HashMap dictionary` from your 
 - acceptance.supportedPaymentAuthentications:
 	- A list of what authentication techniques you want to enforce and apple. For example:
 		- 3DS
-- fields.card.cardHolder:
+- fieldsVisibility.card.cardHolder:
 	- A boolean to indicate wether or not you want to show/collect the card holder name.
-- addons.loader:
+- interface.loader:
 	- A boolean to indicate wether or not you want to show a loading view on top of the card form while it is performing api requests.
 - interface.locale:
 	- The language of the card form. Accepted values as of now are:
@@ -358,7 +359,6 @@ It is always recommended, that you generate this `HashMap dictionary` from your 
 
 ## Initialization of the input
 
-### Initialize as a  Dictionary HashMap 
 You can create a Dictionary HashMap to pass the data to our sdk. The good part about this, is that you can generate the data from one of your apis. Whenever we have an update to the configurations, you can update your api. This will make sure, that you will not have to update your app on the Google Play Store.
 
 ```kotlin
@@ -385,19 +385,6 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
         val post = java.util.HashMap<String,Any>()
         post.put("url","")
 
-         /**
-         * redirect
-         */
-        val redirect = HashMap<String,Any>()
-        redirect.put("url",redirectURL.toString())
-
-
-        /**
-         * metadata
-         */
-        val metada = HashMap<String,Any>()
-        metada.put("id","")
-
 
      /**
          * paymentAgreement
@@ -411,7 +398,7 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
          */
         val transaction = HashMap<String,Any>()
         transaction.put("paymentAgreement",paymentAgreement)
-        transaction.put("metadata",metadata)
+	transaction.put("reference","")
         /**
          * phone
          */
@@ -538,8 +525,8 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
 
 
 
-## Advanced TapCardViewDelegate
-A protocol that allows integrators to get notified from events fired from the `TapCardSDK`. 
+## Advanced TapCardStatusDelegate
+An interface that allows integrators to get notified from events fired from the `TapCardKit`. 
 ```kotlin
 
 interface TapCardStatusDelegate {
