@@ -87,12 +87,44 @@ class SettingsActivity : AppCompatActivity() {
             }
             Section {
 
+
+                Section {
+
+                    title = context.getString(R.string.transaction)
+                    InputPref {
+                        title = context.getString(R.string.payment_agreement_id)
+                        simpleSummaryProvider = true
+                        summary = ""
+                        defaultValue = "test"
+                        key="paymentAgreementID"
+
+                    }
+
+                    InputPref {
+                        title = context.getString(R.string.payment_agreement_contract)
+                        simpleSummaryProvider = true
+                        summary = ""
+                        defaultValue = "test"
+                        key="paymentAgreementContract"
+
+                    }
+                }
                 title = context.getString(R.string.transaction)
                 InputPref {
-                    title = context.getString(R.string.trans_refrence)
-                    summary = "tck_LVL8sXyzVSXfSgG0SFkPvQO1Ns"
-                    defaultValue = "tck_LVL8sXyzVSXfSgG0SFkPvQO1Ns"
-                    key="transRefKey"
+                    title = context.getString(R.string.payment_agreement_id)
+                    simpleSummaryProvider = true
+                    summary = ""
+                    defaultValue = "test"
+                    key="paymentAgreementID"
+
+                }
+
+                InputPref {
+                    title = context.getString(R.string.payment_agreement_contract)
+                    simpleSummaryProvider = true
+                    summary = ""
+                    defaultValue = "test"
+                    key="paymentAgreementContract"
 
                 }
             }
@@ -359,7 +391,7 @@ class SettingsActivity : AppCompatActivity() {
             intent.putExtra("showHideScanner", getPrefBooleanValue("displayScannerKey",true))
             intent.putExtra("showHideNFC", getPrefBooleanValue("displayNFCKey",true))
             intent.putExtra("selectedCurrency", getPrefStringValue("selectedCurrencyKey","KWD"))
-            intent.putExtra("selectedCardType", getPrefStringValue("supportedFundSourceKey","ALL"))
+            intent.putExtra("selectedCardType", getPrefStringValue("supx`portedFundSourceKey","ALL"))
             intent.putExtra("showLoadingState", getPrefBooleanValue("showLoadingKey",true))
             intent.putExtra("selectedCardEdge",if (getPrefStringValue("selectedcardedgeKey","") == "1")  "flat" else  getPrefStringValue("selectedcardedgeKey","flat"))
             intent.putExtra("selectedCardDirection", if (getPrefStringValue("selectedcardirectKey","") == "0") "ltr" else getPrefStringValue("selectedcardirectKey","dynamic"))

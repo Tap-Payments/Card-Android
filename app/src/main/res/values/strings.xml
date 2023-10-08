@@ -19,7 +19,7 @@
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="card_name">Card Holder</string>
     <string name="addons">ADDONS</string>
-    <string name="fields">FieldsVisibility</string>
+    <string name="fields">FieldVisibility</string>
     <string name="display_payment_brands">Display Payment Brands</string>
     <string name="display_card_scanning">Scanner</string>
     <string name="display_nfc">Nfc</string>
@@ -90,6 +90,8 @@
     <string name="display_holdername">Card Holder</string>
     <string name="display_CVV">CVV</string>
     <string name="choose_theme">Choose Theme</string>
+    <string name="payment_agreement_id">Payment agreement id </string>
+    <string name="payment_agreement_contract">Payment agreement contract </string>
 
     <string-array name="ScopeList">
         <item>Token</item>

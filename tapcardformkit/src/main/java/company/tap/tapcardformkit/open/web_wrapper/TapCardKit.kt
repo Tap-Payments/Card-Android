@@ -109,24 +109,20 @@ class TapCardKit : LinearLayout {
         webViewFrame = findViewById(R.id.webViewFrame)
         webFrame3ds = findViewById(R.id.webViewFrame3ds)
         constraintLayout = findViewById(R.id.constraint)
-         cardWebview.settings.cacheMode = WebSettings.LOAD_DEFAULT
-        cardWebview.settings.javaScriptEnabled = true
+         cardWebview.settings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
+         val DESKTOP_USER_AGENT =
+             "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2049.0 Safari/537.36"
+         cardWebview.settings.userAgentString = DESKTOP_USER_AGENT;
+
+         cardWebview.settings.javaScriptEnabled = true
          cardWebview.settings.useWideViewPort = true
          hideableWebView.settings.javaScriptEnabled = true
-//         cardWebview.settings.allowFileAccess = true
-//         cardWebview.settings.allowContentAccess= true
-//         cardWebview.settings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK;
-
-//         cardWebview.settings.domStorageEnabled = true
+        cardWebview.settings.domStorageEnabled = true
         cardWebview.setBackgroundColor(Color.TRANSPARENT)
         cardWebview.setLayerType(LAYER_TYPE_SOFTWARE, null)
-//         cardWebview.settings.loadWithOverviewMode = true
-//         cardWebview.settings.setSupportMultipleWindows(true)
+
          cardWebview.webChromeClient = WebChromeClient()
-
          cardWebview.webViewClient = MyWebViewClient()
-         cardWebview.settings.allowFileAccess = false
-
          hideableWebView.webViewClient = HideableWebViewClient()
 
 
@@ -162,6 +158,7 @@ class TapCardKit : LinearLayout {
             }
         }
     }
+
 
     private fun applyThemeForShimmer() {
         /**
@@ -331,7 +328,6 @@ class TapCardKit : LinearLayout {
                  * listen for states of cardWebStatus of onReady , onValidInput .. etc
                  */
                 if (request?.url.toString().contains(CardFormWebStatus.onReady.name)) {
-
                     DataConfiguration.getTapCardStatusListener()?.onReady()
 
                 }
@@ -420,6 +416,7 @@ class TapCardKit : LinearLayout {
         }
 
         override fun onPageFinished(view: WebView, url: String) {
+
         }
 
 
