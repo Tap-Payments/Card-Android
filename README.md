@@ -82,8 +82,8 @@ It is always recommended, that you generate this `HashMap dictionary` from your 
 | operator| This is the `Key` that you will get after registering you package name. | True  | String| `var operator=HashMap<String,Any>(),operator.put("publicKey","pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7")` |
 | scope| Defines the intention of using the `Card-Android`. | True  | String| ` var scope:String = "Token" ` |
 | purpose| Defines the intention of using the `Token` after generation. | True  | String| ` var purpose:String = "Transaction" ` |
-| transaction| Needed to define transaction metadata and reference, if you are generating an authenticated token. | False  | `Dictionry`| ` var transaction = HashMap(String,Any) = transaction.put("metadata":HashmapOf("example":"value"), "reference":"A reference to this transaciton in your system"],"paymentAgreement":["id":"", "contract":["id":"If you created a contract id with the client to save his card, pass its is here. Otherwise, we will create one for you."]]` |
-| order| This is the `order id` that you created before or `amount` and `currency` to generate a new order.   It will be linked this token. | True  | `Dictionary`| ` var order = HashMap<String, Any>(), order.put("id","") order.put("amount",1),order.put("currency","SAR"),order.put("description","")` |
+| transaction| Needed to define transaction metadata , if you are generating an authenticated token. | False  | `Dictionry`| ` var transaction = HashMap(String,Any) = transaction.put("metadata":HashmapOf("example":"value"),"paymentAgreement":["id":"", "contract":["id":"If you created a contract id with the client to save his card, pass its is here. Otherwise, we will create one for you."]]` |
+| order| This is the `order id` that you created before or `amount` , `currency` , `transaction` to generate a new order .   It will be linked this token. | True  | `Dictionary`| ` var order = HashMap<String, Any>(), order.put("id","") order.put("amount",1),order.put("currency","SAR"),order.put("description",""), order.put("reference":"A reference to this transaciton in your system")` |
 | invoice| This is the `invoice id` that you want to link this token to if any. | False  | `Dictionary`| ` var invoice = HashMap<String,Any>.put("id","")` |
 | merchant| This is the `Merchant id` that you will get after registering you bundle id. | True  | `Dictionary`| ` var merchant = HashMap<String,Any>.put("id","")` |
 | customer| The customer details you want to attach to this tokenization process. | True  | `Dictionary`| ` var customer =  HashMap<String,Any> ,customer.put("id,""), customer.put("nameOnCard","Tap Payments"),customer.put("editable",true),) var name :HashMap<String,Any> = [["lang":"en","first":"TAP","middle":"","last":"PAYMENTS"]] "contact":["email":"tap@tap.company", "phone":["countryCode":"+965","number":"88888888"]]] customer.put("name",name) , customer.put("contact",contact)` |
@@ -123,8 +123,6 @@ It is always recommended, that you generate this `HashMap dictionary` from your 
 
  - transaction:
 	 - Provides essential information about this transaction.
- - transaction.reference:
-	 - Pass this value if you want to link this transaction to the a one you have within your system.
  - transaction.metadata:
 	 - It is a key-value based parameter. You can pass it to attach any miscellaneous data with this transaction for your own convenience.
  - transaction.paymentAgreement.id:
@@ -145,6 +143,8 @@ It is always recommended, that you generate this `HashMap dictionary` from your 
 	 - The intended amount you will perform the order linked to this token afterwards.
  - order.description:
 	 - Optional string to put some clarifications about the order if needed.
+ - order.reference:
+	 - Pass this value if you want to link this transaction to the a one you have within your system.
  - invoice.id:
 	 - Optional string to pass an invoice id, that you want to link to this token afterwards.
  - merchant.id:
@@ -275,7 +275,6 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
          */
         val transaction = HashMap<String,Any>()
         transaction.put("metadata",metadata)
-        transaction.put("reference","refrence_id")
         /**
          * phone
          */
@@ -358,6 +357,7 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
         order.put("amount","1")
         order.put("currency","SAR")
         order.put("description","description")
+        order.put("reference","refrence_id")
 
         /**
          * interface
