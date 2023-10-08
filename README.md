@@ -42,7 +42,7 @@ You can always use the example keys within our example app, but we do recommend 
 
 # Installation
 
-We got you covered, `TapCardSDK` can be installed with all possible technologies.
+We got you covered, `Card-Android` can be installed with all possible technologies.
 
 ## Gradle
 
@@ -208,7 +208,6 @@ It is always recommended, that you generate this `HashMap dictionary` from your 
 | operator| This is the `Key` that you will get after registering you package name. | True  | String| `var operator=HashMap<String,Any>(),operator.put("publicKey","pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7")` |
 | scope| Defines the intention of using the `Card-Android`. | True  | String| ` var scope:String = "Token" ` |
 | purpose| Defines the intention of using the `Token` after generation. | True  | String| ` var purpose:String = "Transaction" ` |
-| transaction| Needed to define transaction data  | False  | `Dictionry`| ` var transaction = HashMap(String,Any) = transaction.put("paymentAgreement":["id":"", "contract":["id":"If you created a contract id with the client to save his card, pass its is here. Otherwise, we will create one for you."],"reference":""]` |
 | order| This is the `order id` that you created before or `amount` , `currency` , `transaction` to generate a new order .   It will be linked this token. | True  | `Dictionary`| ` var order = HashMap<String, Any>(), order.put("id","") order.put("amount",1),order.put("currency","SAR"),order.put("description",""), order.put("reference":"A reference to this order in your system"))` |
 | invoice| This is the `invoice id` that you want to link this token to if any. | False  | `Dictionary`| ` var invoice = HashMap<String,Any>.put("id","")` |
 | merchant| This is the `Merchant id` that you will get after registering you bundle id. | True  | `Dictionary`| ` var merchant = HashMap<String,Any>.put("id","")` |
@@ -246,20 +245,6 @@ It is always recommended, that you generate this `HashMap dictionary` from your 
 		 - `Verify Cardholder` Using the token to verify the ownership of the card.
 		 - `Save Card` Using the token to save this card and link it to a certain customer.
 		 - `Maintain Card` Used to renew a saved card.
-
- - transaction:
-	 - Provides essential information about this transaction.
- - transaction.reference:
-	 - Pass this value if you want to link this transaction to the a one you have within your system.
-
- - transaction.paymentAgreement.id:
-	 - The id the payment agreement you created using our Apis.
-	 - This is an agreement between you and your client to allow saving his card for further payments.
-	 - If not passed, it will be created on the fly.
- - transaction.paymentAgreement.contract.id:
-	 - The id the contract you created using our Apis.
-	 - This is a contract between you and your client to allow saving his card for further payments.
-	 - If not passed, it will be created on the fly.
  - order:
 	 - The details about the order that you will be using the token you are generating within.
  - order.id:
@@ -386,19 +371,6 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
         post.put("url","")
 
 
-     /**
-         * paymentAgreement
-         */
-        val paymentAgreement = HashMap<String,Any>()
-        paymentAgreement.put("id","")
-        paymentAgreement.put("contract",contract)
-
-        /**
-         * transaction
-         */
-        val transaction = HashMap<String,Any>()
-        transaction.put("paymentAgreement",paymentAgreement)
-	transaction.put("reference","")
         /**
          * phone
          */
