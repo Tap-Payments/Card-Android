@@ -81,7 +81,7 @@ It is always recommended, that you generate this `HashMap dictionary` from your 
 |--|--|--| --|--|
 | operator| This is the `Key` that you will get after registering you package name. | True  | String| `var operator=HashMap<String,Any>(),operator.put("publicKey","pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7")` |
 | scope| Defines the intention of using the `Card-Android`. | True  | String| ` var scope:String = "Token" ` |
-| purpose| Defines the intention of using the `Token` after generation. | True  | String| ` var purpose:String = "PAYMENT_TRANSACTION" ` |
+| purpose| Defines the intention of using the `Token` after generation. | True  | String| ` var purpose:String = "Transaction" ` |
 | transaction| Needed to define transaction metadata and reference, if you are generating an authenticated token. | False  | `Dictionry`| ` var transaction = HashMap(String,Any) = transaction.put("metadata":HashmapOf("example":"value"), "reference":"A reference to this transaciton in your system"],"paymentAgreement":["id":"", "contract":["id":"If you created a contract id with the client to save his card, pass its is here. Otherwise, we will create one for you."]]` |
 | order| This is the `order id` that you created before or `amount` and `currency` to generate a new order.   It will be linked this token. | True  | `Dictionary`| ` var order = HashMap<String, Any>(), order.put("id","") order.put("amount",1),order.put("currency","SAR"),order.put("description","")` |
 | invoice| This is the `invoice id` that you want to link this token to if any. | False  | `Dictionary`| ` var invoice = HashMap<String,Any>.put("id","")` |
@@ -113,11 +113,15 @@ It is always recommended, that you generate this `HashMap dictionary` from your 
  - purpose:
 	 - Defines the intention of using the `Token` after generation.
 	 - Possible values:
-		 - `PAYMENT_TRANSACTION` Using the token for a single charge.
-		 - `RECURRING_TRANSACTION` Using the token for multiple recurring charges.
-		 - `INSTALLMENT_TRANSACTION` Using the token for a charge that is a part of an installement plan.
-		 - `ADD_CARD` Using the token for a save a card for a customer.
-		 - `CARDHOLDER_VERIFICATION` Using the token for to verify the ownership of the card.
+		 - `Transaction` .
+		 - `Save Card` .
+		 - `Verify Cardholder` .
+		 - `Order Transaction` .
+		 - `Subscription Transaction` .
+    		 - `Billing Transaction` .
+		 - `Installment Transaction` .
+		 - `Milestone Transaction` .
+
  - transaction:
 	 - Provides essential information about this transaction.
  - transaction.reference:
