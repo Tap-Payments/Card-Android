@@ -82,12 +82,12 @@ It is always recommended, that you generate this `HashMap dictionary` from your 
 | operator| This is the `Key` that you will get after registering you package name. | True  | String| `var operator=HashMap<String,Any>(),operator.put("publicKey","pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7")` |
 | scope| Defines the intention of using the `Card-Android`. | True  | String| ` var scope:String = "Token" ` |
 | purpose| Defines the intention of using the `Token` after generation. | True  | String| ` var purpose:String = "Transaction" ` |
-| transaction| Needed to define transaction  | False  | `Dictionry`| ` var transaction = HashMap(String,Any) = transaction.put("paymentAgreement":["id":"", "contract":["id":"If you created a contract id with the client to save his card, pass its is here. Otherwise, we will create one for you."]]` |
-| order| This is the `order id` that you created before or `amount` , `currency` , `transaction` , `metadata` to generate a new order .   It will be linked this token. | True  | `Dictionary`| ` var order = HashMap<String, Any>(), order.put("id","") order.put("amount",1),order.put("currency","SAR"),order.put("description",""), order.put("reference":"A reference to this transaciton in your system"), order.put("metadata":HashmapOf<Key,Value>())` |
+| transaction| Needed to define transaction `metadata`  | False  | `Dictionry`| ` var transaction = HashMap(String,Any) = transaction.put("paymentAgreement":["id":"", "contract":["id":"If you created a contract id with the client to save his card, pass its is here. Otherwise, we will create one for you.",transaction.put("metadata":HashmapOf<Key,Value>()]]` |
+| order| This is the `order id` that you created before or `amount` , `currency` , `transaction` to generate a new order .   It will be linked this token. | True  | `Dictionary`| ` var order = HashMap<String, Any>(), order.put("id","") order.put("amount",1),order.put("currency","SAR"),order.put("description",""), order.put("reference":"A reference to this transaciton in your system"))` |
 | invoice| This is the `invoice id` that you want to link this token to if any. | False  | `Dictionary`| ` var invoice = HashMap<String,Any>.put("id","")` |
 | merchant| This is the `Merchant id` that you will get after registering you bundle id. | True  | `Dictionary`| ` var merchant = HashMap<String,Any>.put("id","")` |
 | customer| The customer details you want to attach to this tokenization process. | True  | `Dictionary`| ` var customer =  HashMap<String,Any> ,customer.put("id,""), customer.put("nameOnCard","Tap Payments"),customer.put("editable",true),) var name :HashMap<String,Any> = [["lang":"en","first":"TAP","middle":"","last":"PAYMENTS"]] "contact":["email":"tap@tap.company", "phone":["countryCode":"+965","number":"88888888"]]] customer.put("name",name) , customer.put("contact",contact)` |
-| features| Some extra features that you can enable/disable based on the experience you want to provide.. | False  | `Dictionary`| ` var features=HashMap<String,Any> ,features.add("scanner":true), features.add("acceptanceBadge":true), features.add("customerCards":HashMapof("saveCard":false, "autoSaveCard":false)`|
+| features| Some extra features that you can enable/disable based on the experience you want to provide.. | False  | `Dictionary`| ` var features=HashMap<String,Any> ,features.add("scanner":true), features.add("acceptanceBadge":true), features.add("customerCards":HashMapof("saveCard":false, "autoSaveCard":false),features.add("alternativeCardInputs":HashMapof("cardScanner":true, "cardNFC":true)`|
 | acceptance| The acceptance details for the transaction. Including, which card brands and types you want to allow for the customer to tokenize. | False  | `Dictionary`| ` var acceptance = HashMap<String,Any> ,acceptance.put("supportedSchemes",["AMERICAN_EXPRESS","VISA","MASTERCARD","OMANNET","MADA"]),acceptance.put("supportedFundSource",["CREDIT","DEBIT"]),acceptance.put("supportedPaymentAuthentications",["3DS"])` |
 | fieldsVisibility| Needed to define visibility of the optional fieldsVisibility in the card form. | False  | `Dictionary`| ` var fieldsVisibility = HashMap<String,Any> ,fieldsVisibility.put("cardHolder",true)` |
 | interface| Needed to defines look and feel related configurations. | False  | `Dictionary`| ` var interface = HashMap<String,Any> ,interface.put("locale","en"), interface.put("theme","light"), interface.put("edges","curved"), interface.put("direction","dynamic"),interface.put(powered,true),interface.put("colorStyle","colored"),interface.put("loader",true) // Allowed values for theme : light/dark. locale: en/ar, edges: curved/flat, direction:ltr/dynaimc,colorStyle:colored/monochrome` |
@@ -123,7 +123,8 @@ It is always recommended, that you generate this `HashMap dictionary` from your 
 
  - transaction:
 	 - Provides essential information about this transaction.
-
+- transaction.metadata:
+	 - It is a key-value based parameter. You can pass it to attach any miscellaneous data with this transaction for your own convenience.
  - transaction.paymentAgreement.id:
 	 - The id the payment agreement you created using our Apis.
 	 - This is an agreement between you and your client to allow saving his card for further payments.
@@ -144,8 +145,7 @@ It is always recommended, that you generate this `HashMap dictionary` from your 
 	 - Optional string to put some clarifications about the order if needed.
  - order.reference:
 	 - Pass this value if you want to link this transaction to the a one you have within your system.
-- order.metadata:
-	 - It is a key-value based parameter. You can pass it to attach any miscellaneous data with this transaction for your own convenience.
+
  - invoice.id:
 	 - Optional string to pass an invoice id, that you want to link to this token afterwards.
  - merchant.id:
@@ -169,10 +169,7 @@ It is always recommended, that you generate this `HashMap dictionary` from your 
 		 - countryCode
 		 - number
  - features:
-	 - Some extra features/functionalities that can be configured as per your needs.
- - features.scanner:
-	 - A boolean to indicate whether or not you want to display the scan card icon.
-	 - Make sure you have access to camera usage, before enabling the scanner function.
+	 - Some extra features/functionalities that can be configured as per your needs.	 
  - features.acceptanceBadge:
 	 - A boolean to indicate wether or not you want to display the list of supported card brands that appear beneath the card form itself.
  - features.customerCards.saveCard:
@@ -182,6 +179,11 @@ It is always recommended, that you generate this `HashMap dictionary` from your 
 		 - SaveAuthenticatedToken
  - features.customerCards.autoSave:
 	 - A boolean to indicate wether or not you want the save card switch to be on by default.
+ - features.alternativeCardInput.cardScanner:
+	 - A boolean to indicate whether or not you want to display the scan card icon.
+	 - Make sure you have access to camera usage, before enabling the scanner function.
+ - features.alternativeCardInput.cardNFC
+
 - acceptance:
 	- List of configurations that control the payment itself.
 - acceptance.supportedSchemes:
@@ -271,10 +273,18 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
         metada.put("id","")
 
 
+     /**
+         * paymentAgreement
+         */
+        val paymentAgreement = HashMap<String,Any>()
+        paymentAgreement.put("id","")
+        paymentAgreement.put("contract",contract)
+
         /**
          * transaction
          */
         val transaction = HashMap<String,Any>()
+        transaction.put("paymentAgreement",paymentAgreement)
         transaction.put("metadata",metadata)
         /**
          * phone
@@ -339,14 +349,18 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
         customerCards.put("autoSaveCard",true)
 
         /**
+         * alternative cards
+         */
+        val alternativeCardInput = HashMap<String,Any>()
+        alternativeCardInput.put("cardScanner",true)
+        alternativeCardInput.put("cardNFC",true)
+        /**
          * features
          */
         val features = HashMap<String,Any>()
-        features.put("scanner",true)
-        features.put("nfc",true)
         features.put("acceptanceBadge",true)
         features.put("customerCards",customerCards)
-
+        features.put("alternativeCardInputs",alternativeCardInput)
 
 
 
