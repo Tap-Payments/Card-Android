@@ -83,7 +83,7 @@ dependencies {
     implementation 'company.tap:PayCards-Tap-Android:0.1.6.4'
 
     api 'com.github.Tap-Payments:CommonDataModelsWeb-Andriod:0.0.13'
-    api project(path: ':simplesettings')
+//    api project(path: ':simplesettings')
 //    api project(path: ':CommonDataModels')
     implementation 'com.github.Tap-Payments:TapUIKit-Android:2.0.4'
 //    def lottieVersion = "6.1.0"

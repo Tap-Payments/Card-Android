@@ -3,4 +3,4 @@ rootProject.name = "TapCardWebSDK"
 include ':app'
 
 include ':tapcardformkit'
-include ':simplesettings'
+//include ':simplesettings'
