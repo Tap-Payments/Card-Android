@@ -91,6 +91,8 @@ You can initialize `Card-Android` in different ways
         />
 
 </LinearLayout>
+ 
+- in your activity class : 
 
   TapCardConfiguration.configureWithTapCardDictionaryConfiguration(
             this,
