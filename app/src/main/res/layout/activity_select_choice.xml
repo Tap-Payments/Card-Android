@@ -200,7 +200,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textSize="14sp"
-                android:text="tck_LVL8sXyzVSXfSgG0SFkPvQO1Ns"
+                android:text=""
                 android:textAlignment="center" />
 
 

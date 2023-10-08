@@ -1,5 +1,4 @@
 package com.example.tapcardwebsdk.main_activity
-import Scope
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -7,16 +6,13 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.appcompat.widget.SwitchCompat
 import com.example.tapcardwebsdk.R
 import com.example.tapcardwebsdk.select_choice.SelectChoiceActivity
-import com.tap.commondatamodels.cardBrands.CardBrand
 import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.open.TapCardStatusDelegate
 import company.tap.tapcardformkit.open.web_wrapper.TapCardConfiguration
@@ -152,9 +148,8 @@ class MainActivity : AppCompatActivity() {
 
         val transaction = HashMap<String,Any>()
 
-        transaction.put("metadata",metada)
-        transaction.put("reference",transactionRefrence ?:"tck_LVL8sXyzVSXfSgG0SFkPvQO1Ns")
         transaction.put("paymentAgreement",paymentAgreement)
+        transaction.put("metadata",metada)
 
         /**
          * phone
@@ -204,14 +199,14 @@ class MainActivity : AppCompatActivity() {
         /**
          * fields
          */
-        val fields = HashMap<String,Any>()
+        val fieldsVisibility = HashMap<String,Any>()
         /**
          * card
          */
         val card = HashMap<String,Any>()
          card.put("cvv",cvv)
          card.put("cardHolder",cardHolder)
-        fields.put("card",card)
+        fieldsVisibility.put("card",card)
 
         /**
          * customerCards
@@ -221,21 +216,20 @@ class MainActivity : AppCompatActivity() {
         customerCards.put("autoSaveCard",autoSaveCard)
 
         /**
+         * alternative cards
+         */
+        val alternativeCardInput = HashMap<String,Any>()
+        alternativeCardInput.put("cardScanner",showHideScanner)
+        alternativeCardInput.put("cardNFC",showHideNFC)
+        /**
          * features
          */
         val features = HashMap<String,Any>()
-        features.put("scanner",showHideScanner)
-        features.put("nfc",showHideNFC)
         features.put("acceptanceBadge",showCardBrands)
         features.put("customerCards",customerCards)
+        features.put("alternativeCardInputs",alternativeCardInput)
 
 
-
-        /**
-         * addons
-         */
-        val addons = HashMap<String,Any>()
-        addons.put("loader",showLoadingState)
 
         /**
          * order
@@ -245,6 +239,8 @@ class MainActivity : AppCompatActivity() {
         order.put("amount", amount?.toInt() ?: 1)
         order.put("currency",selectedCurrency)
         order.put("description",orderDescription.toString())
+        order.put("reference",transactionRefrence ?:"")
+
         /**
          * interface
          */
@@ -255,6 +251,7 @@ class MainActivity : AppCompatActivity() {
         interfacee.put("cardDirection",selectedCardDirection.toString())
         interfacee.put("powered",powerdBy)
         interfacee.put("colorStyle",selectedColorStyle.toString())
+        interfacee.put("loader",showLoadingState)
 
 
         configuration.put("operator",operator)
@@ -268,8 +265,7 @@ class MainActivity : AppCompatActivity() {
         configuration.put("customer",customer)
         configuration.put("features",features)
         configuration.put("acceptance",acceptance)
-        configuration.put("fields",fields)
-        configuration.put("addons",addons)
+        configuration.put("fieldsVisibility",fieldsVisibility)
         configuration.put("interface",interfacee)
         configuration.put("redirect",redirect)
         configuration.put("post",post)

@@ -432,7 +432,7 @@ class SelectChoiceActivity : AppCompatActivity() {
              */
             intent.putExtra("orderId", findViewById<EditText>(R.id.order_id).text.toString())
             intent.putExtra("orderDescription", findViewById<EditText>(R.id.order_description).text.toString())
-            intent.putExtra("transactionRefrence",getRandomTrx())
+            intent.putExtra("transactionRefrence", findViewById<EditText>(R.id.trans_refrence).text.toString())
             intent.putExtra("invoiceId", findViewById<EditText>(R.id.invoice_id).text.toString())
             intent.putExtra("postUrl", findViewById<EditText>(R.id.post_url).text.toString())
 

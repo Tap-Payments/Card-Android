@@ -94,10 +94,14 @@
     </string-array>
 
     <string-array name="PurposeList">
-        <item>PAYMENT_TRANSACTION</item>
-        <item>RECURRING_TRANSACTION</item>
-        <item>INSTALLMENT_TRANSACTION</item>
-        <item>ADD_CARD</item>
-        <item>CARDHOLDER_VERIFICATION</item>
+        <item>Transaction</item>
+        <item>Save Card</item>
+        <item>Verify Cardholder</item>
+        <item>Order Transaction</item>
+        <item>Subscription Transaction</item>
+        <item>Billing Transaction</item>
+        <item>Installment Transaction</item>
+        <item>Milestone Transaction</item>
+
     </string-array>
 </resources>
