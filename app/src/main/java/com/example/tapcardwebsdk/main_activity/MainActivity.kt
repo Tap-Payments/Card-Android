@@ -82,9 +82,6 @@ class MainActivity : AppCompatActivity() {
         val cardHolder =  intent.getBooleanExtra("cardHolder",true)
         val cvv =  intent.getBooleanExtra("cvv",true)
 
-        Log.e("data", scopeType + " " + purpose)
-        val configuration = LinkedHashMap<String,Any>()
-
         /**
          * operator
          */
@@ -177,7 +174,7 @@ class MainActivity : AppCompatActivity() {
          * customer
          */
         val customer = java.util.HashMap<String,Any>()
-        customer.put("nameOnCard",DataConfiguration.customerExample?.nameOnCard ?: "test")
+        customer.put("nameOnCard", "test")
         customer.put("editable",cardHolder)
         customer.put("contact",contact)
         customer.put("name", listOf(name))
@@ -253,12 +250,12 @@ class MainActivity : AppCompatActivity() {
         interfacee.put("colorStyle",selectedColorStyle.toString())
         interfacee.put("loader",showLoadingState)
 
+        val configuration = LinkedHashMap<String,Any>()
 
         configuration.put("operator",operator)
         configuration.put("scope",scopeType.toString())
         configuration.put("order",order)
         configuration.put("customer",customer)
-
 //        configuration.put("purpose",purpose.toString())
 //        configuration.put("transaction",transaction)
 //        configuration.put("invoice",invoice)
