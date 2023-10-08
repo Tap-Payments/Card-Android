@@ -240,7 +240,7 @@ class SettingsActivity : AppCompatActivity() {
                     entries = listOf("English", "العربية")
                     values=  listOf("en", "ar")
                    // entries=  listOf("en", "ar")
-                    defaultIndex = 0
+//                    defaultIndex = values.indexOf("en")
                     key="selectedlangKey"
 
                 }

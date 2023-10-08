@@ -319,81 +319,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-//    private fun getDataFromSelectChoice() {
-//
-//
-//
-//        val tapCardConfig = TapCardConfigurations(
-//            scope = scopeType,
-//            publicKey = sandboxKey,
-//            merchant = Merchant(id = merchantIdKey.toString()),
-//            transaction = Transaction(
-//                amount = amount.toString(),
-//                currency = GlobalCurrency.valueOf(selectedCurrency)
-//            ),
-//            customer = Customer(
-//                nameOnCard = DataConfiguration.customerExample?.nameOnCard ?: "test",
-//                editable = showHideCardHolderName,
-//                contact = Contact(
-//                    email = DataConfiguration.customerExample?.contact?.email ?: "test@gmail.com",
-//                    phone = Phone(
-//                        countryCode = DataConfiguration.customerExample?.contact?.phone?.countryCode
-//                            ?: "+20",
-//                        number = DataConfiguration.customerExample?.contact?.phone?.number ?: "010"
-//                    )
-//                ),
-//                name = mutableListOf<Name>(
-//                    Name(
-//                        lang = TapLocal.valueOf(selectedLanguage.lowercase()),
-//                        first = DataConfiguration.customerExample?.name?.get(0)?.first ?: "first",
-//                        last = DataConfiguration.customerExample?.name?.get(0)?.last ?: "last",
-//                        middle = DataConfiguration.customerExample?.name?.get(0)?.middle ?: "middle"
-//                    )
-//                )
-//            ),
-//            acceptance = Acceptance(
-//                supportedBrands = mutableListOf(CardBrand.americanExpress,CardBrand.visa,CardBrand.masterCard),
-//                supportedCards = if (selectedCardType == CardType.ALL.name) mutableListOf(
-//                    CardType.DEBIT.name,
-//                    CardType.CREDIT.name
-//                ) else mutableListOf(selectedCardType)
-//            ),
-//            addons = Addons(
-//                loader = showLoadingState,
-//                saveCard = showSaved.toBoolean(),
-//                displayPaymentBrands = selectedCardBrand,
-//                scanner = showHideScanner,
-//                nfc = showHideNFC
-//            ),
-//            tapCardConfigurationInterface = `interface`(
-//                locale = TapLocal.valueOf(selectedLanguage.lowercase()),
-//                theme = TapTheme.valueOf(selectedTheme.lowercase()),
-//                edges = TapCardEdges.valueOf(selectedCardEdge.toString()),
-//                direction = TapCardDirections.valueOf(selectedCardDirection.toString()),
-//            ),
-//            fields = Fields(cardHolder = showHideCardHolderName),
-//            authentication = TapAuthentication(
-//                description = DataConfiguration.authenticationExample?.description
-//                    ?: "test Description",
-//                reference = DataConfiguration.authenticationExample?.reference ?: Refrence(
-//                    transaction = "tck_LV02G1720231634Xj54695435",
-//                    order = "77302316303719338"
-//                ),
-//                invoice = DataConfiguration.authenticationExample?.invoice
-//                    ?: Invoice(id = "Test Description"),
-//                authentication = DataConfiguration.authenticationExample?.authentication
-//                    ?: Authentication(
-//                        channel = "PAYER_BROWSER",
-//                        purpose = "PAYMENT_TRANSACTION"
-//                    ),
-//                post = DataConfiguration.authenticationExample?.post ?: Post(url = "")
-//            )
-//
-//        )
-//
-//
-//
-//    }
 
     override fun onBackPressed() {
         super.onBackPressed()
@@ -442,31 +367,6 @@ class MainActivity : AppCompatActivity() {
         }
         return true
     }
-
-//    override fun onSuccess(data: String) {
-//
-//    }
-
-//    override fun onReady() {
-//        findViewById<TextView>(R.id.tokenizeBtn).visibility = View.VISIBLE
-//
-//    }
-//
-//    override fun onFocus() {
-//    }
-//
-//    override fun onBindIdentification(data: String) {
-//    }
-//
-//    override fun onValidInput(isValid: String) {
-//
-//    }
-//
-//    override fun onError(error: String) {
-//    }
-//
-//    override fun onHeightChange(heightChange: String) {
-//    }
 
 }
 

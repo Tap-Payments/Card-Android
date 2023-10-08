@@ -10,6 +10,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.net.http.SslError
 import android.os.Build
 import android.os.Handler
 import android.util.AttributeSet
@@ -117,7 +118,11 @@ class TapCardKit : LinearLayout {
     //    lottieAnimationView = findViewById(R.id.shimmer_view)
         cardWebview.settings.javaScriptEnabled = true
         hideableWebView.settings.javaScriptEnabled = true
-//        cardWebview.settings.cacheMode = WebSettings.LOAD_NO_CACHE
+         cardWebview.settings.allowFileAccess = true
+         cardWebview.settings.allowContentAccess= true
+         cardWebview.settings.cacheMode = WebSettings.LOAD_DEFAULT;
+
+        // cardWebview.settings.cacheMode = WebSettings.LOAD_NO_CACHE
          cardWebview.settings.domStorageEnabled = true
         cardWebview.setBackgroundColor(Color.TRANSPARENT)
         cardWebview.setLayerType(LAYER_TYPE_SOFTWARE, null)
@@ -126,7 +131,7 @@ class TapCardKit : LinearLayout {
          cardWebview.settings.setSupportMultipleWindows(true)
         cardWebview.webViewClient = MyWebViewClient()
         hideableWebView.webViewClient = HideableWebViewClient()
-        CookieManager.getInstance().setAcceptThirdPartyCookies(cardWebview,true);
+//        CookieManager.getInstance().setAcceptThirdPartyCookies(cardWebview,true);
 
 
      }
@@ -423,12 +428,27 @@ class TapCardKit : LinearLayout {
         override fun onPageFinished(view: WebView, url: String) {
         }
 
+
+
         override fun onReceivedError(
             view: WebView,
             request: WebResourceRequest,
             error: WebResourceError
         ) {
+            Log.e("error",error.toString())
+            Log.e("error",request.toString())
+
             super.onReceivedError(view, request, error)
+        }
+
+        override fun onReceivedSslError(
+            view: WebView?,
+            handler: SslErrorHandler?,
+            error: SslError?
+        ) {
+            Log.e("error",error.toString())
+            Log.e("error",handler.toString())
+            handler?.proceed()
         }
     }
 
