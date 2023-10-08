@@ -65,12 +65,138 @@ dependencies {
 }
 ```
 
+# Simple Integration
+You can initialize `Card-Android` in different ways
+
+ 1. XML.
+ 2. Code.
+## XML
+
+```kotlin
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".main_activity.MainActivity">
+
+ <company.tap.tapcardformkit.open.web_wrapper.TapCardKit
+        android:id="@+id/tapCardForm"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+</LinearLayout>
+ 
+- in your activity class : 
+
+  TapCardConfiguration.configureWithTapCardDictionaryConfiguration(
+            this,
+            findViewById<TapCardKit>(R.id.tapCardForm),
+            configuration,
+            TapCardStatusDelegate: this) 
+```
+
+## Code
+
+ ```kotlin
+
+       lateinit var tapCardKitView: TapCardKit
+
+       override fun onCreate(savedInstanceState: Bundle?){
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        /**
+         * operator
+         */
+        val operator = HashMap<String,Any>()
+        operator.put("publicKey",sandboxKey.toString())
+        /**
+         * order
+         */
+        val order = HashMap<String,Any>()
+        order.put("id",ordrId ?: "")
+        order.put("amount", amount?.toInt() ?: 1)
+        order.put("currency",selectedCurrency)
+        order.put("description",orderDescription.toString())
+        order.put("reference",transactionRefrence ?:"")
+
+        /**
+         * customer
+         */
+        val customer = java.util.HashMap<String,Any>()
+        customer.put("nameOnCard", "test")
+        customer.put("editable",cardHolder)
+        customer.put("contact",contact)
+        customer.put("name", listOf(name))
+
+        /**
+         * configuration 
+         */
+        val configuration = LinkedHashMap<String,Any>()
+
+        configuration.put("operator",operator)
+        configuration.put("scope","Authentication")
+        configuration.put("order",order)
+        configuration.put("customer",customer)
+
+        val linearLayoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        /** create dynamic view of TapCardKit view **/ 
+        tapCardKitView  = TapCardKit(this)
+        tapCardKitView.layoutParams = linearLayoutParams
+        /** refrence to parent layout view **/  
+        this.findViewById<LinearLayout>(R.id.linear_layout).addView(tapCardKitView)
 
 
-# Prepare input
+      TapCardConfiguration.configureWithTapCardDictionaryConfiguration(
+            this,
+            tapCardKitView,
+            configuration,
+            TapCardStatusDelegate : this) 
 
-## Documentation
+}
+        
+```
 
+## Tokenize the card
+
+Once you get notified that the `TapCardView` now has a valid input from the delegate. You can start the tokenization process by calling the public interface:
+
+```kotlin
+///  Wil start the process of generating a `TapToken` with the current card data
+tapCardKitView.generateTapToken()
+```
+
+## Simple TapCardViewDelegate
+A protocol that allows integrators to get notified from events fired from the `Card-Android`. 
+
+```kotlin
+    TapCardViewDelegate {
+    /// Will be fired whenever the validity of the card data changes.
+    /// - Parameter valid: Will be true if the card data is valid and false otherwise.
+    override fun  onValidInput(invalid: Bool) {
+    }
+    
+     ///   Will be fired whenever the card sdk finishes successfully the task assigned to it. Whether `TapToken` or `AuthenticatedToken`
+    override fun  onSuccess(data: String) {
+     }
+    /// Will be fired whenever there is an error related to the card connectivity or apis
+    /// - Parameter data: includes a JSON format for the error description and error
+    override fun onError(data: String){
+    }
+}
+```
+
+# Advanced Integration
+
+## Advanced Documentation
 
 ### Main input documentation
 To make our sdk as dynamic as possible, we accept the input in a form of a `HashMap dictionary` . We will provide you with a sample full one for reference.
@@ -410,66 +536,9 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
 
 ```
 
-# Initializing the TapCardSDK form
-
-##  First Step :  UI
--  add TapCardKit view to your xml  as follows :
-```kotlin
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent"
-    tools:context=".main_activity.MainActivity">
-
- <company.tap.tapcardformkit.open.web_wrapper.TapCardKit
-        android:id="@+id/tapCardForm"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
-
-</LinearLayout>
-```
-- or programmatically through code  as follows :
- ```kotlin
-       lateinit var tapCardKitView: TapCardKit
-
-       override fun onCreate(savedInstanceState: Bundle?){
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main) 
 
 
-        val linearLayoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
-        )
-        /** create dynamic view of TapCardKit view **/ 
-        tapCardKitView  = TapCardKit(this)
-        tapCardKitView.layoutParams = linearLayoutParams
-        /** refrence to parent layout view **/  
-        this.findViewById<LinearLayout>(R.id.linear_layout).addView(tapCardKitView)
-
-
-}
-        
-```
-
-
-## Second Step : 2 - Code
-```kotlin
-     TapCardConfiguration.configureWithTapCardDictionaryConfiguration(
-            this /** context **/,
-            findViewById<TapCardKit>(R.id.tapCardForm) /** refrence to TapCardKit view **/,
-            tapCardConfig /** pass already defiend HashMap Dictionary for TapConfiguration **/,
-            this /** pass this of activity that will going to listen for callbacks  **/)
-
-```
-
-
-# TapCardStatusDelegate
+## Advanced TapCardViewDelegate
 A protocol that allows integrators to get notified from events fired from the `TapCardSDK`. 
 ```kotlin
 
@@ -561,13 +630,4 @@ interface TapCardStatusDelegate {
 }
 
 
-```
-
-# Tokenize the card
-
-Once you get notified that the `TapCardView` now has a valid input from the delegate. You can start the tokenization process by calling the public interface:
-
-```kotlin
-///  Wil start the process of generating a `TapToken` with the current card data
-            findViewById<TapCardKit>(R.id.tapCardForm).generateTapToken()
 ```
