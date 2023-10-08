@@ -90,8 +90,7 @@ It is always recommended, that you generate this `HashMap dictionary` from your 
 | features| Some extra features that you can enable/disable based on the experience you want to provide.. | False  | `Dictionary`| ` var features=HashMap<String,Any> ,features.add("scanner":true), features.add("acceptanceBadge":true), features.add("customerCards":HashMapof("saveCard":false, "autoSaveCard":false)`|
 | acceptance| The acceptance details for the transaction. Including, which card brands and types you want to allow for the customer to tokenize. | False  | `Dictionary`| ` var acceptance = HashMap<String,Any> ,acceptance.put("supportedSchemes",["AMERICAN_EXPRESS","VISA","MASTERCARD","OMANNET","MADA"]),acceptance.put("supportedFundSource",["CREDIT","DEBIT"]),acceptance.put("supportedPaymentAuthentications",["3DS"])` |
 | fieldsVisibility| Needed to define visibility of the optional fieldsVisibility in the card form. | False  | `Dictionary`| ` var fieldsVisibility = HashMap<String,Any> ,fieldsVisibility.put("cardHolder",true)` |
-| addons| Needed to define the enabling of some extra features on top of the basic card form. | False  | `Dictionary`| ` var addons = HashMap<String,Any> , addons.put("loader",true) `|
-| interface| Needed to defines look and feel related configurations. | False  | `Dictionary`| ` var interface = HashMap<String,Any> ,interface.put("locale","en"), interface.put("theme","light"), interface.put("edges","curved"), interface.put("direction","dynamic"),interface.put(powered,true),interface.put("colorStyle","colored") // Allowed values for theme : light/dark. locale: en/ar, edges: curved/flat, direction:ltr/dynaimc,colorStyle:colored/monochrome` |
+| interface| Needed to defines look and feel related configurations. | False  | `Dictionary`| ` var interface = HashMap<String,Any> ,interface.put("locale","en"), interface.put("theme","light"), interface.put("edges","curved"), interface.put("direction","dynamic"),interface.put(powered,true),interface.put("colorStyle","colored"),interface.put("loader",true) // Allowed values for theme : light/dark. locale: en/ar, edges: curved/flat, direction:ltr/dynaimc,colorStyle:colored/monochrome` |
 | post| This is the `webhook` for your server, if you want us to update you server to server. | False  | `Dictionary`| ` var post = HashMap<String,Any>.put("url","")` |
 
 
@@ -349,11 +348,7 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
         features.put("customerCards",customerCards)
 
 
-        /**
-         * addons
-         */
-        val addons = HashMap<String,Any>()
-        addons.put("loader",true)
+
 
         /**
          * order
@@ -374,6 +369,8 @@ You can create a Dictionary HashMap to pass the data to our sdk. The good part a
         tapInterface.put("cardDirection","dynamic")
         tapInterface.put("powered",true)
         tapInterface.put("colorStyle","colored")
+        tapInterface.put("loader",true)
+
 
 
         /**
