@@ -1,0 +1,30 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<!--   ~ Copyright © Marc Auberer 2020-2022. All rights reserved -->
+3<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+4    package="com.chillibits.simplesettings" >
+5
+6    <uses-sdk
+7        android:minSdkVersion="21"
+7-->/Users/akazi/Documents/TapProjects/Tap-Card-SDK-Android/simplesettings/src/main/AndroidManifest.xml
+8        android:targetSdkVersion="32" />
+8-->/Users/akazi/Documents/TapProjects/Tap-Card-SDK-Android/simplesettings/src/main/AndroidManifest.xml
+9
+10    <application>
+10-->/Users/akazi/Documents/TapProjects/Tap-Card-SDK-Android/simplesettings/src/main/AndroidManifest.xml:10:5-20:19
+11        <activity
+11-->/Users/akazi/Documents/TapProjects/Tap-Card-SDK-Android/simplesettings/src/main/AndroidManifest.xml:12:9-15:51
+12            android:name="com.chillibits.simplesettings.ui.SimpleSettingsActivity"
+12-->/Users/akazi/Documents/TapProjects/Tap-Card-SDK-Android/simplesettings/src/main/AndroidManifest.xml:13:13-54
+13            android:configChanges="orientation|keyboardHidden|screenSize"
+13-->/Users/akazi/Documents/TapProjects/Tap-Card-SDK-Android/simplesettings/src/main/AndroidManifest.xml:14:13-74
+14            android:theme="@style/settingsStyle" />
+14-->/Users/akazi/Documents/TapProjects/Tap-Card-SDK-Android/simplesettings/src/main/AndroidManifest.xml:15:13-49
+15        <activity
+15-->/Users/akazi/Documents/TapProjects/Tap-Card-SDK-Android/simplesettings/src/main/AndroidManifest.xml:17:9-19:83
+16            android:name="com.mikepenz.aboutlibraries.ui.LibsActivity"
+16-->/Users/akazi/Documents/TapProjects/Tap-Card-SDK-Android/simplesettings/src/main/AndroidManifest.xml:18:13-71
+17            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
+17-->/Users/akazi/Documents/TapProjects/Tap-Card-SDK-Android/simplesettings/src/main/AndroidManifest.xml:19:13-81
+18    </application>
+19
+20</manifest>

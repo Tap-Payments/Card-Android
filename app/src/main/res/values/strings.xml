@@ -34,10 +34,10 @@
     <string name="scope_title">Scope</string>
     <string name="interface_">Interface</string>
     <string name="scanner_border_color">Scanner Border Color</string>
-    <string name="choose_language">Choose Language:</string>
+    <string name="choose_language">Choose Language</string>
     <string name="english">English</string>
     <string name="arabic">العربية</string>
-    <string name="card_edges">Card Edges:</string>
+    <string name="card_edges">Card Edges</string>
     <string name="curved">curved</string>
     <string name="straight">flat</string>
     <string name="display_powerdby_logo">powered</string>
@@ -85,6 +85,11 @@
     <string name="redirect_url"> url </string>
     <string name="saveCard">Save Card</string>
     <string name="autoSaveCard">Auto Save Card</string>
+    <string name="loading">Loading</string>
+    <string name="supportedFundSource">Supported Fund Source</string>
+    <string name="display_holdername">Card Holder</string>
+    <string name="display_CVV">CVV</string>
+    <string name="choose_theme">Choose Theme</string>
 
     <string-array name="ScopeList">
         <item>Token</item>

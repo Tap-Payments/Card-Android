@@ -27,7 +27,7 @@ allprojects {
     }
     configurations.all {
         resolutionStrategy {
-            force "org.jetbrains.kotlin:kotlin-stdlib:1.7.10"
+            force "org.jetbrains.kotlin:kotlin-stdlib:1.5.31"
         }
     }
 

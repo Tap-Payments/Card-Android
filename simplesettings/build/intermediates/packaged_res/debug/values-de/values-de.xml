@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cancel">Abbrechen</string>
+    <string name="libsPreferenceSummary">Tippe hier, um alle genutzten Bibliotheken einzusehen</string>
+    <string name="libsPreferenceTitle">Genutzte Bibliotheken</string>
+    <string name="no">Nein</string>
+    <string name="ok">OK</string>
+    <string name="resetSettings">Einstellungen zurücksetzen</string>
+    <string name="settings">Einstellungen</string>
+    <string name="yes">Ja</string>
+</resources>

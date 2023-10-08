@@ -1,0 +1,4 @@
+com/chillibits/simplesettings/BuildConfig.java
+ com.chillibits.simplesettings.BuildConfig
+com/chillibits/simplesettings/databinding/ActivitySimpleSettingsBinding.java
+ com.chillibits.simplesettings.databinding.ActivitySimpleSettingsBinding
