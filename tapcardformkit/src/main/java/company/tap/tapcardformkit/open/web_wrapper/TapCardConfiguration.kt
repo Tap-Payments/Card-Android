@@ -8,6 +8,7 @@ import TapTheme
 import android.content.Context
 import android.util.Log
 import company.tap.tapcardformkit.R
+import company.tap.tapcardformkit.doAfterSpecificTime
 import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.open.DataConfiguration.configurationsAsHashMap
 import company.tap.tapcardformkit.open.TapCardStatusDelegate
@@ -54,8 +55,11 @@ class TapCardConfiguration {
                     publickKey.toString()
                 )
 
-                DataConfiguration.addTapCardStatusDelegate(tapCardStatusDelegate) //** Required **
-                tapCardInputViewWeb?.init(CardConfiguraton.MapConfigruation)
+                DataConfiguration.addTapCardStatusDelegate(tapCardStatusDelegate)
+                doAfterSpecificTime {
+                    tapCardInputViewWeb?.init(CardConfiguraton.MapConfigruation)
+
+                }
 
             }
         }
@@ -88,20 +92,11 @@ class TapCardConfiguration {
 //            )
 
             when (modelConfiguration) {
-                CardConfiguraton.ModelConfiguration -> {
-                 //   DataConfiguration.configurations?.operatorData = operator
-                    DataConfiguration.configurations?.headersData = headers
-
-                }
                 CardConfiguraton.MapConfigruation -> {
-                    //val hashMapOperator = HashMap<String, Any>()
-                   // hashMapOperator[publicKeyToGet] = publicKey.toString()
-                 //   configurationsAsHashMap?.put(operatorKey, hashMapOperator)
                     val hashMapHeader = HashMap<String, Any>()
                     hashMapHeader[HeadersMdn] = headers.mdn.toString()
                     hashMapHeader[HeadersApplication] = headers.application.toString()
                     configurationsAsHashMap?.put(headersKey, hashMapHeader)
-
 
                 }
             }

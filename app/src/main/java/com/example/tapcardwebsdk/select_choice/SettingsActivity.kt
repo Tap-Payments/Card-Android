@@ -1,6 +1,7 @@
 package com.example.tapcardwebsdk.select_choice
 
 import TapTheme
+import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT
 import android.os.Bundle
@@ -11,10 +12,14 @@ import android.view.View
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import com.chillibits.simplesettings.clicklistener.DialogClickListener
+import com.chillibits.simplesettings.clicklistener.LibsClickListener
+import com.chillibits.simplesettings.clicklistener.WebsiteClickListener
 
 import com.chillibits.simplesettings.core.SimpleSettings
 import com.chillibits.simplesettings.core.SimpleSettingsConfig
@@ -29,7 +34,7 @@ import company.tap.tapcardformkit.getRandomTrx
 import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapuilibrary.uikit.doOnLanguageChange
 
-class SettingsActivity : AppCompatActivity() {
+class SettingsActivity : AppCompatActivity(), SimpleSettingsConfig.PreferenceCallback {
     lateinit var settings:FrameLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,315 +44,309 @@ class SettingsActivity : AppCompatActivity() {
 
         val configuration = SimpleSettingsConfig.Builder()
             .setActivityTitle("Configuration")
+            .setPreferenceCallback(this)
             .displayHomeAsUpEnabled(false)
             .build()
 
-            SimpleSettings(this,configuration).show {
-
-            Section {
-                title = context.getString(R.string.operation)
-                InputPref {
-                    title = context.getString(R.string.sandbox_key)
-                    summary = "pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"
-                    defaultValue = "pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"
-                    key="publicKey"
-
-                }
-            }
-            Section {
-                title = context.getString(R.string.scope_title)
-                DropDownPref {
-                    title = context.getString(R.string.Token)
-                    summary = "Token"
-                    simpleSummaryProvider = true
-                    entries =
-                        listOf("Token", "AuthenticatedToken", "SaveToken", "SaveAuthenticatedToken")
-                    values =
-                        listOf("Token", "AuthenticatedToken", "SaveToken", "SaveAuthenticatedToken")
-                    key="scopeKey"
-                    defaultIndex=0
-
-                }
-            }
-            Section {
-
-                title = context.getString(R.string.purpose)
-                DropDownPref {
-                    title = context.getString(R.string.purpose)
-                    summary = "PAYMENT_TRANSACTION"
-                    simpleSummaryProvider = true
-                    entries = resources.getStringArray(R.array.PurposeList).toList()
-                    values = resources.getStringArray(R.array.PurposeList).toList()
-
-                    key="purposeKey"
-                    defaultIndex=0
-
-                }
-
-            }
-            Section {
-
-
-                Section {
-
-                    title = context.getString(R.string.transaction)
-                    InputPref {
-                        title = context.getString(R.string.payment_agreement_id)
-                        simpleSummaryProvider = true
-                        summary = ""
-                        defaultValue = "test"
-                        key="paymentAgreementID"
-
-                    }
-
-                    InputPref {
-                        title = context.getString(R.string.payment_agreement_contract)
-                        simpleSummaryProvider = true
-                        summary = ""
-                        defaultValue = "test"
-                        key="paymentAgreementContract"
-
-                    }
-                }
-                title = context.getString(R.string.transaction)
-                InputPref {
-                    title = context.getString(R.string.payment_agreement_id)
-                    simpleSummaryProvider = true
-                    summary = ""
-                    defaultValue = "test"
-                    key="paymentAgreementID"
-
-                }
-
-                InputPref {
-                    title = context.getString(R.string.payment_agreement_contract)
-                    simpleSummaryProvider = true
-                    summary = ""
-                    defaultValue = "test"
-                    key="paymentAgreementContract"
-
-                }
-            }
-            Section {
-                title = context.getString(R.string.order)
-                InputPref {
-                    title = context.getString(R.string.order_id)
-                    key="orderIdKey"
-
-                }
-                InputPref {
-                    title = context.getString(R.string.amount)
-                    summary = "2"
-                    key="amountKey"
-                    defaultValue="2"
-
-
-                }
-                InputPref {
-                    title = context.getString(R.string.order_desc)
-                    summary = "test"
-                    key="orderDescKey"
-                    defaultValue="test"
-
-                }
-                InputPref {
-                    title = context.getString(R.string.trans_refrence)
-                    summary = "tck_LVL8sXyzVSXfSgG0SFkPvQO1Ns"
-                    defaultValue = "tck_LVL8sXyzVSXfSgG0SFkPvQO1Ns"
-                    key="transRefKey2"
-
-                }
-            }
-            Section {
-                title = context.getString(R.string.currency)
-                DropDownPref {
-                    entries = listOf("KWD", "AED", "SAR", "BHD")
-                    simpleSummaryProvider = true
-
-                    values = listOf("KWD", "AED", "SAR", "BHD")
-                    summary="KWD"
-                    key="selectedCurrencyKey"
-                    defaultIndex=0
-
-
-                }
-
-            }
-            Section {
-                title = context.getString(R.string.invoice)
-                InputPref {
-                    title = context.getString(R.string.invoice_id)
-                    key="invoiceIdKey"
-
-
-                }
-                InputPref {
-                    title = context.getString(R.string.merchant_id)
-                   key="merchantIdKey"
-
-
-                }
-
-            }
-
-            Section {
-                title = context.getString(R.string.features)
-                for (i in 0 until 6) {
-                    SwitchPref {
-                        title =
-                            if (i == 0) context.getString(R.string.loading) else if (i == 1) context.getString(
-                                R.string.display_payment_brands
-                            ) else if (i == 2) context.getString(R.string.display_card_scanning) else if (i == 3) context.getString(
-                                R.string.display_nfc
-                            )
-                            else if (i == 4) context.getString(R.string.saveCard) else context.getString(
-                                R.string.autoSaveCard
-                            )
-                        defaultValue = true
-                        key=if (i == 0) "showLoadingKey" else if (i == 1)"displayPymtBrndKey" else if (i == 2) "displayScannerKey" else if (i == 3) "displayNFCKey"
-                        else if (i == 4) "displaySaveCardKey" else "displayAutosaveCardKey"
-                    }
-                }
-
-            }
-            Section {
-                title = context.getString(R.string.acceptance)
-                ListPref {
-                    title = context.getString(R.string.supportedFundSource)
-                    simpleSummaryProvider = true
-                    entries = listOf("All", "Credit", "Debit")
-                    values = listOf("ALL", "CREDIT", "DEBIT")
-                    defaultIndex=2
-                    key="supportedFundSourceKey"
-
-
-                }
-                ListPref {
-                    title = context.getString(R.string.supportedPaymentAuthentications)
-                    simpleSummaryProvider = true
-                    entries = listOf("3DS")
-                    values = listOf("3DS")
-                    defaultIndex = 0
-
-                }
-                MSListPref {
-                    title = context.getString(R.string.supported_brands)
-                    simpleSummaryProvider = true
-                    entries = listOf("mada", "visa", "masterCard", "AMERICAN_EXPRESS", "omanNet", "meeza")
-                    key="selectedBrandsKey"
-
-                }
-
-            }
-            Section {
-                title = context.getString(R.string.fields)
-                SwitchPref {
-                        title =
-                           context.getString(R.string.display_holdername)
-                        defaultValue = true
-                        key="displayHoldernameKey"
-                    }
-                    SwitchPref {
-                        title =
-                           context.getString(
-                                R.string.display_CVV
-                            )
-                        defaultValue = true
-                        key="displayCVVKey"
-                    }
-
-
-            }
-            Section {
-                title = context.getString(R.string.interface_)
-                ListPref {
-                    title = context.getString(R.string.choose_language)
-                    simpleSummaryProvider = true
-                    entries = listOf("English", "العربية")
-                    values=  listOf("en", "ar")
-                   // entries=  listOf("en", "ar")
-                   defaultIndex = values.indexOf("en")
-                    key="selectedlangKey"
-
-                }
-                ListPref {
-                    title = context.getString(R.string.choose_theme)
-                    simpleSummaryProvider = true
-                    entries = listOf("Dark", "Light", "Dynamic")
-                    values = listOf("dark", "light", "dynamic")
-                    defaultIndex = 1
-                    key="selectedthemeKey"
-
-                }
-
-                ListPref {
-                    title = context.getString(R.string.card_edges)
-                    simpleSummaryProvider = true
-                    entries = listOf("Curved", "Flat")
-                    values = listOf("curved", "flat")
-                    defaultIndex = 1
-                    key="selectedcardedgeKey"
-
-                }
-                ListPref {
-                    title = context.getString(R.string.card_directions)
-                    simpleSummaryProvider = true
-                    entries = listOf("LTR", "Dynamic")
-                    values = listOf("ltr", "dynamic")
-                    defaultIndex = 1
-                    key="selectedcardirectKey"
-
-                }
-                ListPref {
-                    title = context.getString(R.string.colorStyle)
-                    simpleSummaryProvider = true
-                    entries = listOf("Colored", "Monochrome")
-                    values = listOf("colored", "monochrome")
-                    defaultIndex = 0
-                    key="selectedcolorstyleKey"
-
-                }
-                SwitchPref {
-                    title = context.getString(R.string.display_powerdby_logo)
-                    defaultValue = true
-                    key="displayPoweredByKey"
-                }
-
-            }
-            Section {
-                title = context.getString(R.string.redirect)
-                InputPref {
-                    title = context.getString(R.string.redirect_url)
-                    key="redirectUrlKey"
-
-
-                }
-
-            }
-            Section {
-                title = context.getString(R.string.post)
-                InputPref {
-                    title = context.getString(R.string.post_url)
-                    key="posturlKey"
-
-
-                }
-
-            }
-             Section {
-                    title = ""
-                    TextPref {
-                        title="Done"
-                        onClick = Preference.OnPreferenceClickListener {
-                        startTokenizationactivity()
-                            true
-                        }
-                    }
-                }
+//            SimpleSettings(this,configuration).show {
+//
+//
+//
+//            Section {
+//                title = context.getString(R.string.operation)
+//                InputPref {
+//                    title = context.getString(R.string.sandbox_key)
+//                    summary = "pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"
+//                    defaultValue = "pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"
+//                //    key="publicKey"
+//
+//                }
+//            }
+//            Section {
+//                title = context.getString(R.string.scope_title)
+//                DropDownPref {
+//                    title = context.getString(R.string.Token)
+//                    summary = "Token"
+//                    simpleSummaryProvider = true
+//                    entries =
+//                        listOf("Token", "AuthenticatedToken", "SaveToken", "SaveAuthenticatedToken")
+//                    values =
+//                        listOf("Token", "AuthenticatedToken", "SaveToken", "SaveAuthenticatedToken")
+//                    key="scopeKey"
+//                    defaultIndex=0
+//
+//                }
+//            }
+//            Section {
+//
+//                title = context.getString(R.string.purpose)
+//                DropDownPref {
+//                    title = context.getString(R.string.purpose)
+//                    summary = "PAYMENT_TRANSACTION"
+//                    simpleSummaryProvider = true
+//                    entries = resources.getStringArray(R.array.PurposeList).toList()
+//                    values = resources.getStringArray(R.array.PurposeList).toList()
+//
+//                    key="purposeKey"
+//                    defaultIndex=0
+//
+//                }
+//
+//            }
+//            Section {
+//
+//
+//                title = context.getString(R.string.transaction)
+//                InputPref {
+//                    title = context.getString(R.string.payment_agreement_id)
+//                    simpleSummaryProvider = true
+//                    summary = ""
+//                    defaultValue = "test"
+//                    key="paymentAgreementID"
+//
+//                }
+//
+//
+//                InputPref {
+//                    title = context.getString(R.string.payment_agreement_contract)
+//                    simpleSummaryProvider = true
+//                    summary = ""
+//                    defaultValue = "test"
+//                    key="paymentAgreementContract"
+//
+//                }
+//            }
+//            Section {
+//                title = context.getString(R.string.order)
+//                InputPref {
+//                    title = context.getString(R.string.order_id)
+//                    key="orderIdKey"
+//
+//                }
+//                InputPref {
+//                    title = context.getString(R.string.amount)
+//                    summary = "2"
+//                    key="amountKey"
+//                    defaultValue="2"
+//
+//
+//
+//                }
+//                InputPref {
+//                    title = context.getString(R.string.order_desc)
+//                    summary = "test"
+//                    key="orderDescKey"
+//                    defaultValue="test"
+//
+//                }
+//                InputPref {
+//                    title = context.getString(R.string.trans_refrence)
+//                    key="transRefKey2"
+//                    simpleSummaryProvider = true
+//
+//
+//                }
+//            }
+//            Section {
+//                title = context.getString(R.string.currency)
+//                DropDownPref {
+//                    entries = listOf("KWD", "AED", "SAR", "BHD")
+//                    simpleSummaryProvider = true
+//
+//                    values = listOf("KWD", "AED", "SAR", "BHD")
+//                    summary="KWD"
+//                    key="selectedCurrencyKey"
+//                    defaultIndex=0
+//
+//
+//                }
+//
+//            }
+//            Section {
+//                title = context.getString(R.string.invoice)
+//                InputPref {
+//                    title = context.getString(R.string.invoice_id)
+//                    key="invoiceIdKey"
+//
+//
+//                }
+//                InputPref {
+//                    title = context.getString(R.string.merchant_id)
+//                   key="merchantIdKey"
+//
+//
+//                }
+//
+//            }
+//
+//            Section {
+//                title = context.getString(R.string.features)
+//                for (i in 0 until 6) {
+//                    SwitchPref {
+//                        title =
+//                            if (i == 0) context.getString(R.string.loading) else if (i == 1) context.getString(
+//                                R.string.display_payment_brands
+//                            ) else if (i == 2) context.getString(R.string.display_card_scanning) else if (i == 3) context.getString(
+//                                R.string.display_nfc
+//                            )
+//                            else if (i == 4) context.getString(R.string.saveCard) else context.getString(
+//                                R.string.autoSaveCard
+//                            )
+//                        defaultValue = true
+//                        key=if (i == 0) "showLoadingKey" else if (i == 1)"displayPymtBrndKey" else if (i == 2) "displayScannerKey" else if (i == 3) "displayNFCKey"
+//                        else if (i == 4) "displaySaveCardKey" else "displayAutosaveCardKey"
+//                    }
+//                }
+//
+//            }
+//            Section {
+//                title = context.getString(R.string.acceptance)
+//                ListPref {
+//                    title = context.getString(R.string.supportedFundSource)
+//                    simpleSummaryProvider = true
+//                    entries = listOf("All", "Credit", "Debit")
+//                    values = listOf("ALL", "CREDIT", "DEBIT")
+//                    defaultIndex=2
+//                    key="supportedFundSourceKey"
+//
+//
+//                }
+//                ListPref {
+//                    title = context.getString(R.string.supportedPaymentAuthentications)
+//                    simpleSummaryProvider = true
+//                    entries = listOf("3DS")
+//                    values = listOf("3DS")
+//                    defaultIndex = 0
+//
+//                }
+//                MSListPref {
+//                    title = context.getString(R.string.supported_brands)
+//                    simpleSummaryProvider = true
+//                    entries = listOf("mada", "visa", "masterCard", "AMERICAN_EXPRESS", "omanNet", "meeza")
+//                    key="selectedBrandsKey"
+//
+//                }
+//
+//            }
+//            Section {
+//                title = context.getString(R.string.fields)
+//                SwitchPref {
+//                        title =
+//                           context.getString(R.string.display_holdername)
+//                        defaultValue = true
+//                        key="displayHoldernameKey"
+//                    }
+//                    SwitchPref {
+//                        title =
+//                           context.getString(
+//                                R.string.display_CVV
+//                            )
+//                        defaultValue = true
+//                        key="displayCVVKey"
+//                    }
+//
+//
+//            }
+//            Section {
+//                title = context.getString(R.string.interface_)
+//                ListPref {
+//                    title = context.getString(R.string.choose_language)
+//                    simpleSummaryProvider = true
+//                    entries = listOf("English", "العربية")
+//                    values=  listOf("en", "ar")
+//                   // entries=  listOf("en", "ar")
+//                   defaultIndex = values.indexOf("en")
+//                    key="selectedlangKey"
+//
+//                }
+//                ListPref {
+//                    title = context.getString(R.string.choose_theme)
+//                    simpleSummaryProvider = true
+//                    entries = listOf("Dark", "Light", "Dynamic")
+//                    values = listOf("dark", "light", "dynamic")
+//                    defaultIndex = 1
+//                    key="selectedthemeKey"
+//
+//                }
+//
+//                ListPref {
+//                    title = context.getString(R.string.card_edges)
+//                    simpleSummaryProvider = true
+//                    entries = listOf("Curved", "Flat")
+//                    values = listOf("curved", "flat")
+//                    defaultIndex = 1
+//                    key="selectedcardedgeKey"
+//
+//                }
+//                ListPref {
+//                    title = context.getString(R.string.card_directions)
+//                    simpleSummaryProvider = true
+//                    entries = listOf("LTR", "Dynamic")
+//                    values = listOf("ltr", "dynamic")
+//                    defaultIndex = 1
+//                    key="selectedcardirectKey"
+//
+//                }
+//                ListPref {
+//                    title = context.getString(R.string.colorStyle)
+//                    simpleSummaryProvider = true
+//                    entries = listOf("Colored", "Monochrome")
+//                    values = listOf("colored", "monochrome")
+//                    defaultIndex = 0
+//                    key="selectedcolorstyleKey"
+//
+//                }
+//                SwitchPref {
+//                    title = context.getString(R.string.display_powerdby_logo)
+//                    defaultValue = true
+//                    key="displayPoweredByKey"
+//                }
+//
+//            }
+//            Section {
+//                title = context.getString(R.string.redirect)
+//                InputPref {
+//                    title = context.getString(R.string.redirect_url)
+//                    key="redirectUrlKey"
+//
+//
+//                }
+//
+//            }
+//            Section {
+//                title = context.getString(R.string.post)
+//                InputPref {
+//                    title = context.getString(R.string.post_url)
+//                    key="posturlKey"
+//
+//
+//                }
+//
+//            }
+//             Section {
+//                    title = ""
+//                    TextPref {
+//                        title="Done"
+//                        onClick = Preference.OnPreferenceClickListener {
+//                        startTokenizationactivity()
+//                            true
+//                        }
+//                    }
+//                }
+//
+//
+//
+//        }
 
 
 
-        }
+       SimpleSettings(this, configuration).show(R.xml.preferences)
+
+//        findViewById<Preference>(R.id.dialog_preference).setOnPreferenceClickListener {
+//            startTokenizationactivity()
+//            true
+//        }
+
 
 
 
@@ -376,6 +375,16 @@ class SettingsActivity : AppCompatActivity() {
             super.onOptionsItemSelected(item)
         }
     }
+
+    override fun onPreferenceClick(context: Context, key: String): Preference.OnPreferenceClickListener? {
+        return when(key) {
+            "dialog_preference" ->Preference.OnPreferenceClickListener {
+                startTokenizationactivity()
+                true
+            }
+            else -> super.onPreferenceClick(context, key)
+        }
+    }
     fun startTokenizationactivity() {
 
 
@@ -400,7 +409,7 @@ class SettingsActivity : AppCompatActivity() {
              */
             intent.putExtra("orderId", getPrefStringValue("orderIdKey",""))
             intent.putExtra("orderDescription", getPrefStringValue("orderDescKey","test"))
-            intent.putExtra("transactionRefrence",getRandomTrx())
+            intent.putExtra("transactionRefrence",getPrefStringValue("orderTransactionRefrence",""))
             intent.putExtra("invoiceId",getPrefStringValue("invoiceIdKey",""))
             intent.putExtra("postUrl", getPrefStringValue("posturlKey",""))
 
@@ -410,10 +419,20 @@ class SettingsActivity : AppCompatActivity() {
 
             Log.e("cardBrands",  getPrefs().getStringSet("selectedBrandsKey",null).toString())
             intent.putExtra("amount", getPrefStringValue("amountKey","1"))
+        val cardBrandArrayList = arrayListOf<String>()
+        getPrefs().getStringSet("selectedBrandsKey",null)?.forEach {
+            cardBrandArrayList.add(it)
+        }
 
-        val cardBrandArrayList: ArrayList<String> = ArrayList<String>(getPrefs().getStringSet("selectedBrandsKey",null))
+        val cardFundSources = arrayListOf<String>()
+        getPrefs().getStringSet("supportedFundSourceKey",null)?.forEach {
+            cardFundSources.add(it)
+        }
+
+//        val cardBrandArrayList: ArrayList<String?> = ArrayList<String?>(getPrefs().getStringSet("selectedBrandsKey",null))
 
         intent.putStringArrayListExtra("cardBrands", cardBrandArrayList)
+        intent.putStringArrayListExtra("cardFundSources", cardFundSources)
 
 
             intent.putExtra("showPowerdBy", getPrefBooleanValue("displayPoweredByKey",true))

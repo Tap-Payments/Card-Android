@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity() {
     val REQUEST_ID_MULTIPLE_PERMISSIONS = 7
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
-        codeCacheDir.setReadOnly()
 
 
 
@@ -61,6 +60,8 @@ class MainActivity : AppCompatActivity() {
         val showHideNFC: Boolean = intent.getBooleanExtra("showHideNFC", true)
         val amount = intent.getStringExtra("amount")
         val cardBrands = intent.getStringArrayListExtra("cardBrands")
+        val cardFundSources = intent.getStringArrayListExtra("cardFundSources")
+
         val scopeType = intent.getStringExtra("scope")
         val powerdBy = intent.getBooleanExtra("showPowerdBy", false)
         val showLoadingState: Boolean = intent.getBooleanExtra("showLoadingState", true)
@@ -190,10 +191,7 @@ class MainActivity : AppCompatActivity() {
          */
         val acceptance = java.util.HashMap<String,Any>()
         acceptance.put("supportedSchemes", cardBrands?.toList()?: listOf(""))
-        acceptance.put("supportedFundSource",if (selectedCardType == CardType.ALL.name) mutableListOf(
-                    CardType.DEBIT.name,
-                    CardType.CREDIT.name
-                ) else mutableListOf(selectedCardType))
+        acceptance.put("supportedFundSource",cardFundSources?.toList()?: listOf(""))
         acceptance.put("supportedPaymentAuthentications", mutableListOf("3DS"))
 
         /**
@@ -236,7 +234,7 @@ class MainActivity : AppCompatActivity() {
          */
         val order = HashMap<String,Any>()
         order.put("id",ordrId ?: "")
-        order.put("amount", amount?.toInt() ?: 1)
+        order.put("amount", amount ?: 1)
         order.put("currency",selectedCurrency)
         order.put("description",orderDescription.toString())
         order.put("reference",transactionRefrence ?:"")

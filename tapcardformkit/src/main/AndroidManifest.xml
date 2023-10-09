@@ -3,6 +3,7 @@
     package="company.tap.tapcardformkit">
 
     <uses-permission android:name="android.permission.NFC" />
+    <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application android:supportsRtl="true"
