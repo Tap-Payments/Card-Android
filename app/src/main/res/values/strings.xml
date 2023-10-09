@@ -123,6 +123,11 @@
         <item>DEBIT</item>
     </string-array>
 
+
+    <string-array name="SupportedFundSourceValues">
+        <item>1</item>
+    </string-array>
+
     <string-array name="SupportedPaymentAuthentication">
         <item>3DS</item>
     </string-array>

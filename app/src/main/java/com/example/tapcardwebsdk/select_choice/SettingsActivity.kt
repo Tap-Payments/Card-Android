@@ -3,24 +3,15 @@ package com.example.tapcardwebsdk.select_choice
 import TapTheme
 import android.content.Context
 import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.EditText
 import android.widget.FrameLayout
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.preference.Preference
-import androidx.preference.PreferenceFragmentCompat
-import com.chillibits.simplesettings.clicklistener.DialogClickListener
-import com.chillibits.simplesettings.clicklistener.LibsClickListener
-import com.chillibits.simplesettings.clicklistener.WebsiteClickListener
-
 import com.chillibits.simplesettings.core.SimpleSettings
 import com.chillibits.simplesettings.core.SimpleSettingsConfig
 import com.chillibits.simplesettings.tool.getPrefBooleanValue
@@ -32,7 +23,6 @@ import com.example.tapcardwebsdk.main_activity.MainActivity
 import company.tap.tapcardformkit.getRandomNumbers
 import company.tap.tapcardformkit.getRandomTrx
 import company.tap.tapcardformkit.open.DataConfiguration
-import company.tap.tapuilibrary.uikit.doOnLanguageChange
 
 class SettingsActivity : AppCompatActivity(), SimpleSettingsConfig.PreferenceCallback {
     lateinit var settings:FrameLayout
@@ -420,16 +410,18 @@ class SettingsActivity : AppCompatActivity(), SimpleSettingsConfig.PreferenceCal
             Log.e("cardBrands",  getPrefs().getStringSet("selectedBrandsKey",null).toString())
             intent.putExtra("amount", getPrefStringValue("amountKey","1"))
         val cardBrandArrayList = arrayListOf<String>()
-        getPrefs().getStringSet("selectedBrandsKey",null)?.forEach {
-            cardBrandArrayList.add(it)
+        getPrefs().getStringSet("selectedBrandsKey",null)?.forEachIndexed { index, s ->
+            cardBrandArrayList.add(s)
+
         }
 
         val cardFundSources = arrayListOf<String>()
-        getPrefs().getStringSet("supportedFundSourceKey",null)?.forEach {
-            cardFundSources.add(it)
+        getPrefs().getStringSet("supportedFundSourceKey",null)?.forEachIndexed { index, s ->
+            cardFundSources.add(s)
+
         }
 
-//        val cardBrandArrayList: ArrayList<String?> = ArrayList<String?>(getPrefs().getStringSet("selectedBrandsKey",null))
+
 
         intent.putStringArrayListExtra("cardBrands", cardBrandArrayList)
         intent.putStringArrayListExtra("cardFundSources", cardFundSources)

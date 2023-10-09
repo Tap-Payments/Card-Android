@@ -176,7 +176,8 @@
             app:title="@string/supportedFundSource"
             app:entries="@array/SupportedFundSource"
             app:entryValues="@array/SupportedFundSource"
-            app:defaultValue="@array/SupportedFundSource" />
+
+            />
 
 
 
@@ -185,7 +186,8 @@
             app:title="@string/supportedPaymentAuthentications"
             app:entries="@array/SupportedPaymentAuthentication"
             app:entryValues="@array/SupportedPaymentAuthentication"
-            app:defaultValue="@array/SupportedPaymentAuthenticationValues" />
+
+            />
 
 
 
