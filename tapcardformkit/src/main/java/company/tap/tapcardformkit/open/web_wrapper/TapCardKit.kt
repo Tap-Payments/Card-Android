@@ -9,18 +9,16 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.net.http.SslError
 import android.os.Build
 import android.os.Handler
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.ViewGroup
+import android.view.View
 import android.webkit.*
 import android.widget.*
 import androidx.annotation.RequiresApi
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.*
 import cards.pay.paycardsrecognizer.sdk.Card
 import com.google.gson.Gson
@@ -44,7 +42,7 @@ class TapCardKit : LinearLayout {
 //    lateinit var threeDsBottomsheet: BottomSheetDialogFragment
 //    lateinit var lottieAnimationView: LottieAnimationView
     private var isRedirected = false
-    lateinit var constraintLayout: ConstraintLayout
+    lateinit var constraintLayout: LinearLayout
     lateinit var webViewFrame: FrameLayout
     lateinit var webFrame3ds: FrameLayout
 
@@ -52,16 +50,16 @@ class TapCardKit : LinearLayout {
          var alreadyEvaluated = false
 
         lateinit var threeDsResponse: ThreeDsResponse
-        lateinit var cardWebview: WebView
         lateinit var cardConfiguraton: CardConfiguraton
+       // lateinit var cardWebview: WebView
 
         var card:Card?=null
         fun fillCardNumber(cardNumber:String,expiryDate:String,cvv:String,cardHolderName:String){
-            cardWebview.loadUrl("javascript:window.fillCardInputs({cardNumber:'$cardNumber',expiryDate:'$expiryDate',cvv:'$cvv',cardHolderName:'$cardHolderName'})")
+        //    cardWebview.loadUrl("javascript:window.fillCardInputs({cardNumber:'$cardNumber',expiryDate:'$expiryDate',cvv:'$cvv',cardHolderName:'$cardHolderName'})")
         }
 
         fun generateTapAuthenticate(authIdPayer: String) {
-            cardWebview.loadUrl("javascript:window.loadAuthentication('$authIdPayer')")
+           // cardWebview.loadUrl("javascript:window.loadAuthentication('$authIdPayer')")
         }
 
 
@@ -98,65 +96,105 @@ class TapCardKit : LinearLayout {
 
 
     init {
-     LayoutInflater.from(context).inflate(R.layout.activity_card_web_wrapper, this)
+       LayoutInflater.from(context).inflate(R.layout.activity_card_web_wrapper, this)
         initWebView()
 
     }
 
-     private fun initWebView() {
-        cardWebview = findViewById(R.id.webview)
-        hideableWebView = findViewById(R.id.hideableWebView)
-        webViewFrame = findViewById(R.id.webViewFrame)
-        webFrame3ds = findViewById(R.id.webViewFrame3ds)
+    private var mWebView: WebView? = null
+
+
+    private fun initWebView() {
+      //  cardWebview = findViewById(R.id.webview)
+      //  hideableWebView = findViewById(R.id.hideableWebView)
+//        webViewFrame = findViewById(R.id.webViewFrame)
+   //     webFrame3ds = findViewById(R.id.webViewFrame3ds)
         constraintLayout = findViewById(R.id.constraint)
-         cardWebview.settings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
-         val DESKTOP_USER_AGENT =
-             "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2049.0 Safari/537.36"
-         cardWebview.settings.userAgentString = DESKTOP_USER_AGENT;
+//         cardWebview.settings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
 
-         cardWebview.settings.javaScriptEnabled = true
-         cardWebview.settings.useWideViewPort = true
-         hideableWebView.settings.javaScriptEnabled = true
-        cardWebview.settings.domStorageEnabled = true
-        cardWebview.setBackgroundColor(Color.TRANSPARENT)
-        cardWebview.setLayerType(LAYER_TYPE_SOFTWARE, null)
 
-         cardWebview.webChromeClient = WebChromeClient()
-         cardWebview.webViewClient = MyWebViewClient()
-         hideableWebView.webViewClient = HideableWebViewClient()
+      //   cardWebview.settings.javaScriptEnabled = true
+       //  cardWebview.settings.useWideViewPort = true
+        // hide ableWebView.settings.javaScriptEnabled = true
+    //    cardWebview.settings.domStorageEnabled = true
+//        cardWebview.setBackgroundColor(Color.TRANSPARENT)
+//        cardWebview.setLayerType(LAYER_TYPE_SOFTWARE, null)
+
+//         cardWebview.webChromeClient = WebChromeClient()
+    //     cardWebview.webViewClient = MyWebViewClient()
+      //   hideableWebView.webViewClient = HideableWebViewClient()
+       //  cardWebview.settings.cacheMode = WebSettings.LOAD_NO_CACHE
+//         val file = File(this.getExternalFilesDir(null), "fileName.html")
+//         FileUtils.copyURLToFile(URL("http://www.bmimobile.co.uk/why-bmi.php"), file)
+
+//         cardWebview.settings.domStorageEnabled= true
+//         cardWebview.settings.javaScriptEnabled= true
+//         cardWebview.loadUrl("https://www.google.com/")
 
 
      }
+    fun CustomRelativeLayout(context: Context, url: String) {
+        mWebView = WebView(context)
+        mWebView?.setId(View.NO_ID)
+        mWebView?.setScrollContainer(false)
+        mWebView?.loadUrl(url)
+        val params: RelativeLayout.LayoutParams = RelativeLayout.LayoutParams(
+            context.resources.displayMetrics.widthPixels,
+            context.resources.displayMetrics.heightPixels
+        )
+        params.addRule(RelativeLayout.ALIGN_PARENT_TOP)
+        mWebView?.layoutParams = params
+        addView(mWebView)
+    }
 
+    fun getTheWebView(): WebView? {
+        return mWebView
+    }
 
      fun init(configuraton: CardConfiguraton) {
         cardConfiguraton = configuraton
         applyThemeForShimmer()
       //  startShimmer()
         when (configuraton) {
-            CardConfiguraton.ModelConfiguration -> {
-                with(DataConfiguration.configurations) {
-                    var url  = "${urlWebStarter}${
-                        encodeConfigurationToUrl(
-                            DataConfiguration.configurations
-                        )
-                    }"
-                    cardWebview.loadUrl(
-                        "${urlWebStarter}${
-                            encodeConfigurationToUrl(
-                                DataConfiguration.configurations
-                            )
-                        }"
-                    )
+            CardConfiguraton.MapConfigruation -> {
+                val wv = WebView(context)
+
+             //   wv.loadUrl("https://www.google.com")
+
+                var url  = "${urlWebStarter}${encodeConfigurationMapToUrl(DataConfiguration.configurationsAsHashMap)}"
+//                cardWebview.loadData("test",null,null)
+
+
+//                cardWebview.loadUrl("http://www.google.com")
+         //       doAfterSpecificTime(time = 5000) {
+             //      cardWebview.loadUrl("${urlWebStarter}${encodeConfigurationMapToUrl(DataConfiguration.configurationsAsHashMap)}")
+             //   }
+//                cardWebview.clearCache(false)
+
+                val params = LayoutParams(1500,1500);
+                wv.layoutParams = params;
+
+
+             //   wv.loadUrl(url)
+
+                wv.settings.javaScriptEnabled= true
+                wv.settings.cacheMode = WebSettings.LOAD_DEFAULT
+
+                  wv.webViewClient = MyWebViewClient()
+              //  wv.loadUrl(url)
+                wv.loadUrl("https://sdk.dev.tap.company/v2/card/wrapper?configurations=%7B%22operator%22%3A%7B%22publicKey%22%3A%22pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7%22%7D%2C%22scope%22%3A%22Token%22%2C%22order%22%3A%7B%22reference%22%3A%22tck_LVDdp2zw5iGyPByCiNuCht0Dj%22%2C%22amount%22%3A%22%22%2C%22description%22%3A%22%22%2C%22currency%22%3A%22KWD%22%2C%22id%22%3A%22%22%7D%2C%22customer%22%3A%7B%22nameOnCard%22%3A%22test%22%2C%22editable%22%3Atrue%2C%22contact%22%3A%7B%22phone%22%3A%7B%22number%22%3A%22011%22%2C%22countryCode%22%3A%22%2B20%22%7D%2C%22email%22%3A%22test%40gmail.com%22%7D%2C%22name%22%3A%5B%7B%22middle%22%3A%22middle%22%2C%22last%22%3A%22last%22%2C%22lang%22%3A%22en%22%2C%22first%22%3A%22first%22%7D%5D%7D%2C%22purpose%22%3A%22Transaction%22%2C%22transaction%22%3A%7B%22metadata%22%3A%7B%22id%22%3A%22%22%7D%2C%22paymentAgreement%22%3A%7B%22contract%22%3A%7B%22id%22%3A%22%22%7D%2C%22id%22%3A%22%22%7D%7D%2C%22invoice%22%3A%7B%22id%22%3A%22%22%7D%2C%22merchant%22%3A%7B%22id%22%3A%22%22%7D%2C%22features%22%3A%7B%22customerCards%22%3A%7B%22saveCard%22%3Atrue%2C%22autoSaveCard%22%3Atrue%7D%2C%22alternativeCardInputs%22%3A%7B%22cardScanner%22%3Atrue%2C%22cardNFC%22%3Atrue%7D%2C%22acceptanceBadge%22%3Atrue%7D%2C%22acceptance%22%3A%7B%22supportedSchemes%22%3A%5B%5D%2C%22supportedFundSource%22%3A%5B%22CREDIT%22%2C%22DEBIT%22%5D%2C%22supportedPaymentAuthentications%22%3A%5B%223DS%22%5D%7D%2C%22fieldsVisibility%22%3A%7B%22card%22%3A%7B%22cvv%22%3Atrue%2C%22cardHolder%22%3Atrue%7D%7D%2C%22interface%22%3A%7B%22powered%22%3Atrue%2C%22loader%22%3Atrue%2C%22edges%22%3A%22flat%22%2C%22colorStyle%22%3A%22colored%22%2C%22theme%22%3A%22light%22%2C%22cardDirection%22%3A%22dynamic%22%2C%22locale%22%3A%22en%22%7D%2C%22redirect%22%3A%7B%22url%22%3A%22%22%7D%2C%22post%22%3A%7B%22url%22%3A%22%22%7D%2C%22headers%22%3A%7B%22application%22%3A%22cu%5Cu003dVBBaeoPAEullVOi4F1WGQh%2FyBGeb75Ztnj59IjaykssoR9bNCqUUTmKSbADtf7CPH4Gh%2BkpHAlFFite4zuFC3x1NuD4xaQmiwbouvAMWav9Qxp100azlxigJA3AXyAwPJI4eKGGBLQqoLhS9UszL%2BIAR8a0gO11g1zTX1eCuoHA%5Cu003d%7Caid%5Cu003duqoFeECwOgjPG6dDKojFvFKuolP1oNuLo5VCSr6EFzIbpduF7dVE6%2Fcq5SIM7GFG%2BSvVkK8x73jOJWhtZvJ08fSXzW4eCQ5Rge1qbm8WThJgnJJHcsGtWfbDLpiUKaPbubQfT00GrXpeYX7JEPHvU%2F3%2FF%2BX43GEFfAuUo31ed18%5Cu003d%7Cat%5Cu003dQYIgqltASRLOWi2DCE%2FS7s7vNHnwf8Qde2XjnGaSpsq%2FENJfrcYnnrFnWxkJfGlHWR3EI9uFCVUuMeYF6XDfYZF3EVPJtZraSknDnBUQC4C6uqmMlKwO5bCmEBMAUvBJTCLiPEiSSJPCFOJO08fDn9NEIodOwcDan6cxZWgNzxY%5Cu003d%7Cav%5Cu003dqifL%2BxvxUBUc1ynBenNIWW%2Fqb5%2FhklbeluSUd3rlkhrYno2P5WL15V7eTIeP9pjzhfHj0VQ17WQmGJ59QA8zz262COTuQTPD93GHs3Q0p03NXGpLkh47R8CYxz85kxEr%2B61C6quZ4HxsJzNZQKiT6Pb%2BuYO2lZjWyuI4gV4Dq68%5Cu003d%7Crn%5Cu003dMoQ4LTvxH79ukadQzE3pvmF4BIijYULXg8VkpsXD1%2FXXBr2zu8YQn7rKy6SOBNdZzIulc8RGPtxx9%2FCtxLl1n57k3peWhDCmpdBvycs4KTnc1DWdeI1rtetAHhfA3WYPZVGlJDt9W%2BlnA2T704LbMK3aFfIKgYFE7slPNwX4wc4%5Cu003d%7Crt%5Cu003dD9nKDmzC6914e0Mkh4Z1G5c1EZznO1DndmVlavofla%2B7BUtDzNlzwAqcsFUq%2Br6Cl4Ci%2BmxP2RruxAEphw%2FnPQQflnT2owIKzK37vJLCL15t%2FNKneFhke6qGC50HuSfQKV7sffbpzbPXV2To6EgDQPldf2YcgYIUaiMXkhkxSxg%5Cu003d%7Crb%5Cu003dD66hUJDxt4m4yVk%2B5sPcsEixzVmDpr1DM1G9SVgYSAz9WbhEd1%2FYpJ7f2%2F%2BN2DlphSRai%2FTxYurasQwAUQ48nczMiscyI4kSVGI%2F2y3DkGJZcE2sYWJQMovQl9dtfnz4bBjCeRBVutQGDJiCrt1XHo4K8Cu1esAqu6WKjHc86yQ%5Cu003d%7Crm%5Cu003dDkIfDTh2Y97qfs9UQsOAOCwoa08AjCZ%2Fc5x2%2FaUGjBBlQk1yQk%2BscjUBBfdgZ7jkVQKCNaDFqKsLU%2BQuOdqp8LvGwVGefFwbK47mao9Usu8wHkEr2l1CabnUsSEuPPGDgo9z0k4cjEH4fZSY%2F026zP%2Bkl2T8VhZox4WkyQWVGD8%5Cu003d%7Cro%5Cu003dCFwpy8CSDqQf4l1V2CMhxnmLGuFnyHuiPgbT%2BkXhkpjOu0bspxlfvKPMz0sk7WbF5pd9XjuHyaKlufDZ5rZNmq6sCQ8JbL8bxvXe%2FL7gi6diX%2Fa%2BZo8L2EjJLt0D%2Fs6DXdHP2juG1FAObVylFUhaWrimZ0UvmNwpyy5uJgmAIK8%5Cu003d%7Crov%5Cu003dKG3vlvFc%2B5BxK9ldoolKqLgB83mKyX6nofF5dWFB9Saq2u3J33%2BxPHMp8EnyR3Z8yu%2Bf11%2B%2Bo%2BDP3HRXKabNxkOhLH3Ehb53T0CcEzxM5z2xNF%2BGiYpHFVgx7043qBhgkvZbm7yXkjNIuF%2BqBebIcRA1JwBOnW8ogb3oE2%2FUS0k%5Cu003d%7Cal%5Cu003dK5t74VWs1mEzA3CyipF%2FXzXuqOr8VY19QEpiq2Y8v3jtF0NDgM4TvzTh2XVOcuJjM9dJmMrDIRpF3P3btEifGd1W%2Fxr5IiluorYMjFUqge4ABrhBSgZ8oCh5zf8bjePn93%2B4ABrGEhd2rDzirnNImU4Ey7fVdD9NFc27Ily3CfY%5Cu003d%22%2C%22mdn%22%3A%22DI%2FZOLVvYnE5cP8Rg8yxagATPCwNkt0lJZDSKY6lJkMCwWhhglqf6EvCLL4SSJvD7tJv2ouok8%2B4GwZUrXtyORzL6NthYtyN1utzOwKYSU0SYxeNkzAZUgrOTGuxyEYB5DbGTzZ6%2BSR8Wgi35I7XqVi1SKpIcHWAalVUo8RUoiA%5Cu003d%22%7D%7D");
+
+
+                constraintLayout.addView(wv)
+                doAfterSpecificTime(time = 5000) {
+                    wv.loadUrl(url)
+                    wv.reload()
+
+
                 }
             }
-            CardConfiguraton.MapConfigruation -> {
-                var url  = "${urlWebStarter}${encodeConfigurationMapToUrl(DataConfiguration.configurationsAsHashMap)}"
-                cardWebview.loadUrl("${urlWebStarter}${encodeConfigurationMapToUrl(DataConfiguration.configurationsAsHashMap)}")
-
-
-            }
         }
+
     }
 
 
@@ -165,42 +203,6 @@ class TapCardKit : LinearLayout {
          * need to be refactored : mulitple copies of same code
          */
         when(cardConfiguraton){
-            CardConfiguraton.ModelConfiguration->{
-//                with(DataConfiguration.configurations?.tapCardConfigurationInterface) {
-//                    lottieAnimationView.setCacheComposition(true)
-//                    when (this?.theme) {
-//                        TapTheme.light -> {
-//                            setLottieAnimationAccordingToTheme(lightLottieUrlJson,lightLottieAssetName)
-//
-//                        }
-//                        TapTheme.dark -> {
-//                            setLottieAnimationAccordingToTheme(
-//                                darkLottieUrlJson,
-//                                darkLottieAssetName)
-//                        }
-//                        else -> {}
-//                    }
-//
-//                    when (this?.edges) {
-//                        TapCardEdges.flat -> {}
-//                        TapCardEdges.curved -> {
-//                            val radius = TypedValue.applyDimension(
-//                                TypedValue.COMPLEX_UNIT_DIP,
-//                                10f,
-//                                context.resources.displayMetrics
-//                            )
-//                            findViewById<CardView>(R.id.card_lottie).radius = radius
-//                        }
-//                        else -> {}
-//                    }
-//
-//                  setTapThemeAndLanguage(
-//                        context,
-//                        TapLocal.valueOf(this?.locale?.name.toString()),
-//                        TapTheme.valueOf(this?.theme?.name.toString())
-//                    )
-//                }
-            }
             CardConfiguraton.MapConfigruation ->{
                 val tapInterface = DataConfiguration.configurationsAsHashMap?.get("interface") as? Map<*, *>
                 with(tapInterface?.get("theme").toString()) {
@@ -358,9 +360,9 @@ class TapCardKit : LinearLayout {
                 }
                 if (request?.url.toString().contains(CardFormWebStatus.onHeightChange.name)) {
                     val newHeight = request?.url?.getQueryParameter(keyValueName)
-                    val params: ViewGroup.LayoutParams? = webViewFrame.layoutParams
-                    params?.height = webViewFrame.context.getDimensionsInDp(newHeight?.toInt() ?: 95)
-                    webViewFrame.layoutParams = params
+//                    val params: ViewGroup.LayoutParams? = webViewFrame.layoutParams
+//                    params?.height = webViewFrame.context.getDimensionsInDp(newHeight?.toInt() ?: 95)
+//                    webViewFrame.layoutParams = params
 
                     DataConfiguration.getTapCardStatusListener()?.onHeightChange(newHeight.toString())
 
@@ -427,7 +429,9 @@ class TapCardKit : LinearLayout {
             error: WebResourceError
         ) {
             Log.e("error",error.toString())
-            Log.e("error",request.toString())
+            Log.e("error",request.method.toString())
+            Log.e("error",request.url.toString())
+            Log.e("error",request.isForMainFrame.toString())
 
             super.onReceivedError(view, request, error)
         }
@@ -440,6 +444,7 @@ class TapCardKit : LinearLayout {
             Log.e("error",error.toString())
             Log.e("error",handler.toString())
             handler?.proceed()
+
         }
     }
 
@@ -495,7 +500,7 @@ class TapCardKit : LinearLayout {
     }
 
     fun generateTapToken() {
-        cardWebview.loadUrl("javascript:window.generateTapToken()")
+       // cardWebview.loadUrl("javascript:window.generateTapToken()")
     }
 }
 

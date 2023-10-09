@@ -31,6 +31,8 @@
     <string name="amount">Amount</string>
     <string name="acceptance">Acceptance</string>
     <string name="supported_brands">Supported scheme</string>
+    <string name="supported_scheme">Supported scheme</string>
+
     <string name="scope_title">Scope</string>
     <string name="interface_">Interface</string>
     <string name="scanner_border_color">Scanner Border Color</string>
@@ -100,6 +102,10 @@
         <item>SaveAuthenticatedToken</item>
     </string-array>
 
+    <string-array name="ScopeList_default_values">
+        <item>1</item>
+    </string-array>
+
     <string-array name="PurposeList">
         <item>Transaction</item>
         <item>Save Card</item>
@@ -111,4 +117,73 @@
         <item>Milestone Transaction</item>
 
     </string-array>
+
+    <string-array name="SupportedFundSource">
+        <item>CREDIT</item>
+        <item>DEBIT</item>
+    </string-array>
+
+    <string-array name="SupportedPaymentAuthentication">
+        <item>3DS</item>
+    </string-array>
+
+    <string-array name="SupportedPaymentAuthenticationValues">
+        <item>1</item>
+    </string-array>
+
+    <string-array name="SupportedSchemes">
+        <item>MADA</item>
+        <item>VISA</item>
+        <item>MASTERCARD</item>
+        <item>AMERICAN_EXPRESS</item>
+        <item>OMANNET</item>
+        <item>MEEZA</item>
+
+    </string-array>
+
+    <string-array name="Lanugages">
+        <item>English</item>
+        <item>Arabic</item>
+    </string-array>
+    <string-array name="LanugagesValues">
+        <item>en</item>
+        <item>ar</item>
+    </string-array>
+
+    <string-array name="Theme">
+        <item>light</item>
+        <item>dark</item>
+    </string-array>
+
+    <string-array name="Edges">
+        <item>flat</item>
+        <item>curved</item>
+    </string-array>
+
+    <string-array name="Direction">
+        <item>dynamic</item>
+        <item>ltr</item>
+    </string-array>
+
+
+    <string-array name="colorStyle">
+        <item>colored</item>
+        <item>monochrome</item>
+    </string-array>
+
+
+
+
+
+    <string-array name="currencies">
+        <item>KWD</item>
+        <item>AED</item>
+        <item>SAR</item>
+        <item>BHD</item>
+
+    </string-array>
+    <string-array name="PurposeList_default_values">
+        <item>1</item>
+    </string-array>
+
 </resources>
