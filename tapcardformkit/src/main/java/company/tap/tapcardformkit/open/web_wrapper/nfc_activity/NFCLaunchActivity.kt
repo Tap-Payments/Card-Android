@@ -23,6 +23,7 @@ import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
 import company.tap.taplocalizationkit.LocalizationManager
 import io.reactivex.exceptions.UndeliverableException
+import io.reactivex.plugins.RxJavaPlugins
 import java.util.*
 
 
@@ -76,7 +77,7 @@ fun handleNFCResult(intent: Intent?) {
                     } else {
                         // Forward all others to current thread's uncaught exception handler
                         Thread.currentThread().also { thread ->
-                            thread.uncaughtExceptionHandler.uncaughtException(
+                            thread.uncaughtExceptionHandler?.uncaughtException(
                                 thread,
                                 throwable.cause
                             )
@@ -84,6 +85,18 @@ fun handleNFCResult(intent: Intent?) {
                         //throwable.message?.let { println("error is nfc" + throwable.printStackTrace()) }
                     }
                 })
+    }else {
+        RxJavaPlugins.setErrorHandler { e ->
+            if (e is UndeliverableException) {
+                // Merely log undeliverable exceptions
+                Log.e("Try check",e.message.toString())
+            } else {
+                // Forward all others to current thread's uncaught exception handler
+                Thread.currentThread().also { thread ->
+                    thread.uncaughtExceptionHandler.uncaughtException(thread, e)
+                }
+            }
+        }
     }
 
 }
