@@ -28,6 +28,7 @@ import java.util.*
 class NFCLaunchActivity : AppCompatActivity() {
     private lateinit var tapNfcCardReader: TapNfcCardReader
     private var cardReadDisposable = Disposables.empty()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         LocalizationManager.setLocale(this, Locale(DataConfiguration.lanuage.toString()))
@@ -102,6 +103,7 @@ private fun displayError(message: String?) {
                                     cvv = "",
                                     expiryDate = expDateString ?: ""
                                 )
+                                TapCardKit.Companion.NFCopened = false
                                 finish()
                             }
 
@@ -140,11 +142,12 @@ override fun onResume() {
 
 override fun onPause() {
     super.onPause()
-    //if (tapCheckoutFragment.isNfcOpened) {
+    if (TapCardKit.Companion.NFCopened) {
     cardReadDisposable.dispose()
     tapNfcCardReader?.disableDispatch()
 
-    //  }
+
+      }
 
 }
 
