@@ -22,6 +22,7 @@ import androidx.fragment.app.FragmentTransaction
 import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
 import company.tap.taplocalizationkit.LocalizationManager
+import io.reactivex.exceptions.UndeliverableException
 import java.util.*
 
 
@@ -68,7 +69,21 @@ fun handleNFCResult(intent: Intent?) {
 
                 }
             },
-                { throwable -> throwable.message?.let { println("error is nfc" + throwable.printStackTrace()) } })
+                { throwable ->
+                    if (throwable is UndeliverableException) {
+                        // Merely log undeliverable exceptions
+                        throwable.message?.let { Log.e("NFC Tag Err", it) }
+                    } else {
+                        // Forward all others to current thread's uncaught exception handler
+                        Thread.currentThread().also { thread ->
+                            thread.uncaughtExceptionHandler.uncaughtException(
+                                thread,
+                                throwable.cause
+                            )
+                        }
+                        //throwable.message?.let { println("error is nfc" + throwable.printStackTrace()) }
+                    }
+                })
     }
 
 }
