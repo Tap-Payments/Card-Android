@@ -48,8 +48,10 @@ class ThreeDsBottomSheetFragment : BottomSheetDialogFragment() {
         val tapBrandView = view.findViewById<TapBrandView>(R.id.tab_brand_view)
 
         try {
-            val interfacee =  DataConfiguration.configurationsAsHashMap?.get("interface") as HashMap<*, *>
-            val powerd  = interfacee.get("powered") as Boolean
+       //     val interfacee =  DataConfiguration.configurationsAsHashMap?.get("interface") as HashMap<*, *>
+      //      val powerd  = interfacee.get("powered") as Boolean
+            val powerd  = TapCardKit.threeDsResponse.powered
+
 
             when(powerd){
                 false ->tapBrandView.poweredByImage.visibility = View.INVISIBLE

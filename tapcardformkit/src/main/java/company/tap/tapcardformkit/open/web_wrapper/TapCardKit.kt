@@ -261,6 +261,8 @@ class TapCardKit : LinearLayout {
                      * navigate to 3ds Activity
                      */
                     val queryParams = request?.url?.getQueryParameterFromUri(keyValueName).toString()
+                    Log.e("data", queryParams.toString())
+
                     threeDsResponse = queryParams.getModelFromJson()
                     Log.e("data", threeDsResponse.toString())
                     hideableWebView.loadUrl(threeDsResponse.threeDsUrl)

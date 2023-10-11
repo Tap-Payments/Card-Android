@@ -234,7 +234,7 @@ class MainActivity : AppCompatActivity() {
          */
         val order = HashMap<String,Any>()
         order.put("id",ordrId ?: "")
-        order.put("amount", amount ?: 1)
+        order.put("amount", if (amount?.isEmpty() == true) "1" else amount.toString())
         order.put("currency",selectedCurrency)
         order.put("description",orderDescription.toString())
         order.put("reference",transactionRefrence ?:"")
@@ -279,7 +279,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onReady() {
-                    Toast.makeText(this@MainActivity, "onReady", Toast.LENGTH_SHORT).show()
+                 //   Toast.makeText(this@MainActivity, "onReady", Toast.LENGTH_SHORT).show()
                     findViewById<TextView>(R.id.tokenizeBtn).visibility = View.VISIBLE
 
                 }
@@ -297,8 +297,7 @@ class MainActivity : AppCompatActivity() {
 //                }
 
                 override fun onValidInput(isValid: String) {
-                    Toast.makeText(this@MainActivity, "onValidInput ${isValid}", Toast.LENGTH_SHORT)
-                        .show()
+            //        Toast.makeText(this@MainActivity, "onValidInput ${isValid}", Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onError(error: String) {
