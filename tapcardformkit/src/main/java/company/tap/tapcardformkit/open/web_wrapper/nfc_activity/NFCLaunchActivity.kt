@@ -47,12 +47,13 @@ class NFCLaunchActivity : AppCompatActivity() {
         transaction.commit()
 
 
+
 }
 
 override fun onNewIntent(intent: Intent?) {
     // TODO Auto-generated method stub
     super.onNewIntent(intent)
-    // if this activity is in stack , this mwthod will be called
+    // if this activity is in stack , this method will be called
     handleNFCResult(intent)
 }
 
