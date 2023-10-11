@@ -9,6 +9,7 @@
     <application android:supportsRtl="true"
         android:hardwareAccelerated="true"
         android:allowBackup="false"
+        android:name=".open.web_wrapper.ApplicationClass"
         >
         <activity
             android:name=".open.web_wrapper.nfc_activity.NFCLaunchActivity"
