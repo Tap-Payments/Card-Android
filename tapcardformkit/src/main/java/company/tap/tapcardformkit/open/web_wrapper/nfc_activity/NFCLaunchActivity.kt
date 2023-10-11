@@ -22,12 +22,15 @@ import androidx.fragment.app.FragmentTransaction
 import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
 import company.tap.taplocalizationkit.LocalizationManager
+import io.reactivex.exceptions.UndeliverableException
+import io.reactivex.plugins.RxJavaPlugins
 import java.util.*
 
 
 class NFCLaunchActivity : AppCompatActivity() {
     private lateinit var tapNfcCardReader: TapNfcCardReader
     private var cardReadDisposable = Disposables.empty()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         LocalizationManager.setLocale(this, Locale(DataConfiguration.lanuage.toString()))
@@ -67,7 +70,33 @@ fun handleNFCResult(intent: Intent?) {
 
                 }
             },
-                { throwable -> throwable.message?.let { println("error is nfc" + throwable.printStackTrace()) } })
+                { throwable ->
+                    if (throwable is UndeliverableException) {
+                        // Merely log undeliverable exceptions
+                        throwable.message?.let { Log.e("NFC Tag Err", it) }
+                    } else {
+                        // Forward all others to current thread's uncaught exception handler
+                        Thread.currentThread().also { thread ->
+                            thread.uncaughtExceptionHandler?.uncaughtException(
+                                thread,
+                                throwable.cause
+                            )
+                        }
+                        //throwable.message?.let { println("error is nfc" + throwable.printStackTrace()) }
+                    }
+                })
+    }else {
+        RxJavaPlugins.setErrorHandler { e ->
+            if (e is UndeliverableException) {
+                // Merely log undeliverable exceptions
+                Log.e("Try check",e.message.toString())
+            } else {
+                // Forward all others to current thread's uncaught exception handler
+                Thread.currentThread().also { thread ->
+                    thread.uncaughtExceptionHandler.uncaughtException(thread, e)
+                }
+            }
+        }
     }
 
 }
@@ -102,6 +131,7 @@ private fun displayError(message: String?) {
                                     cvv = "",
                                     expiryDate = expDateString ?: ""
                                 )
+                                TapCardKit.Companion.NFCopened = false
                                 finish()
                             }
 
@@ -140,11 +170,12 @@ override fun onResume() {
 
 override fun onPause() {
     super.onPause()
-    //if (tapCheckoutFragment.isNfcOpened) {
+    if (TapCardKit.Companion.NFCopened) {
     cardReadDisposable.dispose()
     tapNfcCardReader?.disableDispatch()
 
-    //  }
+
+      }
 
 }
 

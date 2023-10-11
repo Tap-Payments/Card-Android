@@ -49,7 +49,7 @@ class TapCardKit : LinearLayout {
 
     companion object{
          var alreadyEvaluated = false
-
+        var NFCopened:Boolean = false
         lateinit var threeDsResponse: ThreeDsResponse
         lateinit var cardWebview: WebView
         lateinit var cardConfiguraton: CardConfiguraton
@@ -282,6 +282,7 @@ class TapCardKit : LinearLayout {
                      * navigate to NFC Activity
                      */
                     if (TapNfcUtils.isNfcAvailable(context)) {
+                        NFCopened = true
                         val intent = Intent(context,NFCLaunchActivity::class.java)
                         (context).startActivity(intent)
                     }else

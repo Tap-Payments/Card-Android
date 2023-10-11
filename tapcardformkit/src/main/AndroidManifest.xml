@@ -12,6 +12,7 @@
         >
         <activity
             android:name=".open.web_wrapper.nfc_activity.NFCLaunchActivity"
+            android:theme="@style/Theme.AppCompat"
             android:exported="false" />
         <activity
             android:name=".open.web_wrapper.ThreeDsWebViewActivity"
