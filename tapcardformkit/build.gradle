@@ -62,7 +62,7 @@ dependencies {
 
 
    
-    implementation 'com.github.Tap-Payments:TapNFCCardReaderKit-Android:0.0.4.2'
+    implementation 'com.github.Tap-Payments:TapNFCCardReaderKit-Android:0.0.4.3'
 
     api 'com.github.Tap-Payments:TapUIKit-Android:2.0.8'
    
