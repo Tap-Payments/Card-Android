@@ -92,12 +92,14 @@ fun handleNFCResult(intent: Intent?) {
                             println("eee$e")
                             Thread.currentThread().uncaughtExceptionHandler
                                 .uncaughtException(Thread.currentThread(), e)
+                            Log.e("warn", "NullPointerException to do", e)
                             return@Consumer
                         }
                         if (e is IllegalStateException) {
                             // that's a bug in RxJava or in a custom operator
                             Thread.currentThread().uncaughtExceptionHandler.toString()
                             //  .handleException(Thread.currentThread(), e);
+                            Log.e("warn", "IllegalStateExceptiont to do", e)
                             return@Consumer
                         }
                         Log.e("warn", "Undeliverable exception received, not sure what to do", e)
