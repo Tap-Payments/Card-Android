@@ -1,7 +1,6 @@
 package company.tap.tapcardformkit.open.web_wrapper.nfc_activity
 
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
@@ -9,27 +8,30 @@ import android.text.format.DateFormat
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import company.tap.nfcreader.open.reader.TapEmvCard
 import company.tap.nfcreader.open.reader.TapNfcCardReader
 import company.tap.nfcreader.open.utils.TapCardUtils
 import company.tap.nfcreader.open.utils.TapNfcUtils
 import company.tap.tapcardformkit.R
-import company.tap.tapuilibrary.uikit.fragment.NFCFragment
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposables
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
 import company.tap.taplocalizationkit.LocalizationManager
-import io.reactivex.exceptions.UndeliverableException
-import io.reactivex.plugins.RxJavaPlugins
-import java.util.*
+import company.tap.tapuilibrary.uikit.fragment.NFCFragment
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.exceptions.UndeliverableException
+import io.reactivex.rxjava3.functions.Consumer
+import io.reactivex.rxjava3.plugins.RxJavaPlugins
+import java.io.IOException
+import java.net.SocketException
+import java.util.Locale
 
 
 class NFCLaunchActivity : AppCompatActivity() {
     private lateinit var tapNfcCardReader: TapNfcCardReader
-    private var cardReadDisposable = Disposables.empty()
+    private var cardReadDisposable = Disposable.empty()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,19 +73,34 @@ fun handleNFCResult(intent: Intent?) {
                 }
             },
                 { throwable ->
-                    if (throwable is UndeliverableException) {
-                        // Merely log undeliverable exceptions
-                        throwable.message?.let { Log.e("NFC Tag Err", it) }
-                    } else {
-                        // Forward all others to current thread's uncaught exception handler
-                        Thread.currentThread().also { thread ->
-                            thread.uncaughtExceptionHandler?.uncaughtException(
-                                thread,
-                                throwable.cause
-                            )
+                    RxJavaPlugins.setErrorHandler(Consumer { e: Throwable ->
+                        var e = e
+                        if (e is UndeliverableException) {
+                            e = e.cause!!
                         }
-                        //throwable.message?.let { println("error is nfc" + throwable.printStackTrace()) }
-                    }
+                        if (e is IOException || e is SocketException) {
+                            // fine, irrelevant network problem or API that throws on cancellation
+                            return@Consumer
+                        }
+                        if (e is InterruptedException) {
+                            // fine, some blocking code was interrupted by a dispose call
+                            return@Consumer
+                        }
+                        if (e is NullPointerException || e is IllegalArgumentException) {
+                            // that's likely a bug in the application
+                            println("eee$e")
+                            Thread.currentThread().uncaughtExceptionHandler
+                                .uncaughtException(Thread.currentThread(), e)
+                            return@Consumer
+                        }
+                        if (e is IllegalStateException) {
+                            // that's a bug in RxJava or in a custom operator
+                            Thread.currentThread().uncaughtExceptionHandler.toString()
+                            //  .handleException(Thread.currentThread(), e);
+                            return@Consumer
+                        }
+                        Log.e("warn", "Undeliverable exception received, not sure what to do", e)
+                    })
                 })
     }else {
         RxJavaPlugins.setErrorHandler { e ->
