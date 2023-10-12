@@ -25,7 +25,7 @@ class ApplicationClass : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        RxJavaPlugins.setErrorHandler(Consumer { e: Throwable ->
+         RxJavaPlugins.setErrorHandler(Consumer { e: Throwable ->
             var e = e
             if (e is UndeliverableException) {
                 e = e.cause!!

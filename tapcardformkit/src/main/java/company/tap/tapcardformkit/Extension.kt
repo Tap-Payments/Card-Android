@@ -38,7 +38,7 @@ fun View.applyBluryToView(
     showOriginalView: Boolean = false
 ) {
 
-//    (this as ViewGroup).children.forEachIndexed { index, view ->
+//     (this as ViewGroup).children.forEachIndexed { index, view ->
 //        if (index != 0) removeView(view)
 //    }
 

@@ -68,12 +68,15 @@ fun handleNFCResult(intent: Intent?) {
                 if (emvCard != null) {
                     // tapCheckoutFragment.viewModel?.handleNFCScannedResult(emvCard)
                     println("emvCard${emvCard}")
-                    println("emvCardexpireDate ${emvCard.expireDate}")
+                    println("emvCardexpireDate ${emvCard.cardNumber
+                    }")
                     convertDateString(emvCard)
 
                 }
             },
-                { throwable ->
+                {
+                        throwable ->
+
                     RxJavaPlugins.setErrorHandler(Consumer { e: Throwable ->
                         var e = e
                         if (e is UndeliverableException) {
