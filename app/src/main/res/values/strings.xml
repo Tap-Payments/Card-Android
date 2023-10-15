@@ -98,7 +98,7 @@
     <string-array name="ScopeList">
         <item>Token</item>
         <item>AuthenticatedToken</item>
-        <item>SaveToken</item>
+       <!-- <item>SaveToken</item>-->
         <item>SaveAuthenticatedToken</item>
     </string-array>
 
