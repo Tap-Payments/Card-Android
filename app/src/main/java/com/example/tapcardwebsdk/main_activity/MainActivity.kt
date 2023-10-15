@@ -276,6 +276,7 @@ class MainActivity : AppCompatActivity() {
             object : TapCardStatusDelegate {
                 override fun onSuccess(data: String) {
                     Toast.makeText(this@MainActivity, "onSuccess $data", Toast.LENGTH_SHORT).show()
+                    println("onSuccess $data")
                 }
 
                 override fun onReady() {
