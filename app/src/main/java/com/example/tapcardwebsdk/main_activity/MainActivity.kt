@@ -289,6 +289,11 @@ class MainActivity : AppCompatActivity() {
 
                 }
 
+              override fun onBindIdentification(data: String) {
+                  Log.e("data",data.toString())
+
+              }
+
 
                 override fun onValidInput(isValid: String) {
                 }
