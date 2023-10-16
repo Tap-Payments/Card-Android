@@ -4,13 +4,17 @@ import TapTheme
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputFilter
+import android.text.InputType
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
 import android.widget.FrameLayout
+import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.preference.EditTextPreference
 import androidx.preference.Preference
 import com.chillibits.simplesettings.core.SimpleSettings
 import com.chillibits.simplesettings.core.SimpleSettingsConfig
@@ -332,6 +336,7 @@ class SettingsActivity : AppCompatActivity(), SimpleSettingsConfig.PreferenceCal
 
        SimpleSettings(this, configuration).show(R.xml.preferences)
 
+
 //        findViewById<Preference>(R.id.dialog_preference).setOnPreferenceClickListener {
 //            startTokenizationactivity()
 //            true
@@ -371,6 +376,18 @@ class SettingsActivity : AppCompatActivity(), SimpleSettingsConfig.PreferenceCal
             "dialog_preference" ->Preference.OnPreferenceClickListener {
                 startTokenizationactivity()
                 true
+            }
+            "cardNumberKey" ->{
+                Preference.OnPreferenceClickListener {
+                    (it as EditTextPreference).setOnBindEditTextListener { editText ->
+                        editText.inputType =
+                            InputType.TYPE_CLASS_NUMBER // set only numbers allowed to input
+                        editText.selectAll() // select all text
+                        val maxLength = 16
+                        editText.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(maxLength)) // set maxLength to 2
+                    }
+                    true
+                }
             }
             else -> super.onPreferenceClick(context, key)
         }
@@ -423,6 +440,7 @@ class SettingsActivity : AppCompatActivity(), SimpleSettingsConfig.PreferenceCal
 
 
 
+
         intent.putStringArrayListExtra("cardBrands", cardBrandArrayList)
         intent.putStringArrayListExtra("cardFundSources", cardFundSources)
 
@@ -443,6 +461,9 @@ class SettingsActivity : AppCompatActivity(), SimpleSettingsConfig.PreferenceCal
             intent.putExtra("selectedColorStyle", getPrefStringValue("selectedcolorstyleKey","colored"))
             intent.putExtra("cardHolder",  getPrefBooleanValue("displayHoldernameKey",true))
             intent.putExtra("cvv",getPrefBooleanValue("displayCVVKey",true))
+        intent.putExtra("cardNumberKey",getPrefStringValue("cardNumberKey",""))
+        intent.putExtra("cardExpiryKey", if (getPrefStringValue("cardExpiryKey","") == "1") "" else  getPrefStringValue("cardExpiryKey",""))
+
 
 
             finish()

@@ -40,12 +40,11 @@ import java.util.*
 @SuppressLint("ViewConstructor")
 class TapCardKit : LinearLayout {
     lateinit var hideableWebView: WebView
-//    lateinit var threeDsBottomsheet: BottomSheetDialogFragment
-//    lateinit var lottieAnimationView: LottieAnimationView
     private var isRedirected = false
     lateinit var constraintLayout: ConstraintLayout
     lateinit var webViewFrame: FrameLayout
     lateinit var webFrame3ds: FrameLayout
+    private var cardPrefillPair:Pair<String,String> = Pair("","")
 
     companion object{
          var alreadyEvaluated = false
@@ -56,6 +55,8 @@ class TapCardKit : LinearLayout {
 
         var card:Card?=null
         fun fillCardNumber(cardNumber:String,expiryDate:String,cvv:String,cardHolderName:String){
+            Log.e("fillcardNumber","card in fillCardNumber ${cardNumber} + ${expiryDate} +${cvv} + ${cardHolderName}")
+
             cardWebview.loadUrl("javascript:window.fillCardInputs({cardNumber:'$cardNumber',expiryDate:'$expiryDate',cvv:'$cvv',cardHolderName:'$cardHolderName'})")
         }
 
@@ -132,8 +133,9 @@ class TapCardKit : LinearLayout {
      }
 
 
-     fun init(configuraton: CardConfiguraton) {
+     fun init(configuraton: CardConfiguraton,cardNumber: String="",cardExpiry:String="") {
         cardConfiguraton = configuraton
+         cardPrefillPair = Pair(cardNumber,cardExpiry)
         applyThemeForShimmer()
       //  startShimmer()
         when (configuraton) {
@@ -212,6 +214,9 @@ class TapCardKit : LinearLayout {
                  */
                 if (request?.url.toString().contains(CardFormWebStatus.onReady.name)) {
                     DataConfiguration.getTapCardStatusListener()?.onReady()
+                    if (cardPrefillPair.first.length>=7){
+                        fillCardNumber(cardNumber = cardPrefillPair.first, expiryDate = cardPrefillPair.second,"","")
+                    }
                 }
                 if (request?.url.toString().contains(CardFormWebStatus.onValidInput.name)) {
                     val validInputValue =

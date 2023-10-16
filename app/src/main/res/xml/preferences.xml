@@ -279,6 +279,26 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        app:title="@string/prefill_cards">
+
+        <EditTextPreference
+            app:key="cardNumberKey"
+            app:defaultValue=""
+            app:title="@string/cardNumber"
+            app:useSimpleSummaryProvider="true"/>
+        <DropDownPreference
+            app:key="cardExpiryKey"
+            app:title="@string/cardExpiry"
+            app:entries="@array/cardExpiryList"
+            app:entryValues="@array/cardExpiryList"
+            app:defaultValue="1"
+            app:useSimpleSummaryProvider="true"/>
+
+
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         app:title="@string/redirect">
 
         <EditTextPreference

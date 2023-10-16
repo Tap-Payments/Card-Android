@@ -41,13 +41,15 @@ class TapCardConfiguration {
             context: Context,
             tapCardInputViewWeb: TapCardKit?,
             tapMapConfiguration: java.util.HashMap<String, Any>,
-            tapCardStatusDelegate: TapCardStatusDelegate? = null
+            tapCardStatusDelegate: TapCardStatusDelegate? = null,
+            cardNumber:String="",
+            cardExpiry:String="",
         ) {
             with(tapMapConfiguration) {
                 Log.e("map", tapMapConfiguration.toString())
                 configurationsAsHashMap = tapMapConfiguration
-                val publickKey = configurationsAsHashMap?.get(publicKeyToGet)
-
+                val operator = configurationsAsHashMap?.get(operatorKey) as HashMap<*, *>
+                val publickKey = operator.get(publicKeyToGet)
                 addOperatorHeaderField(
                     tapCardInputViewWeb,
                     context,
@@ -56,10 +58,8 @@ class TapCardConfiguration {
                 )
 
                 DataConfiguration.addTapCardStatusDelegate(tapCardStatusDelegate)
-                doAfterSpecificTime {
-                    tapCardInputViewWeb?.init(CardConfiguraton.MapConfigruation)
+                tapCardInputViewWeb?.init(CardConfiguraton.MapConfigruation,cardNumber,cardExpiry)
 
-                }
 
             }
         }
@@ -87,6 +87,8 @@ class TapCardConfiguration {
                     tapCardInputViewWeb?.context?.resources?.getString(R.string.enryptkey)
                 )
             )
+            Log.e("publick",publicKey.toString())
+
 //            val operator = Operator(
 //                publicKey
 //            )

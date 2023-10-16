@@ -52,8 +52,8 @@ class MainActivity : AppCompatActivity() {
         val selectedLanguage: String = lang.toString()
         val selectedCurrency: String = intent.getStringExtra("selectedCurrency").toString()
         val selectedTheme: String = intent.getStringExtra("themeSelected").toString()
-        val selectedCardType: String = intent.getStringExtra("selectedCardType").toString()
-        val showSaved = intent.getBooleanExtra("showSaveSwitch", false)
+        val cardNumber= intent.getStringExtra("cardNumberKey")
+        val cardExpiry = intent.getStringExtra("cardExpiryKey")
         val selectedCardEdge = intent.getStringExtra("selectedCardEdge")
         val showCardBrands: Boolean = intent.getBooleanExtra("selectedCardBrand", true)
         val showHideScanner: Boolean = intent.getBooleanExtra("showHideScanner", true)
@@ -268,14 +268,18 @@ class MainActivity : AppCompatActivity() {
         configuration.put("redirect",redirect)
         configuration.put("post",post)
 
+        Log.e("cardPrefil", "cardnumber + $cardNumber + card + $cardExpiry")
+
 
         TapCardConfiguration.configureWithTapCardDictionaryConfiguration(
-            this,
-            findViewById<TapCardKit>(R.id.tapCardForm),
-            configuration,
-            object : TapCardStatusDelegate {
+            context = this,
+            tapCardInputViewWeb= findViewById<TapCardKit>(R.id.tapCardForm),
+           tapMapConfiguration =  configuration,
+          tapCardStatusDelegate =   object : TapCardStatusDelegate {
                 override fun onSuccess(data: String) {
+
                     Toast.makeText(this@MainActivity, "onSuccess $data", Toast.LENGTH_SHORT).show()
+                    Log.e("data",data.toString())
                     println("onSuccess $data")
                 }
 
@@ -284,21 +288,9 @@ class MainActivity : AppCompatActivity() {
                     findViewById<TextView>(R.id.tokenizeBtn).visibility = View.VISIBLE
 
                 }
-//                override fun onFocus() {
-//                    Toast.makeText(this@MainActivity, "onFocus", Toast.LENGTH_SHORT).show()
-//                }
 
-//
-//                override fun onBindIdentification(data: String) {
-//                    Toast.makeText(
-//                        this@MainActivity,
-//                        "on BindIdentification $data",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                }
 
                 override fun onValidInput(isValid: String) {
-            //        Toast.makeText(this@MainActivity, "onValidInput ${isValid}", Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onError(error: String) {
@@ -308,12 +300,8 @@ class MainActivity : AppCompatActivity() {
                 }
 
 
-
-//                override fun onHeightChange(heightChange: String) {
-//                    Log.e("heightChanged",heightChange.toString())
-//                }
-
-            })
+            },
+        cardNumber =cardNumber?: "",cardExpiry= cardExpiry?: "")
 
     }
 
