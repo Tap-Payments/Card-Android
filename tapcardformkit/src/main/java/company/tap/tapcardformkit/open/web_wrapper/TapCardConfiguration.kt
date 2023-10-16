@@ -58,7 +58,7 @@ class TapCardConfiguration {
                 )
 
                 DataConfiguration.addTapCardStatusDelegate(tapCardStatusDelegate)
-                tapCardInputViewWeb?.init(CardConfiguraton.MapConfigruation,cardNumber,cardExpiry)
+                tapCardInputViewWeb?.init(CardConfiguraton.MapConfigruation,cardNumber.filter { it.isDigit() },cardExpiry)
 
 
             }
