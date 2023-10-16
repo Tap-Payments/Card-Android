@@ -9,6 +9,9 @@ import android.content.Context
 import android.content.res.Resources
 import android.os.Build
 import android.util.Log
+import android.view.View
+import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import company.tap.tapcardformkit.R
 import company.tap.tapcardformkit.open.web_wrapper.TapCardConfiguration
@@ -141,8 +144,13 @@ object DataConfiguration {
     fun generateToken(tapCardKit: TapCardKit){
         tapCardKit.generateTapToken()
     }
-    fun initializeSDK(activity: Activity,configurations: HashMap<String,Any>,tapCardKit: TapCardKit){
-        TapCardConfiguration.configureWithTapCardDictionaryConfiguration(activity,tapCardKit,configurations)
+    fun initializeSDK(activity: Activity,configurations: HashMap<String,Any>,tapCardKit: TapCardKit,cardNumber:String="",cardExpiry:String=""){
+        TapCardConfiguration.configureWithTapCardDictionaryConfiguration(
+            context = activity,
+            tapCardInputViewWeb=tapCardKit,
+            tapMapConfiguration =  configurations,
+            cardNumber =cardNumber?: "",cardExpiry= cardExpiry?: "")
+
     }
 
 

@@ -37,6 +37,7 @@ class TapCardConfiguration {
 //            }
 //        }
 
+
         fun configureWithTapCardDictionaryConfiguration(
             context: Context,
             tapCardInputViewWeb: TapCardKit?,

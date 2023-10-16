@@ -269,8 +269,6 @@ class MainActivity : AppCompatActivity() {
         configuration.put("post",post)
 
         Log.e("cardPrefil", "cardnumber + $cardNumber + card + $cardExpiry")
-
-
         TapCardConfiguration.configureWithTapCardDictionaryConfiguration(
             context = this,
             tapCardInputViewWeb= findViewById<TapCardKit>(R.id.tapCardForm),
