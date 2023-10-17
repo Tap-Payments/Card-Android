@@ -16,6 +16,10 @@
             android:theme="@style/Theme.AppCompat"
             android:exported="false" />
         <activity
+            android:name=".open.web_wrapper.nfc_activity.nfcbottomsheet.NFCBottomSheetActivity"
+            android:theme="@style/Theme.Transparent"
+            android:exported="false" />
+        <activity
             android:name=".open.web_wrapper.ThreeDsWebViewActivity"
             android:exported="false"
             android:theme="@style/Theme.Transparent" />

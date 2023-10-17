@@ -28,7 +28,7 @@ import company.tap.tapcardformkit.*
 import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.enums.CardFormWebStatus
 import company.tap.tapcardformkit.open.web_wrapper.model.ThreeDsResponse
-import company.tap.tapcardformkit.open.web_wrapper.nfc_activity.NFCLaunchActivity
+import company.tap.tapcardformkit.open.web_wrapper.nfc_activity.nfcbottomsheet.NFCBottomSheetActivity
 import company.tap.tapcardformkit.open.web_wrapper.scanner_activity.ScannerActivity
 import company.tap.tapuilibrary.themekit.ThemeManager
 import company.tap.tapuilibrary.uikit.atoms.*
@@ -135,6 +135,9 @@ class TapCardKit : LinearLayout {
 
      fun init(configuraton: CardConfiguraton,cardNumber: String="",cardExpiry:String="") {
         cardConfiguraton = configuraton
+         Log.e("carddata cardnumber",cardNumber.toString())
+         Log.e("carddata expiry",cardExpiry.toString())
+
          cardPrefillPair = Pair(cardNumber,cardExpiry)
         applyThemeForShimmer()
       //  startShimmer()
@@ -288,7 +291,10 @@ class TapCardKit : LinearLayout {
                      */
                     if (TapNfcUtils.isNfcAvailable(context)) {
                         NFCopened = true
-                        val intent = Intent(context,NFCLaunchActivity::class.java)
+//                        val intent = Intent(context,NFCLaunchActivity::class.java)
+//                        (context).startActivity(intent)
+
+                        val intent = Intent(context,NFCBottomSheetActivity::class.java)
                         (context).startActivity(intent)
                     }else
                     {

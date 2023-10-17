@@ -82,7 +82,6 @@ fun String.getModelFromJson(): ThreeDsResponse {
 }
 
 fun getRandomNumbers(length: Int): String {
-//    val allowedChars = ('A'..'Z') + ('0'..'9')
     val allowedChars = ('0'..'9')
     return (1..length)
         .map { allowedChars.random() }.shuffled()
