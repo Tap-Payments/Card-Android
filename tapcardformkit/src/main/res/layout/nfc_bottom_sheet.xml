@@ -24,10 +24,21 @@
         android:layout_marginTop="-25dp"
         android:layout_height="match_parent">
 
-        <FrameLayout
+<!--        <FrameLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="@dimen/_400sdp"-->
+<!--            android:id="@+id/nfc_view"/>-->
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/shimmer_view"
+            android:scaleType="centerCrop"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_400sdp"
-            android:id="@+id/nfc_view"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"/>
 
     </LinearLayout>
 

@@ -90,8 +90,8 @@ dependencies {
     api 'com.github.Tap-Payments:CommonDataModelsWeb-Andriod:0.0.13'
 //    api project(path: ':simplesettings')
 //    api project(path: ':CommonDataModels')
-//    def lottieVersion = "6.1.0"
-//    implementation "com.airbnb.android:lottie:$lottieVersion"
+    def lottieVersion = "6.1.0"
+    implementation "com.airbnb.android:lottie:$lottieVersion"
 
 
 }

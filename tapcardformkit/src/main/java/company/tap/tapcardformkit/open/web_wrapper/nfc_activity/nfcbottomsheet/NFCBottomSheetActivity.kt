@@ -45,6 +45,7 @@ class NFCBottomSheetActivity : AppCompatActivity() {
 
 
 
+
     override fun onNewIntent(intent: Intent?) {
         // TODO Auto-generated method stub
         super.onNewIntent(intent)

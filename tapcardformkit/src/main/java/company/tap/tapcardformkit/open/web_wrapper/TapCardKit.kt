@@ -56,7 +56,6 @@ class TapCardKit : LinearLayout {
         var card:Card?=null
         fun fillCardNumber(cardNumber:String,expiryDate:String,cvv:String,cardHolderName:String){
             Log.e("fillcardNumber","card in fillCardNumber ${cardNumber} + ${expiryDate} +${cvv} + ${cardHolderName}")
-
             cardWebview.loadUrl("javascript:window.fillCardInputs({cardNumber:'$cardNumber',expiryDate:'$expiryDate',cvv:'$cvv',cardHolderName:'$cardHolderName'})")
         }
 

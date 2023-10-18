@@ -3,6 +3,8 @@ package company.tap.tapcardformkit.open.web_wrapper
 const val rawFolderRefrence = "raw"
 const val CardWebUrlPrefix = "tapCardWebSDK://"
 const val keyValueName = "data"
+const val packageName = "com.example.tapcardwebsdk"
+
 const val parcelableThreeDsKey = "threeDsUrl"
 const val authDataPayerKey = "authDataPayer"
 const val waitDelaytime = 4000L
