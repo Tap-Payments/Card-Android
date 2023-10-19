@@ -12,6 +12,7 @@ import company.tap.nfcreader.open.reader.TapNfcCardReader
 import company.tap.nfcreader.open.utils.TapCardUtils
 import company.tap.nfcreader.open.utils.TapNfcUtils
 import company.tap.tapcardformkit.R
+import company.tap.tapcardformkit.doAfterSpecificTime
 import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
 import company.tap.taplocalizationkit.LocalizationManager
@@ -38,12 +39,7 @@ class NFCBottomSheetActivity : AppCompatActivity() {
 
         nfcBottomSheet = NfcBottomSheet()
         nfcBottomSheet.show(supportFragmentManager,"")
-
-
-
     }
-
-
 
 
     override fun onNewIntent(intent: Intent?) {

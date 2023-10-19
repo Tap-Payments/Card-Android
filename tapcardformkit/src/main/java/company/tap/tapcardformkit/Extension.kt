@@ -3,6 +3,8 @@ package company.tap.tapcardformkit
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
+import android.content.res.Configuration
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.content.res.Resources
 import android.net.Uri
 import android.os.Build
@@ -95,6 +97,19 @@ fun getRandomTrx(length: Int=23): String {
     return prefix+(1..length)
         .map { letters.random() }.shuffled()
         .joinToString("")
+}
+
+fun getDeviceLocale(): Locale? {
+    val defaultLocale = Resources.getSystem().configuration.locales.get(0);
+    return defaultLocale
+
+}
+
+fun Context.getDeviceTheme(): String {
+    return when(resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == UI_MODE_NIGHT_YES){
+        true ->"dark"
+        false->"light"
+    }
 }
 fun <T> List<T>?.jointToStringForUrl(): String? {
     return this?.joinToString()?.replace(", ", "%22%2C%22")

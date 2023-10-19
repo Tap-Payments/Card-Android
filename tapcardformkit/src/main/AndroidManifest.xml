@@ -20,7 +20,7 @@
             android:theme="@style/Theme.Transparent"
             android:exported="false" />
         <activity
-            android:name=".open.web_wrapper.ThreeDsWebViewActivity"
+            android:name=".open.web_wrapper.threeDsWebView.ThreeDsWebViewActivity"
             android:exported="false"
             android:theme="@style/Theme.Transparent" />
         <activity

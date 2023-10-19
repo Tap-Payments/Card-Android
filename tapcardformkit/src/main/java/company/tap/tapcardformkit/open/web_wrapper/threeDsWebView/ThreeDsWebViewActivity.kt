@@ -1,10 +1,11 @@
-package company.tap.tapcardformkit.open.web_wrapper
+package company.tap.tapcardformkit.open.web_wrapper.threeDsWebView
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import company.tap.tapcardformkit.R
 import company.tap.tapcardformkit.open.DataConfiguration
+import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
 import company.tap.taplocalizationkit.LocalizationManager
 import java.util.*
 

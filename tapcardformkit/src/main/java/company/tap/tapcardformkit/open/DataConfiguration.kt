@@ -49,11 +49,7 @@ object DataConfiguration {
         set(value) {
             field = value
         }
-    var configurationsAsJson: String? = null
-        get() = field
-        set(value) {
-            field = value
-        }
+
 
     var configurationsAsHashMap: HashMap<String,Any>? = null
         get() = field
@@ -66,12 +62,6 @@ object DataConfiguration {
         set(value) {
             field = value
         }
-
-
-
-
-
-
 
 
 

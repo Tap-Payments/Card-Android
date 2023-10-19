@@ -1,4 +1,4 @@
-package company.tap.tapcardformkit.open.web_wrapper
+package company.tap.tapcardformkit.open.web_wrapper.threeDsWebView
 
 import android.os.Build
 import android.os.Bundle
@@ -11,7 +11,6 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 import androidx.annotation.RequiresApi
@@ -19,10 +18,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import company.tap.tapcardformkit.R
 import company.tap.tapcardformkit.doAfterSpecificTime
 import company.tap.tapcardformkit.open.DataConfiguration
+import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
 import company.tap.tapcardformkit.twoThirdHeightView
 import company.tap.tapuilibrary.uikit.views.TapBrandView
 import java.util.*
-import kotlin.collections.HashMap
 import kotlin.math.roundToInt
 
 class ThreeDsBottomSheetFragment : BottomSheetDialogFragment() {

@@ -30,6 +30,8 @@ import company.tap.tapcardformkit.open.web_wrapper.enums.CardFormWebStatus
 import company.tap.tapcardformkit.open.web_wrapper.model.ThreeDsResponse
 import company.tap.tapcardformkit.open.web_wrapper.nfc_activity.nfcbottomsheet.NFCBottomSheetActivity
 import company.tap.tapcardformkit.open.web_wrapper.scanner_activity.ScannerActivity
+import company.tap.tapcardformkit.open.web_wrapper.threeDsWebView.ThreeDsBottomSheetFragment
+import company.tap.tapcardformkit.open.web_wrapper.threeDsWebView.ThreeDsWebViewActivity
 import company.tap.tapuilibrary.themekit.ThemeManager
 import company.tap.tapuilibrary.uikit.atoms.*
 import java.net.URLEncoder
@@ -159,24 +161,25 @@ class TapCardKit : LinearLayout {
                 val tapInterface = DataConfiguration.configurationsAsHashMap?.get("interface") as? Map<*, *>
               setTapThemeAndLanguage(
                     this.context,
-                    TapLocal.valueOf(tapInterface?.get("locale")?.toString() ?: TapLocal.en.name),
-                  TapTheme.valueOf(tapInterface?.get("theme")?.toString() ?: TapTheme.light.name))
+                    tapInterface?.get("locale")?.toString() ?: getDeviceLocale()?.language,
+                 tapInterface?.get("theme")?.toString() ?: context.getDeviceTheme())
             }
+            else -> {}
         }
 
 
     }
 
-    private fun setTapThemeAndLanguage(context: Context, language: TapLocal?, themeMode: TapTheme?) {
+    private fun setTapThemeAndLanguage(context: Context, language: String?, themeMode: String?) {
         when (themeMode) {
-            TapTheme.light -> {
+            TapTheme.light.name -> {
                 DataConfiguration.setTheme(
                     context, context.resources, null,
                     R.raw.defaultlighttheme, TapTheme.light.name
                 )
                 ThemeManager.currentThemeName = TapTheme.light.name
             }
-            TapTheme.dark -> {
+            TapTheme.dark.name -> {
                 DataConfiguration.setTheme(
                     context, context.resources, null,
                     R.raw.defaultdarktheme, TapTheme.dark.name
@@ -185,7 +188,7 @@ class TapCardKit : LinearLayout {
             }
             else -> {}
         }
-        DataConfiguration.setLocale(this.context, language?.name ?:"en", null, this@TapCardKit.context.resources, R.raw.lang)
+        DataConfiguration.setLocale(this.context, language ?:"en", null, this@TapCardKit.context.resources, R.raw.lang)
 
     }
 
@@ -377,7 +380,7 @@ class TapCardKit : LinearLayout {
              */
 
 
-            val intent = Intent(context,ThreeDsWebViewActivity::class.java)
+            val intent = Intent(context, ThreeDsWebViewActivity::class.java)
             (context).startActivity(intent)
             ThreeDsBottomSheetFragment.tapCardKit = this@TapCardKit
 
