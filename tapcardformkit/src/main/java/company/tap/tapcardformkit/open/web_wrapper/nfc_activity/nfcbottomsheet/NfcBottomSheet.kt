@@ -35,8 +35,14 @@ class NfcBottomSheet : BottomSheetDialogFragment() {
 
     fun loadLottie() {
         val tapInterface = DataConfiguration.configurationsAsHashMap?.get("interface") as? Map<*, *>
-        val lanugage = tapInterface?.get("locale")?.toString() ?: getDeviceLocale()?.language
-        val theme = tapInterface?.get("theme")?.toString() ?: requireContext().getDeviceTheme()
+        var lanugage = tapInterface?.get("locale")?.toString() ?: getDeviceLocale()?.language
+        if (lanugage == "dynamic"){
+            lanugage =  getDeviceLocale()?.language
+        }
+        var theme = tapInterface?.get("theme")?.toString() ?: requireContext().getDeviceTheme()
+        if (theme == "dynamic"){
+            theme =  requireContext().getDeviceTheme()
+        }
         when(lanugage){
             TapLocal.en.name->{
                 when(theme){

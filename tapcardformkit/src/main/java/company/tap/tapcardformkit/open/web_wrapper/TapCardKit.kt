@@ -159,10 +159,18 @@ class TapCardKit : LinearLayout {
         when(cardConfiguraton){
             CardConfiguraton.MapConfigruation ->{
                 val tapInterface = DataConfiguration.configurationsAsHashMap?.get("interface") as? Map<*, *>
+                var lanugage = tapInterface?.get("locale")?.toString() ?: getDeviceLocale()?.language
+                if (lanugage == "dynamic"){
+                    lanugage =  getDeviceLocale()?.language
+                }
+                var theme = tapInterface?.get("theme")?.toString() ?: context.getDeviceTheme()
+                if (theme == "dynamic"){
+                    theme =  context.getDeviceTheme()
+                }
               setTapThemeAndLanguage(
                     this.context,
-                    tapInterface?.get("locale")?.toString() ?: getDeviceLocale()?.language,
-                 tapInterface?.get("theme")?.toString() ?: context.getDeviceTheme())
+                    language = lanugage,
+                  themeMode =theme)
             }
             else -> {}
         }
