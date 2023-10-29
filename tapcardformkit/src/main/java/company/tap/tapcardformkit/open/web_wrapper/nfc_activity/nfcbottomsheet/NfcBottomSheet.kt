@@ -16,6 +16,7 @@ import company.tap.tapcardformkit.doAfterSpecificTime
 import company.tap.tapcardformkit.getDeviceLocale
 import company.tap.tapcardformkit.getDeviceTheme
 import company.tap.tapcardformkit.open.DataConfiguration
+import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
 import company.tap.tapuilibrary.uikit.views.TapBrandView
 
 class NfcBottomSheet : BottomSheetDialogFragment() {
@@ -28,24 +29,15 @@ class NfcBottomSheet : BottomSheetDialogFragment() {
         @Nullable savedInstanceState: Bundle?
     ): View? {
         val view = LayoutInflater.from(context).inflate(R.layout.nfc_bottom_sheet, null)
-        mShimmerViewContainer =  view.findViewById<LottieAnimationView>(R.id.shimmer_view)
+        mShimmerViewContainer =  view.findViewById(R.id.shimmer_view)
         loadLottie()
         return view
     }
 
     fun loadLottie() {
-        val tapInterface = DataConfiguration.configurationsAsHashMap?.get("interface") as? Map<*, *>
-        var lanugage = tapInterface?.get("locale")?.toString() ?: getDeviceLocale()?.language
-        if (lanugage == "dynamic"){
-            lanugage =  getDeviceLocale()?.language
-        }
-        var theme = tapInterface?.get("theme")?.toString() ?: requireContext().getDeviceTheme()
-        if (theme == "dynamic"){
-            theme =  requireContext().getDeviceTheme()
-        }
-        when(lanugage){
+        when(TapCardKit.languageThemePair.first){
             TapLocal.en.name->{
-                when(theme){
+                when(TapCardKit.languageThemePair.second){
                     TapTheme.light.name ->setAnimationUrl("https://tap-assets.b-cdn.net/card-sdk/nfc/nfc_light_en.json")
                     TapTheme.dark.name->setAnimationUrl(
                         "https://tap-assets.b-cdn.net/card-sdk/nfc/nfc_dark_en.json"
@@ -56,7 +48,7 @@ class NfcBottomSheet : BottomSheetDialogFragment() {
                 }
             }
             TapLocal.ar.name->{
-                when(theme){
+                when(TapCardKit.languageThemePair.second){
                     TapTheme.light.name ->setAnimationUrl(
                         "https://tap-assets.b-cdn.net/card-sdk/nfc/nfc_light_ar.json"
                     )
@@ -92,21 +84,10 @@ class NfcBottomSheet : BottomSheetDialogFragment() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         this.dialog?.window?.attributes?.windowAnimations = R.style.DialogAnimations
-
         setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialogFragment)
 
     }
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-
-        return super.onCreateDialog(savedInstanceState)
-
-
-    }
-
-
 
     override fun getTheme(): Int = R.style.CustomBottomSheetDialogFragment
 

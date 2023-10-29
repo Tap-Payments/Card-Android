@@ -38,6 +38,7 @@ class NFCBottomSheetActivity : AppCompatActivity() {
         LocalizationManager.setLocale(this, Locale(DataConfiguration.lanuage.toString()))
 
         nfcBottomSheet = NfcBottomSheet()
+        nfcBottomSheet.loadLottie()
         nfcBottomSheet.show(supportFragmentManager,"")
     }
 

@@ -1,8 +1,5 @@
 package company.tap.tapcardformkit.open.web_wrapper
 
-//import com.airbnb.lottie.LottieAnimationView
-
-import TapLocal
 import TapTheme
 import android.annotation.SuppressLint
 import android.content.Context
@@ -22,11 +19,13 @@ import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.*
 import cards.pay.paycardsrecognizer.sdk.Card
+import com.fasterxml.jackson.databind.util.ClassUtil.getPackageName
 import com.google.gson.Gson
 import company.tap.nfcreader.open.utils.TapNfcUtils
 import company.tap.tapcardformkit.*
 import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.enums.CardFormWebStatus
+import company.tap.tapcardformkit.open.web_wrapper.model.CardConfigurationResponse
 import company.tap.tapcardformkit.open.web_wrapper.model.ThreeDsResponse
 import company.tap.tapcardformkit.open.web_wrapper.nfc_activity.nfcbottomsheet.NFCBottomSheetActivity
 import company.tap.tapcardformkit.open.web_wrapper.scanner_activity.ScannerActivity
@@ -34,6 +33,10 @@ import company.tap.tapcardformkit.open.web_wrapper.threeDsWebView.ThreeDsBottomS
 import company.tap.tapcardformkit.open.web_wrapper.threeDsWebView.ThreeDsWebViewActivity
 import company.tap.tapuilibrary.themekit.ThemeManager
 import company.tap.tapuilibrary.uikit.atoms.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import org.json.JSONObject
 import java.net.URLEncoder
 import java.util.*
 
@@ -48,12 +51,20 @@ class TapCardKit : LinearLayout {
     lateinit var webFrame3ds: FrameLayout
     private var cardPrefillPair:Pair<String,String> = Pair("","")
 
+    private val retrofit = RetrofitClient.getClient()
+    private val cardConfiguration = retrofit.create(UserApi::class.java)
+    private lateinit var cardUrlPrefix:String
+
+
+
     companion object{
          var alreadyEvaluated = false
         var NFCopened:Boolean = false
         lateinit var threeDsResponse: ThreeDsResponse
         lateinit var cardWebview: WebView
         lateinit var cardConfiguraton: CardConfiguraton
+         var languageThemePair:Pair<String?,String?> = Pair("","")
+
 
         var card:Card?=null
         fun fillCardNumber(cardNumber:String,expiryDate:String,cvv:String,cardHolderName:String){
@@ -135,21 +146,44 @@ class TapCardKit : LinearLayout {
 
 
      fun init(configuraton: CardConfiguraton,cardNumber: String="",cardExpiry:String="") {
-        cardConfiguraton = configuraton
-         Log.e("carddata cardnumber",cardNumber.toString())
-         Log.e("carddata expiry",cardExpiry.toString())
 
-         cardPrefillPair = Pair(cardNumber,cardExpiry)
-        applyThemeForShimmer()
-      //  startShimmer()
-        when (configuraton) {
-            CardConfiguraton.MapConfigruation -> {
-                val url  = "${urlWebStarter}${encodeConfigurationMapToUrl(DataConfiguration.configurationsAsHashMap)}"
-             Log.e("url",url.toString())
-                cardWebview.loadUrl("${urlWebStarter}${encodeConfigurationMapToUrl(DataConfiguration.configurationsAsHashMap)}")
+         GlobalScope.launch {
+             try {
 
-            }
-        }
+                 val usersResponse = cardConfiguration.getCardConfiguration()
+                 if (usersResponse.android.toString().contains(BuildConfig.VERSION_CODE.toString())){
+                     cardUrlPrefix = usersResponse.android.`50`
+                 }
+             }catch (e:Exception){
+                 Log.e("error",e.message.toString())
+                 cardUrlPrefix = urlWebStarter
+             }
+             cardConfiguraton = configuraton
+             cardPrefillPair = Pair(cardNumber, cardExpiry)
+             applyThemeForShimmer()
+             when (configuraton) {
+                 CardConfiguraton.MapConfigruation -> {
+                     val url = "${cardUrlPrefix}${encodeConfigurationMapToUrl(DataConfiguration.configurationsAsHashMap)}"
+                     Log.e("url", url.toString())
+                     cardWebview.post {
+                         cardWebview.loadUrl(
+                             "${cardUrlPrefix}${
+                                 encodeConfigurationMapToUrl(
+                                     DataConfiguration.configurationsAsHashMap
+                                 )
+                             }"
+                         )
+                     }
+
+
+                 }
+                 else -> {}
+             }
+         }
+
+
+
+
     }
 
     private fun applyThemeForShimmer() {
@@ -167,6 +201,7 @@ class TapCardKit : LinearLayout {
                 if (theme == "dynamic"){
                     theme =  context.getDeviceTheme()
                 }
+                languageThemePair = Pair(lanugage,theme)
               setTapThemeAndLanguage(
                     this.context,
                     language = lanugage,

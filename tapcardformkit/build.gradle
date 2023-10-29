@@ -23,12 +23,19 @@ def getVersionName = { ->
 android {
     compileSdkVersion 31
     buildToolsVersion "30.0.3"
+//
+//    def versionName = properties["VERSION_NAME"]
+//    def versionCode = properties["VERSION_CODE"]
+    buildTypes.all {
+        buildConfigField "int", "VERSION_CODE", "50"
+    }
+
 
     defaultConfig {
         minSdkVersion 24
         targetSdkVersion 31
-        versionCode 1
-        versionName "1.0.1"
+        versionCode 50
+        versionName "0.0.50"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -88,10 +95,17 @@ dependencies {
     implementation 'company.tap:PayCards-Tap-Android:0.1.6.4'
 
     api 'com.github.Tap-Payments:CommonDataModelsWeb-Andriod:0.0.13'
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+
+// coroutine
+
+
 //    api project(path: ':simplesettings')
 //    api project(path: ':CommonDataModels')
     def lottieVersion = "6.1.0"
     implementation "com.airbnb.android:lottie:$lottieVersion"
+    implementation("com.squareup.retrofit2:converter-jackson:2.9.0")
+
 
 
 }
@@ -103,3 +117,4 @@ task sourcesJar(type: Jar) {
 artifacts {
     archives sourcesJar
 }
+// build.gradle file of the chosen module
