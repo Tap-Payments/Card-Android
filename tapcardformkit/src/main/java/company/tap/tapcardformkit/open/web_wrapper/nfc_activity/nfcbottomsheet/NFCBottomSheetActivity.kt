@@ -38,7 +38,7 @@ class NFCBottomSheetActivity : AppCompatActivity() {
         LocalizationManager.setLocale(this, Locale(DataConfiguration.lanuage.toString()))
 
         nfcBottomSheet = NfcBottomSheet()
-        nfcBottomSheet.loadLottie()
+       // nfcBottomSheet.loadLottie() // stopped was creating NPE
         nfcBottomSheet.show(supportFragmentManager,"")
     }
 

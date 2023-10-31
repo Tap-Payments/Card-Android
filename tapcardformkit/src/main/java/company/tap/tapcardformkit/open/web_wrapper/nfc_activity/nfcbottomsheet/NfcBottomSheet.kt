@@ -22,13 +22,12 @@ import company.tap.tapuilibrary.uikit.views.TapBrandView
 class NfcBottomSheet : BottomSheetDialogFragment() {
 
     private lateinit var  mShimmerViewContainer :LottieAnimationView
-
     @Nullable
     override fun onCreateView(
         @NonNull inflater: LayoutInflater, @Nullable container: ViewGroup?,
         @Nullable savedInstanceState: Bundle?
     ): View? {
-        val view = LayoutInflater.from(context).inflate(R.layout.nfc_bottom_sheet, null)
+        val view = inflater.inflate(R.layout.nfc_bottom_sheet, null)
         mShimmerViewContainer =  view.findViewById(R.id.shimmer_view)
         loadLottie()
         return view
@@ -62,7 +61,7 @@ class NfcBottomSheet : BottomSheetDialogFragment() {
 
     }
     fun setAnimationUrl(url: String){
-        mShimmerViewContainer.setAnimationFromUrl(url)
+        mShimmerViewContainer?.setAnimationFromUrl(url)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
