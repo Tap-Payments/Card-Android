@@ -163,17 +163,15 @@ class TapCardKit : LinearLayout {
                  }
 
              }catch (e:Exception){
-                 Log.e("error",e.message.toString())
+              //   Log.e("error",e.message.toString())
                  cardUrlPrefix = urlWebStarter
              }
              try {
 
                  val geoLocationResponse = ipAddressConfiguration.getGeoLocation()
                  userIpAddress = geoLocationResponse.IPv4
-                 Log.e("ipAddress before",userIpAddress)
 
              }catch (e:Exception){
-                 Log.e("error",e.message.toString())
                  Log.e("error",e.message.toString())
 
              }
