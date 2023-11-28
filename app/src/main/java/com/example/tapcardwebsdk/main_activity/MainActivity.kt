@@ -264,7 +264,7 @@ class MainActivity : AppCompatActivity() {
         configuration.put("features",features)
         configuration.put("acceptance",acceptance)
         configuration.put("fieldsVisibility",fieldsVisibility)
-      //  configuration.put("interface",interfacee)
+        configuration.put("interface",interfacee)
         configuration.put("redirect",redirect)
         configuration.put("post",post)
 

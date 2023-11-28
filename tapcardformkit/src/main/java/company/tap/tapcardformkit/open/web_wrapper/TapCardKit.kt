@@ -50,9 +50,13 @@ class TapCardKit : LinearLayout {
     lateinit var webViewFrame: FrameLayout
     lateinit var webFrame3ds: FrameLayout
     private var cardPrefillPair:Pair<String,String> = Pair("","")
-
+    private var userIpAddress =""
     private val retrofit = RetrofitClient.getClient()
+    private val retrofit2 = RetrofitClient.getClient2()
+
     private val cardConfiguration = retrofit.create(UserApi::class.java)
+    private val ipAddressConfiguration = retrofit2.create(IPaddressApi::class.java)
+
     private lateinit var cardUrlPrefix:String
 
 
@@ -71,6 +75,10 @@ class TapCardKit : LinearLayout {
             Log.e("fillcardNumber","card in fillCardNumber ${cardNumber} + ${expiryDate} +${cvv} + ${cardHolderName}")
             cardWebview.loadUrl("javascript:window.fillCardInputs({cardNumber:'$cardNumber',expiryDate:'$expiryDate',cvv:'$cvv',cardHolderName:'$cardHolderName'})")
         }
+        fun setIpAddress(ipAddress:String){
+            cardWebview.loadUrl("javascript:window.setIP('$ipAddress')")
+        }
+
 
         fun generateTapAuthenticate(authIdPayer: String) {
             cardWebview.loadUrl("javascript:window.loadAuthentication('$authIdPayer')")
@@ -145,19 +153,33 @@ class TapCardKit : LinearLayout {
      }
 
 
-     fun init(configuraton: CardConfiguraton,cardNumber: String="",cardExpiry:String="") {
+    fun init(configuraton: CardConfiguraton,cardNumber: String="",cardExpiry:String="") {
 
          GlobalScope.launch {
              try {
-
                  val usersResponse = cardConfiguration.getCardConfiguration()
                  if (usersResponse.android.toString().contains(BuildConfig.VERSION_CODE.toString())){
                      cardUrlPrefix = usersResponse.android.`50`
                  }
+
              }catch (e:Exception){
                  Log.e("error",e.message.toString())
                  cardUrlPrefix = urlWebStarter
              }
+             try {
+
+                 val geoLocationResponse = ipAddressConfiguration.getGeoLocation()
+                 userIpAddress = geoLocationResponse.IPv4
+                 Log.e("ipAddress before",userIpAddress)
+
+             }catch (e:Exception){
+                 Log.e("error",e.message.toString())
+                 Log.e("error",e.message.toString())
+
+             }
+
+
+
              cardConfiguraton = configuraton
              cardPrefillPair = Pair(cardNumber, cardExpiry)
              applyThemeForShimmer()
@@ -262,6 +284,10 @@ class TapCardKit : LinearLayout {
                  */
                 if (request?.url.toString().contains(CardFormWebStatus.onReady.name)) {
                     DataConfiguration.getTapCardStatusListener()?.onReady()
+                    Log.e("ipAddress after",userIpAddress.toString())
+                    if (userIpAddress.isNotEmpty()){
+                        setIpAddress(userIpAddress)
+                    }
                     if (cardPrefillPair.first.length>=7){
                         fillCardNumber(cardNumber = cardPrefillPair.first, expiryDate = cardPrefillPair.second,"","")
                     }
