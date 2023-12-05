@@ -75,7 +75,7 @@ class ThreeDsBottomSheetFragment : BottomSheetDialogFragment() {
         tapBrandView.backButtonLinearLayout.setOnClickListener {
             this.dismiss()
             requireActivity().finish()
-            tapCardKit.init(TapCardKit.cardConfiguraton)
+            tapCardKit.init(TapCardKit.cardConfiguraton, context = context)
             DataConfiguration.getTapCardStatusListener()?.onError("User canceled 3ds")
 
         }
@@ -106,7 +106,6 @@ class ThreeDsBottomSheetFragment : BottomSheetDialogFragment() {
             when (request?.url?.toString()?.contains(TapCardKit.threeDsResponse.keyword)) {
                 true -> {
                     this@ThreeDsBottomSheetFragment.dialog?.dismiss()
-               //     requireActivity().finish()
                     TapCardKit.generateTapAuthenticate(request.url?.toString().toString())
                 }
                 false -> {}

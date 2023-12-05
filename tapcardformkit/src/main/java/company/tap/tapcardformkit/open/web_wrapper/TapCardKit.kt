@@ -19,24 +19,21 @@ import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.*
 import cards.pay.paycardsrecognizer.sdk.Card
-import com.fasterxml.jackson.databind.util.ClassUtil.getPackageName
 import com.google.gson.Gson
 import company.tap.nfcreader.open.utils.TapNfcUtils
 import company.tap.tapcardformkit.*
 import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.enums.CardFormWebStatus
-import company.tap.tapcardformkit.open.web_wrapper.model.CardConfigurationResponse
 import company.tap.tapcardformkit.open.web_wrapper.model.ThreeDsResponse
 import company.tap.tapcardformkit.open.web_wrapper.nfc_activity.nfcbottomsheet.NFCBottomSheetActivity
+import company.tap.tapcardformkit.open.web_wrapper.pref.Pref
 import company.tap.tapcardformkit.open.web_wrapper.scanner_activity.ScannerActivity
 import company.tap.tapcardformkit.open.web_wrapper.threeDsWebView.ThreeDsBottomSheetFragment
 import company.tap.tapcardformkit.open.web_wrapper.threeDsWebView.ThreeDsWebViewActivity
 import company.tap.tapuilibrary.themekit.ThemeManager
 import company.tap.tapuilibrary.uikit.atoms.*
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.json.JSONObject
 import java.net.URLEncoder
 import java.util.*
 
@@ -107,7 +104,6 @@ class TapCardKit : LinearLayout {
     init {
      LayoutInflater.from(context).inflate(R.layout.activity_card_web_wrapper, this)
         initWebView()
-
     }
 
      private fun initWebView() {
@@ -117,9 +113,6 @@ class TapCardKit : LinearLayout {
         webViewFrame = findViewById(R.id.webViewFrame)
         webFrame3ds = findViewById(R.id.webViewFrame3ds)
         constraintLayout = findViewById(R.id.constraint)
-
-
-//         cardWebview.settings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
 
          cardWebview.settings.javaScriptEnabled = true
          cardWebview.settings.useWideViewPort = true
@@ -153,9 +146,15 @@ class TapCardKit : LinearLayout {
      }
 
 
-    fun init(configuraton: CardConfiguraton,cardNumber: String="",cardExpiry:String="") {
+    fun init(
+        configuraton: CardConfiguraton,
+        cardNumber: String = "",
+        cardExpiry: String = "",
+        context: Context ?=null
+    ) {
 
-         GlobalScope.launch {
+        GlobalScope.launch {
+
              try {
                  val usersResponse = cardConfiguration.getCardConfiguration()
                  if (usersResponse.android.toString().contains(BuildConfig.VERSION_CODE.toString())){
@@ -193,6 +192,7 @@ class TapCardKit : LinearLayout {
                                  )
                              }"
                          )
+
                      }
 
 
@@ -281,14 +281,25 @@ class TapCardKit : LinearLayout {
                  * listen for states of cardWebStatus of onReady , onValidInput .. etc
                  */
                 if (request?.url.toString().contains(CardFormWebStatus.onReady.name)) {
-                    DataConfiguration.getTapCardStatusListener()?.onReady()
-                    Log.e("ipAddress after",userIpAddress.toString())
-                    if (userIpAddress.isNotEmpty()){
-                        setIpAddress(userIpAddress)
+                    /**
+                     * this scenario only for the first launch of the app , due to issue navigation
+                     * of webview after shimmering , if issue appears [in first install only] init function isCalled again .
+                     */
+                   val isFirstTime =  Pref.getValue(context!!,"firstRun","true").toString()
+                    if (isFirstTime == "true"){
+                        init(TapCardKit.cardConfiguraton, context = context)
+                        Pref.setValue(context,"firstRun","false")
+                    }else{
+                        DataConfiguration.getTapCardStatusListener()?.onReady()
+                        Log.e("ipAddress after",userIpAddress.toString())
+                        if (userIpAddress.isNotEmpty()){
+                            setIpAddress(userIpAddress)
+                        }
+                        if (cardPrefillPair.first.length>=7){
+                            fillCardNumber(cardNumber = cardPrefillPair.first, expiryDate = cardPrefillPair.second,"","")
+                        }
                     }
-                    if (cardPrefillPair.first.length>=7){
-                        fillCardNumber(cardNumber = cardPrefillPair.first, expiryDate = cardPrefillPair.second,"","")
-                    }
+
                 }
                 if (request?.url.toString().contains(CardFormWebStatus.onValidInput.name)) {
                     val validInputValue =

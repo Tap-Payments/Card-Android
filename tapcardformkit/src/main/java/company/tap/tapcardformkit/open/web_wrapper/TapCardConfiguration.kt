@@ -1,20 +1,14 @@
 package company.tap.tapcardformkit.open.web_wrapper
 
 import Headers
-import Operator
-import TapCardConfigurations
-import TapLocal
-import TapTheme
 import android.content.Context
 import android.util.Log
 import company.tap.tapcardformkit.R
-import company.tap.tapcardformkit.doAfterSpecificTime
 import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.open.DataConfiguration.configurationsAsHashMap
 import company.tap.tapcardformkit.open.TapCardStatusDelegate
 import company.tap.tapnetworkkit.connection.NetworkApp
 import company.tap.tapnetworkkit.utils.CryptoUtil
-import company.tap.tapuilibrary.themekit.ThemeManager
 
 
 class TapCardConfiguration {
@@ -42,7 +36,7 @@ class TapCardConfiguration {
                 )
 
                 DataConfiguration.addTapCardStatusDelegate(tapCardStatusDelegate)
-                tapCardInputViewWeb?.init(CardConfiguraton.MapConfigruation,cardNumber.filter { it.isDigit() },cardExpiry)
+                tapCardInputViewWeb?.init(CardConfiguraton.MapConfigruation,cardNumber.filter { it.isDigit() },cardExpiry,context)
 
 
             }
