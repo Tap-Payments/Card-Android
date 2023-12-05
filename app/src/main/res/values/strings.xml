@@ -111,13 +111,15 @@
 
     <string-array name="PurposeList">
         <item>Transaction</item>
-        <item>Save Card</item>
-        <item>Verify Cardholder</item>
-        <item>Order Transaction</item>
-        <item>Subscription Transaction</item>
-        <item>Billing Transaction</item>
-        <item>Installment Transaction</item>
-        <item>Milestone Transaction</item>
+        <item>Save_Token</item>
+
+<!--        <item>Save Card</item>-->
+<!--        <item>Verify Cardholder</item>-->
+<!--        <item>Order Transaction</item>-->
+<!--        <item>Subscription Transaction</item>-->
+<!--        <item>Billing Transaction</item>-->
+<!--        <item>Installment Transaction</item>-->
+<!--        <item>Milestone Transaction</item>-->
 
     </string-array>
 

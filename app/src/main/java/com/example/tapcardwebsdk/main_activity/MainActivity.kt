@@ -303,8 +303,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
 
-            },
-        cardNumber =cardNumber?: "",cardExpiry= cardExpiry?: "")
+            })
 
     }
 
