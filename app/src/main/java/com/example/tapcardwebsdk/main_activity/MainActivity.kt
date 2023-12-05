@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.tapcardwebsdk.R
-import com.example.tapcardwebsdk.select_choice.SelectChoiceActivity
 import com.example.tapcardwebsdk.select_choice.SettingsActivity
 import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.open.TapCardStatusDelegate
@@ -197,14 +196,14 @@ class MainActivity : AppCompatActivity() {
         /**
          * fields
          */
-        val fieldsVisibility = HashMap<String,Any>()
+        val fieldVisibility = HashMap<String,Any>()
         /**
          * card
          */
         val card = HashMap<String,Any>()
          card.put("cvv",cvv)
          card.put("cardHolder",cardHolder)
-        fieldsVisibility.put("card",card)
+        fieldVisibility.put("card",card)
 
         /**
          * customerCards
@@ -263,7 +262,7 @@ class MainActivity : AppCompatActivity() {
         configuration.put("merchant",merchant)
         configuration.put("features",features)
         configuration.put("acceptance",acceptance)
-        configuration.put("fieldsVisibility",fieldsVisibility)
+        configuration.put("fieldVisibility",fieldVisibility)
         configuration.put("interface",interfacee)
         configuration.put("redirect",redirect)
         configuration.put("post",post)

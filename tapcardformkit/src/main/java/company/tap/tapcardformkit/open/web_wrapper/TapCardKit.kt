@@ -119,7 +119,7 @@ class TapCardKit : LinearLayout {
         constraintLayout = findViewById(R.id.constraint)
 
 
-         cardWebview.settings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
+//         cardWebview.settings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
 
          cardWebview.settings.javaScriptEnabled = true
          cardWebview.settings.useWideViewPort = true
@@ -313,7 +313,6 @@ class TapCardKit : LinearLayout {
 
                 }
                 if (request?.url.toString().contains(CardFormWebStatus.onSuccess.name)) {
-                    Log.e("data",request?.url?.getQueryParameterFromUri(keyValueName).toString())
                     DataConfiguration.getTapCardStatusListener()?.onSuccess(request?.url?.getQueryParameterFromUri(keyValueName).toString())
                 }
                 if (request?.url.toString().contains(CardFormWebStatus.onHeightChange.name)) {

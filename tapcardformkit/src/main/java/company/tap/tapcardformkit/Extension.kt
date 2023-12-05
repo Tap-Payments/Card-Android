@@ -120,8 +120,7 @@ fun <T> List<T>?.jointToStringForUrl(): String? {
  */
 @RequiresApi(Build.VERSION_CODES.O)
 fun Uri.getQueryParameterFromUri(keyValue: String): String {
-    val decodedBytes =
-        String(Base64.getDecoder().decode(this.getQueryParameter(keyValue).toString()))
+    val decodedBytes = String(Base64.getDecoder().decode(this.getQueryParameter(keyValue)),Charsets.UTF_8)
 
     return decodedBytes
 }

@@ -102,7 +102,7 @@
         <item>Token</item>
         <item>AuthenticatedToken</item>
        <!-- <item>SaveToken</item>-->
-        <item>SaveAuthenticatedToken</item>
+<!--        <item>SaveAuthenticatedToken</item>-->
     </string-array>
 
     <string-array name="ScopeList_default_values">
