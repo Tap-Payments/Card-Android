@@ -107,6 +107,8 @@
     </style>
     <style name="CustomBottomSheetDialogFr" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@android:color/transparent</item>
+        <item name="behavior_peekHeight">612dp</item>
+
 
     </style>
 
