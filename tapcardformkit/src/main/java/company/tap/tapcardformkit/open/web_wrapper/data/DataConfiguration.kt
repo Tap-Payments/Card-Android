@@ -7,19 +7,13 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.res.Resources
-import android.os.Build
 import android.util.Log
-import android.view.View
-import android.widget.TextView
-import android.widget.Toast
-import androidx.annotation.RequiresApi
 import company.tap.tapcardformkit.R
 import company.tap.tapcardformkit.open.web_wrapper.TapCardConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
 import company.tap.taplocalizationkit.LocalizationManager
 import company.tap.tapuilibrary.themekit.ThemeManager
 import java.util.*
-import kotlin.collections.HashMap
 
 /**
  * Created by AhlaamK on 3/23/22.
@@ -51,7 +45,7 @@ object DataConfiguration {
         }
 
 
-    var configurationsAsHashMap: HashMap<String,Any>? = null
+    var configurationsAsHashMap: HashMap<String, Any>? = null
         get() = field
         set(value) {
             field = value
@@ -62,7 +56,6 @@ object DataConfiguration {
         set(value) {
             field = value
         }
-
 
 
     fun setTheme(
@@ -131,21 +124,25 @@ object DataConfiguration {
         return tapCardStatusDelegate
     }
 
-    fun generateToken(tapCardKit: TapCardKit){
+    fun generateToken(tapCardKit: TapCardKit) {
         tapCardKit.generateTapToken()
     }
-    fun initializeSDK(activity: Activity,configurations: HashMap<String,Any>,tapCardKit: TapCardKit,cardNumber:String="",cardExpiry:String=""){
+
+    fun initializeSDK(
+        activity: Activity,
+        configurations: HashMap<String, Any>,
+        tapCardKit: TapCardKit,
+        cardNumber: String = "",
+        cardExpiry: String = ""
+    ) {
         TapCardConfiguration.configureWithTapCardDictionaryConfiguration(
             context = activity,
-            tapCardInputViewWeb=tapCardKit,
-            tapMapConfiguration =  configurations,
-            cardNumber =cardNumber?: "",cardExpiry= cardExpiry?: "")
+            tapCardInputViewWeb = tapCardKit,
+            tapMapConfiguration = configurations,
+            cardNumber = cardNumber ?: "", cardExpiry = cardExpiry ?: ""
+        )
 
     }
-
-
-
-
 
 
 }
@@ -155,18 +152,18 @@ interface TapCardStatusDelegate {
     fun onSuccess(data: String)
 
 
-    fun onReady(){}
+    fun onReady() {}
 
-    fun onFocus(){}
+    fun onFocus() {}
 
-    fun onBindIdentification(data: String){}
+    fun onBindIdentification(data: String) {}
 
     fun onValidInput(isValid: String)
 
 
     fun onError(error: String)
 
-    fun onHeightChange(heightChange:String){}
+    fun onHeightChange(heightChange: String) {}
 
 
 }

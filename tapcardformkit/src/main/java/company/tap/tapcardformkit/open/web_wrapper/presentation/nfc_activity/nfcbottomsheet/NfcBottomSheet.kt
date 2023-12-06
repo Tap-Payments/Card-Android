@@ -1,4 +1,4 @@
-package company.tap.tapcardformkit.open.web_wrapper.nfc_activity.nfcbottomsheet
+package company.tap.tapcardformkit.open.web_wrapper.presentation.nfc_activity.nfcbottomsheet
 
 import TapLocal
 import TapTheme
@@ -13,9 +13,6 @@ import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import company.tap.tapcardformkit.R
 import company.tap.tapcardformkit.doAfterSpecificTime
-import company.tap.tapcardformkit.getDeviceLocale
-import company.tap.tapcardformkit.getDeviceTheme
-import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
 import company.tap.tapuilibrary.uikit.views.TapBrandView
 

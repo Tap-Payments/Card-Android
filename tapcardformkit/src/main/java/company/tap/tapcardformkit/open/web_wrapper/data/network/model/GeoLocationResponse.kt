@@ -1,4 +1,4 @@
-package company.tap.tapcardformkit.open.web_wrapper.model
+package company.tap.tapcardformkit.open.web_wrapper.data.network.model
 
 data class GeoLocationResponse(
     val IPv4: String,

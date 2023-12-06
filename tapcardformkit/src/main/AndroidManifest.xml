@@ -12,19 +12,19 @@
         
         >
         <activity
-            android:name=".open.web_wrapper.nfc_activity.NFCLaunchActivity"
+            android:name=".open.web_wrapper.presentation.nfc_activity.NFCLaunchActivity"
             android:theme="@style/Theme.AppCompat"
             android:exported="false" />
         <activity
-            android:name=".open.web_wrapper.nfc_activity.nfcbottomsheet.NFCBottomSheetActivity"
+            android:name=".open.web_wrapper.presentation.nfc_activity.nfcbottomsheet.NFCBottomSheetActivity"
             android:theme="@style/Theme.Transparent"
             android:exported="false" />
         <activity
-            android:name=".open.web_wrapper.threeDsWebView.ThreeDsWebViewActivity"
+            android:name=".open.web_wrapper.presentation.threeDsWebView.ThreeDsWebViewActivity"
             android:exported="false"
             android:theme="@style/Theme.Transparent" />
         <activity
-            android:name=".open.web_wrapper.scanner_activity.ScannerActivity"
+            android:name=".open.web_wrapper.presentation.scanner_activity.ScannerActivity"
             android:theme="@style/Theme.AppCompat" />
     </application>
 

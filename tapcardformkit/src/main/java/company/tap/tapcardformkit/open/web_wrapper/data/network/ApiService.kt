@@ -1,8 +1,8 @@
 package company.tap.tapcardformkit.open.web_wrapper
 
 import androidx.annotation.RestrictTo
-import company.tap.tapcardformkit.open.web_wrapper.model.CardConfigurationResponse
-import company.tap.tapcardformkit.open.web_wrapper.model.GeoLocationResponse
+import company.tap.tapcardformkit.open.web_wrapper.data.network.model.CardConfigurationResponse
+import company.tap.tapcardformkit.open.web_wrapper.data.network.model.GeoLocationResponse
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response

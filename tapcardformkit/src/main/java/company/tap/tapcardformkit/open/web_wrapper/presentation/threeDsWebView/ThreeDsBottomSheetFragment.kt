@@ -1,4 +1,4 @@
-package company.tap.tapcardformkit.open.web_wrapper.threeDsWebView
+package company.tap.tapcardformkit.open.web_wrapper.presentation.threeDsWebView
 
 import android.os.Bundle
 import android.util.Log

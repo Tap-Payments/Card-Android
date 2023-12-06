@@ -1,4 +1,4 @@
-package company.tap.tapcardformkit.open.web_wrapper.nfc_activity.nfcbottomsheet
+package company.tap.tapcardformkit.open.web_wrapper.presentation.nfc_activity.nfcbottomsheet
 
 import android.content.Intent
 import android.os.Bundle

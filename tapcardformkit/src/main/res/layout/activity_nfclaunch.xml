@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".open.web_wrapper.nfc_activity.NFCLaunchActivity">
+    tools:context=".open.web_wrapper.presentation.nfc_activity.NFCLaunchActivity">
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

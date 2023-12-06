@@ -24,14 +24,12 @@ import androidx.annotation.RequiresApi
 import androidx.core.os.postDelayed
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
-import company.tap.tapcardformkit.open.web_wrapper.model.ThreeDsResponse
-import company.tap.tapcardformkit.open.web_wrapper.rawFolderRefrence
+import company.tap.tapcardformkit.open.web_wrapper.data.network.model.ThreeDsResponse
+import company.tap.tapcardformkit.open.web_wrapper.data.rawFolderRefrence
 import company.tap.tapuilibrary.R
 import company.tap.tapuilibrary.themekit.ThemeManager
 import jp.wasabeef.blurry.Blurry
 import java.util.*
-import kotlin.random.Random
-import kotlin.random.asKotlinRandom
 
 fun View.applyBluryToView(
     radiusNeeded: Int = 8,

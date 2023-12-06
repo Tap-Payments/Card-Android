@@ -1,4 +1,4 @@
-package company.tap.tapcardformkit.open.web_wrapper
+package company.tap.tapcardformkit.open.web_wrapper.data
 
 const val rawFolderRefrence = "raw"
 const val CardWebUrlPrefix = "tapCardWebSDK://"
@@ -24,4 +24,9 @@ const val HeadersApplication ="application"
 const val HeadersMdn ="mdn"
 const val operatorKey ="operator"
 const val headersKey ="headers"
+
+enum class CardFormWebStatus {
+    onReady, onFocus, onValidInput, onInvalidInput, onError, onSuccess, onBinIdentification, onHeightChange, on3dsRedirect,onScannerClick,onNfcClick
+}
+
 

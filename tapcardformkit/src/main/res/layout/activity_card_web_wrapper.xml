@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
-    tools:context=".open.web_wrapper.scanner_activity.ScannerActivity">
+    tools:context=".open.web_wrapper.presentation.scanner_activity.ScannerActivity">
 
 
     <FrameLayout

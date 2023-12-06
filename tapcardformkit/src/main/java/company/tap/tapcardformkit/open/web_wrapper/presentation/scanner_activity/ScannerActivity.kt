@@ -1,4 +1,4 @@
-package company.tap.tapcardformkit.open.web_wrapper.scanner_activity
+package company.tap.tapcardformkit.open.web_wrapper.presentation.scanner_activity
 
 import android.app.Activity
 import android.content.Intent
