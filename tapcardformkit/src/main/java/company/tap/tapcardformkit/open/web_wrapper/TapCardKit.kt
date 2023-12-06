@@ -4,11 +4,8 @@ import TapTheme
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.Color
-import android.net.http.SslError
 import android.os.Build
-import android.os.Handler
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,7 +13,6 @@ import android.view.ViewGroup
 import android.webkit.*
 import android.widget.*
 import androidx.annotation.RequiresApi
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.*
 import cards.pay.paycardsrecognizer.sdk.Card
 import com.google.gson.Gson
@@ -28,11 +24,10 @@ import company.tap.tapcardformkit.open.web_wrapper.model.ThreeDsResponse
 import company.tap.tapcardformkit.open.web_wrapper.nfc_activity.nfcbottomsheet.NFCBottomSheetActivity
 import company.tap.tapcardformkit.open.web_wrapper.pref.Pref
 import company.tap.tapcardformkit.open.web_wrapper.scanner_activity.ScannerActivity
-import company.tap.tapcardformkit.open.web_wrapper.threeDsWebView.ThreeDsBottomSheetFragment
 import company.tap.tapcardformkit.open.web_wrapper.threeDsWebView.ThreeDsWebViewActivity
 import company.tap.tapuilibrary.themekit.ThemeManager
 import company.tap.tapuilibrary.uikit.atoms.*
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import java.net.URLEncoder
 import java.util.*
@@ -41,38 +36,35 @@ import java.util.*
 @RequiresApi(Build.VERSION_CODES.N)
 @SuppressLint("ViewConstructor")
 class TapCardKit : LinearLayout {
-    lateinit var hideableWebView: WebView
-    private var isRedirected = false
-    lateinit var constraintLayout: ConstraintLayout
     lateinit var webViewFrame: FrameLayout
-    lateinit var webFrame3ds: FrameLayout
-    private var cardPrefillPair:Pair<String,String> = Pair("","")
-    private var userIpAddress =""
+    private var cardPrefillPair: Pair<String, String> = Pair("", "")
+    private var userIpAddress = ""
     private val retrofit = RetrofitClient.getClient()
     private val retrofit2 = RetrofitClient.getClient2()
-
-    private val cardConfiguration = retrofit.create(UserApi::class.java)
+    private val cardConfigurationApi = retrofit.create(UserApi::class.java)
     private val ipAddressConfiguration = retrofit2.create(IPaddressApi::class.java)
 
-    private lateinit var cardUrlPrefix:String
+    private lateinit var cardUrlPrefix: String
 
 
-
-    companion object{
-         var alreadyEvaluated = false
-        var NFCopened:Boolean = false
+    companion object {
+        var alreadyEvaluated = false
+        var NFCopened: Boolean = false
         lateinit var threeDsResponse: ThreeDsResponse
         lateinit var cardWebview: WebView
-        lateinit var cardConfiguraton: CardConfiguraton
-         var languageThemePair:Pair<String?,String?> = Pair("","")
+        var languageThemePair: Pair<String?, String?> = Pair("", "")
 
-
-        var card:Card?=null
-        fun fillCardNumber(cardNumber:String,expiryDate:String,cvv:String,cardHolderName:String){
-            Log.e("fillcardNumber","card in fillCardNumber ${cardNumber} + ${expiryDate} +${cvv} + ${cardHolderName}")
+        var card: Card? = null
+        fun fillCardNumber(
+            cardNumber: String,
+            expiryDate: String,
+            cvv: String,
+            cardHolderName: String
+        ) {
             cardWebview.loadUrl("javascript:window.fillCardInputs({cardNumber:'$cardNumber',expiryDate:'$expiryDate',cvv:'$cvv',cardHolderName:'$cardHolderName'})")
         }
-        fun setIpAddress(ipAddress:String){
+
+        fun setIpAddress(ipAddress: String) {
             cardWebview.loadUrl("javascript:window.setIP('$ipAddress')")
         }
 
@@ -80,7 +72,6 @@ class TapCardKit : LinearLayout {
         fun generateTapAuthenticate(authIdPayer: String) {
             cardWebview.loadUrl("javascript:window.loadAuthentication('$authIdPayer')")
         }
-
 
 
     }
@@ -102,136 +93,96 @@ class TapCardKit : LinearLayout {
 
 
     init {
-     LayoutInflater.from(context).inflate(R.layout.activity_card_web_wrapper, this)
+        LayoutInflater.from(context).inflate(R.layout.activity_card_web_wrapper, this)
         initWebView()
     }
 
-     private fun initWebView() {
+    private fun initWebView() {
         cardWebview = findViewById(R.id.webview)
-
-         hideableWebView = findViewById(R.id.hideableWebView)
         webViewFrame = findViewById(R.id.webViewFrame)
-        webFrame3ds = findViewById(R.id.webViewFrame3ds)
-        constraintLayout = findViewById(R.id.constraint)
+        with(cardWebview) {
+            with(settings) {
+                javaScriptEnabled = true
+                domStorageEnabled = true
+            }
+            webViewClient = MyWebViewClient()
+            setBackgroundColor(Color.TRANSPARENT)
+            setLayerType(LAYER_TYPE_SOFTWARE, null)
+        }
 
-         cardWebview.settings.javaScriptEnabled = true
-         cardWebview.settings.useWideViewPort = true
-         hideableWebView.settings.javaScriptEnabled = true
-        cardWebview.settings.domStorageEnabled = true
-         cardWebview.settings.loadsImagesAutomatically = true
-         cardWebview.settings.databaseEnabled = false
-         cardWebview.settings.javaScriptCanOpenWindowsAutomatically = true
-         cardWebview.settings.builtInZoomControls = true;
-
-         cardWebview.setBackgroundColor(Color.TRANSPARENT)
-        cardWebview.setLayerType(LAYER_TYPE_SOFTWARE, null)
-
-         cardWebview.webViewClient = MyWebViewClient()
-         cardWebview.webChromeClient = object : WebChromeClient() {
-             override fun onJsPrompt(
-                 view: WebView?, url: String?,
-                 message: String?, defaultValue: String?, result: JsPromptResult?
-             ): Boolean {
-                 return true
-             }
-
-             override fun onConsoleMessage(consoleMessage: ConsoleMessage): Boolean {
-                 Log.d("console", consoleMessage.message())
-
-                 return true
-             }
-         }
-         hideableWebView.webViewClient = HideableWebViewClient()
-
-     }
+    }
 
 
     fun init(
-        configuraton: CardConfiguraton,
         cardNumber: String = "",
-        cardExpiry: String = "",
-        context: Context ?=null
+        cardExpiry: String = ""
     ) {
 
-        GlobalScope.launch {
-
-             try {
-                 val usersResponse = cardConfiguration.getCardConfiguration()
-                 if (usersResponse.android.toString().contains(BuildConfig.VERSION_CODE.toString())){
-                     cardUrlPrefix = usersResponse.android.`50`
-                 }
-
-             }catch (e:Exception){
-              //   Log.e("error",e.message.toString())
-                 cardUrlPrefix = urlWebStarter
-             }
-             try {
-
-                 val geoLocationResponse = ipAddressConfiguration.getGeoLocation()
-                 userIpAddress = geoLocationResponse.IPv4
-
-             }catch (e:Exception){
-                 Log.e("error",e.message.toString())
-
-             }
+        MainScope().launch {
+            getCardUrlPrefixFromApi()
+            getDeviceLocation()
+            cardPrefillPair = Pair(cardNumber, cardExpiry)
+            applyThemeForShimmer()
+            val url = "${cardUrlPrefix}${encodeConfigurationMapToUrl(DataConfiguration.configurationsAsHashMap)}"
+            Log.e("url", url.toString())
+            cardWebview.post { cardWebview.loadUrl(url) }
+        }
 
 
+    }
 
-             cardConfiguraton = configuraton
-             cardPrefillPair = Pair(cardNumber, cardExpiry)
-             applyThemeForShimmer()
-             when (configuraton) {
-                 CardConfiguraton.MapConfigruation -> {
-                     val url = "${cardUrlPrefix}${encodeConfigurationMapToUrl(DataConfiguration.configurationsAsHashMap)}"
-                     Log.e("url", url.toString())
-                     cardWebview.post {
-                         cardWebview.loadUrl(
-                             "${cardUrlPrefix}${
-                                 encodeConfigurationMapToUrl(
-                                     DataConfiguration.configurationsAsHashMap
-                                 )
-                             }"
-                         )
+    private suspend fun getDeviceLocation() {
+        try {
+            /**
+             * request to get GeoLocation, ip address of device
+             */
 
-                     }
+            val geoLocationResponse = ipAddressConfiguration.getGeoLocation()
+            userIpAddress = geoLocationResponse.IPv4
 
+        } catch (e: Exception) {
+            Log.e("error", e.message.toString())
+        }
+    }
 
-                 }
-                 else -> {}
-             }
-         }
+    private suspend fun getCardUrlPrefixFromApi() {
+        try {
+            val usersResponse = cardConfigurationApi.getCardConfiguration()
+            if (usersResponse.android.toString()
+                    .contains(BuildConfig.VERSION_CODE.toString())
+            ) {
+                cardUrlPrefix = usersResponse.android.`50`
+            }
 
-
-
-
+        } catch (e: Exception) {
+            //   Log.e("error",e.message.toString())
+            cardUrlPrefix = urlWebStarter
+        }
     }
 
     private fun applyThemeForShimmer() {
         /**
          * need to be refactored : mulitple copies of same code
          */
-        when(cardConfiguraton){
-            CardConfiguraton.MapConfigruation ->{
-                val tapInterface = DataConfiguration.configurationsAsHashMap?.get("interface") as? Map<*, *>
-                var lanugage = tapInterface?.get("locale")?.toString() ?: getDeviceLocale()?.language
-                if (lanugage == "dynamic"){
-                    lanugage =  getDeviceLocale()?.language
-                }
-                var theme = tapInterface?.get("theme")?.toString() ?: context.getDeviceTheme()
-                if (theme == "dynamic"){
-                    theme =  context.getDeviceTheme()
-                }
-                languageThemePair = Pair(lanugage,theme)
-              setTapThemeAndLanguage(
-                    this.context,
-                    language = lanugage,
-                  themeMode =theme)
-            }
-            else -> {}
+
+        val tapInterface = DataConfiguration.configurationsAsHashMap?.get("interface") as? Map<*, *>
+        var lanugage =
+            tapInterface?.get("locale")?.toString() ?: getDeviceLocale()?.language
+        if (lanugage == "dynamic") {
+            lanugage = getDeviceLocale()?.language
         }
-
-
+        var theme = tapInterface?.get("theme")?.toString() ?: context.getDeviceTheme()
+        if (theme == "dynamic") {
+            theme = context.getDeviceTheme()
+        }
+        languageThemePair = Pair(lanugage, theme)
+        setTapThemeAndLanguage(
+            this.context,
+            language = lanugage,
+            themeMode = theme
+        )
     }
+
 
     private fun setTapThemeAndLanguage(context: Context, language: String?, themeMode: String?) {
         when (themeMode) {
@@ -251,15 +202,20 @@ class TapCardKit : LinearLayout {
             }
             else -> {}
         }
-        DataConfiguration.setLocale(this.context, language ?:"en", null, this@TapCardKit.context.resources, R.raw.lang)
+        DataConfiguration.setLocale(
+            this.context,
+            language ?: "en",
+            null,
+            this@TapCardKit.context.resources,
+            R.raw.lang
+        )
 
     }
 
 
-    private fun encodeConfigurationMapToUrl(configuraton: HashMap<String,Any>?): String? {
+    private fun encodeConfigurationMapToUrl(configuraton: HashMap<String, Any>?): String? {
         val gson = Gson()
         val json: String = gson.toJson(configuraton)
-
         val encodedUrl = URLEncoder.encode(json, "UTF-8")
         return encodedUrl
 
@@ -285,18 +241,29 @@ class TapCardKit : LinearLayout {
                      * this scenario only for the first launch of the app , due to issue navigation
                      * of webview after shimmering , if issue appears [in first install only] init function isCalled again .
                      */
-                   val isFirstTime =  Pref.getValue(context!!,"firstRun","true").toString()
-                    if (isFirstTime == "true"){
-                        init(TapCardKit.cardConfiguraton, context = context)
-                        Pref.setValue(context,"firstRun","false")
-                    }else{
+                    val isFirstTime = Pref.getValue(context, "firstRun", "true").toString()
+                    if (isFirstTime == "true") {
+                        init()
+                        Pref.setValue(context, "firstRun", "false")
+                    } else {
                         DataConfiguration.getTapCardStatusListener()?.onReady()
-                        Log.e("ipAddress after",userIpAddress.toString())
-                        if (userIpAddress.isNotEmpty()){
+                        /**
+                         * here we send ip Address to front end
+                         */
+                        Log.e("ipAddress after", userIpAddress.toString())
+                        if (userIpAddress.isNotEmpty()) {
                             setIpAddress(userIpAddress)
                         }
-                        if (cardPrefillPair.first.length>=7){
-                            fillCardNumber(cardNumber = cardPrefillPair.first, expiryDate = cardPrefillPair.second,"","")
+                        /**
+                         * here we ensure prefilling card with numbers passed from merchant
+                         */
+                        if (cardPrefillPair.first.length >= 7) {
+                            fillCardNumber(
+                                cardNumber = cardPrefillPair.first,
+                                expiryDate = cardPrefillPair.second,
+                                "",
+                                ""
+                            )
                         }
                     }
 
@@ -324,16 +291,18 @@ class TapCardKit : LinearLayout {
 
                 }
                 if (request?.url.toString().contains(CardFormWebStatus.onSuccess.name)) {
-                    DataConfiguration.getTapCardStatusListener()?.onSuccess(request?.url?.getQueryParameterFromUri(keyValueName).toString())
+                    DataConfiguration.getTapCardStatusListener()
+                        ?.onSuccess(request?.url?.getQueryParameterFromUri(keyValueName).toString())
                 }
                 if (request?.url.toString().contains(CardFormWebStatus.onHeightChange.name)) {
                     val newHeight = request?.url?.getQueryParameter(keyValueName)
                     val params: ViewGroup.LayoutParams? = webViewFrame.layoutParams
-                    params?.height = webViewFrame.context.getDimensionsInDp(newHeight?.toInt() ?: 95)
+                    params?.height =
+                        webViewFrame.context.getDimensionsInDp(newHeight?.toInt() ?: 95)
                     webViewFrame.layoutParams = params
 
-                    DataConfiguration.getTapCardStatusListener()?.onHeightChange(newHeight.toString())
-
+                    DataConfiguration.getTapCardStatusListener()
+                        ?.onHeightChange(newHeight.toString())
 
 
                 }
@@ -348,12 +317,11 @@ class TapCardKit : LinearLayout {
                     /**
                      * navigate to 3ds Activity
                      */
-                    val queryParams = request?.url?.getQueryParameterFromUri(keyValueName).toString()
-                    Log.e("data", queryParams.toString())
-
+                    val queryParams =
+                        request?.url?.getQueryParameterFromUri(keyValueName).toString()
                     threeDsResponse = queryParams.getModelFromJson()
                     Log.e("data", threeDsResponse.toString())
-                    hideableWebView.loadUrl(threeDsResponse.threeDsUrl)
+                    navigateTo3dsActivity()
 
 
                 }
@@ -361,7 +329,7 @@ class TapCardKit : LinearLayout {
                     /**
                      * navigate to Scanner Activity
                      */
-                    val intent = Intent(context,ScannerActivity::class.java)
+                    val intent = Intent(context, ScannerActivity::class.java)
                     (context).startActivity(intent)
 
                 }
@@ -371,117 +339,44 @@ class TapCardKit : LinearLayout {
                      */
                     if (TapNfcUtils.isNfcAvailable(context)) {
                         NFCopened = true
+                        /**
+                         * old NFCLauncher
+                         */
 //                        val intent = Intent(context,NFCLaunchActivity::class.java)
-//                        (context).startActivity(intent)
-
-                        val intent = Intent(context,NFCBottomSheetActivity::class.java)
+                        /**
+                         * new NFC act as bottomSheet
+                         */
+                        val intent = Intent(context, NFCBottomSheetActivity()::class.java)
                         (context).startActivity(intent)
-                    }else
-                    {
-                        //TODO:check if u need any other call back here if device doesn't support NFC
-                        DataConfiguration.getTapCardStatusListener()?.onError("NFC is not supported on this device")
+                    } else {
+                        DataConfiguration.getTapCardStatusListener()
+                            ?.onError("NFC is not supported on this device")
                     }
-
 
 
                 }
                 return true
 
+            } else {
+                return false
             }
-        else {
-             //   webView?.loadUrl(request?.url.toString())
-                return false}
         }
 
-        override fun onPageFinished(view: WebView, url: String) {
-            super.onPageFinished(view, url)
-
-        }
-
-
-
-        override fun onReceivedError(
-            view: WebView,
-            request: WebResourceRequest,
-            error: WebResourceError
-        ) {
-            Log.e("error",error.toString())
-            Log.e("error",request.toString())
-
-            super.onReceivedError(view, request, error)
-        }
-
-        override fun onReceivedSslError(
-            view: WebView?,
-            handler: SslErrorHandler?,
-            error: SslError?
-        ) {
-            Log.e("error",error.toString())
-            Log.e("error",handler.toString())
-            handler?.proceed()
-        }
     }
 
+    fun navigateTo3dsActivity() {
+        /**
+         * navigate to 3ds Activity
+         */
+        val intent = Intent(context, ThreeDsWebViewActivity::class.java)
+        (context).startActivity(intent)
+        ThreeDsWebViewActivity.tapCardKit = this@TapCardKit
 
-    inner class HideableWebViewClient : WebViewClient() {
-        @RequiresApi(Build.VERSION_CODES.O)
-        override fun shouldOverrideUrlLoading(
-            webView: WebView?,
-            request: WebResourceRequest?
-        ): Boolean {
-            isRedirected = true;
-            return false
-        }
-
-        override fun onPageFinished(view: WebView, url: String) {
-            if (!alreadyEvaluated) {
-                alreadyEvaluated = true;
-                Handler().postDelayed({
-                    navigateTo3dsActivity()
-                }, waitDelaytime)
-            } else {
-                alreadyEvaluated = false;
-            }
-
-
-        }
-
-        override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-            isRedirected = false;
-
-        }
-
-        fun navigateTo3dsActivity() {
-            // on below line we are creating a new bottom sheet dialog.
-            /**
-             * put buttomsheet in separate class
-             */
-
-
-            val intent = Intent(context, ThreeDsWebViewActivity::class.java)
-            (context).startActivity(intent)
-            ThreeDsBottomSheetFragment.tapCardKit = this@TapCardKit
-
-        }
-
-        override fun onReceivedError(
-            view: WebView,
-            request: WebResourceRequest,
-            error: WebResourceError
-        ) {
-            super.onReceivedError(view, request, error)
-        }
     }
 
     fun generateTapToken() {
         cardWebview.loadUrl("javascript:window.generateTapToken()")
     }
-}
-
-
-
-enum class CardConfiguraton() {
-    MapConfigruation, ModelConfiguration
 }
 
 

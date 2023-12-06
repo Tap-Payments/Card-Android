@@ -8,6 +8,8 @@ const val packageName = "com.example.tapcardwebsdk"
 const val parcelableThreeDsKey = "threeDsUrl"
 const val authDataPayerKey = "authDataPayer"
 const val waitDelaytime = 4000L
+const val chunkSize = 2048
+const val keyValueForAuthPayer = "auth_payer"
 
 //const val urlWebStarter = "https://demo.dev.tap.company/v2/sdk/checkout?type=card-iframe&configurations="
 const val urlWebStarter = "https://sdk.dev.tap.company/v2/card/wrapper?configurations="

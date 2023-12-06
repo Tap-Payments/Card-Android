@@ -147,7 +147,7 @@ class NFCBottomSheetActivity : AppCompatActivity() {
                                 cvv = "",
                                 expiryDate = expDateString ?: ""
                             )
-                            TapCardKit.Companion.NFCopened = false
+                            TapCardKit.NFCopened = false
                             finish()
                         }
 
@@ -186,7 +186,7 @@ class NFCBottomSheetActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        if (TapCardKit.Companion.NFCopened) {
+        if (TapCardKit.NFCopened) {
             cardReadDisposable.dispose()
             tapNfcCardReader?.disableDispatch()
 
