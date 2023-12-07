@@ -271,7 +271,6 @@ class MainActivity : AppCompatActivity() {
         TapCardConfiguration.configureWithTapCardDictionaryConfiguration(
             context = this,
             tapCardInputViewWeb= findViewById<TapCardKit>(R.id.tapCardForm),
-
            tapMapConfiguration =  configuration,
           tapCardStatusDelegate =   object : TapCardStatusDelegate {
                 override fun onSuccess(data: String) {
