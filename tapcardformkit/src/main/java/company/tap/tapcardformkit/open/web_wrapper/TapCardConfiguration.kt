@@ -47,7 +47,7 @@ class TapCardConfiguration {
             NetworkApp.initNetwork(
                 tapCardInputViewWeb?.context,
                 publicKey ?: "",
-                "com.baraka.app",
+                context.packageName,
                 ApiService.BASE_URL,
                 "android-cardFromKit",
                 true,
@@ -57,7 +57,7 @@ class TapCardConfiguration {
             val headers = Headers(
                 application = NetworkApp.getApplicationInfo(),
                 mdn = CryptoUtil.encryptJsonString(
-                    "com.baraka.app",
+                    context.packageName.toString(),
                     tapCardInputViewWeb?.context?.resources?.getString(R.string.enryptkey)
                 )
             )
