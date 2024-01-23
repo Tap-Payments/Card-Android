@@ -107,6 +107,11 @@ class TapCardKit : LinearLayout {
             with(settings) {
                 javaScriptEnabled = true
                 domStorageEnabled = true
+                javaScriptCanOpenWindowsAutomatically = true
+                setSupportMultipleWindows(true)
+                cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
+                useWideViewPort = true
+                loadWithOverviewMode = true
             }
             webViewClient = MyWebViewClient()
             setBackgroundColor(Color.TRANSPARENT)
@@ -127,7 +132,7 @@ class TapCardKit : LinearLayout {
             cardPrefillPair = Pair(cardNumber, cardExpiry)
             applyThemeForShimmer()
             val url = "${cardUrlPrefix}${encodeConfigurationMapToUrl(DataConfiguration.configurationsAsHashMap)}"
-            Log.e("url", url.toString())
+            Log.e("url", url)
             cardWebview.post { cardWebview.loadUrl(url) }
         }
 
@@ -244,7 +249,7 @@ class TapCardKit : LinearLayout {
                      * this scenario only for the first launch of the app , due to issue navigation
                      * of webview after shimmering , if issue appears [in first install only] init function isCalled again .
                      */
-                    val isFirstTime = Pref.getValue(context, "firstRun", "true").toString()
+                    val isFirstTime = Pref.getValue(context, "firstRun", "true")
                     if (isFirstTime == "true") {
                         init()
                         Pref.setValue(context, "firstRun", "false")
@@ -253,7 +258,7 @@ class TapCardKit : LinearLayout {
                         /**
                          * here we send ip Address to front end
                          */
-                        Log.e("ipAddress after", userIpAddress.toString())
+//                        Log.e("ipAddress after", userIpAddress.toString())
                         if (userIpAddress.isNotEmpty()) {
                             setIpAddress(userIpAddress)
                         }
@@ -268,7 +273,7 @@ class TapCardKit : LinearLayout {
                                 ""
                             )
                         }
-                    }
+                   }
 
                 }
                 if (request?.url.toString().contains(CardFormWebStatus.onValidInput.name)) {
