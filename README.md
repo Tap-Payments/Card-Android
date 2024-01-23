@@ -125,6 +125,27 @@ You can initialize `Card-Android` in different ways
         order.put("currency",selectedCurrency)
         order.put("description",orderDescription.toString())
         order.put("reference",transactionRefrence ?:"")
+	
+        /**
+         * name
+         */
+        val name = java.util.HashMap<String,Any>()
+        name.put("lang","en")
+        name.put("first",  "first")
+        name.put("middle",  "middle")
+        name.put("last",  "last")
+        /**
+         * phone
+         */
+        val phone = java.util.HashMap<String,Any>()
+        phone.put("countryCode","+20")
+        phone.put("number","011")
+        /**
+         * contact
+         */
+        val contact = java.util.HashMap<String,Any>()
+        contact.put("email","test@gmail.com")
+        contact.put("phone",phone)
 
         /**
          * customer
@@ -134,6 +155,7 @@ You can initialize `Card-Android` in different ways
         customer.put("editable",cardHolder)
         customer.put("contact",contact)
         customer.put("name", listOf(name))
+
 
         /**
          * configuration 
