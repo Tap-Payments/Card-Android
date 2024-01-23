@@ -115,16 +115,16 @@ You can initialize `Card-Android` in different ways
          * operator
          */
         val operator = HashMap<String,Any>()
-        operator.put("publicKey",sandboxKey.toString())
-        /**
+        operator.put("publicKey","")
+          /**
          * order
          */
         val order = HashMap<String,Any>()
-        order.put("id",ordrId ?: "")
-        order.put("amount", amount?.toInt() ?: 1)
-        order.put("currency",selectedCurrency)
-        order.put("description",orderDescription.toString())
-        order.put("reference",transactionRefrence ?:"")
+        order.put("id", "")
+        order.put("amount",  1)
+        order.put("currency","SAR")
+        order.put("description","")
+        order.put("reference","")
 	
         /**
          * name
@@ -152,10 +152,9 @@ You can initialize `Card-Android` in different ways
          */
         val customer = java.util.HashMap<String,Any>()
         customer.put("nameOnCard", "test")
-        customer.put("editable",cardHolder)
+        customer.put("editable","true")
         customer.put("contact",contact)
         customer.put("name", listOf(name))
-
 
         /**
          * configuration 
