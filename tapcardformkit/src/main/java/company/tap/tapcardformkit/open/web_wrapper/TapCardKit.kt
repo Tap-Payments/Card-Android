@@ -258,21 +258,22 @@ class TapCardKit : LinearLayout {
                         /**
                          * here we send ip Address to front end
                          */
-//                        Log.e("ipAddress after", userIpAddress.toString())
                         if (userIpAddress.isNotEmpty()) {
                             setIpAddress(userIpAddress)
                         }
                         /**
                          * here we ensure prefilling card with numbers passed from merchant
+                         * commented for now
                          */
-                        if (cardPrefillPair.first.length >= 7) {
-                            fillCardNumber(
-                                cardNumber = cardPrefillPair.first,
-                                expiryDate = cardPrefillPair.second,
-                                "",
-                                ""
-                            )
-                        }
+
+//                        if (cardPrefillPair.first.length >= 7) {
+//                            fillCardNumber(
+//                                cardNumber = cardPrefillPair.first,
+//                                expiryDate = cardPrefillPair.second,
+//                                "",
+//                                ""
+//                            )
+//                        }
                    }
 
                 }
@@ -299,8 +300,7 @@ class TapCardKit : LinearLayout {
 
                 }
                 if (request?.url.toString().contains(CardFormWebStatus.onSuccess.name)) {
-                    DataConfiguration.getTapCardStatusListener()
-                        ?.onSuccess(request?.url?.getQueryParameterFromUri(keyValueName).toString())
+                    DataConfiguration.getTapCardStatusListener()?.onSuccess(request?.url?.getQueryParameterFromUri(keyValueName).toString())
                 }
                 if (request?.url.toString().contains(CardFormWebStatus.onHeightChange.name)) {
                     val newHeight = request?.url?.getQueryParameter(keyValueName)

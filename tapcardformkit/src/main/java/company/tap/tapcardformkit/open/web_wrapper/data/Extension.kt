@@ -13,46 +13,13 @@ import android.os.Looper
 import android.util.DisplayMetrics
 import android.util.Log
 import android.util.TypedValue
-import android.view.Gravity
-import android.view.View
-import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.ImageView
 import androidx.annotation.DimenRes
-import androidx.annotation.DrawableRes
 import androidx.annotation.RequiresApi
 import androidx.core.os.postDelayed
-import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import company.tap.tapcardformkit.open.web_wrapper.data.network.model.ThreeDsResponse
 import company.tap.tapcardformkit.open.web_wrapper.data.rawFolderRefrence
-import company.tap.tapuilibrary.R
-import company.tap.tapuilibrary.themekit.ThemeManager
-import jp.wasabeef.blurry.Blurry
 import java.util.*
-
-fun View.applyBluryToView(
-    radiusNeeded: Int = 8,
-    sampling: Int = 2,
-    animationDuration: Int = 1000,
-    showOriginalView: Boolean = false
-) {
-
-//     (this as ViewGroup).children.forEachIndexed { index, view ->
-//        if (index != 0) removeView(view)
-//    }
-
-    Blurry.with(context).radius(radiusNeeded).sampling(sampling).animate(animationDuration)
-        .onto(this as ViewGroup).apply {
-            when (showOriginalView) {
-                true -> this@applyBluryToView.getChildAt(0).visibility = View.VISIBLE
-                false -> this@applyBluryToView.getChildAt(0).visibility = View.GONE
-            }
-
-        }
-
-
-}
 
 
 fun Context.px(@DimenRes dimen: Int): Int = resources.getDimension(dimen).toInt()
@@ -117,47 +84,13 @@ fun <T> List<T>?.jointToStringForUrl(): String? {
  * function to get query data and decode it
  */
 @RequiresApi(Build.VERSION_CODES.O)
-fun Uri.getQueryParameterFromUri(keyValue: String): String {
+fun Uri.getQueryParameterFromUri(keyValue: String?): String {
     val decodedBytes = String(Base64.getDecoder().decode(this.getQueryParameter(keyValue)),Charsets.UTF_8)
 
     return decodedBytes
 }
 
 
-fun ViewGroup.addLoaderWithBlurryToView(showLoadingIcon: Boolean, invokeAfterLoad: () -> Unit) {
-    val progressBarSize = 65
-
-
-    @DrawableRes
-    val loaderGif: Int =
-        if (ThemeManager.currentTheme.isNotEmpty() && ThemeManager.currentTheme.contains("dark")) {
-            R.drawable.loader
-        } else if (ThemeManager.currentTheme.isNotEmpty() && !ThemeManager.currentTheme.contains(
-                "dark"
-            )
-        ) {
-            company.tap.tapcardformkit.R.drawable.output_black_loader_nobg
-        } else
-            R.drawable.loader
-
-
-
-    this.applyBluryToView()
-
-    if (showLoadingIcon) {
-        val progressImage = ImageView(this.context)
-        val params = FrameLayout.LayoutParams(progressBarSize, progressBarSize)
-        params.gravity = Gravity.CENTER
-        progressImage.layoutParams = params
-        Glide.with(this.context).asGif().load(loaderGif).into(progressImage)
-
-        this.addView(progressImage)
-    }
-    doAfterSpecificTime(5000) {
-        invokeAfterLoad.invoke()
-    }
-
-}
 
 fun getScreenHeight(): Int {
     return Resources.getSystem().getDisplayMetrics().heightPixels
