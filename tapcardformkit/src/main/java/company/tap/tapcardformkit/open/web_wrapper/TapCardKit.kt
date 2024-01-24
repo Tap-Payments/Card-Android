@@ -49,7 +49,6 @@ class TapCardKit : LinearLayout {
     private val retrofit2 = RetrofitClient.getClient2()
     private val cardConfigurationApi = retrofit.create(UserApi::class.java)
     private val ipAddressConfiguration = retrofit2.create(IPaddressApi::class.java)
-
     private lateinit var cardUrlPrefix: String
 
 
@@ -103,6 +102,7 @@ class TapCardKit : LinearLayout {
         initWebView()
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private fun initWebView() {
         cardWebview = findViewById(R.id.webview)
         webViewFrame = findViewById(R.id.webViewFrame)
