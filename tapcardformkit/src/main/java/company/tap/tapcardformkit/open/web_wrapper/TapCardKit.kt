@@ -2,9 +2,11 @@ package company.tap.tapcardformkit.open.web_wrapper
 
 import TapTheme
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.net.http.SslError
 import android.os.Build
 import android.util.AttributeSet
 import android.util.Log
@@ -21,12 +23,12 @@ import company.tap.tapcardformkit.*
 import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.data.CardFormWebStatus
 import company.tap.tapcardformkit.open.web_wrapper.data.CardWebUrlPrefix
-import company.tap.tapcardformkit.open.web_wrapper.data.network.model.ThreeDsResponse
-import company.tap.tapcardformkit.open.web_wrapper.presentation.nfc_activity.nfcbottomsheet.NFCBottomSheetActivity
 import company.tap.tapcardformkit.open.web_wrapper.data.cache.pref.Pref
 import company.tap.tapcardformkit.open.web_wrapper.data.firstRunKeySharedPrefrence
 import company.tap.tapcardformkit.open.web_wrapper.data.keyValueName
+import company.tap.tapcardformkit.open.web_wrapper.data.network.model.ThreeDsResponse
 import company.tap.tapcardformkit.open.web_wrapper.data.urlWebStarter
+import company.tap.tapcardformkit.open.web_wrapper.presentation.nfc_activity.nfcbottomsheet.NFCBottomSheetActivity
 import company.tap.tapcardformkit.open.web_wrapper.presentation.scanner_activity.ScannerActivity
 import company.tap.tapcardformkit.open.web_wrapper.presentation.threeDsWebView.ThreeDsWebViewActivity
 import company.tap.tapuilibrary.themekit.ThemeManager
@@ -383,6 +385,15 @@ class TapCardKit : LinearLayout {
             }
         }
 
+        @SuppressLint("WebViewClientOnReceivedSslError")
+        override fun onReceivedSslError(
+            view: WebView?,
+            handler: SslErrorHandler?,
+            error: SslError?
+        ) {
+            view?.handleSSlError(error,handler)
+        }
+
     }
 
     fun navigateTo3dsActivity() {
@@ -397,6 +408,32 @@ class TapCardKit : LinearLayout {
 
     fun generateTapToken() {
         cardWebview.loadUrl("javascript:window.generateTapToken()")
+    }
+}
+
+fun  WebView.handleSSlError(error: SslError?, handler: SslErrorHandler?){
+    val builder = AlertDialog.Builder(this.context)
+    var message: String = when (error?.primaryError) {
+        SslError.SSL_EXPIRED -> resources.getString(R.string.ssl_error_certificate)
+        SslError.SSL_IDMISMATCH -> resources.getString(R.string.ssl_error_host_name)
+        SslError.SSL_NOTYETVALID ->  resources.getString(R.string.ssl_error_certifc_error)
+        SslError.SSL_UNTRUSTED ->  resources.getString(R.string.ssl_error_certifc_not_trusted)
+        else ->  resources.getString(R.string.ssl_error_certifc_uknwon_ssl_error)
+    }
+    message += resources.getString(R.string.continueSubtitle)
+    builder.setTitle(resources.getString(R.string.ssl_error))
+    builder.setMessage(message)
+    builder.setPositiveButton(
+        resources.getString(R.string.continueTitle)
+    ) { dialog, which -> handler?.proceed() }
+    builder.setNegativeButton(
+        resources.getString(R.string.canceltitle)
+    ) { dialog, which -> handler?.cancel() }
+        if (error?.primaryError != SslError.SSL_IDMISMATCH) {
+        val dialog = builder.create()
+        dialog.show()
+    } else {
+        handler?.proceed()
     }
 }
 
