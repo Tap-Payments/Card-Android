@@ -24,6 +24,7 @@ import company.tap.tapcardformkit.open.web_wrapper.data.CardWebUrlPrefix
 import company.tap.tapcardformkit.open.web_wrapper.data.network.model.ThreeDsResponse
 import company.tap.tapcardformkit.open.web_wrapper.presentation.nfc_activity.nfcbottomsheet.NFCBottomSheetActivity
 import company.tap.tapcardformkit.open.web_wrapper.data.cache.pref.Pref
+import company.tap.tapcardformkit.open.web_wrapper.data.firstRunKeySharedPrefrence
 import company.tap.tapcardformkit.open.web_wrapper.data.keyValueName
 import company.tap.tapcardformkit.open.web_wrapper.data.urlWebStarter
 import company.tap.tapcardformkit.open.web_wrapper.presentation.scanner_activity.ScannerActivity
@@ -131,9 +132,10 @@ class TapCardKit : LinearLayout {
             getDeviceLocation()
             cardPrefillPair = Pair(cardNumber, cardExpiry)
             applyThemeForShimmer()
-            val url = "${cardUrlPrefix}${encodeConfigurationMapToUrl(DataConfiguration.configurationsAsHashMap)}"
+            val url =
+                "${cardUrlPrefix}${encodeConfigurationMapToUrl(DataConfiguration.configurationsAsHashMap)}"
             Log.e("url", url)
-            cardWebview.post { cardWebview.loadUrl(url) }
+             cardWebview.loadUrl(url)
         }
 
 
@@ -201,6 +203,7 @@ class TapCardKit : LinearLayout {
                 )
                 ThemeManager.currentThemeName = TapTheme.light.name
             }
+
             TapTheme.dark.name -> {
                 DataConfiguration.setTheme(
                     context, context.resources, null,
@@ -208,6 +211,7 @@ class TapCardKit : LinearLayout {
                 )
                 ThemeManager.currentThemeName = TapTheme.dark.name
             }
+
             else -> {}
         }
         DataConfiguration.setLocale(
@@ -248,11 +252,13 @@ class TapCardKit : LinearLayout {
                     /**
                      * this scenario only for the first launch of the app , due to issue navigation
                      * of webview after shimmering , if issue appears [in first install only] init function isCalled again .
+                     *
+                     *
                      */
-                    val isFirstTime = Pref.getValue(context, "firstRun", "true")
+                    val isFirstTime = Pref.getValue(context, firstRunKeySharedPrefrence, "true")
                     if (isFirstTime == "true") {
                         init()
-                        Pref.setValue(context, "firstRun", "false")
+                        Pref.setValue(context, firstRunKeySharedPrefrence, "false")
                     } else {
                         DataConfiguration.getTapCardStatusListener()?.onReady()
                         /**
@@ -266,15 +272,22 @@ class TapCardKit : LinearLayout {
                          * commented for now
                          */
 
-//                        if (cardPrefillPair.first.length >= 7) {
-//                            fillCardNumber(
-//                                cardNumber = cardPrefillPair.first,
-//                                expiryDate = cardPrefillPair.second,
-//                                "",
-//                                ""
-//                            )
-//                        }
-                   }
+                        when (cardPrefillPair.first.isNotBlank()) {
+                            true -> {
+                                if (cardPrefillPair.first.length >= 7) {
+                                    fillCardNumber(
+                                        cardNumber = cardPrefillPair.first,
+                                        expiryDate = cardPrefillPair.second,
+                                        "",
+                                        ""
+                                    )
+                                }
+                            }
+
+                            false -> {}
+                        }
+
+                    }
 
                 }
                 if (request?.url.toString().contains(CardFormWebStatus.onValidInput.name)) {
@@ -287,6 +300,7 @@ class TapCardKit : LinearLayout {
                             )
 
                         }
+
                         false -> {}
                     }
 
@@ -300,13 +314,13 @@ class TapCardKit : LinearLayout {
 
                 }
                 if (request?.url.toString().contains(CardFormWebStatus.onSuccess.name)) {
-                    DataConfiguration.getTapCardStatusListener()?.onSuccess(request?.url?.getQueryParameterFromUri(keyValueName).toString())
+                    DataConfiguration.getTapCardStatusListener()
+                        ?.onSuccess(request?.url?.getQueryParameterFromUri(keyValueName).toString())
                 }
                 if (request?.url.toString().contains(CardFormWebStatus.onHeightChange.name)) {
                     val newHeight = request?.url?.getQueryParameter(keyValueName)
                     val params: ViewGroup.LayoutParams? = webViewFrame.layoutParams
-                    params?.height =
-                        webViewFrame.context.getDimensionsInDp(newHeight?.toInt() ?: 95)
+                    params?.height = webViewFrame.context.getDimensionsInDp(newHeight?.toInt() ?: 95)
                     webViewFrame.layoutParams = params
 
                     DataConfiguration.getTapCardStatusListener()
@@ -328,7 +342,6 @@ class TapCardKit : LinearLayout {
                     val queryParams =
                         request?.url?.getQueryParameterFromUri(keyValueName).toString()
                     threeDsResponse = queryParams.getModelFromJson()
-                    Log.e("data", threeDsResponse.toString())
                     navigateTo3dsActivity()
 
 
