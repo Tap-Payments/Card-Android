@@ -418,6 +418,9 @@ fun  WebView.handleSSlError(error: SslError?, handler: SslErrorHandler?){
         SslError.SSL_IDMISMATCH -> resources.getString(R.string.ssl_error_host_name)
         SslError.SSL_NOTYETVALID ->  resources.getString(R.string.ssl_error_certifc_error)
         SslError.SSL_UNTRUSTED ->  resources.getString(R.string.ssl_error_certifc_not_trusted)
+        SslError.SSL_DATE_INVALID ->  resources.getString(R.string.ssl_error_certifc_not_trusted)
+        SslError.SSL_INVALID ->  resources.getString(R.string.ssl_error_certifc_not_trusted)
+
         else ->  resources.getString(R.string.ssl_error_certifc_uknwon_ssl_error)
     }
     message += resources.getString(R.string.continueSubtitle)
@@ -428,7 +431,9 @@ fun  WebView.handleSSlError(error: SslError?, handler: SslErrorHandler?){
     ) { dialog, which -> handler?.proceed() }
     builder.setNegativeButton(
         resources.getString(R.string.canceltitle)
-    ) { dialog, which -> handler?.cancel() }
+    ) { dialog, which ->
+        handler?.cancel()
+    }
         if (error?.primaryError != SslError.SSL_IDMISMATCH) {
         val dialog = builder.create()
         dialog.show()
