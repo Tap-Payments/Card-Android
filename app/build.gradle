@@ -51,7 +51,7 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'androidx.preference:preference:1.2.1'
     implementation 'com.google.android.material:material:1.4.0'
-   // implementation 'com.github.Tap-Payments:Card-Android:0.0.59'
+//    implementation 'com.github.Tap-Payments:Card-Android:0.0.0.9'
 
     implementation 'com.github.Tap-Payments:TapAndroidForm:0.0.3'
 

@@ -409,6 +409,10 @@ class TapCardKit : LinearLayout {
     fun generateTapToken() {
         cardWebview.loadUrl("javascript:window.generateTapToken()")
     }
+    override fun onDetachedFromWindow() {
+        cardWebview.destroy()
+        super.onDetachedFromWindow()
+    }
 }
 
 fun  WebView.handleSSlError(error: SslError?, handler: SslErrorHandler?){
