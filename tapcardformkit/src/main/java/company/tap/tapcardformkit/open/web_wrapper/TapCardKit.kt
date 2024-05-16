@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.net.http.SslError
 import android.os.Build
 import android.util.AttributeSet
 import android.util.Log
@@ -14,7 +15,6 @@ import android.webkit.*
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.view.*
-import cards.pay.paycardsrecognizer.sdk.Card
 import com.google.gson.Gson
 import company.tap.nfcreader.open.utils.TapNfcUtils
 import company.tap.tapcardformkit.*
@@ -57,7 +57,7 @@ class TapCardKit : LinearLayout {
         lateinit var cardWebview: WebView
         var languageThemePair: Pair<String?, String?> = Pair("", "")
 
-        var card: Card? = null
+       // var card: Card? = null
         fun fillCardNumber(
             cardNumber: String,
             expiryDate: String,
@@ -363,6 +363,14 @@ class TapCardKit : LinearLayout {
             } else {
                 return false
             }
+        }
+
+        override fun onReceivedSslError(
+            view: WebView?,
+            handler: SslErrorHandler?,
+            error: SslError?
+        ) {
+            super.onReceivedSslError(view, handler, error)
         }
 
     }

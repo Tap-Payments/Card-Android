@@ -3,13 +3,13 @@ plugins {
     id 'kotlin-android'
 }
 android {
-    compileSdkVersion 33
-    buildToolsVersion "30.0.3"
+    compileSdkVersion 34
+
 
     defaultConfig {
         applicationId "com.example.tapcardwebsdk"
         minSdkVersion 24
-        targetSdkVersion 33
+        targetSdkVersion 34
         versionCode 4
         versionName "1.0.10"
         multiDexEnabled true
@@ -24,8 +24,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     configurations.all {
         resolutionStrategy {
