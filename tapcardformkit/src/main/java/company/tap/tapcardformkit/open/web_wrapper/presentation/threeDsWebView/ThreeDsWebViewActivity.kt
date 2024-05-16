@@ -1,9 +1,11 @@
 package company.tap.tapcardformkit.open.web_wrapper.presentation.threeDsWebView
 
+import android.annotation.SuppressLint
+import android.net.http.SslError
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.webkit.WebResourceError
+import android.webkit.SslErrorHandler
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -16,17 +18,21 @@ import company.tap.tapcardformkit.doAfterSpecificTime
 import company.tap.tapcardformkit.getDeviceSpecs
 import company.tap.tapcardformkit.open.DataConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
+import company.tap.tapcardformkit.open.web_wrapper.handleSSlError
 import company.tap.taplocalizationkit.LocalizationManager
 import java.util.*
 
-const val delayTime=2000L
+
+const val delayTime = 2000L
 
 class ThreeDsWebViewActivity : AppCompatActivity() {
     lateinit var threeDsBottomsheet: BottomSheetDialogFragment
     var loadedBottomSheet = false
-    companion object{
+
+    companion object {
         lateinit var tapCardKit: TapCardKit
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_three_ds_web_view)
@@ -57,7 +63,6 @@ class ThreeDsWebViewActivity : AppCompatActivity() {
         TapCardKit.alreadyEvaluated = false
 
 
-
     }
 
     inner class threeDsWebViewClient : WebViewClient() {
@@ -72,6 +77,7 @@ class ThreeDsWebViewActivity : AppCompatActivity() {
                     threeDsBottomsheet.dialog?.dismiss()
                     TapCardKit.generateTapAuthenticate(request.url?.toString().toString())
                 }
+
                 false -> {}
                 else -> {}
             }
@@ -88,6 +94,11 @@ class ThreeDsWebViewActivity : AppCompatActivity() {
                 }
             }
             loadedBottomSheet = true
+        }
+
+        @SuppressLint("WebViewClientOnReceivedSslError")
+        override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler, error: SslError) {
+            view?.handleSSlError(error, handler)
         }
 
     }

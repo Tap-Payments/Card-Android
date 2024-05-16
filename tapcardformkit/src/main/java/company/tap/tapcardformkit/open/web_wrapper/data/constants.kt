@@ -3,6 +3,8 @@ package company.tap.tapcardformkit.open.web_wrapper.data
 const val rawFolderRefrence = "raw"
 const val CardWebUrlPrefix = "tapCardWebSDK://"
 const val keyValueName = "data"
+const val firstRunKeySharedPrefrence = "firstRun"
+
 const val packageName = "com.example.tapcardwebsdk"
 
 const val parcelableThreeDsKey = "threeDsUrl"

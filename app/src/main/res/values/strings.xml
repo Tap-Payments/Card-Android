@@ -110,10 +110,13 @@
     </string-array>
 
     <string-array name="PurposeList">
-        <item>Transaction</item>
-        <item>Save_Token</item>
+        <item>CHARGE</item>
+        <item>AUTHORIZE</item>
+        <item>SAVE TOKEN</item>
 
-<!--        <item>Save Card</item>-->
+
+
+        <!--        <item>Save Card</item>-->
 <!--        <item>Verify Cardholder</item>-->
 <!--        <item>Order Transaction</item>-->
 <!--        <item>Subscription Transaction</item>-->

@@ -1,4 +1,14 @@
 <resources>
     <string name="card_not_supported">البطاقة غير مدعومة</string>
     <string name="user_cancell">ألغى المستخدم 3DS</string>
+    <string name="ssl_error">SSL error</string>
+    <string name="ssl_error_certificate">The certificate has expired.</string>
+    <string name="ssl_error_host_name">The certificate Hostname mismatch</string>
+    <string name="ssl_error_certifc_error">The certificate is not yet valid.</string>
+    <string name="ssl_error_certifc_not_trusted">The certificate authority is not trusted.</string>
+    <string name="ssl_error_certifc_uknwon_ssl_error">Uknown ssl error</string>
+    <string name="ssl_error_certifcate_error">SSL Certificate Error</string>
+    <string name="continueTitle">continue</string>
+    <string name="canceltitle">cancel</string>
+    <string name="continueSubtitle">Do you want to continue anyway?</string>
 </resources>

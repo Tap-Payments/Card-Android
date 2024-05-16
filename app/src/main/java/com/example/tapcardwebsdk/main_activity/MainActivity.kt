@@ -90,6 +90,7 @@ class MainActivity : AppCompatActivity() {
          */
         val operator = HashMap<String,Any>()
         operator.put("publicKey",sandboxKey.toString())
+     //   operator.put("publicKey","pk_live_opg04O1K8UdsnAmxqIkyEeT5")
 
         /**
          * merchant

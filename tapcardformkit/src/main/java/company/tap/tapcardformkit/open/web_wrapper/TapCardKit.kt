@@ -2,6 +2,7 @@ package company.tap.tapcardformkit.open.web_wrapper
 
 import TapTheme
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -46,7 +47,6 @@ class TapCardKit : LinearLayout {
     private val retrofit2 = RetrofitClient.getClient2()
     private val cardConfigurationApi = retrofit.create(UserApi::class.java)
     private val ipAddressConfiguration = retrofit2.create(IPaddressApi::class.java)
-
     private lateinit var cardUrlPrefix: String
 
 
@@ -107,6 +107,11 @@ class TapCardKit : LinearLayout {
             with(settings) {
                 javaScriptEnabled = true
                 domStorageEnabled = true
+                javaScriptCanOpenWindowsAutomatically = true
+                setSupportMultipleWindows(true)
+                cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
+                useWideViewPort = true
+                loadWithOverviewMode = true
             }
             webViewClient = MyWebViewClient()
             setBackgroundColor(Color.TRANSPARENT)
@@ -126,9 +131,10 @@ class TapCardKit : LinearLayout {
             getDeviceLocation()
             cardPrefillPair = Pair(cardNumber, cardExpiry)
             applyThemeForShimmer()
-            val url = "${cardUrlPrefix}${encodeConfigurationMapToUrl(DataConfiguration.configurationsAsHashMap)}"
-            Log.e("url", url.toString())
-            cardWebview.post { cardWebview.loadUrl(url) }
+            val url =
+                "${cardUrlPrefix}${encodeConfigurationMapToUrl(DataConfiguration.configurationsAsHashMap)}"
+            Log.e("url", url)
+             cardWebview.loadUrl(url)
         }
 
 
@@ -196,6 +202,7 @@ class TapCardKit : LinearLayout {
                 )
                 ThemeManager.currentThemeName = TapTheme.light.name
             }
+
             TapTheme.dark.name -> {
                 DataConfiguration.setTheme(
                     context, context.resources, null,
@@ -203,6 +210,7 @@ class TapCardKit : LinearLayout {
                 )
                 ThemeManager.currentThemeName = TapTheme.dark.name
             }
+
             else -> {}
         }
         DataConfiguration.setLocale(
@@ -243,31 +251,41 @@ class TapCardKit : LinearLayout {
                     /**
                      * this scenario only for the first launch of the app , due to issue navigation
                      * of webview after shimmering , if issue appears [in first install only] init function isCalled again .
+                     *
+                     *
                      */
-                    val isFirstTime = Pref.getValue(context, "firstRun", "true").toString()
+                    val isFirstTime = Pref.getValue(context, firstRunKeySharedPrefrence, "true")
                     if (isFirstTime == "true") {
                         init()
-                        Pref.setValue(context, "firstRun", "false")
+                        Pref.setValue(context, firstRunKeySharedPrefrence, "false")
                     } else {
                         DataConfiguration.getTapCardStatusListener()?.onReady()
                         /**
                          * here we send ip Address to front end
                          */
-                        Log.e("ipAddress after", userIpAddress.toString())
                         if (userIpAddress.isNotEmpty()) {
                             setIpAddress(userIpAddress)
                         }
                         /**
                          * here we ensure prefilling card with numbers passed from merchant
+                         * commented for now
                          */
-                        if (cardPrefillPair.first.length >= 7) {
-                            fillCardNumber(
-                                cardNumber = cardPrefillPair.first,
-                                expiryDate = cardPrefillPair.second,
-                                "",
-                                ""
-                            )
+
+                        when (cardPrefillPair.first.isNotBlank()) {
+                            true -> {
+                                if (cardPrefillPair.first.length >= 7) {
+                                    fillCardNumber(
+                                        cardNumber = cardPrefillPair.first,
+                                        expiryDate = cardPrefillPair.second,
+                                        "",
+                                        ""
+                                    )
+                                }
+                            }
+
+                            false -> {}
                         }
+
                     }
 
                 }
@@ -281,6 +299,7 @@ class TapCardKit : LinearLayout {
                             )
 
                         }
+
                         false -> {}
                     }
 
@@ -300,8 +319,7 @@ class TapCardKit : LinearLayout {
                 if (request?.url.toString().contains(CardFormWebStatus.onHeightChange.name)) {
                     val newHeight = request?.url?.getQueryParameter(keyValueName)
                     val params: ViewGroup.LayoutParams? = webViewFrame.layoutParams
-                    params?.height =
-                        webViewFrame.context.getDimensionsInDp(newHeight?.toInt() ?: 95)
+                    params?.height = webViewFrame.context.getDimensionsInDp(newHeight?.toInt() ?: 95)
                     webViewFrame.layoutParams = params
 
                     DataConfiguration.getTapCardStatusListener()
@@ -323,7 +341,6 @@ class TapCardKit : LinearLayout {
                     val queryParams =
                         request?.url?.getQueryParameterFromUri(keyValueName).toString()
                     threeDsResponse = queryParams.getModelFromJson()
-                    Log.e("data", threeDsResponse.toString())
                     navigateTo3dsActivity()
 
 
@@ -365,12 +382,13 @@ class TapCardKit : LinearLayout {
             }
         }
 
+        @SuppressLint("WebViewClientOnReceivedSslError")
         override fun onReceivedSslError(
             view: WebView?,
             handler: SslErrorHandler?,
             error: SslError?
         ) {
-            super.onReceivedSslError(view, handler, error)
+            view?.handleSSlError(error,handler)
         }
 
     }
@@ -387,6 +405,41 @@ class TapCardKit : LinearLayout {
 
     fun generateTapToken() {
         cardWebview.loadUrl("javascript:window.generateTapToken()")
+    }
+    override fun onDetachedFromWindow() {
+        cardWebview.destroy()
+        super.onDetachedFromWindow()
+    }
+}
+
+fun  WebView.handleSSlError(error: SslError?, handler: SslErrorHandler?){
+    val builder = AlertDialog.Builder(this.context)
+    var message: String = when (error?.primaryError) {
+        SslError.SSL_EXPIRED -> resources.getString(R.string.ssl_error_certificate)
+        SslError.SSL_IDMISMATCH -> resources.getString(R.string.ssl_error_host_name)
+        SslError.SSL_NOTYETVALID ->  resources.getString(R.string.ssl_error_certifc_error)
+        SslError.SSL_UNTRUSTED ->  resources.getString(R.string.ssl_error_certifc_not_trusted)
+        SslError.SSL_DATE_INVALID ->  resources.getString(R.string.ssl_error_certifc_not_trusted)
+        SslError.SSL_INVALID ->  resources.getString(R.string.ssl_error_certifc_not_trusted)
+
+        else ->  resources.getString(R.string.ssl_error_certifc_uknwon_ssl_error)
+    }
+    message += resources.getString(R.string.continueSubtitle)
+    builder.setTitle(resources.getString(R.string.ssl_error))
+    builder.setMessage(message)
+    builder.setPositiveButton(
+        resources.getString(R.string.continueTitle)
+    ) { dialog, which -> handler?.proceed() }
+    builder.setNegativeButton(
+        resources.getString(R.string.canceltitle)
+    ) { dialog, which ->
+        handler?.cancel()
+    }
+        if (error?.primaryError != SslError.SSL_IDMISMATCH) {
+        val dialog = builder.create()
+        dialog.show()
+    } else {
+        handler?.proceed()
     }
 }
 

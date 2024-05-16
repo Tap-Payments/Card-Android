@@ -19,8 +19,10 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            debuggable true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
         }
     }
     compileOptions {
@@ -35,6 +37,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    namespace 'com.example.tapcardwebsdk'
 }
 
 dependencies {
@@ -48,7 +51,7 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'androidx.preference:preference:1.2.1'
     implementation 'com.google.android.material:material:1.4.0'
- //   implementation 'com.github.Tap-Payments:Card-Android:0.0.25'
+//    implementation 'com.github.Tap-Payments:Card-Android:0.0.0.9'
 
     implementation 'com.github.Tap-Payments:TapAndroidForm:0.0.3'
 
