@@ -52,7 +52,7 @@ android {
         targetCompatibility JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '11'
     }
     namespace 'company.tap.tapcardformkit'
 
@@ -71,7 +71,7 @@ dependencies {
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.2'
     implementation 'com.github.Tap-Payments:TapNetwrok-Android:0.2.2.44'
    // implementation project(path: ':tapnetworkkit')
-    api 'com.google.code.gson:gson:2.8.9'
+    api 'com.google.code.gson:gson:2.10'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
     implementation 'com.github.Tap-Payments:LocalisationManager-Android:0.0.1.34'
