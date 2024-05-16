@@ -25,6 +25,7 @@ import company.tap.tapcardformkit.open.web_wrapper.data.CardWebUrlPrefix
 import company.tap.tapcardformkit.open.web_wrapper.data.network.model.ThreeDsResponse
 import company.tap.tapcardformkit.open.web_wrapper.presentation.nfc_activity.nfcbottomsheet.NFCBottomSheetActivity
 import company.tap.tapcardformkit.open.web_wrapper.data.cache.pref.Pref
+import company.tap.tapcardformkit.open.web_wrapper.data.firstRunKeySharedPrefrence
 import company.tap.tapcardformkit.open.web_wrapper.data.keyValueName
 import company.tap.tapcardformkit.open.web_wrapper.data.urlWebStarter
 import company.tap.tapcardformkit.open.web_wrapper.presentation.scanner_activity.ScannerActivity
