@@ -34,6 +34,9 @@ import company.tap.tapuilibrary.themekit.ThemeManager
 import company.tap.tapuilibrary.uikit.atoms.*
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.net.URL
 import java.net.URLEncoder
 import java.util.*
 
@@ -166,7 +169,11 @@ class TapCardKit : LinearLayout {
 
         } catch (e: Exception) {
             //   Log.e("error",e.message.toString())
+            if(urlWebStarter.isNullOrBlank()){
+                urlWebStarter = "https://sdk.dev.tap.company/v2/card/wrapper?configurations="
+            }
             cardUrlPrefix = urlWebStarter
+            println("cardUrlPrefix>>>"+cardUrlPrefix)
         }
     }
 
@@ -442,6 +449,8 @@ fun  WebView.handleSSlError(error: SslError?, handler: SslErrorHandler?){
     } else {
         handler?.proceed()
     }
+
+
 }
 
 

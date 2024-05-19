@@ -269,41 +269,45 @@ class MainActivity : AppCompatActivity() {
         configuration.put("post",post)
 
         Log.e("cardPrefil", "cardnumber + $cardNumber + card + $cardExpiry")
-        TapCardConfiguration.configureWithTapCardDictionaryConfiguration(
-            context = this,
-            tapCardInputViewWeb= findViewById<TapCardKit>(R.id.tapCardForm),
-           tapMapConfiguration =  configuration,
-          tapCardStatusDelegate =   object : TapCardStatusDelegate {
-                override fun onSuccess(data: String) {
+        if (cardNumber != null) {
+            if (cardExpiry != null) {
+                TapCardConfiguration.configureWithTapCardDictionaryConfiguration(
+                    context = this,
+                    tapCardInputViewWeb= findViewById<TapCardKit>(R.id.tapCardForm),
+                    tapMapConfiguration =  configuration,
+                    tapCardStatusDelegate =   object : TapCardStatusDelegate {
+                        override fun onSuccess(data: String) {
 
-                    Toast.makeText(this@MainActivity, "onSuccess $data", Toast.LENGTH_SHORT).show()
-                    Log.e("data",data.toString())
-                    println("onSuccess $data")
-                }
+                            Toast.makeText(this@MainActivity, "onSuccess $data", Toast.LENGTH_SHORT).show()
+                            Log.e("data",data.toString())
+                            println("onSuccess $data")
+                        }
 
-                override fun onReady() {
-                 //   Toast.makeText(this@MainActivity, "onReady", Toast.LENGTH_SHORT).show()
-                    findViewById<TextView>(R.id.tokenizeBtn).visibility = View.VISIBLE
+                        override fun onReady() {
+                            //   Toast.makeText(this@MainActivity, "onReady", Toast.LENGTH_SHORT).show()
+                            findViewById<TextView>(R.id.tokenizeBtn).visibility = View.VISIBLE
 
-                }
+                        }
 
-              override fun onBindIdentification(data: String) {
-                  Log.e("data",data.toString())
+                        override fun onBindIdentification(data: String) {
+                            Log.e("data",data.toString())
 
-              }
-
-
-                override fun onValidInput(isValid: String) {
-                }
-
-                override fun onError(error: String) {
-                    Toast.makeText(this@MainActivity, "onError ${error}", Toast.LENGTH_SHORT).show()
-                    Log.e("test",error.toString())
-
-                }
+                        }
 
 
-            })
+                        override fun onValidInput(isValid: String) {
+                        }
+
+                        override fun onError(error: String) {
+                            Toast.makeText(this@MainActivity, "onError ${error}", Toast.LENGTH_SHORT).show()
+                            Log.e("test",error.toString())
+
+                        }
+
+
+                    },cardNumber,cardExpiry)
+            }
+        }
 
 //        findViewById<WebView>(R.id.default_webview).settings.javaScriptEnabled = true
 //        findViewById<WebView>(R.id.default_webview).settings.domStorageEnabled = true
