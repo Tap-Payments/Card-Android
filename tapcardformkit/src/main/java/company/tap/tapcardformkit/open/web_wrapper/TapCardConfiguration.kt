@@ -182,14 +182,14 @@ class TapCardConfiguration {
         ): String? {
             if (!testEncKey.isNullOrBlank() && !prodEncKey.isNullOrBlank()) {
                 return if (publicKey?.contains("test") == true) {
-                    println("EncKey>>>>>" + testEncKey)
+                   // println("EncKey>>>>>" + testEncKey)
                     testEncKey
                 } else {
-                    println("EncKey<<<<<<" + prodEncKey)
+                  //  println("EncKey<<<<<<" + prodEncKey)
                     prodEncKey
                 }
             } else {
-                println("EncKey<<<<<<>>>>>>>>>" + testEncKey)
+              //  println("EncKey<<<<<<>>>>>>>>>" + testEncKey)
                 return if (publicKey?.contains("test") == true) {
                     tapCardInputViewWeb?.context?.resources?.getString(R.string.enryptkey)
                 }else{
