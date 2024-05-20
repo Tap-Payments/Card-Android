@@ -140,6 +140,7 @@ object DataConfiguration {
             context = activity,
             tapCardInputViewWeb = tapCardKit,
             tapMapConfiguration = configurations,
+            tapCardStatusDelegate = tapCardStatusDelegate,
             cardNumber = cardNumber ?: "", cardExpiry = cardExpiry ?: ""
         )
 
