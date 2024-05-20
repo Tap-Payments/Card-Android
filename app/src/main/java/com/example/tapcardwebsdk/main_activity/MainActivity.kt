@@ -51,6 +51,8 @@ class MainActivity : AppCompatActivity() {
         val selectedLanguage: String = lang.toString()
         val selectedCurrency: String = intent.getStringExtra("selectedCurrency").toString()
         val selectedTheme: String = intent.getStringExtra("themeSelected").toString()
+        val custId= intent.getStringExtra("custIdKey")
+        val cardNameKey= intent.getStringExtra("cardNameKey")
         val cardNumber= intent.getStringExtra("cardNumberKey")
         val cardExpiry = intent.getStringExtra("cardExpiryKey")
         val selectedCardEdge = intent.getStringExtra("selectedCardEdge")
@@ -178,7 +180,9 @@ class MainActivity : AppCompatActivity() {
          * customer
          */
         val customer = java.util.HashMap<String,Any>()
-        customer.put("nameOnCard", "test")
+        if (cardNameKey != null) {
+            customer.put("nameOnCard", cardNameKey)
+        }
         customer.put("editable",cardHolder)
         customer.put("contact",contact)
         customer.put("name", listOf(name))
@@ -271,7 +275,7 @@ class MainActivity : AppCompatActivity() {
         Log.e("cardPrefil", "cardnumber + $cardNumber + card + $cardExpiry")
         if (cardNumber != null) {
             if (cardExpiry != null) {
-                TapCardConfiguration.configureWithTapCardDictionaryConfiguration(
+               TapCardConfiguration.configureWithTapCardDictionaryConfiguration(
                     context = this,
                     tapCardInputViewWeb= findViewById<TapCardKit>(R.id.tapCardForm),
                     tapMapConfiguration =  configuration,
@@ -306,6 +310,36 @@ class MainActivity : AppCompatActivity() {
 
 
                     },cardNumber,cardExpiry)
+    /*    Function used in flutter plugin        DataConfiguration.initializeSDK(this,configuration,object : TapCardStatusDelegate{
+                    override fun onSuccess(data: String) {
+
+                        Toast.makeText(this@MainActivity, "onSuccess $data", Toast.LENGTH_SHORT).show()
+                        Log.e("data",data.toString())
+                        println("onSuccess $data")
+                    }
+
+                    override fun onReady() {
+                        //   Toast.makeText(this@MainActivity, "onReady", Toast.LENGTH_SHORT).show()
+                        findViewById<TextView>(R.id.tokenizeBtn).visibility = View.VISIBLE
+
+                    }
+
+                    override fun onBindIdentification(data: String) {
+                        Log.e("data",data.toString())
+
+                    }
+
+
+                    override fun onValidInput(isValid: String) {
+                    }
+
+                    override fun onError(error: String) {
+                        Toast.makeText(this@MainActivity, "onError ${error}", Toast.LENGTH_SHORT).show()
+                        Log.e("test",error.toString())
+
+                    }
+
+                },findViewById<TapCardKit>(R.id.tapCardForm),cardNumber,cardExpiry)*/
             }
         }
 

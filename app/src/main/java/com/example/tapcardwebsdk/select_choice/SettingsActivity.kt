@@ -461,7 +461,9 @@ class SettingsActivity : AppCompatActivity(), SimpleSettingsConfig.PreferenceCal
             intent.putExtra("selectedColorStyle", getPrefStringValue("selectedcolorstyleKey","colored"))
             intent.putExtra("cardHolder",  getPrefBooleanValue("displayHoldernameKey",true))
             intent.putExtra("cvv",getPrefBooleanValue("displayCVVKey",true))
+        intent.putExtra("custIdKey",getPrefStringValue("custIdKey",""))
         intent.putExtra("cardNumberKey",getPrefStringValue("cardNumberKey",""))
+        intent.putExtra("cardNameKey",getPrefStringValue("cardNameKey",""))
         intent.putExtra("cardExpiryKey", if (getPrefStringValue("cardExpiryKey","") == "1") "" else  getPrefStringValue("cardExpiryKey",""))
 
 

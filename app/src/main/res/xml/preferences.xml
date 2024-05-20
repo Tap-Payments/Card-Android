@@ -277,7 +277,15 @@
 
 
     </PreferenceCategory>
+    <PreferenceCategory
+        app:title="Customer Detail">
 
+    <EditTextPreference
+        app:key="custIdKey"
+        app:defaultValue=""
+        app:title="@string/customerId"
+        app:useSimpleSummaryProvider="true"/>
+    </PreferenceCategory>
     <PreferenceCategory
         app:title="@string/prefill_cards">
 
@@ -292,6 +300,12 @@
             app:entries="@array/cardExpiryList"
             app:entryValues="@array/cardExpiryList"
             app:defaultValue="1"
+            app:useSimpleSummaryProvider="true"/>
+
+        <EditTextPreference
+            app:key="cardNameKey"
+            app:defaultValue=""
+            app:title="@string/cardName"
             app:useSimpleSummaryProvider="true"/>
 
 

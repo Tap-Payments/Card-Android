@@ -96,6 +96,8 @@
     <string name="payment_agreement_contract">Payment agreement contract </string>
     <string name="prefill_cards">Prefill Card</string>
     <string name="cardNumber">Card number</string>
+    <string name="cardName">Card Holder Name</string>
+    <string name="customerId">Customer id</string>
     <string name="cardExpiry">Card Expiry YEAR 2025</string>
 
     <string-array name="ScopeList">
