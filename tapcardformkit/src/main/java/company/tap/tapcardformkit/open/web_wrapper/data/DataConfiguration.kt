@@ -131,6 +131,7 @@ object DataConfiguration {
     fun initializeSDK(
         activity: Activity,
         configurations: HashMap<String, Any>,
+        tapCardStatusDelegate: TapCardStatusDelegate ,
         tapCardKit: TapCardKit,
         cardNumber: String = "",
         cardExpiry: String = ""
