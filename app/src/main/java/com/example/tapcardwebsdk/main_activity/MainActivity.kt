@@ -264,7 +264,7 @@ class MainActivity : AppCompatActivity() {
         configuration.put("purpose",purpose.toString())
         configuration.put("transaction",transaction)
         configuration.put("invoice",invoice)
-        configuration.put("merchant",merchant)
+       configuration.put("merchant",merchant)
         configuration.put("features",features)
         configuration.put("acceptance",acceptance)
         configuration.put("fieldVisibility",fieldVisibility)

@@ -447,7 +447,7 @@ class SettingsActivity : AppCompatActivity(), SimpleSettingsConfig.PreferenceCal
 
             intent.putExtra("showPowerdBy", getPrefBooleanValue("displayPoweredByKey",true))
             intent.putExtra("publicKey", getPrefStringValue("publicKey","pk_test_YhUjg9PNT8oDlKJ1aE2fMRz7"))
-            intent.putExtra("merchantId", getPrefStringValue("merchantIdKey",""))
+            intent.putExtra("merchantId", getPrefStringValue("merchantIdKey","1124340"))
 
             /**
              * new config
