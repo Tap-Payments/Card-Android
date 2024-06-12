@@ -125,6 +125,7 @@ class TapCardConfiguration {
                 testEncKey = tapSDKConfigUrlResponse.testEncKey
                 urlWebStarter = tapSDKConfigUrlResponse.baseURL
 
+                tapMapConfiguration.put("sdkVersion",1)
                 startSDKWithConfigs(
                     tapMapConfiguration,
                     tapCardInputViewWeb,
