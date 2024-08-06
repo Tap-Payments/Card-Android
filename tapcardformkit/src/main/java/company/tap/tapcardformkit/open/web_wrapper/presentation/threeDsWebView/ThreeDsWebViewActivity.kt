@@ -55,7 +55,7 @@ class ThreeDsWebViewActivity : AppCompatActivity() {
 
         threeDsBottomsheet = ThreeDsBottomSheetFragment(webView, onCancel = {
             tapCardKit.init()
-            DataConfiguration.getTapCardStatusListener()?.onError("User canceled 3ds")
+            DataConfiguration.getTapCardStatusListener()?.onCardError("User canceled 3ds")
 
         })
 

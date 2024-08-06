@@ -280,14 +280,14 @@ class MainActivity : AppCompatActivity() {
                     tapCardInputViewWeb= findViewById<TapCardKit>(R.id.tapCardForm),
                     tapMapConfiguration =  configuration,
                     tapCardStatusDelegate =   object : TapCardStatusDelegate {
-                        override fun onSuccess(data: String) {
+                        override fun onCardSuccess(data: String) {
 
                             Toast.makeText(this@MainActivity, "onSuccess $data", Toast.LENGTH_SHORT).show()
                             Log.e("data",data.toString())
                             println("onSuccess $data")
                         }
 
-                        override fun onReady() {
+                        override fun onCardReady() {
                             //   Toast.makeText(this@MainActivity, "onReady", Toast.LENGTH_SHORT).show()
                             findViewById<TextView>(R.id.tokenizeBtn).visibility = View.VISIBLE
 
@@ -302,7 +302,7 @@ class MainActivity : AppCompatActivity() {
                         override fun onValidInput(isValid: String) {
                         }
 
-                        override fun onError(error: String) {
+                        override fun onCardError(error: String) {
                             Toast.makeText(this@MainActivity, "onError ${error}", Toast.LENGTH_SHORT).show()
                             Log.e("test",error.toString())
 

@@ -34,9 +34,6 @@ import company.tap.tapuilibrary.themekit.ThemeManager
 import company.tap.tapuilibrary.uikit.atoms.*
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.net.URL
 import java.net.URLEncoder
 import java.util.*
 
@@ -267,7 +264,7 @@ class TapCardKit : LinearLayout {
                         init()
                         Pref.setValue(context, firstRunKeySharedPrefrence, "false")
                     } else {
-                        DataConfiguration.getTapCardStatusListener()?.onReady()
+                        DataConfiguration.getTapCardStatusListener()?.onCardReady()
                         /**
                          * here we send ip Address to front end
                          */
@@ -314,15 +311,15 @@ class TapCardKit : LinearLayout {
                 }
                 if (request?.url.toString().contains(CardFormWebStatus.onError.name)) {
                     DataConfiguration.getTapCardStatusListener()
-                        ?.onError(request?.url?.getQueryParameterFromUri(keyValueName).toString())
+                        ?.onCardError(request?.url?.getQueryParameterFromUri(keyValueName).toString())
                 }
                 if (request?.url.toString().contains(CardFormWebStatus.onFocus.name)) {
-                    DataConfiguration.getTapCardStatusListener()?.onFocus()
+                    DataConfiguration.getTapCardStatusListener()?.onCardFocus()
 
                 }
                 if (request?.url.toString().contains(CardFormWebStatus.onSuccess.name)) {
                     DataConfiguration.getTapCardStatusListener()
-                        ?.onSuccess(request?.url?.getQueryParameterFromUri(keyValueName).toString())
+                        ?.onCardSuccess(request?.url?.getQueryParameterFromUri(keyValueName).toString())
                 }
                 if (request?.url.toString().contains(CardFormWebStatus.onHeightChange.name)) {
                     val newHeight = request?.url?.getQueryParameter(keyValueName)
@@ -378,7 +375,7 @@ class TapCardKit : LinearLayout {
                         (context).startActivity(intent)
                     } else {
                         DataConfiguration.getTapCardStatusListener()
-                            ?.onError("NFC is not supported on this device")
+                            ?.onCardError("NFC is not supported on this device")
                     }
 
 

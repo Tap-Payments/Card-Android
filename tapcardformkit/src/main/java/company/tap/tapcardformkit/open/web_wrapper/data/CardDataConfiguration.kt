@@ -151,19 +151,19 @@ object DataConfiguration {
 
 interface TapCardStatusDelegate {
 
-    fun onSuccess(data: String)
+    fun onCardSuccess(data: String)
 
 
-    fun onReady() {}
+    fun onCardReady() {}
 
-    fun onFocus() {}
+    fun onCardFocus() {}
 
     fun onBindIdentification(data: String) {}
 
     fun onValidInput(isValid: String)
 
 
-    fun onError(error: String)
+    fun onCardError(error: String)
 
     fun onHeightChange(heightChange: String) {}
 
