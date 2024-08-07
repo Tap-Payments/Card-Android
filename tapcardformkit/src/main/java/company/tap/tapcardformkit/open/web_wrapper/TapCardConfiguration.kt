@@ -4,22 +4,16 @@ import Headers
 import android.content.Context
 import android.util.Log
 import company.tap.tapcardformkit.R
-import company.tap.tapcardformkit.open.DataConfiguration
-import company.tap.tapcardformkit.open.DataConfiguration.configurationsAsHashMap
+import company.tap.tapcardformkit.open.CardDataConfiguration
+import company.tap.tapcardformkit.open.CardDataConfiguration.configurationsAsHashMap
 import company.tap.tapcardformkit.open.TapCardStatusDelegate
 import company.tap.tapcardformkit.open.web_wrapper.ApiService.BASE_URL
 import company.tap.tapcardformkit.open.web_wrapper.data.*
-import company.tap.tapcardformkit.open.web_wrapper.data.network.model.TapSDKConfigUrlResponse
 import company.tap.tapnetworkkit.connection.NetworkApp
 import company.tap.tapnetworkkit.utils.CryptoUtil
 import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.net.URL
 
 
 class TapCardConfiguration {
@@ -169,7 +163,7 @@ class TapCardConfiguration {
                     context,
                     publickKey.toString()
                 )
-                DataConfiguration.addTapCardStatusDelegate(tapCardStatusDelegate)
+                CardDataConfiguration.addTapCardStatusDelegate(tapCardStatusDelegate)
                 tapCardInputViewWeb?.init(cardNumber.filter { it.isDigit() }, cardExpiry)
 
 

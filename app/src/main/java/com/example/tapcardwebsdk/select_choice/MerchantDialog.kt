@@ -6,14 +6,11 @@ import Name
 import Phone
 import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import com.example.tapcardwebsdk.R
-import company.tap.tapcardformkit.open.DataConfiguration
+import company.tap.tapcardformkit.open.CardDataConfiguration
 
 class MerchantDialog(var contexts: Context) : Dialog(contexts) {
     init {
@@ -24,7 +21,7 @@ class MerchantDialog(var contexts: Context) : Dialog(contexts) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.custom_dialog_)
         setOnDismissListener {
-            DataConfiguration.setCustomer(
+            CardDataConfiguration.setCustomer(
                 Customer(
                     //id = findViewById<EditText>(R.id.et_customer_id).text.toString(),
                     nameOnCard = findViewById<EditText>(R.id.et_nameOnCard).text.toString(),

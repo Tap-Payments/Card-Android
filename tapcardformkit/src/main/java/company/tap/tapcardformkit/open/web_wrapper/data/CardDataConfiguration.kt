@@ -22,7 +22,7 @@ Copyright (c) 2022    Tap Payments.
 All rights reserved.
  **/
 @SuppressLint("StaticFieldLeak")
-object DataConfiguration {
+object CardDataConfiguration {
 
     private var tapCardStatusDelegate: TapCardStatusDelegate? = null
 

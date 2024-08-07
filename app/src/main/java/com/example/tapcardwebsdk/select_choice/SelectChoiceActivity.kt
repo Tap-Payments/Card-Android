@@ -7,7 +7,6 @@
 package com.example.tapcardwebsdk.select_choice
 
 import CardType
-import PaymentChannels
 import Scope
 import TapCardColorStyle
 import TapCardDirections
@@ -35,7 +34,7 @@ import com.tap.commondatamodels.cardBrands.CardBrand
 import company.tap.cardformkit.activities.MerchantDialog
 import company.tap.tapcardformkit.getRandomNumbers
 import company.tap.tapcardformkit.getRandomTrx
-import company.tap.tapcardformkit.open.DataConfiguration
+import company.tap.tapcardformkit.open.CardDataConfiguration
 import company.tap.tapuilibrary.themekit.ThemeManager
 
 class SelectChoiceActivity : AppCompatActivity() {
@@ -499,7 +498,7 @@ class SelectChoiceActivity : AppCompatActivity() {
             findViewById<EditText>(R.id.trans_refrence).setText(getRandomTrx())
             findViewById<EditText>(R.id.order_id).setText(getRandomNumbers(17))
 
-            Log.e("data",DataConfiguration.authenticationExample.toString())
+            Log.e("data",CardDataConfiguration.authenticationExample.toString())
             true
 
         }

@@ -16,7 +16,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import company.tap.tapcardformkit.R
 import company.tap.tapcardformkit.doAfterSpecificTime
 import company.tap.tapcardformkit.getDeviceSpecs
-import company.tap.tapcardformkit.open.DataConfiguration
+import company.tap.tapcardformkit.open.CardDataConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
 import company.tap.tapcardformkit.open.web_wrapper.handleSSlError
 import company.tap.taplocalizationkit.LocalizationManager
@@ -36,7 +36,7 @@ class ThreeDsWebViewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_three_ds_web_view)
-        LocalizationManager.setLocale(this, Locale(DataConfiguration.lanuage.toString()))
+        LocalizationManager.setLocale(this, Locale(CardDataConfiguration.lanuage.toString()))
 
         val webView = WebView(this)
         webView.layoutParams = this.getDeviceSpecs().first.let {
@@ -55,7 +55,7 @@ class ThreeDsWebViewActivity : AppCompatActivity() {
 
         threeDsBottomsheet = ThreeDsBottomSheetFragment(webView, onCancel = {
             tapCardKit.init()
-            DataConfiguration.getTapCardStatusListener()?.onCardError("User canceled 3ds")
+            CardDataConfiguration.getTapCardStatusListener()?.onCardError("User canceled 3ds")
 
         })
 

@@ -15,7 +15,7 @@ import company.tap.nfcreader.open.reader.TapNfcCardReader
 import company.tap.nfcreader.open.utils.TapCardUtils
 import company.tap.nfcreader.open.utils.TapNfcUtils
 import company.tap.tapcardformkit.R
-import company.tap.tapcardformkit.open.DataConfiguration
+import company.tap.tapcardformkit.open.CardDataConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
 import company.tap.taplocalizationkit.LocalizationManager
 import company.tap.tapuilibrary.uikit.fragment.NFCFragment
@@ -35,7 +35,7 @@ class NFCLaunchActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        LocalizationManager.setLocale(this, Locale(DataConfiguration.lanuage.toString()))
+        LocalizationManager.setLocale(this, Locale(CardDataConfiguration.lanuage.toString()))
         setContentView(R.layout.activity_nfclaunch)
 
         tapNfcCardReader = TapNfcCardReader(this)

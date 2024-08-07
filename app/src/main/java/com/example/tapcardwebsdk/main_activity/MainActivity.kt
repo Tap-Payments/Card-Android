@@ -13,7 +13,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.tapcardwebsdk.R
 import com.example.tapcardwebsdk.select_choice.SettingsActivity
-import company.tap.tapcardformkit.open.DataConfiguration
+import company.tap.tapcardformkit.open.CardDataConfiguration
 import company.tap.tapcardformkit.open.TapCardStatusDelegate
 import company.tap.tapcardformkit.open.web_wrapper.TapCardConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         checkAndroidVersion()
         findViewById<TextView>(R.id.tokenizeBtn).setOnClickListener {
         //    findViewById<TapCardKit>(R.id.tapCardForm).generateTapToken()
-            DataConfiguration.generateToken(findViewById<TapCardKit>(R.id.tapCardForm))
+            CardDataConfiguration.generateToken(findViewById<TapCardKit>(R.id.tapCardForm))
 
         }
         /**
@@ -172,9 +172,9 @@ class MainActivity : AppCompatActivity() {
          */
         val name = java.util.HashMap<String,Any>()
         name.put("lang",selectedLanguage)
-        name.put("first", DataConfiguration.customerExample?.name?.get(0)?.first ?: "first")
-        name.put("middle",DataConfiguration.customerExample?.name?.get(0)?.middle ?: "middle")
-        name.put("last",DataConfiguration.customerExample?.name?.get(0)?.last ?: "last")
+        name.put("first", CardDataConfiguration.customerExample?.name?.get(0)?.first ?: "first")
+        name.put("middle",CardDataConfiguration.customerExample?.name?.get(0)?.middle ?: "middle")
+        name.put("last",CardDataConfiguration.customerExample?.name?.get(0)?.last ?: "last")
 
         /**
          * customer

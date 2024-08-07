@@ -12,8 +12,7 @@ import company.tap.nfcreader.open.reader.TapNfcCardReader
 import company.tap.nfcreader.open.utils.TapCardUtils
 import company.tap.nfcreader.open.utils.TapNfcUtils
 import company.tap.tapcardformkit.R
-import company.tap.tapcardformkit.doAfterSpecificTime
-import company.tap.tapcardformkit.open.DataConfiguration
+import company.tap.tapcardformkit.open.CardDataConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
 import company.tap.taplocalizationkit.LocalizationManager
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -35,7 +34,7 @@ class NFCBottomSheetActivity : AppCompatActivity() {
         setContentView(R.layout.activity_three_ds_web_view)
         tapNfcCardReader = TapNfcCardReader(this)
 
-        LocalizationManager.setLocale(this, Locale(DataConfiguration.lanuage.toString()))
+        LocalizationManager.setLocale(this, Locale(CardDataConfiguration.lanuage.toString()))
 
         nfcBottomSheet = NfcBottomSheet()
        // nfcBottomSheet.loadLottie() // stopped was creating NPE
