@@ -129,6 +129,7 @@ class TapCardConfiguration {
                     cardExpiry
                 )
                 urlWebStarter = BASE_URL
+                println("urlWebStarter>>>"+urlWebStarter)
 
             } catch (e: Exception) {
                 BASE_URL = urlWebStarter

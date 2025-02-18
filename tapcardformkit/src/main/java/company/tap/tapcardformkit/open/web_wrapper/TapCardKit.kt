@@ -168,9 +168,9 @@ class TapCardKit : LinearLayout {
         } catch (e: Exception) {
             //   Log.e("error",e.message.toString())
             if(urlWebStarter.isNullOrBlank()){
-                urlWebStarter = "https://sdk.beta.tap.company/v2/card/wrapper?configurations="
+                urlWebStarter  = "https://sdk.beta.tap.company/v2/card/wrapper?configurations="
             }
-            cardUrlPrefix = urlWebStarter
+            cardUrlPrefix =  urlWebStarter
             println("cardUrlPrefix>>>"+cardUrlPrefix)
         }
     }
