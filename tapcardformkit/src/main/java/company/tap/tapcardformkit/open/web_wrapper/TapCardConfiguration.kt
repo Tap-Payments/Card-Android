@@ -117,7 +117,7 @@ class TapCardConfiguration {
                 BASE_URL = tapSDKConfigUrlResponse.baseURL
                 prodEncKey = tapSDKConfigUrlResponse.prodEncKey
                 testEncKey = tapSDKConfigUrlResponse.testEncKey
-                urlWebStarter = tapSDKConfigUrlResponse.baseURL
+               // urlWebStarter = tapSDKConfigUrlResponse.baseURL
 
                 tapMapConfiguration.put("sdkVersion",1)
                 startSDKWithConfigs(
@@ -128,6 +128,7 @@ class TapCardConfiguration {
                     cardNumber,
                     cardExpiry
                 )
+                urlWebStarter = BASE_URL
 
             } catch (e: Exception) {
                 BASE_URL = urlWebStarter

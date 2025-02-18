@@ -29,6 +29,7 @@ import company.tap.tapcardformkit.open.web_wrapper.data.firstRunKeySharedPrefren
 import company.tap.tapcardformkit.open.web_wrapper.data.keyValueName
 import company.tap.tapcardformkit.open.web_wrapper.data.urlWebStarter
 import company.tap.tapcardformkit.open.web_wrapper.presentation.scanner_activity.ScannerActivity
+//import company.tap.tapcardformkit.open.web_wrapper.presentation.scanner_activity.ScannerActivity
 import company.tap.tapcardformkit.open.web_wrapper.presentation.threeDsWebView.ThreeDsWebViewActivity
 import company.tap.tapuilibrary.themekit.ThemeManager
 import company.tap.tapuilibrary.uikit.atoms.*
@@ -167,7 +168,7 @@ class TapCardKit : LinearLayout {
         } catch (e: Exception) {
             //   Log.e("error",e.message.toString())
             if(urlWebStarter.isNullOrBlank()){
-                urlWebStarter = "https://sdk.dev.tap.company/v2/card/wrapper?configurations="
+                urlWebStarter = "https://sdk.beta.tap.company/v2/card/wrapper?configurations="
             }
             cardUrlPrefix = urlWebStarter
             println("cardUrlPrefix>>>"+cardUrlPrefix)

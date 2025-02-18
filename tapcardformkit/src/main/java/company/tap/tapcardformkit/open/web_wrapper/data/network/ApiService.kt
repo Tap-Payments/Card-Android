@@ -30,7 +30,8 @@ interface UserApi {
 }
 
 interface TapSDKConfigUrls {
-  @GET("/mobile/card/1.0.0/base_url.json")
+  @GET("o/base_url.json?alt=media&token=c9df8f79-1832-4222-bcc0-259cf621b823")
+ // @GET("/mobile/card/1.0.0/base_url.json")
   suspend fun getSDKConfigUrl(): TapSDKConfigUrlResponse
 
 
@@ -43,7 +44,8 @@ interface IPaddressApi{
 object RetrofitClient {
   private const val BASE_URL = "https://tap-assets.b-cdn.net"
   private const val BASE_URL_2 = "https://geolocation-db.com/"
-  private const val BASE_URL_3 = "https://tap-sdks.b-cdn.net"
+ // private const val BASE_URL_3 = "https://tap-sdks.b-cdn.net"
+  private const val BASE_URL_3 = "https://firebasestorage.googleapis.com/v0/b/tapcardcheckout.appspot.com/"
 
   val okHttpClient = OkHttpClient()
     .newBuilder()

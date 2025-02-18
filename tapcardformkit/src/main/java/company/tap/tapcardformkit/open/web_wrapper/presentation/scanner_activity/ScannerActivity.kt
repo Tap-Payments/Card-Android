@@ -6,9 +6,7 @@ import android.os.Bundle
 import android.webkit.WebView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-//import cards.pay.paycardsrecognizer.sdk.Card
-//import cards.pay.paycardsrecognizer.sdk.ScanCardIntent
-//import cards.pay.paycardsrecognizer.sdk.ui.InlineViewCallback
+
 import company.tap.cardscanner.CameraFragment
 import company.tap.cardscanner.TapCard
 import company.tap.cardscanner.TapScannerCallback

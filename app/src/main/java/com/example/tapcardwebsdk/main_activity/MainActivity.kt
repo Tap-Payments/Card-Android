@@ -285,16 +285,23 @@ class MainActivity : AppCompatActivity() {
                             Toast.makeText(this@MainActivity, "onSuccess $data", Toast.LENGTH_SHORT).show()
                             Log.e("data",data.toString())
                             println("onSuccess $data")
+                            findViewById<TextView>(R.id.textView_Logs).visibility = View.VISIBLE
+                            findViewById<TextView>(R.id.textView_Logs).setText("onSuccess $data")
+
                         }
 
                         override fun onCardReady() {
                             //   Toast.makeText(this@MainActivity, "onReady", Toast.LENGTH_SHORT).show()
                             findViewById<TextView>(R.id.tokenizeBtn).visibility = View.VISIBLE
+                            findViewById<TextView>(R.id.textView_Logs).visibility = View.VISIBLE
+                            findViewById<TextView>(R.id.textView_Logs).setText("onCardReady>>>>> ")
 
                         }
 
                         override fun onBindIdentification(data: String) {
                             Log.e("data",data.toString())
+                            findViewById<TextView>(R.id.textView_Logs).visibility = View.VISIBLE
+                            findViewById<TextView>(R.id.textView_Logs).setText("onBindIdentification>>>>> $data")
 
                         }
 
@@ -305,6 +312,8 @@ class MainActivity : AppCompatActivity() {
                         override fun onCardError(error: String) {
                             Toast.makeText(this@MainActivity, "onError ${error}", Toast.LENGTH_SHORT).show()
                             Log.e("test",error.toString())
+                            findViewById<TextView>(R.id.textView_Logs).visibility = View.VISIBLE
+                            findViewById<TextView>(R.id.textView_Logs).setText("onError $error")
 
                         }
 
