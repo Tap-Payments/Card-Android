@@ -346,7 +346,7 @@ class TapCardKit : LinearLayout {
                      */
                     val queryParams =
                         request?.url?.getQueryParameterFromUri(keyValueName).toString()
-                    threeDsResponse = queryParams.getModelFromJson()
+                    threeDsResponse =  queryParams.getModelFromJson()
                     navigateTo3dsActivity()
 
 
