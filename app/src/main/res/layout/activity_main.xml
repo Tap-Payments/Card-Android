@@ -27,6 +27,13 @@
         android:layout_marginEnd="@dimen/_20sdp"
 
         />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tokenizeBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
     <TextView
         android:layout_width="match_parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,9 +43,10 @@
         android:layout_height="wrap_content"
         android:textColor="@color/black_color"
         android:layout_marginHorizontal="@dimen/_10sdp"
+        android:scrollbars="vertical"
         android:id="@+id/textView_Logs"/>
 
-
+    </ScrollView>
     <WebView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
