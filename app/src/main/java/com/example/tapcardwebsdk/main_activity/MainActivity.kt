@@ -272,6 +272,7 @@ class MainActivity : AppCompatActivity() {
         configuration.put("redirect",redirect)
         configuration.put("post",post)
 
+        println("configuration here"+configuration)
         Log.e("cardPrefil", "cardnumber + $cardNumber + card + $cardExpiry")
         if (cardNumber != null) {
             if (cardExpiry != null) {
