@@ -30,7 +30,7 @@ const val operatorKey ="operator"
 const val headersKey ="headers"
 
 enum class CardFormWebStatus {
-    onReady, onFocus, onValidInput, onInvalidInput, onError, onSuccess, onBinIdentification, onHeightChange, on3dsRedirect,onScannerClick,onNfcClick
+    onReady, onFocus, onValidInput, onInvalidInput, onError, onSuccess, onBinIdentification, onHeightChange, on3dsRedirect,onScannerClick,onNfcClick,onChangeSaveCardLater
 }
 
 

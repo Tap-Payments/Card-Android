@@ -309,6 +309,14 @@ class MainActivity : AppCompatActivity() {
                         override fun onValidInput(isValid: String) {
                         }
 
+                        override fun onChangeSaveCard(enabled: Boolean) {
+                            super.onChangeSaveCard(enabled)
+                            findViewById<TextView>(R.id.textView_Logs).visibility = View.VISIBLE
+                            findViewById<TextView>(R.id.textView_Logs).setText("onChangeSaveCard status>>>> $enabled")
+                            println("onChangeSaveCard status$enabled")
+                        }
+
+
                         override fun onCardError(error: String) {
                             Toast.makeText(this@MainActivity, "onError ${error}", Toast.LENGTH_SHORT).show()
                             Log.e("test",error.toString())

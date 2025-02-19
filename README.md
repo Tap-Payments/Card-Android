@@ -525,7 +525,7 @@ An interface that allows integrators to get notified from events fired from the 
 interface TapCardStatusDelegate {
 
 
-    override fun onSuccess(data: String)
+    override fun onCardSuccess(data: String)
 /**
         Will be fired whenever the card sdk finishes successfully the task assigned to it. Whether `TapToken` or `AuthenticatedToken`
      - Parameter data: will include the data in JSON format. For `TapToken`:
@@ -566,13 +566,13 @@ interface TapCardStatusDelegate {
      *  Will be fired whenever the card is rendered and loaded
      */
 
-    override fun onFocus()
+    override fun onCardFocus()
     /**
      *  Will be fired once the user focuses any of the card fields
      */
 
  
-    override fun onBindIdentification(data: String)
+    override fun onCardBindIdentification(data: String)
 /** - Parameter data: will include the data in JSON format. example :
      *{
         "bin": "424242",
@@ -595,17 +595,22 @@ interface TapCardStatusDelegate {
      */
 
 
-    override fun onError(error: String)=
+    override fun onCardError(error: String)=
    /**
      *  Will be fired whenever there is an error related to the card connectivity or apis
      *  Parameter data: includes a JSON format for the error description and error
      */
 
-    override fun onHeightChange(heightChange:String)
+    override fun onCardHeightChange(heightChange:String)
    /**
      *  Will be fired whenever the card element changes its height for your convience
      *   Parameter height: The new needed height
      */
+
+   override fun onChangeSaveCard(enabled: Boolean) {
+       
+   }
+
 
 }
 

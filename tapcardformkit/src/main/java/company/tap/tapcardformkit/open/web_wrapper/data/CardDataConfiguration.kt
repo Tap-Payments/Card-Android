@@ -167,5 +167,7 @@ interface TapCardStatusDelegate {
 
     fun onHeightChange(heightChange: String) {}
 
+    fun onChangeSaveCard(enabled: Boolean) {}
+
 
 }

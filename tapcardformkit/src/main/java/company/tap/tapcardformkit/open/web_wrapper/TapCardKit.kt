@@ -351,6 +351,10 @@ class TapCardKit : LinearLayout {
 
 
                 }
+                if (request?.url.toString().contains(CardFormWebStatus.onChangeSaveCardLater.name)) {
+                    CardDataConfiguration.getTapCardStatusListener()
+                        ?.onChangeSaveCard(request?.url?.getQueryParameterFromUri(keyValueName).toBoolean())
+                }
                 if (request?.url.toString().contains(CardFormWebStatus.onScannerClick.name)) {
                     /**
                      * navigate to Scanner Activity
