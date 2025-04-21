@@ -382,7 +382,7 @@ class MainActivity : AppCompatActivity() {
     }
     private fun checkAndroidVersion() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            checkAndRequestPermissions()
+           // checkAndRequestPermissions()
         } else {
             // code for lollipop and pre-lollipop devices
         }
