@@ -81,7 +81,8 @@ dependencies {
     /**
      * update this library in tapUiLibrary to be used automatically
      */
-    api 'com.github.Tap-Payments:TapCardScannerKit-Android:0.0.9.10'
+    api 'com.github.Tap-Payments:TapCardScannerKit-Android:0.0.10.2'
+  //  implementation 'com.github.Tap-Payments:TapCardScannerKit-Android:0.0.10.1'
     //implementation 'company.tap:PayCards-Tap-Android:0.1.6.4'
     api 'com.github.Tap-Payments:CommonDataModelsWeb-Andriod:0.0.14'
     implementation "com.squareup.retrofit2:converter-gson:2.9.0"
