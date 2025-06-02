@@ -68,7 +68,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'com.github.Tap-Payments:TapNFCCardReaderKit-Android:0.0.4.3'
+    implementation 'com.github.Tap-Payments:TapNFCCardReaderKit-Android:0.0.6'
     api 'com.github.Tap-Payments:TapUIKit-Android:2.0.15'
     implementation 'io.reactivex.rxjava3:rxjava:3.1.5'
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.2'
