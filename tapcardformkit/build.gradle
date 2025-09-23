@@ -116,13 +116,12 @@ dependencies {
     api "androidx.camera:camera-view:1.5.0"
 
 }
-task sourcesJar(type: Jar) {
+// Javadoc for Android (variant-aware)
+task releaseJavadoc(type: Jar) {
+    archiveClassifier.set('javadoc')
     from android.sourceSets.main.java.srcDirs
-    archiveClassifier = 'sources'
-}
-
-artifacts {
-    archives sourcesJar
+    // optional: include kotlin sources if you have Kotlin
+    from android.sourceSets.main.kotlin.srcDirs
 }
 // build.gradle file of the chosen module
 afterEvaluate {
