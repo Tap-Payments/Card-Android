@@ -69,20 +69,20 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'com.github.Tap-Payments:TapNFCCardReaderKit-Android:0.0.6'
+    api 'com.github.Tap-Payments:TapNFCCardReaderKit-Android:0.0.6'
 
     implementation 'io.reactivex.rxjava3:rxjava:3.1.5'
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.2'
-    implementation 'com.github.Tap-Payments:TapNetwrok-Android:0.2.2.45'
+    api 'com.github.Tap-Payments:TapNetwrok-Android:0.2.2.45'
 
     api 'com.google.code.gson:gson:2.13.2'
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
-    implementation 'com.github.Tap-Payments:LocalisationManager-Android:0.0.1.34'
+    api 'com.squareup.retrofit2:retrofit:2.9.0'
+    api 'com.squareup.okhttp3:logging-interceptor:4.10.0'
+    api 'com.github.Tap-Payments:LocalisationManager-Android:0.0.1.34'
 
    // api 'com.github.Tap-Payments:TapCardScannerKit-Android:0.0.10.2'
   //  api 'com.github.Tap-Payments:TapCardScannerKit-Android:0.0.11.7'
-    implementation 'com.koushikdutta.ion:ion:3.1.0'
+    api 'com.koushikdutta.ion:ion:3.1.0'
 
     api 'com.github.Tap-Payments:CommonDataModelsWeb-Andriod:0.0.15'
     implementation "com.squareup.retrofit2:converter-gson:2.9.0"
@@ -116,16 +116,20 @@ dependencies {
     api "androidx.camera:camera-view:1.5.0"
 
 }
-// Javadoc for Android (variant-aware)
+// Create sources and Javadoc JARs
+task releaseSourcesJar(type: Jar) {
+    archiveClassifier.set('sources')
+    from android.sourceSets.main.java.srcDirs
+    from android.sourceSets.main.kotlin.srcDirs
+}
+
 task releaseJavadoc(type: Jar) {
     archiveClassifier.set('javadoc')
     from android.sourceSets.main.java.srcDirs
-    // optional: include kotlin sources if you have Kotlin
     from android.sourceSets.main.kotlin.srcDirs
 }
-// build.gradle file of the chosen module
-afterEvaluate {
 
+afterEvaluate {
     publishing {
         publications {
             create("release", MavenPublication) {
@@ -134,18 +138,30 @@ afterEvaluate {
                     builtBy tasks.named("assembleRelease")
                 }
 
-                groupId = "com.github.Tap-Payments"
-                artifactId = "Card-Android"
-                version = android.defaultConfig.versionName ?: "1.0.7.6"
-
                 // Attach sources and javadoc
                 artifact(tasks.named("releaseSourcesJar"))
+                artifact(tasks.named("releaseJavadoc"))
 
+                groupId = "com.github.Tap-Payments"
+                artifactId = "Card-Android"
+                version = "1.0.7.7"
+
+                // Variant-aware: ensure dependencies are included in POM
+                pom.withXml {
+                    def dependenciesNode = asNode().appendNode('dependencies')
+                    configurations.api.allDependencies.each { dep ->
+                        def depNode = dependenciesNode.appendNode('dependency')
+                        depNode.appendNode('groupId', dep.group)
+                        depNode.appendNode('artifactId', dep.name)
+                        depNode.appendNode('version', dep.version)
+                        depNode.appendNode('scope', 'compile')
+                    }
+                }
             }
         }
     }
 
-    // Ensure metadata generation waits for sources/javadoc
+    // Ensure metadata waits for sources/javadoc
     tasks.named("generateMetadataFileForReleasePublication") {
         dependsOn(tasks.named("releaseSourcesJar"))
         dependsOn(tasks.named("releaseJavadoc"))
