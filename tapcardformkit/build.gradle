@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.library'
+    id 'maven-publish'
     id 'kotlin-android'
     id 'kotlin-parcelize'
 
@@ -124,3 +125,30 @@ artifacts {
     archives sourcesJar
 }
 // build.gradle file of the chosen module
+afterEvaluate {
+
+    publishing {
+        publications {
+            create("release", MavenPublication) {
+                // Publish AAR
+                artifact("$buildDir/outputs/aar/${project.name}-release.aar") {
+                    builtBy tasks.named("assembleRelease")
+                }
+
+                groupId = "com.github.Tap-Payments"
+                artifactId = "Card-Android"
+                version = android.defaultConfig.versionName ?: "1.0.7.3"
+
+                // Attach sources and javadoc
+                artifact(tasks.named("releaseSourcesJar"))
+
+            }
+        }
+    }
+
+    // Ensure metadata generation waits for sources/javadoc
+    tasks.named("generateMetadataFileForReleasePublication") {
+        dependsOn(tasks.named("releaseSourcesJar"))
+        dependsOn(tasks.named("releaseJavadoc"))
+    }
+}
