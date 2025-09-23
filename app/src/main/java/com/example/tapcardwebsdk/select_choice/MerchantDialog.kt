@@ -1,15 +1,17 @@
 package company.tap.cardformkit.activities
 
-import Contact
-import Customer
-import Name
-import Phone
+
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import com.example.tapcardwebsdk.R
+import com.tap.commondatamodels.Contact
+import com.tap.commondatamodels.Customer
+import com.tap.commondatamodels.Name
+import com.tap.commondatamodels.Phone
+import com.tap.commondatamodels.TapLocal
 import company.tap.tapcardformkit.open.CardDataConfiguration
 
 class MerchantDialog(var contexts: Context) : Dialog(contexts) {

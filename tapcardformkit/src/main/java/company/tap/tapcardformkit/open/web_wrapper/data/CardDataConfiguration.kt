@@ -1,13 +1,14 @@
 package company.tap.tapcardformkit.open
 
-import Customer
-import TapAuthentication
-import TapCardConfigurations
+
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.res.Resources
 import android.util.Log
+import com.tap.commondatamodels.Customer
+import com.tap.commondatamodels.TapAuthentication
+import com.tap.commondatamodels.TapCardConfigurations
 import company.tap.tapcardformkit.R
 import company.tap.tapcardformkit.open.web_wrapper.TapCardConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.TapCardKit

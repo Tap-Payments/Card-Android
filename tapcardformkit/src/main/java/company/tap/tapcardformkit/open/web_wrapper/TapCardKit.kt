@@ -1,6 +1,6 @@
 package company.tap.tapcardformkit.open.web_wrapper
 
-import TapTheme
+
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
@@ -16,6 +16,7 @@ import android.webkit.*
 import android.widget.*
 import androidx.annotation.RequiresApi
 import com.google.gson.Gson
+import com.tap.commondatamodels.TapTheme
 import company.tap.nfcreader.open.utils.TapNfcUtils
 import company.tap.tapcardformkit.*
 import company.tap.tapcardformkit.open.CardDataConfiguration

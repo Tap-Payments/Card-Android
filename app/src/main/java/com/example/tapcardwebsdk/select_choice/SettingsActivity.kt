@@ -1,6 +1,6 @@
 package com.example.tapcardwebsdk.select_choice
 
-import TapTheme
+
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -23,6 +23,7 @@ import com.chillibits.simplesettings.tool.getPrefStringValue
 import com.chillibits.simplesettings.tool.getPrefs
 import com.example.tapcardwebsdk.R
 import com.example.tapcardwebsdk.main_activity.MainActivity
+import com.tap.commondatamodels.TapTheme
 import company.tap.tapcardformkit.getRandomNumbers
 import company.tap.tapcardformkit.getRandomTrx
 import company.tap.tapcardformkit.open.CardDataConfiguration

@@ -6,12 +6,7 @@
 
 package com.example.tapcardwebsdk.select_choice
 
-import CardType
-import Scope
-import TapCardColorStyle
-import TapCardDirections
-import TapCardEdges
-import TapTheme
+
 import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Color
@@ -30,6 +25,12 @@ import com.example.tapcardwebsdk.main_activity.MainActivity
 import com.example.tapcardwebsdk.select_choice.adapter.CustomAdapter
 import com.example.tapcardwebsdk.select_choice.adapter.DataModel
 import com.google.android.material.button.MaterialButtonToggleGroup
+import com.tap.commondatamodels.CardType
+import com.tap.commondatamodels.Scope
+import com.tap.commondatamodels.TapCardColorStyle
+import com.tap.commondatamodels.TapCardDirections
+import com.tap.commondatamodels.TapCardEdges
+import com.tap.commondatamodels.TapTheme
 import com.tap.commondatamodels.cardBrands.CardBrand
 import company.tap.cardformkit.activities.MerchantDialog
 import company.tap.tapcardformkit.getRandomNumbers

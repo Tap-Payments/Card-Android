@@ -75,7 +75,7 @@ dependencies {
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.2'
     implementation 'com.github.Tap-Payments:TapNetwrok-Android:0.2.2.45'
 
-    api 'com.google.code.gson:gson:2.10'
+    api 'com.google.code.gson:gson:2.13.2'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
     implementation 'com.github.Tap-Payments:LocalisationManager-Android:0.0.1.34'
@@ -84,7 +84,7 @@ dependencies {
   //  api 'com.github.Tap-Payments:TapCardScannerKit-Android:0.0.11.7'
     implementation 'com.koushikdutta.ion:ion:3.1.0'
 
-    api 'com.github.Tap-Payments:CommonDataModelsWeb-Andriod:0.0.14'
+    api 'com.github.Tap-Payments:CommonDataModelsWeb-Andriod:0.0.15'
     implementation "com.squareup.retrofit2:converter-gson:2.9.0"
 
     implementation 'com.github.bumptech.glide:glide:4.16.0'
@@ -93,8 +93,8 @@ dependencies {
 // coroutine
 
     def lottieVersion = "6.1.0"
-    implementation "com.airbnb.android:lottie:$lottieVersion"
-    implementation("com.squareup.retrofit2:converter-jackson:2.9.0")
+    api "com.airbnb.android:lottie:$lottieVersion"
+    api("com.squareup.retrofit2:converter-jackson:2.9.0")
 
     def camerax_version = "1.5.0"
 

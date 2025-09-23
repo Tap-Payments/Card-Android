@@ -1,8 +1,9 @@
 package company.tap.tapcardformkit.open.web_wrapper
 
-import Headers
+
 import android.content.Context
 import android.util.Log
+import com.tap.commondatamodels.Headers
 import company.tap.tapcardformkit.R
 import company.tap.tapcardformkit.open.CardDataConfiguration
 import company.tap.tapcardformkit.open.CardDataConfiguration.configurationsAsHashMap
