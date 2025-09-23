@@ -136,7 +136,7 @@ afterEvaluate {
 
                 groupId = "com.github.Tap-Payments"
                 artifactId = "Card-Android"
-                version = android.defaultConfig.versionName ?: "1.0.7.3"
+                version = android.defaultConfig.versionName ?: "1.0.7.6"
 
                 // Attach sources and javadoc
                 artifact(tasks.named("releaseSourcesJar"))
