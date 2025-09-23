@@ -11,8 +11,9 @@ import android.util.Log
 import company.tap.tapcardformkit.R
 import company.tap.tapcardformkit.open.web_wrapper.TapCardConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
+import company.tap.tapcardformkit.open.web_wrapper.internal.ThemeManager
 import company.tap.taplocalizationkit.LocalizationManager
-import company.tap.tapuilibrary.themekit.ThemeManager
+
 import java.util.*
 
 /**

@@ -14,8 +14,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import company.tap.tapcardformkit.R
 import company.tap.tapcardformkit.doAfterSpecificTime
 import company.tap.tapcardformkit.getDeviceSpecs
+import company.tap.tapcardformkit.open.web_wrapper.internal.TapBrandView
 import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
-import company.tap.tapuilibrary.uikit.views.TapBrandView
+
 
 class ThreeDsBottomSheetFragment (var webView: WebView?, var onCancel:()->Unit): BottomSheetDialogFragment() {
 

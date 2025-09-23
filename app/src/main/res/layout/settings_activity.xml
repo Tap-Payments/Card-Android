@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:backgroundTint="@color/button_green"
+        android:backgroundTint="#50C878"
         android:layout_gravity="bottom"
         android:onClick="startTokenizationactivity"
         android:visibility="visible"

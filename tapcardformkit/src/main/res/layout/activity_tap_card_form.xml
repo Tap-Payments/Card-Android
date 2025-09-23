@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <company.tap.tapuilibrary.uikit.atoms.TapTextViewNew
+    <company.tap.tapcardformkit.open.web_wrapper.internal.TapTextViewNew
         android:id="@+id/textview_CardTitle"
         android:layout_width="match_parent"
         android:layout_height="35dp"
@@ -16,7 +16,7 @@
         android:text="CARD INFORMATION"
         android:textAllCaps="true"
         android:textColor="#9F9F9F"
-        android:textSize="@dimen/font_size_11sp"
+        android:textSize="11sp"
         android:visibility="gone" />
 
 
@@ -26,23 +26,18 @@
         android:id="@+id/linear_blurry"
         android:layout_height="wrap_content">
 
-        <company.tap.tapuilibrary.uikit.organisms.TapPaymentInput
-            android:id="@+id/tap_payment_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layoutDirection="locale" />
 
 
     </FrameLayout>
 
 
 
-    <company.tap.tapuilibrary.uikit.views.TabAnimatedActionButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/pay"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_36sdp"
+        android:layout_height="36dp"
         android:visibility="gone"
-        android:layout_marginHorizontal="@dimen/_5sdp"
+        android:layout_marginHorizontal="5dp"
         />
 
     <FrameLayout

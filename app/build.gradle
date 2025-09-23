@@ -4,13 +4,13 @@ plugins {
     id 'com.google.gms.google-services'
 }
 android {
-    compileSdkVersion 34
+    compileSdkVersion 36
 
 
     defaultConfig {
         applicationId "com.example.tapcardwebsdk"
         minSdkVersion 24
-        targetSdkVersion 34
+        targetSdkVersion 36
         versionCode 4
         versionName "1.0.14"
         multiDexEnabled true
@@ -27,16 +27,16 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     configurations.all {
         resolutionStrategy {
-            force "org.jetbrains.kotlin:kotlin-stdlib:1.7.10"
+
         }
     }
     kotlinOptions {
-        jvmTarget = '11'
+        jvmTarget = '17'
     }
     namespace 'com.example.tapcardwebsdk'
 }

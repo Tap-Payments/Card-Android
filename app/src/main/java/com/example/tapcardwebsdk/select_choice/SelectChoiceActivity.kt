@@ -35,7 +35,8 @@ import company.tap.cardformkit.activities.MerchantDialog
 import company.tap.tapcardformkit.getRandomNumbers
 import company.tap.tapcardformkit.getRandomTrx
 import company.tap.tapcardformkit.open.CardDataConfiguration
-import company.tap.tapuilibrary.themekit.ThemeManager
+import company.tap.tapcardformkit.open.web_wrapper.internal.ThemeManager
+
 
 class SelectChoiceActivity : AppCompatActivity() {
 

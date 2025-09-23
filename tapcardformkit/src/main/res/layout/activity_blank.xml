@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/inline_container"
-    tools:context=".internal.BlankActivity">
+    >
 
 
 

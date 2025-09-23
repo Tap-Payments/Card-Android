@@ -11,11 +11,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 
-import company.tap.cardscanner.CameraFragment
-import company.tap.cardscanner.TapCard
-import company.tap.cardscanner.TapScannerCallback
-import company.tap.cardscanner.TapTextRecognitionCallBack
-import company.tap.cardscanner.TapTextRecognitionML
+
+import company.tap.tapcardformkit.open.web_wrapper.internal.scanner.TapScannerCallback
+import company.tap.tapcardformkit.open.web_wrapper.internal.scanner.TapTextRecognitionCallBack
+import company.tap.tapcardformkit.open.web_wrapper.internal.scanner.TapCard
+import company.tap.tapcardformkit.open.web_wrapper.internal.scanner.CameraFragment
+import company.tap.tapcardformkit.open.web_wrapper.internal.scanner.TapTextRecognitionML
+
 import company.tap.tapcardformkit.R
 import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
 import company.tap.tapcardformkit.open.web_wrapper.TapCardKit.Companion.fillCardNumber

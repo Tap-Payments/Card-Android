@@ -18,7 +18,7 @@ import company.tap.tapcardformkit.R
 import company.tap.tapcardformkit.open.CardDataConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
 import company.tap.taplocalizationkit.LocalizationManager
-import company.tap.tapuilibrary.uikit.fragment.NFCFragment
+import company.tap.tapcardformkit.open.web_wrapper.internal.NFCFragment
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.exceptions.UndeliverableException

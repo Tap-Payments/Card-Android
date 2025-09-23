@@ -2,7 +2,6 @@ package company.tap.tapcardformkit.open.web_wrapper.presentation.nfc_activity.nf
 
 import TapLocal
 import TapTheme
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,8 +12,9 @@ import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import company.tap.tapcardformkit.R
 import company.tap.tapcardformkit.doAfterSpecificTime
+import company.tap.tapcardformkit.open.web_wrapper.internal.TapBrandView
 import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
-import company.tap.tapuilibrary.uikit.views.TapBrandView
+
 
 class NfcBottomSheet : BottomSheetDialogFragment() {
 

@@ -15,7 +15,6 @@ import android.view.ViewGroup
 import android.webkit.*
 import android.widget.*
 import androidx.annotation.RequiresApi
-import androidx.core.view.*
 import com.google.gson.Gson
 import company.tap.nfcreader.open.utils.TapNfcUtils
 import company.tap.tapcardformkit.*
@@ -28,11 +27,12 @@ import company.tap.tapcardformkit.open.web_wrapper.data.cache.pref.Pref
 import company.tap.tapcardformkit.open.web_wrapper.data.firstRunKeySharedPrefrence
 import company.tap.tapcardformkit.open.web_wrapper.data.keyValueName
 import company.tap.tapcardformkit.open.web_wrapper.data.urlWebStarter
+import company.tap.tapcardformkit.open.web_wrapper.internal.ThemeManager
 import company.tap.tapcardformkit.open.web_wrapper.presentation.scanner_activity.ScannerActivity
 //import company.tap.tapcardformkit.open.web_wrapper.presentation.scanner_activity.ScannerActivity
 import company.tap.tapcardformkit.open.web_wrapper.presentation.threeDsWebView.ThreeDsWebViewActivity
-import company.tap.tapuilibrary.themekit.ThemeManager
-import company.tap.tapuilibrary.uikit.atoms.*
+
+
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import java.net.URLEncoder

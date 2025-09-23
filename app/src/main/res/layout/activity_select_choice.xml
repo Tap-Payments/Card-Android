@@ -18,14 +18,14 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:text="Customize your card"
-            android:textColor="@color/black_color" />
+            android:textColor="#000000" />
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
             android:textStyle="bold|italic"
             android:text="@string/operation"
 
@@ -35,7 +35,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginHorizontal="10dp"
             android:orientation="horizontal"
             android:weightSum="2">
 
@@ -67,8 +67,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
             android:text="@string/scope_title"
 
             android:textStyle="bold|italic"
@@ -77,8 +77,8 @@
         <Spinner
             android:id="@+id/spinnerScope"
             android:layout_width="match_parent"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
 
             />
@@ -119,8 +119,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
             android:text="@string/purpose"
             android:textStyle="bold|italic"
             />
@@ -128,8 +128,8 @@
         <Spinner
             android:id="@+id/spinnerPurpose"
             android:layout_width="match_parent"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
 
             />
@@ -169,8 +169,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
             android:text="@string/transaction"
             android:textStyle="bold|italic"
 
@@ -179,8 +179,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="5dp"
             android:weightSum="2">
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -212,14 +212,14 @@
             android:layout_height="wrap_content"
             android:text="@string/order"
             android:textStyle="bold|italic"
-            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginHorizontal="10dp"
             />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="5dp"
             android:weightSum="2">
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -250,8 +250,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="5dp"
             android:weightSum="2">
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -284,8 +284,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="5dp"
             android:weightSum="2">
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -314,8 +314,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
             android:text="@string/currency"
             android:textStyle="bold|italic"
 
@@ -327,7 +327,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginTop="5dp"
 
             app:checkedButton="@+id/btnKuwait"
             app:selectionRequired="true"
@@ -367,8 +367,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
             android:text="@string/invoice"
             android:textStyle="bold|italic"
 
@@ -378,8 +378,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="5dp"
             android:weightSum="2">
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -410,8 +410,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="5dp"
             android:weightSum="2">
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -440,8 +440,8 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
             android:text="@string/merchant"
             android:textAllCaps="false"
             android:id="@+id/merchant_tv"
@@ -454,8 +454,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/features"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
             android:textStyle="bold|italic"
 
             />
@@ -463,11 +463,11 @@
             android:id="@+id/radioGroup9"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/margin_basic_10dp"
-            android:paddingRight="@dimen/margin_basic_10dp">
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switchButton_showLoadingView"
@@ -484,12 +484,12 @@
             android:id="@+id/radioGroup4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="5dp"
 
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/margin_basic_10dp"
-            android:paddingRight="@dimen/margin_basic_10dp">
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switchButton_cardBrands"
@@ -506,11 +506,11 @@
             android:id="@+id/radioGroup5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/margin_basic_10dp"
-            android:paddingRight="@dimen/margin_basic_10dp">
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switchButton_showHidescan"
@@ -528,11 +528,11 @@
             android:id="@+id/radioGroup12"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/margin_basic_10dp"
-            android:paddingRight="@dimen/margin_basic_10dp">
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switchButton_showHidenfc"
@@ -550,11 +550,11 @@
             android:id="@+id/rgSavedCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/margin_basic_10dp"
-            android:paddingRight="@dimen/margin_basic_10dp">
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switchButton_savCard"
@@ -572,11 +572,11 @@
             android:id="@+id/rgAutoSavedCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/margin_basic_10dp"
-            android:paddingRight="@dimen/margin_basic_10dp">
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switchButton_autoSavedCard"
@@ -595,8 +595,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
             android:text="@string/acceptance"
             android:textStyle="bold|italic"
             />
@@ -604,8 +604,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="10dp"
             android:text="supportedFundSource"
             android:textStyle="bold|italic"
             />
@@ -649,8 +649,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="10dp"
             android:text="@string/supportedPaymentAuthentications"
             android:textStyle="bold|italic"
 
@@ -662,7 +662,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginTop="5dp"
             app:checkedButton="@+id/btnAuth"
             app:selectionRequired="true"
             app:singleSelection="true">
@@ -683,8 +683,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="10dp"
             android:text="@string/supported_brands"
             android:textStyle="bold|italic"
 
@@ -692,14 +692,14 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_marginHorizontal="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="5dp"
             android:layout_height="wrap_content">
 
             <ListView
                 android:id="@+id/list_view_1"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_300sdp"
+                android:layout_height="300dp"
                 android:layout_weight="1" />
         </LinearLayout>
 
@@ -710,18 +710,18 @@
             android:text="@string/fields"
             android:textStyle="bold|italic"
 
-            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginHorizontal="10dp"
             />
 
         <RadioGroup
             android:id="@+id/radioGroup3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/margin_basic_10dp"
-            android:paddingRight="@dimen/margin_basic_10dp">
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switchButton_cardHolderName"
@@ -739,11 +739,11 @@
             android:id="@+id/rgCardCVV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/margin_basic_10dp"
-            android:paddingRight="@dimen/margin_basic_10dp">
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switchButton_cardCVV"
@@ -764,15 +764,15 @@
             android:text="@string/interface_"
             android:textStyle="bold|italic"
 
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
 
             />
         <RadioGroup
             android:id="@+id/radioGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_basic_10dp"
+            android:layout_margin="10dp"
             android:orientation="horizontal"
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
@@ -807,7 +807,7 @@
             android:id="@+id/radioGroup2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_basic_10dp"
+            android:layout_margin="10dp"
             android:orientation="horizontal"
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
@@ -849,7 +849,7 @@
             android:id="@+id/card_edges"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_basic_10dp"
+            android:layout_margin="10dp"
             android:orientation="horizontal"
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
@@ -884,7 +884,7 @@
             android:id="@+id/card_direction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_basic_10dp"
+            android:layout_margin="10dp"
             android:orientation="horizontal"
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
@@ -919,7 +919,7 @@
             android:id="@+id/colorStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_basic_10dp"
+            android:layout_margin="10dp"
             android:orientation="horizontal"
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
@@ -956,10 +956,10 @@
             android:id="@+id/radioGroupPowerdBy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_basic_10dp"
+            android:layout_margin="10dp"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/margin_basic_10dp"
-            android:paddingRight="@dimen/margin_basic_10dp">
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switchButton_showPowerdBy"
@@ -977,8 +977,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
             android:text="@string/redirect"
             android:textStyle="bold|italic"
 
@@ -987,8 +987,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="5dp"
             android:weightSum="2">
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -1016,8 +1016,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
             android:text="@string/post"
             android:textStyle="bold|italic"
 
@@ -1027,8 +1027,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="5dp"
             android:weightSum="2">
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -1057,7 +1057,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:backgroundTint="@color/button_green"
+            android:backgroundTint="#50C878"
             android:onClick="startTokenizationactivity"
             android:text="@string/done" />
 

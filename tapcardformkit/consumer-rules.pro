@@ -36,3 +36,6 @@
 }
 
 -keep class company.tap.tapcardformkit.** { *; }
+# Keep ML Kit classes
+-keep class com.google.mlkit.** { *; }
+-dontwarn com.google.mlkit.**

@@ -11,4 +11,7 @@
     <string name="continueTitle">continue</string>
     <string name="canceltitle">cancel</string>
     <string name="continueSubtitle">Do you want to continue anyway?</string>
+    <string name="back">الرجوع</string>
+    <string name="msg_ok">تم</string>
+    <string name="msg_dismiss">اغلاق</string>
 </resources>

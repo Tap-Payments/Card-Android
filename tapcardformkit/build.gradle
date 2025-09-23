@@ -22,7 +22,7 @@ def getVersionName = { ->
     }
 }
 android {
-    compileSdkVersion 34
+    compileSdkVersion 36
 
 //
 //    def versionName = properties["VERSION_NAME"]
@@ -34,7 +34,7 @@ android {
 
     defaultConfig {
         minSdkVersion 24
-        targetSdkVersion 34
+        targetSdkVersion 36
         versionCode 50
         versionName "0.0.63"
 
@@ -49,13 +49,13 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '11'
+        jvmTarget = '17'
     }
-    namespace 'company.tap.tapcardformkit'
+    namespace "company.tap.tapcardformkit"
     buildFeatures {
         buildConfig true
     }
@@ -63,29 +63,31 @@ android {
 
 dependencies {
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.22"
+
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'com.github.Tap-Payments:TapNFCCardReaderKit-Android:0.0.6'
-    api 'com.github.Tap-Payments:TapUIKit-Android:2.0.15'
+
     implementation 'io.reactivex.rxjava3:rxjava:3.1.5'
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.2'
     implementation 'com.github.Tap-Payments:TapNetwrok-Android:0.2.2.45'
-   // implementation project(path: ':tapnetworkkit')
+
     api 'com.google.code.gson:gson:2.10'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
     implementation 'com.github.Tap-Payments:LocalisationManager-Android:0.0.1.34'
-    /**
-     * update this library in tapUiLibrary to be used automatically
-     */
-    api 'com.github.Tap-Payments:TapCardScannerKit-Android:0.0.10.2'
-  //  implementation 'com.github.Tap-Payments:TapCardScannerKit-Android:0.0.10.1'
-    //implementation 'company.tap:PayCards-Tap-Android:0.1.6.4'
+
+   // api 'com.github.Tap-Payments:TapCardScannerKit-Android:0.0.10.2'
+  //  api 'com.github.Tap-Payments:TapCardScannerKit-Android:0.0.11.7'
+    implementation 'com.koushikdutta.ion:ion:3.1.0'
+
     api 'com.github.Tap-Payments:CommonDataModelsWeb-Andriod:0.0.14'
     implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.16.0'
 
 // coroutine
 
@@ -93,7 +95,24 @@ dependencies {
     implementation "com.airbnb.android:lottie:$lottieVersion"
     implementation("com.squareup.retrofit2:converter-jackson:2.9.0")
 
+    def camerax_version = "1.5.0"
 
+    api "androidx.camera:camera-core:$camerax_version"
+    api "androidx.camera:camera-camera2:$camerax_version"
+    api "androidx.camera:camera-lifecycle:$camerax_version"
+    api "androidx.camera:camera-video:$camerax_version" // keep same version as other core libs
+    api "androidx.camera:camera-view:$camerax_version"
+
+    // ML Kit
+    api 'com.google.mlkit:barcode-scanning:17.3.0'
+    api 'com.google.mlkit:text-recognition:16.0.1'
+    api 'com.google.mlkit:vision-common:17.3.0'   // 👈 add this
+
+
+    api "androidx.camera:camera-core:1.5.0"
+    api "androidx.camera:camera-camera2:1.5.0"
+    api "androidx.camera:camera-lifecycle:1.5.0"
+    api "androidx.camera:camera-view:1.5.0"
 
 }
 task sourcesJar(type: Jar) {
