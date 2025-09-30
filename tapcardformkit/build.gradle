@@ -68,7 +68,9 @@ android {
             res.srcDirs += 'src/main/res'
             assets.srcDirs += 'src/main/assets'   // <-- ensures assets are packaged in AAR
         }
+
     }
+    android.libraryVariants.all { variant -> variant.mergeAssetsProvider.get().doLast { def dest = variant.mergeAssetsProvider.get().outputDir.get().asFile copy { from "${projectDir}/src/main/assets" into dest } } }
 }
 
 dependencies {
@@ -142,15 +144,16 @@ afterEvaluate {
     publishing {
         publications {
             create("release", MavenPublication) {
-                // ✅ Use the proper AAR task
-                artifact(tasks.named("bundleReleaseAar"))
+                artifact("$buildDir/outputs/aar/${project.name}-release.aar") {
+                    builtBy tasks.named("assembleRelease")
+                }
 
                 artifact(tasks.named("releaseSourcesJar"))
                 artifact(tasks.named("releaseJavadoc"))
 
                 groupId = "com.github.Tap-Payments"
                 artifactId = "Card-Android"
-                version = "1.0.9.10"
+                version = "1.0.9.11"
 
                 pom.withXml {
                     def dependenciesNode = asNode().appendNode('dependencies')
@@ -166,10 +169,6 @@ afterEvaluate {
         }
     }
 
-    // ✅ Force publish to depend on bundleReleaseAar
-    tasks.matching { it.name.startsWith("publish") }.all {
-        dependsOn(tasks.named("bundleReleaseAar"))
-    }
 
     // ✅ Ensure metadata waits for sources/javadoc
     tasks.named("generateMetadataFileForReleasePublication") {
