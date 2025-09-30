@@ -82,7 +82,7 @@ class TapBrandView : LinearLayout {
             )
         }else{
             backTitle?.typeface = Typeface.createFromAsset(
-                context?.assets, TapFont.tapFontType(
+                context?.applicationContext?.assets, TapFont.tapFontType(
                     TapFont.RobotoRegular
                 )
             )

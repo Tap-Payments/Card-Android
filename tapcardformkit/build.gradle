@@ -70,7 +70,17 @@ android {
         }
 
     }
-    android.libraryVariants.all { variant -> variant.mergeAssetsProvider.get().doLast { def dest = variant.mergeAssetsProvider.get().outputDir.get().asFile copy { from "${projectDir}/src/main/assets" into dest } } }
+
+
+        libraryVariants.all { variant ->
+            variant.mergeAssetsProvider.get().doLast {
+                def destDir = variant.mergeAssetsProvider.get().outputDir.get().asFile
+                project.copy { CopySpec spec ->
+                    spec.from("${projectDir}/src/main/assets")
+                    spec.into(destDir)
+                }
+            }
+        }
 }
 
 dependencies {
@@ -153,7 +163,7 @@ afterEvaluate {
 
                 groupId = "com.github.Tap-Payments"
                 artifactId = "Card-Android"
-                version = "1.0.9.11"
+                version = "1.0.9.12"
 
                 pom.withXml {
                     def dependenciesNode = asNode().appendNode('dependencies')
