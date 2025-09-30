@@ -60,6 +60,11 @@ android {
     buildFeatures {
         buildConfig true
     }
+    sourceSets {
+        main {
+            assets.srcDirs = ['src/main/assets']
+        }
+    }
 }
 
 dependencies {
@@ -144,7 +149,7 @@ afterEvaluate {
 
                 groupId = "com.github.Tap-Payments"
                 artifactId = "Card-Android"
-                version = "1.0.9"
+                version = "1.0.9.1"
 
                 // Variant-aware: ensure dependencies are included in POM
                 pom.withXml {
