@@ -76,7 +76,7 @@ class TapBrandView : LinearLayout {
         if (LocalizationManager.getLocale(context).language == "ar") {
             imageBack.rotation = 180f
             backTitle?.typeface = Typeface.createFromAsset(
-                context?.assets, TapFont.tapFontType(
+                context?.applicationContext?.assets, TapFont.tapFontType(
                     TapFont.TajawalMedium
                 )
             )
