@@ -143,9 +143,7 @@ afterEvaluate {
         publications {
             create("release", MavenPublication) {
                 // Publish AAR
-                artifact("$buildDir/outputs/aar/${project.name}-release.aar") {
-                    builtBy tasks.named("assembleRelease")
-                }
+                artifact(tasks.named("bundleReleaseAar"))
 
                 // Attach sources and javadoc
                 artifact(tasks.named("releaseSourcesJar"))
@@ -153,7 +151,7 @@ afterEvaluate {
 
                 groupId = "com.github.Tap-Payments"
                 artifactId = "Card-Android"
-                version = "1.0.9.8"
+                version = "1.0.9.9"
 
                 // Variant-aware: ensure dependencies are included in POM
                 pom.withXml {
