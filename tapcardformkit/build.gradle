@@ -60,9 +60,13 @@ android {
     buildFeatures {
         buildConfig true
     }
+    // ✅ Ensure assets/fonts get packaged in the AAR
     sourceSets {
         main {
-            assets.srcDirs = ['src/main/assets']
+            java.srcDirs += 'src/main/java'
+            kotlin.srcDirs += 'src/main/kotlin'
+            res.srcDirs += 'src/main/res'
+            assets.srcDirs += 'src/main/assets'   // 👈 important line
         }
     }
 }
@@ -139,8 +143,11 @@ afterEvaluate {
         publications {
             create("release", MavenPublication) {
                 // Publish AAR
-                artifact("$buildDir/outputs/aar/${project.name}-release.aar") {
+                /*artifact("$buildDir/outputs/aar/${project.name}-release.aar") {
                     builtBy tasks.named("assembleRelease")
+                }*/
+                afterEvaluate {
+                    from components.release   // ✅ let Gradle handle packaging (includes assets, res, manifest, etc.)
                 }
 
                 // Attach sources and javadoc
@@ -149,7 +156,7 @@ afterEvaluate {
 
                 groupId = "com.github.Tap-Payments"
                 artifactId = "Card-Android"
-                version = "1.0.9.1"
+                version = "1.0.9.2"
 
                 // Variant-aware: ensure dependencies are included in POM
                 pom.withXml {
