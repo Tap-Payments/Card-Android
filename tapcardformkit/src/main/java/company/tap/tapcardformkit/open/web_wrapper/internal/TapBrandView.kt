@@ -1,4 +1,5 @@
 package company.tap.tapcardformkit.open.web_wrapper.internal
+
 import android.content.Context
 import android.graphics.Typeface
 import android.util.AttributeSet
@@ -10,85 +11,68 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import company.tap.tapcardformkit.R
-
 import company.tap.taplocalizationkit.LocalizationManager
-
 
 class TapBrandView : LinearLayout {
 
-    val poweredByImage by lazy { findViewById<AppCompatImageView>(R.id.poweredByImage) }
-    val outerConstraint by lazy { findViewById<ConstraintLayout>(R.id.outerConstraint) }
-    val constraint by lazy { findViewById<CardView>(R.id.outerConstraint) }
-    val backButtonLinearLayout by lazy { findViewById<LinearLayout>(R.id.back_btn_linear) }
-    val imageBack by lazy { findViewById<ImageView>(R.id.image_back) }
-    val backTitle by lazy { findViewById<TextView>(R.id.back_title) }
+    private val poweredByImage by lazy { findViewById<AppCompatImageView>(R.id.poweredByImage) }
+    private val outerConstraint by lazy { findViewById<ConstraintLayout>(R.id.outerConstraint) }
+    private val constraint by lazy { findViewById<CardView>(R.id.outerConstraint) }
+    private val backButtonLinearLayout by lazy { findViewById<LinearLayout>(R.id.back_btn_linear) }
+    private val imageBack by lazy { findViewById<ImageView>(R.id.image_back) }
+    private val backTitle by lazy { findViewById<TextView>(R.id.back_title) }
 
     @DrawableRes
-    val logoIcon: Int =
-        if (ThemeManager.currentTheme.isNotEmpty() && ThemeManager.currentTheme.contains("dark")) {
+    private val logoIcon: Int =
+        if (ThemeManager.currentTheme.contains("dark")) {
             R.drawable.poweredbytap2
-        } else if (ThemeManager.currentTheme.isNotEmpty() && ThemeManager.currentTheme.contains("light")) {
-           R.drawable.poweredbytap2
-        } else R.drawable.poweredbytap2
+        } else {
+            R.drawable.poweredbytap2
+        }
 
+    constructor(context: Context) : super(context) {
+        initView(context)
+    }
 
-    /**
-     * Simple constructor to use when creating a TapHeader from code.
-     *  @param con] ext The Context the view is running in, through which it can
-     *  access the current theme, resources, etc.
-     **/
-    constructor(context: Context) : super(context)
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+        initView(context)
+    }
 
-    /**
-     *  @param context The Context the view is running in, through which it can
-     *  access the current theme, resources, etc.
-     *  @param attrs The attributes of the XML Button tag being used to inflate the view.
-     *
-     */
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+        initView(context)
+    }
 
-    /**
-     *  @param context The Context the view is running in, through which it can
-     *  access the current theme, resources, etc.
-     *  @param attrs The attributes of the XML Button tag being used to inflate the view.
-     * @param defStyleAttr The resource identifier of an attribute in the current theme
-     * whose value is the the resource id of a style. The specified style’s
-     * attribute values serve as default values for the button. Set this parameter
-     * to 0 to avoid use of default values.
-     */
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
-        context,
-        attrs,
-        defStyleAttr
-    )
-
-    init {
+    private fun initView(context: Context) {
         inflate(context, R.layout.tap_brandview, this)
         poweredByImage.setImageResource(logoIcon)
         backTitle.text = resources.getString(R.string.back)
 
-        // backTitle.setTextColor(loadAppThemManagerFromPath(AppColorTheme.PoweredByTapBackButtonLabelColor))
-        //imageBack.backgroundTintList =
-        //  ColorStateList.valueOf(loadAppThemManagerFromPath(AppColorTheme.PoweredByTapBackButtonIconColor))
+        val typeface = loadTypefaceFromLibrary(context)
 
-
-
+        backTitle?.typeface = typeface
         if (LocalizationManager.getLocale(context).language == "ar") {
             imageBack.rotation = 180f
-            backTitle?.typeface = Typeface.createFromAsset(
-                context?.applicationContext?.assets, TapFont.tapFontType(
-                    TapFont.TajawalMedium
-                )
-            )
-        }else{
-            backTitle?.typeface = Typeface.createFromAsset(
-                context?.applicationContext?.assets, TapFont.tapFontType(
-                    TapFont.RobotoRegular
-                )
-            )
         }
     }
 
+    private fun loadTypefaceFromLibrary(context: Context): Typeface? {
+        return try {
+            val fontPath = if (LocalizationManager.getLocale(context).language == "ar") {
+                TapFont.tapFontType(TapFont.TajawalMedium)
+            } else {
+                TapFont.tapFontType(TapFont.RobotoRegular)
+            }
 
+            // ✅ Use class loader to get library context for font access
+            val assetManager = this.javaClass.classLoader?.let {
+                context.createPackageContext(context.packageName, 0).assets
+            } ?: context.assets
 
+            Typeface.createFromAsset(assetManager, fontPath)
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
 }
