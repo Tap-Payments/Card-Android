@@ -15,12 +15,12 @@ import company.tap.taplocalizationkit.LocalizationManager
 
 class TapBrandView : LinearLayout {
 
-    private val poweredByImage by lazy { findViewById<AppCompatImageView>(R.id.poweredByImage) }
-    private val outerConstraint by lazy { findViewById<ConstraintLayout>(R.id.outerConstraint) }
-    private val constraint by lazy { findViewById<CardView>(R.id.outerConstraint) }
-    private val backButtonLinearLayout by lazy { findViewById<LinearLayout>(R.id.back_btn_linear) }
-    private val imageBack by lazy { findViewById<ImageView>(R.id.image_back) }
-    private val backTitle by lazy { findViewById<TextView>(R.id.back_title) }
+     val poweredByImage by lazy { findViewById<AppCompatImageView>(R.id.poweredByImage) }
+     val outerConstraint by lazy { findViewById<ConstraintLayout>(R.id.outerConstraint) }
+     val constraint by lazy { findViewById<CardView>(R.id.outerConstraint) }
+     val backButtonLinearLayout by lazy { findViewById<LinearLayout>(R.id.back_btn_linear) }
+     val imageBack by lazy { findViewById<ImageView>(R.id.image_back) }
+     val backTitle by lazy { findViewById<TextView>(R.id.back_title) }
 
     @DrawableRes
     private val logoIcon: Int =
