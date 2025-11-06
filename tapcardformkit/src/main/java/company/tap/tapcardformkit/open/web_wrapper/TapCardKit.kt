@@ -11,6 +11,7 @@ import android.os.Build
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
 import android.widget.*
@@ -116,6 +117,10 @@ class TapCardKit : LinearLayout {
                 useWideViewPort = true
                 loadWithOverviewMode = true
             }
+            // Disable scrollbars visually
+            isVerticalScrollBarEnabled = false
+            isHorizontalScrollBarEnabled = false
+            scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
             webViewClient = MyWebViewClient()
             setBackgroundColor(Color.TRANSPARENT)
             setLayerType(LAYER_TYPE_SOFTWARE, null)
@@ -400,6 +405,14 @@ class TapCardKit : LinearLayout {
             error: SslError?
         ) {
             view?.handleSSlError(error,handler)
+        }
+        override fun onPageFinished(view: WebView, url: String?) {
+            super.onPageFinished(view, url)
+            // ✅ Disable scrolling within the web page content
+            view.evaluateJavascript(
+                "document.body.style.overflow='hidden';document.documentElement.style.overflow='hidden';",
+                null
+            )
         }
 
     }
