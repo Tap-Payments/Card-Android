@@ -9,6 +9,8 @@ import android.widget.LinearLayout
 import com.bumptech.glide.Glide
 import company.tap.tapcardformkit.R
 import company.tap.taplocalizationkit.LocalizationManager
+import androidx.core.graphics.toColorInt
+import company.tap.tapcardformkit.open.web_wrapper.internal.ThemeManager.toColorIntOrDefault
 
 
 /**
@@ -113,9 +115,10 @@ class TapNFCView : LinearLayout {
         } else {
             mainLinearNFC.setBackgroundResource(R.drawable.blurbackground)
         }
-        topLinearNFC.setBackgroundColor(Color.parseColor(ThemeManager.getValue("Nfc.topTextBackgroundColor")))
-        scanNfc.setTextColor(Color.parseColor(ThemeManager.getValue("Nfc.topTextColor")))
-        aboutNFC.setTextColor(Color.parseColor(ThemeManager.getValue("Nfc.bottomTextColor")))
+        topLinearNFC.setBackgroundColor(
+            ThemeManager.getValue<String>("Nfc.topTextBackgroundColor").toColorIntOrDefault())
+        scanNfc.setTextColor( ThemeManager.getValue<String>("Nfc.topTextColor").toColorIntOrDefault())
+        aboutNFC.setTextColor( ThemeManager.getValue<String>("Nfc.bottomTextColor").toColorIntOrDefault())
     }
     private fun setNFCGif(){
         println("ThemeManager.currentTheme are"+ ThemeManager.currentTheme)

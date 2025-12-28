@@ -4,6 +4,7 @@ package company.tap.tapcardformkit.open.web_wrapper.internal
 
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.Color
 import android.util.Log
 import android.widget.Toast
 import com.koushikdutta.ion.Ion
@@ -64,41 +65,48 @@ object ThemeManager {
     }
 
 
+    // Safe color conversion extension
+    fun String?.toColorIntOrDefault(default: Int = Color.BLACK): Int {
+        return try {
+            if (this.isNullOrBlank()) default else Color.parseColor(this)
+        } catch (e: Exception) {
+            default
+        }
+    }
 
-    fun  <T>  getValue(path: String): T  {
-        var result: T
-        try
-        {
-            result = valueFromJson(path)
-            if (isInteger(result.toString())){
-                return result
-            }else{
-                if(result.toString().contains("#")){ return result as T
-                }
-                else {
-                    //  Log.d("themeStringthemeString", themeString.toString())
-                    if(ThemeManager::themeString.isInitialized) {
-                        val jsonObject = JSONObject(themeString)
-                        val jsonObjectGlobal = jsonObject.getJSONObject("GlobalValues")
-                        val colorListObject = jsonObjectGlobal.getJSONObject("Colors")
+    // Updated getValue function
+    fun <T> getValue(path: String): T? {
+        return try {
+            val result: T = valueFromJson(path)
+            if (isInteger(result.toString()) || result.toString().contains("#")) {
+                result
+            } else {
+                if (ThemeManager::themeString.isInitialized) {
+                    val jsonObject = JSONObject(themeString)
+                    val colorListObject = jsonObject
+                        .optJSONObject("GlobalValues")
+                        ?.optJSONObject("Colors")
 
-
-                        if (result.toString() in colorListObject.toString()) {
-                            return valueFromJson("GlobalValues.Colors.${result}") as T
-                        }
-                        return result
+                    if (colorListObject != null && colorListObject.has(result.toString())) {
+                        valueFromJson("GlobalValues.Colors.${result}") as T
+                    } else {
+                        result
                     }
+                } else {
+                    result
                 }
             }
-        }catch ( e : JSONException) {
-            Log.e("APP", "unexpected JSON exception", e);
-            // Do something to recover ... or kill the app.
+        } catch (e: Exception) {
+            Log.e("APP", "getValue failed for $path", e)
+            null
         }
-        return valueFromJson(path)
     }
 
 
-    fun getFontName(path: String): String {
+
+
+
+/*    fun getFontName(path: String): String {
         // get font value and split with comma and return string and float
         var fontName: String
         var fontValue = getValue(path) as String
@@ -111,7 +119,7 @@ object ThemeManager {
         var fontValue = (getValue(path) as Any).toString()
         fontSize = fontValue.split(",")[1].toDouble()
         return fontSize
-    }
+    }*/
 
 
     private fun isInteger(str: String?): Boolean {
