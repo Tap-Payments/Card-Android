@@ -308,6 +308,15 @@ class MainActivity : AppCompatActivity() {
 
 
                         override fun onValidInput(isValid: String) {
+
+                            Log.e("isValid",isValid.toString())
+                        }
+
+                        override fun onInValidInput(isValid: Boolean) {
+
+                            findViewById<TextView>(R.id.textView_Logs).visibility = View.VISIBLE
+                            findViewById<TextView>(R.id.textView_Logs).setText("onInValidInput status$isValid")
+                            println("onInValidInput status$isValid")
                         }
 
                         override fun onChangeSaveCard(enabled: Boolean) {
