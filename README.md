@@ -103,117 +103,128 @@ You can initialize `Card-Android` in different ways
 
 ## Code
 
- ```kotlin
+Replace the verbose inline example below with the practical MainActivity snippet and short notes. Keys are masked in this README — always fetch keys securely for real usage.
 
-       lateinit var tapCardKitView: TapCardKit
+```kotlin
+// Example: concise MainActivity integration (Kotlin) — update package & imports as needed
+package com.example.cardapp
 
-       override fun onCreate(savedInstanceState: Bundle?){
+import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
+import com.example.cardapp.databinding.ActivityMainBinding
+import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
+import company.tap.tapcardformkit.open.web_wrapper.TapCardConfiguration
+import company.tap.tapcardformkit.open.web_wrapper.TapCardStatusDelegate
+
+class MainActivity : AppCompatActivity(), TapCardStatusDelegate {
+
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var tapCardKitView: TapCardKit
+
+    // Use ActivityResult API if you need to launch other screens
+    private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        // handle activity results if required
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        /**
-         * operator
-         */
-        val operator = HashMap<String,Any>()
-        operator.put("publicKey","")
-          /**
-         * order
-         */
-        val order = HashMap<String,Any>()
-        order.put("id", "")
-        order.put("amount",  1)
-        order.put("currency","SAR")
-        order.put("description","")
-        order.put("reference","")
-	
-        /**
-         * name
-         */
-        val name = java.util.HashMap<String,Any>()
-        name.put("lang","en")
-        name.put("first",  "first")
-        name.put("middle",  "middle")
-        name.put("last",  "last")
-        /**
-         * phone
-         */
-        val phone = java.util.HashMap<String,Any>()
-        phone.put("countryCode","+20")
-        phone.put("number","011")
-        /**
-         * contact
-         */
-        val contact = java.util.HashMap<String,Any>()
-        contact.put("email","test@gmail.com")
-        contact.put("phone",phone)
-
-        /**
-         * customer
-         */
-        val customer = java.util.HashMap<String,Any>()
-        customer.put("nameOnCard", "test")
-        customer.put("editable","true")
-        customer.put("contact",contact)
-        customer.put("name", listOf(name))
-
-        /**
-         * configuration 
-         */
-        val configuration = LinkedHashMap<String,Any>()
-
-        configuration.put("operator",operator)
-        configuration.put("scope","Authentication")
-        configuration.put("order",order)
-        configuration.put("customer",customer)
-
-        val linearLayoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
+        // Configuration maps: keys in README are masked (pk_test_*****). Replace with your key securely.
+        val operator = hashMapOf<String, Any>("publicKey" to "pk_test_*****")
+        val order = hashMapOf<String, Any>(
+            "id" to "order_123",
+            "amount" to 1,
+            "currency" to "SAR",
+            "description" to "Example order",
+            "reference" to "ref_123"
         )
-        /** create dynamic view of TapCardKit view **/ 
-        tapCardKitView  = TapCardKit(this)
-        tapCardKitView.layoutParams = linearLayoutParams
-        /** refrence to parent layout view **/  
-        this.findViewById<LinearLayout>(R.id.linear_layout).addView(tapCardKitView)
+        val phone = hashMapOf<String, Any>("countryCode" to "+20", "number" to "011")
+        val contact = hashMapOf<String, Any>("email" to "test@example.com", "phone" to phone)
+        val name = hashMapOf<String, Any>("lang" to "en", "first" to "First", "middle" to "", "last" to "Last")
+        val customer = hashMapOf<String, Any>(
+            "nameOnCard" to "Test User",
+            "editable" to true,
+            "contact" to contact,
+            "name" to listOf(name)
+        )
+        val interfaceConfig = hashMapOf<String, Any>(
+            "locale" to "en",
+            "theme" to "light",
+            "edges" to "curved",
+            "cardDirection" to "dynamic",
+            "powered" to true,
+            "colorStyle" to "colored",
+            "loader" to true
+        )
+        val features = hashMapOf<String, Any>(
+            "acceptanceBadge" to true,
+            "customerCards" to hashMapOf("saveCard" to true, "autoSaveCard" to false),
+            "alternativeCardInputs" to hashMapOf("cardScanner" to true, "cardNFC" to true)
+        )
+        val configuration = linkedMapOf<String, Any>(
+            "operator" to operator,
+            "order" to order,
+            "customer" to customer,
+            "interface" to interfaceConfig,
+            "features" to features,
+            "scope" to "Token"
+        )
 
-
-      TapCardConfiguration.configureWithTapCardDictionaryConfiguration(
+        // If you added the TapCardKit view in XML with id "tapCardForm", use binding.tapCardForm
+        tapCardKitView = binding.tapCardForm
+        TapCardConfiguration.configureWithTapCardDictionaryConfiguration(
             this,
             tapCardKitView,
             configuration,
-            TapCardStatusDelegate : this) 
+            this // this activity implements TapCardStatusDelegate
+        )
 
-}
-        
-```
-
-## Tokenize the card
-
-Once you get notified that the `TapCardKit` now has a valid input from the delegate. You can start the tokenization process by calling the public interface:
-
-```kotlin
-///  Wil start the process of generating a `TapToken` with the current card data
-tapCardKitView.generateTapToken()
-```
-
-## Simple TapCardStatusDelegate
-A protocol that allows integrators to get notified from events fired from the `Card-Android`. 
-
-```kotlin
-    interface TapCardStatusDelegate {
-    /// Will be fired whenever the validity of the card data changes.
-    /// - Parameter valid: Will be true if the card data is valid and false otherwise.
-    override fun  onValidInput(invalid: Bool) {
+        // Example: start tokenization from a button
+        binding.fab.setOnClickListener {
+            tapCardKitView.generateTapToken()
+        }
     }
-    
-     ///   Will be fired whenever the card sdk finishes successfully the task assigned to it. Whether `TapToken` or `AuthenticatedToken`
-    override fun  onSuccess(data: String) {
-     }
-    /// Will be fired whenever there is an error related to the card connectivity or apis
-    /// - Parameter data: includes a JSON format for the error description and error
-    override fun onError(data: String){
+
+    // Delegate callbacks (implement what you need)
+    override fun onReady() {
+        // SDK view is rendered and ready
     }
+
+    override fun onCardSuccess(data: String) {
+        // Tokenization/authentication succeeded. 'data' is SDK JSON response.
+    }
+
+    override fun onCardError(error: String) {
+        // Handle SDK errors
+    }
+
+    override fun onValidInput(isValid: String) {
+        // Called when validity changes; enable/disable submission accordingly
+    }
+
+    override fun onCardBindIdentification(data: String) {
+        // Bin identification info (JSON) — can be used to update UI
+    }
+
+    // Optional: other callbacks like onCardFocus, onCardHeightChange, onChangeSaveCard...
 }
 ```
+
+### Mapping to MainActivity (quick guide)
+- operator.publicKey: masked in this README ("pk_test_*****"). Never hardcode production keys in your app — fetch from your backend.
+- order / customer / interface / features: the LinkedHashMap structure maps directly to the SDK configuration. Fill values server-side when possible.
+- TapCardConfiguration.configureWithTapCardDictionaryConfiguration(...): call once you created the TapCardKit view and the configuration map.
+- tapCardKitView.generateTapToken(): call when onValidInput indicates current input is valid (or when user taps “Pay”).
+- Implement TapCardStatusDelegate methods to receive lifecycle/events: onReady, onCardSuccess (token response), onCardError, onValidInput, onCardBindIdentification.
+- Use ActivityResult API (launcher) if you need to open other flows and handle results.
+
+Notes and best practices
+- Masked keys: all example keys here are masked. Use sandbox keys for development and fetch keys securely from your server for production.
+- Placement: the concise MainActivity example sits inside the Code example under Simple Integration so it's directly usable.
+- Videos and diagrams are preserved elsewhere in this README and left unchanged.
 
 # Advanced Integration
 
