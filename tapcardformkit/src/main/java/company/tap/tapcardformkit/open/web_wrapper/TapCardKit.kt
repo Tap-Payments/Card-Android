@@ -472,7 +472,11 @@ fun  WebView.handleSSlError(error: SslError?, handler: SslErrorHandler?){
         val dialog = builder.create()
         dialog.show()
     } else {
-        handler?.proceed()
+           /* if (BuildConfig.DEBUG) {
+                handler?.proceed() // Debug only
+            } else {*/
+                handler?.cancel() // Release always cancels
+          //  }
     }
 
 
