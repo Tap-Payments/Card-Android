@@ -1,213 +1,196 @@
 package company.tap.tapcardformkit.open.web_wrapper.presentation.nfc_activity.nfcbottomsheet
 
+import android.app.AlertDialog
 import android.content.Intent
+import android.media.AudioManager
+import android.media.ToneGenerator
+import android.os.Build
 import android.os.Bundle
-import android.text.TextUtils
-import android.text.format.DateFormat
-import android.util.Log
+import android.os.Handler
+import android.os.Looper
+import android.provider.Settings
+import android.view.HapticFeedbackConstants
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import company.tap.nfcreader.open.reader.TapEmvCard
-import company.tap.nfcreader.open.reader.TapNfcCardReader
-import company.tap.nfcreader.open.utils.TapCardUtils
-import company.tap.nfcreader.open.utils.TapNfcUtils
 import company.tap.tapcardformkit.R
 import company.tap.tapcardformkit.open.CardDataConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
+import company.tap.tapcardformkit.open.web_wrapper.presentation.nfc_activity.TapNfcReaderModeHelper
 import company.tap.taplocalizationkit.LocalizationManager
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.disposables.Disposable
-import io.reactivex.rxjava3.exceptions.UndeliverableException
-import io.reactivex.rxjava3.functions.Consumer
-import io.reactivex.rxjava3.plugins.RxJavaPlugins
-import java.io.IOException
-import java.net.SocketException
-import java.util.*
+import java.text.SimpleDateFormat
+import java.util.Locale
 
-class NFCBottomSheetActivity : AppCompatActivity() {
-    private lateinit var tapNfcCardReader: TapNfcCardReader
-    private var cardReadDisposable = Disposable.empty()
-    lateinit var nfcBottomSheet: NfcBottomSheet
+/**
+ * Transparent host for [NfcBottomSheet]. Owns the NFC reader-mode session and hands the
+ * scanned card back to the web form.
+ */
+class NFCBottomSheetActivity : AppCompatActivity(), TapNfcReaderModeHelper.Listener {
+    private lateinit var nfcReader: TapNfcReaderModeHelper
+    private var nfcBottomSheet: NfcBottomSheet? = null
+    private var enableNfcDialog: AlertDialog? = null
+    private var cardDelivered = false
+    private val mainHandler = Handler(Looper.getMainLooper())
+    private val resetStatus = Runnable { nfcBottomSheet?.showIdle() }
+    private val lostTimeout = Runnable { showReadError("cardMoved") }
+    private var awaitingRediscovery = false
+    /** Short POS-style beep when the card is detected; created lazily, released in onDestroy. */
+    private val toneGenerator: ToneGenerator? by lazy {
+        runCatching { ToneGenerator(AudioManager.STREAM_NOTIFICATION, BEEP_VOLUME) }.getOrNull()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_three_ds_web_view)
-        tapNfcCardReader = TapNfcCardReader(this)
-
         LocalizationManager.setLocale(this, Locale(CardDataConfiguration.lanuage.toString()))
 
-        nfcBottomSheet = NfcBottomSheet()
-       // nfcBottomSheet.loadLottie() // stopped was creating NPE
-        nfcBottomSheet.show(supportFragmentManager,"")
-    }
+        nfcReader = TapNfcReaderModeHelper(this, this)
 
-
-    override fun onNewIntent(intent: Intent?) {
-        // TODO Auto-generated method stub
-        super.onNewIntent(intent)
-        // if this activity is in stack , this method will be called
-        handleNFCResult(intent)
-    }
-
-
-
-    fun handleNFCResult(intent: Intent?) {
-        if (tapNfcCardReader?.isSuitableIntent(intent)== true) {
-            cardReadDisposable = tapNfcCardReader
-                .readCardRx2(intent)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ emvCard: TapEmvCard? ->
-                    if (emvCard != null) {
-                        // tapCheckoutFragment.viewModel?.handleNFCScannedResult(emvCard)
-                        println("emvCard${emvCard}")
-                        println("emvCardexpireDate ${emvCard.cardNumber
-                        }")
-                        convertDateString(emvCard)
-
-                    }
-                },
-                    {
-                            throwable ->
-
-                        RxJavaPlugins.setErrorHandler(Consumer { e: Throwable ->
-                            var e = e
-                            if (e is UndeliverableException) {
-                                e = e.cause!!
-                            }
-                            if (e is IOException || e is SocketException) {
-                                // fine, irrelevant network problem or API that throws on cancellation
-                                return@Consumer
-                            }
-                            if (e is InterruptedException) {
-                                // fine, some blocking code was interrupted by a dispose call
-                                return@Consumer
-                            }
-                            if (e is NullPointerException || e is IllegalArgumentException) {
-                                // that's likely a bug in the application
-                                println("eee$e")
-                                Thread.currentThread().uncaughtExceptionHandler
-                                    .uncaughtException(Thread.currentThread(), e)
-                                Log.e("warn", "NullPointerException to do", e)
-                                return@Consumer
-                            }
-                            if (e is IllegalStateException) {
-                                // that's a bug in RxJava or in a custom operator
-                                Thread.currentThread().uncaughtExceptionHandler.toString()
-                                //  .handleException(Thread.currentThread(), e);
-                                Log.e("warn", "IllegalStateExceptiont to do", e)
-                                return@Consumer
-                            }
-                            Log.e("warn", "Undeliverable exception received, not sure what to do", e)
-                        })
-                    })
-        }else {
-            RxJavaPlugins.setErrorHandler { e ->
-                if (e is UndeliverableException) {
-                    // Merely log undeliverable exceptions
-                    Log.e("Try check",e.message.toString())
-                } else {
-                    // Forward all others to current thread's uncaught exception handler
-                    Thread.currentThread().also { thread ->
-                        thread.uncaughtExceptionHandler.uncaughtException(thread, e)
-                    }
-                }
-            }
+        if (savedInstanceState == null) {
+            nfcBottomSheet = NfcBottomSheet().also { it.show(supportFragmentManager, NfcBottomSheet.TAG) }
+        } else {
+            nfcBottomSheet = supportFragmentManager.findFragmentByTag(NfcBottomSheet.TAG) as? NfcBottomSheet
         }
-
-    }
-
-    private fun displayError(message: String?) {
-        Toast.makeText(this, message.toString(), Toast.LENGTH_SHORT).show()
-    }
-    private fun convertDateString(emvCard: TapEmvCard) {
-        var expDateString :String?=null
-        //  println("emvCard.getExpireDate()"+emvCard.getExpireDate())
-        val dateParts: CharSequence? = DateFormat.format("M/y", emvCard.getExpireDate())
-        println("dateparts" + dateParts?.length)
-        if (dateParts?.contains("/") == true) {
-            if (dateParts.length <= 3) {
-                return
-            } else {
-                if (dateParts.length >= 5 || dateParts.length >= 4) {
-                    val month = (dateParts).substring(0, 1).toInt()
-                    val year = (dateParts).substring(2, 4)
-                    if (year.contains("/")) {
-
-                        return
-                    } else {
-
-                        if(month<10) expDateString= "0$month/$year"
-                        else expDateString = "$month/$year"
-
-                        if (emvCard != null) {
-                            TapCardKit.fillCardNumber(
-                                cardNumber = emvCard?.cardNumber.toString(),
-                                cardHolderName = emvCard?.holderFirstname ?: "",
-                                cvv = "",
-                                expiryDate = expDateString ?: ""
-                            )
-                            TapCardKit.NFCopened = false
-                            finish()
-                        }
-
-
-
-                    }
-
-                }
-
-            }
-        }
-
     }
 
     override fun onResume() {
-        if (TapNfcUtils.isNfcAvailable(this)) {
-            if (TapNfcUtils.isNfcEnabled(this)) {
-                tapNfcCardReader?.enableDispatch();
-                //  scancardContent.setVisibility(View.VISIBLE);
+        super.onResume()
+        when {
+            !nfcReader.isNfcAvailable -> {
+                Toast.makeText(this, nfcString("nfcUnsupported"), Toast.LENGTH_SHORT).show()
+                closeSheet()
             }
-            // else
-            // enableNFC();
-        } else {
-//            scancardContent.setVisibility(View.GONE);
-//            cardreadContent.setVisibility(View.GONE);
-//            noNfcText.setVisibility(View.VISIBLE);
+            !nfcReader.isNfcEnabled -> showEnableNfcDialog()
+            else -> nfcReader.enable()
         }
-        super.onResume();
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        finish()
-
     }
 
     override fun onPause() {
+        nfcReader.disable()
         super.onPause()
-        if (TapCardKit.NFCopened) {
-            cardReadDisposable.dispose()
-            tapNfcCardReader?.disableDispatch()
+    }
 
+    override fun onDestroy() {
+        mainHandler.removeCallbacksAndMessages(null)
+        toneGenerator?.release()
+        enableNfcDialog?.dismiss()
+        enableNfcDialog = null
+        TapCardKit.NFCopened = false
+        super.onDestroy()
+    }
 
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        // Reader mode delivers tags via the callback; nothing to do with foreground-dispatch intents.
+    }
+
+    // region TapNfcReaderModeHelper.Listener
+
+    override fun onCardDetected() {
+        if (cardDelivered) return
+        mainHandler.removeCallbacks(resetStatus)
+        mainHandler.removeCallbacks(lostTimeout)
+        // Re-discovery after a brief drop is silent: no second beep/haptic, keep the same status.
+        if (!awaitingRediscovery) {
+            window.decorView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP)
+            toneGenerator?.startTone(ToneGenerator.TONE_PROP_BEEP, BEEP_DURATION_MS)
         }
-
+        awaitingRediscovery = false
+        nfcBottomSheet?.showReading()
     }
 
-    private fun showCardInfo(emvCard: TapEmvCard) {
-        val text: String = TextUtils.join(
-            "\n", arrayOf<Any>(
-                TapCardUtils.formatCardNumber(emvCard.cardNumber, emvCard.type),
-                DateFormat.format("M/y", emvCard.expireDate),
-                "---",
-                "Bank info (probably): ",
-                emvCard.atrDescription,
-                "---",
-                emvCard.toString().replace(", ", ",\n")
-            )
+    override fun onCardLost() {
+        if (cardDelivered) return
+        // Keep "hold it still" up while the stack re-polls; only complain if the card really left.
+        awaitingRediscovery = true
+        mainHandler.removeCallbacks(lostTimeout)
+        mainHandler.postDelayed(lostTimeout, LOST_GRACE_MS)
+    }
+
+    override fun onReadProgress(commandsSent: Int, expectedCommands: Int) {
+        if (cardDelivered) return
+        nfcBottomSheet?.setReadProgress(commandsSent, expectedCommands)
+    }
+
+    override fun onCardRead(card: TapEmvCard) {
+        if (cardDelivered) return
+        cardDelivered = true
+        nfcReader.disable()
+        window.decorView.performHapticFeedback(
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) HapticFeedbackConstants.CONFIRM
+            else HapticFeedbackConstants.LONG_PRESS
         )
-        Log.e("showCardInfo:", text)
+        nfcBottomSheet?.showSuccess()
 
+        TapCardKit.fillCardNumber(
+            cardNumber = card.cardNumber.orEmpty(),
+            cardHolderName = card.holderFirstname.orEmpty(),
+            cvv = "",
+            expiryDate = formatExpiry(card)
+        )
+        TapCardKit.NFCopened = false
+        // Let the user see the success state before the sheet slides away.
+        mainHandler.postDelayed({ closeSheet() }, SUCCESS_LINGER_MS)
     }
 
+    override fun onCardReadError(throwable: Throwable) {
+        if (cardDelivered) return
+        showReadError("scanFailed")
+    }
+
+    /** Reader mode stays armed, so the user just has to re-present the card. */
+    private fun showReadError(messageKey: String) {
+        awaitingRediscovery = false
+        window.decorView.performHapticFeedback(REJECT_COMPAT)
+        nfcBottomSheet?.showError(messageKey)
+        mainHandler.removeCallbacks(resetStatus)
+        mainHandler.postDelayed(resetStatus, ERROR_LINGER_MS)
+    }
+
+    // endregion
+
+    /** Dismisses the sheet with its exit animation; the sheet's dismiss listener finishes the activity. */
+    fun closeSheet() {
+        val sheet = nfcBottomSheet
+        if (sheet != null && sheet.isAdded) sheet.dismissAllowingStateLoss() else finish()
+    }
+
+    private fun showEnableNfcDialog() {
+        if (enableNfcDialog?.isShowing == true) return
+        enableNfcDialog = AlertDialog.Builder(this)
+            .setTitle(nfcString("enableNFC"))
+            .setMessage(nfcString("disabledNFC"))
+            .setCancelable(false)
+            .setPositiveButton(R.string.msg_ok) { dialog, _ ->
+                dialog.dismiss()
+                startActivity(Intent(Settings.ACTION_NFC_SETTINGS))
+            }
+            .setNegativeButton(R.string.msg_dismiss) { dialog, _ ->
+                dialog.dismiss()
+                closeSheet()
+            }
+            .show()
+    }
+
+    private fun nfcString(key: String): String =
+        LocalizationManager.getValue(key, "NFC") as? String ?: key
+
+    private fun formatExpiry(card: TapEmvCard): String {
+        val date = card.expireDate ?: return ""
+        return SimpleDateFormat("MM/yy", Locale.US).format(date)
+    }
+
+    private companion object {
+        const val SUCCESS_LINGER_MS = 700L
+        const val BEEP_VOLUME = 80
+        const val BEEP_DURATION_MS = 120
+        const val ERROR_LINGER_MS = 2_500L
+        /** How long a dropped link may take to be re-discovered before we show an error. */
+        const val LOST_GRACE_MS = 1_500L
+
+        /** [HapticFeedbackConstants.REJECT] needs API 30; fall back to a plain tick below that. */
+        val REJECT_COMPAT =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) HapticFeedbackConstants.REJECT
+            else HapticFeedbackConstants.LONG_PRESS
+    }
 }

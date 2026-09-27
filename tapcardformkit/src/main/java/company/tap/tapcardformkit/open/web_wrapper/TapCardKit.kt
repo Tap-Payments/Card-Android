@@ -25,6 +25,7 @@ import company.tap.tapcardformkit.open.web_wrapper.data.CardFormWebStatus
 import company.tap.tapcardformkit.open.web_wrapper.data.CardWebUrlPrefix
 import company.tap.tapcardformkit.open.web_wrapper.data.network.model.ThreeDsResponse
 import company.tap.tapcardformkit.open.web_wrapper.presentation.nfc_activity.nfcbottomsheet.NFCBottomSheetActivity
+import company.tap.tapcardformkit.open.web_wrapper.presentation.nfc_activity.nfcbottomsheet.NfcBottomSheet
 import company.tap.tapcardformkit.open.web_wrapper.data.cache.pref.Pref
 import company.tap.tapcardformkit.open.web_wrapper.data.firstRunKeySharedPrefrence
 import company.tap.tapcardformkit.open.web_wrapper.data.keyValueName
@@ -197,6 +198,7 @@ class TapCardKit : LinearLayout {
             theme = context.getDeviceTheme()
         }
         languageThemePair = Pair(lanugage, theme)
+        if (TapNfcUtils.isNfcAvailable(context)) NfcBottomSheet.preloadAnimation(context)
         setTapThemeAndLanguage(
             this.context,
             language = lanugage,

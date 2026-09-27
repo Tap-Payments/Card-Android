@@ -2,6 +2,7 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layoutDirection="locale"
@@ -19,28 +20,81 @@
 
         />
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_marginTop="-25dp"
         android:layout_height="match_parent">
-
-<!--        <FrameLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="@dimen/_400sdp"-->
-<!--            android:id="@+id/nfc_view"/>-->
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/shimmer_view"
             android:scaleType="centerCrop"
             android:layout_width="match_parent"
             android:layout_height="400dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"/>
 
-    </LinearLayout>
+        <!-- Live scan status: shown once a card is detected, hidden while idle. -->
+        <LinearLayout
+            android:id="@+id/nfc_status_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="120dp"
+            android:background="@drawable/nfc_status_bg"
+            android:elevation="6dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="12dp"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <ProgressBar
+                android:id="@+id/nfc_status_spinner"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:indeterminate="true" />
+
+            <ImageView
+                android:id="@+id/nfc_status_icon"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:contentDescription="@null"
+                android:visibility="gone"
+                tools:src="@drawable/ic_nfc_status_check"
+                tools:visibility="visible" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/nfc_status_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#4b4847"
+                    android:textSize="14sp"
+                    tools:text="Card detected, hold still…" />
+
+                <ProgressBar
+                    android:id="@+id/nfc_progress"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:layout_marginTop="8dp"
+                    android:max="100"
+                    tools:progress="40" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </FrameLayout>
 
 
 </LinearLayout>

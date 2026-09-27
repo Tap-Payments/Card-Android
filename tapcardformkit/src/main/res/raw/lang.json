@@ -92,7 +92,10 @@
       "nfcDescription": "الاتصال قريب المدى عبارة عن مجموعة من بروتوكولات الاتصال للاتصال بين جهازين إلكترونيين على مسافة 4 سم أو أقل.",
       "nfcUnsupported": "NFC غير مدعوم!",
       "scan": "جاهز للمسح الضوئي ، أضف البطاقة أسفل الجهاز لمسحها ضوئيًا.",
-      "scanSuccess": "تم المسح بنجاح!"
+      "scanSuccess": "تم المسح بنجاح!",
+      "cardDetected": "تم اكتشاف البطاقة، ثبّتها مكانها…",
+      "cardMoved": "تحركت البطاقة. أعدها إلى الجزء العلوي من ظهر الهاتف وثبّتها.",
+      "scanFailed": "لم نتمكن من قراءة البطاقة، يرجى المحاولة مرة أخرى"
     },
     "TapAsyncSection": {
       "paymentCodeTitleLabel": "كود العملية",
@@ -268,7 +271,10 @@
       "nfcDescription": "Near-field communication is a set of communication protocols for communication between two electronic devices over a distance of 4 cm or less.",
       "nfcUnsupported": "NFC is not supported!",
       "scan": "Ready to scan, add the card under the device to scan it.",
-      "scanSuccess": "Scanned Successful!"
+      "scanSuccess": "Scanned Successful!",
+      "cardDetected": "Card detected, hold it still…",
+      "cardMoved": "Card moved away. Place it back on the upper back of the phone and hold still.",
+      "scanFailed": "Couldn't read the card, please hold it steady and try again"
     },
     "TapAsyncSection": {
       "paymentCodeTitleLabel": "Order code",
