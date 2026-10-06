@@ -424,6 +424,65 @@ class TapCardKit : LinearLayout {
                 "document.body.style.overflow='hidden';document.documentElement.style.overflow='hidden';",
                 null
             )
+            drawClippedCardShadow(view)
+        }
+
+        /**
+         * The card is rendered inside an iframe (#tap-card-iframe) and fills its full
+         * width, so the card's box-shadow is cut flat at the left and right: an iframe
+         * can never paint outside its own box. The page sizes the inputs from the
+         * iframe's width, so the iframe cannot be widened to make room without the
+         * inputs re-flowing.
+         *
+         * Instead, this draws only the part of the shadow the iframe cuts off: two
+         * strips behind the iframe, in the outer page, copying the card's own
+         * box-shadow and corner radius and clipped to the band outside the card.
+         * Nothing inside the card is touched, so no field or icon moves. The strips
+         * follow the card as it resizes (card holder row, CVV, theme reloads).
+         */
+        private fun drawClippedCardShadow(view: WebView) {
+            view.evaluateJavascript(
+                """
+                (function () {
+                  if (window.__tapSideShadow) return;
+                  window.__tapSideShadow = true;
+                  var strips = ['left', 'right'].map(function (side) {
+                    var s = document.createElement('div');
+                    s.setAttribute('data-tap-side-shadow', side);
+                    s.style.position = 'absolute';
+                    s.style.zIndex = '-1';
+                    s.style.pointerEvents = 'none';
+                    s.style.clipPath = side === 'left'
+                      ? 'inset(-16px 100% -16px -16px)'
+                      : 'inset(-16px -16px -16px 100%)';
+                    document.body.appendChild(s);
+                    return s;
+                  });
+                  function sync() {
+                    try {
+                      var frame = document.getElementById('tap-card-iframe');
+                      var doc = frame && frame.contentDocument;
+                      var card = doc && doc.getElementById('card-inputs-container');
+                      if (!card) { strips.forEach(function (s) { s.style.display = 'none'; }); return; }
+                      var fr = frame.getBoundingClientRect(), r = card.getBoundingClientRect();
+                      var cs = doc.defaultView.getComputedStyle(card);
+                      strips.forEach(function (s) {
+                        s.style.display = 'block';
+                        s.style.left = (fr.left + r.left + window.scrollX) + 'px';
+                        s.style.top = (fr.top + r.top + window.scrollY) + 'px';
+                        s.style.width = r.width + 'px';
+                        s.style.height = r.height + 'px';
+                        s.style.borderRadius = cs.borderRadius;
+                        s.style.boxShadow = cs.boxShadow;
+                      });
+                    } catch (e) { /* cross-origin or mid-navigation: try again next tick */ }
+                  }
+                  sync();
+                  setInterval(sync, 250);
+                })();
+                """.trimIndent(),
+                null
+            )
         }
 
     }

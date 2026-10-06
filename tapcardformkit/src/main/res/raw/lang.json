@@ -95,7 +95,8 @@
       "scanSuccess": "تم المسح بنجاح!",
       "cardDetected": "تم اكتشاف البطاقة، ثبّتها مكانها…",
       "cardMoved": "تحركت البطاقة. أعدها إلى الجزء العلوي من ظهر الهاتف وثبّتها.",
-      "scanFailed": "لم نتمكن من قراءة البطاقة، يرجى المحاولة مرة أخرى"
+      "scanFailed": "لم نتمكن من قراءة البطاقة، يرجى المحاولة مرة أخرى",
+      "antennaHint": "ضع البطاقة مسطّحة على ظهر الهاتف، فوق النقطة."
     },
     "TapAsyncSection": {
       "paymentCodeTitleLabel": "كود العملية",
@@ -274,7 +275,8 @@
       "scanSuccess": "Scanned Successful!",
       "cardDetected": "Card detected, hold it still…",
       "cardMoved": "Card moved away. Place it back on the upper back of the phone and hold still.",
-      "scanFailed": "Couldn't read the card, please hold it steady and try again"
+      "scanFailed": "Couldn't read the card, please hold it steady and try again",
+      "antennaHint": "Hold your card flat on the back of the phone, over the dot."
     },
     "TapAsyncSection": {
       "paymentCodeTitleLabel": "Order code",

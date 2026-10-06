@@ -21,6 +21,7 @@
         />
 
     <FrameLayout
+        android:id="@+id/nfc_body"
         android:layout_width="match_parent"
         android:layout_marginTop="-25dp"
         android:layout_height="match_parent">
@@ -32,6 +33,43 @@
             android:layout_height="400dp"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"/>
+
+        <!-- Where to hold the card: shown while idle on devices that report their antenna
+             position, swapped for the scan status once a card is detected. -->
+        <!-- Positioned in code over the animation's own instruction line, which it replaces. -->
+        <LinearLayout
+            android:id="@+id/nfc_antenna_hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/nfc_status_bg"
+            android:elevation="6dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="12dp"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <company.tap.tapcardformkit.open.web_wrapper.presentation.nfc_activity.nfcbottomsheet.NfcAntennaGuideView
+                android:id="@+id/nfc_antenna_guide"
+                android:layout_width="34dp"
+                android:layout_height="54dp" />
+
+            <TextView
+                android:id="@+id/nfc_antenna_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_weight="1"
+                android:textColor="#4b4847"
+                android:textSize="14sp"
+                tools:text="Hold your card flat on the back of the phone, over the dot." />
+        </LinearLayout>
 
         <!-- Live scan status: shown once a card is detected, hidden while idle. -->
         <LinearLayout
