@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bench">#FF0E1116</color>
+    <color name="stage">#FF161A21</color>
+    <color name="ink">#FFE8ECF2</color>
+    <color name="ink_muted">#FF8893A4</color>
+    <color name="rule">#FF262C36</color>
+    <color name="signal">#FF6E8DFF</color>
+    <color name="signal_dim">#336E8DFF</color>
+</resources>

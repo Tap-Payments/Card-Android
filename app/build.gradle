@@ -3,8 +3,28 @@ plugins {
     id 'kotlin-android'
     id 'com.google.gms.google-services'
 }
+// Release signing comes from keystore.properties at the project root (git-ignored).
+// Without it - e.g. on a machine that does not have the keystore - release builds
+// fall back to the debug key so the project still builds.
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+if (keystorePropertiesFile.exists()) {
+    keystorePropertiesFile.withInputStream { keystoreProperties.load(it) }
+}
+
 android {
     compileSdkVersion 36
+
+    signingConfigs {
+        release {
+            if (keystorePropertiesFile.exists()) {
+                storeFile file(keystoreProperties['storeFile'])
+                storePassword keystoreProperties['storePassword']
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+            }
+        }
+    }
 
 
     defaultConfig {
@@ -23,7 +43,7 @@ android {
             minifyEnabled true
             debuggable true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.debug
+            signingConfig keystorePropertiesFile.exists() ? signingConfigs.release : signingConfigs.debug
         }
     }
     compileOptions {
@@ -39,6 +59,15 @@ android {
         jvmTarget = '17'
     }
     namespace 'com.example.tapcardwebsdk'
+
+    // Release builds land as tap-card-sdk.apk instead of app-release.apk.
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            if (variant.buildType.name == 'release') {
+                outputFileName = "tap-card-sdk.apk"
+            }
+        }
+    }
 }
 
 dependencies {

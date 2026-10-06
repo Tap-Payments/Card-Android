@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Legacy Android template colours; kept, other screens still reference them. -->
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -7,4 +8,18 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!--
+      Bench palette. This screen is a test instrument, not a checkout: the chrome
+      stays greyscale so the card form is the only coloured thing on screen, and a
+      single signal blue marks anything live or tappable.
+      Dark counterparts live in values-night/colors.xml.
+    -->
+    <color name="bench">#FFEEF0F4</color>
+    <color name="stage">#FFFFFFFF</color>
+    <color name="ink">#FF15181F</color>
+    <color name="ink_muted">#FF5B6472</color>
+    <color name="rule">#FFD9DEE7</color>
+    <color name="signal">#FF2E5BFF</color>
+    <color name="signal_dim">#332E5BFF</color>
 </resources>

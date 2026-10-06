@@ -9,6 +9,7 @@ import android.text.InputType
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.EditText
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
@@ -334,7 +335,17 @@ class SettingsActivity : AppCompatActivity(), SimpleSettingsConfig.PreferenceCal
 
 
 
+        migrateDefaults()
+
        SimpleSettings(this, configuration).show(R.xml.preferences)
+
+        // Open the card screen straight away so a test build does not need the
+        // "Done" tap first. Settings stay on the back stack: press Back to come
+        // here and tweak the configuration, then it reopens with the new values.
+        if (savedInstanceState == null && !autoOpenedCardScreen) {
+            autoOpenedCardScreen = true
+            startTokenizationactivity(finishSettings = false)
+        }
 
 
 //        findViewById<Preference>(R.id.dialog_preference).setOnPreferenceClickListener {
@@ -392,7 +403,13 @@ class SettingsActivity : AppCompatActivity(), SimpleSettingsConfig.PreferenceCal
             else -> super.onPreferenceClick(context, key)
         }
     }
-    fun startTokenizationactivity() {
+    /**
+     * Bound from settings_activity.xml with android:onClick, which resolves by
+     * reflection and needs the View overload - without it the button throws.
+     */
+    fun startTokenizationactivity(view: View) = startTokenizationactivity()
+
+    fun startTokenizationactivity(finishSettings: Boolean = true) {
 
 
         getPrefObserver(this@SettingsActivity, "amountKey", Observer<String> { value ->
@@ -402,14 +419,15 @@ class SettingsActivity : AppCompatActivity(), SimpleSettingsConfig.PreferenceCal
         println("vall ss"+getPrefs().getString("selectedlangKey","en"))
             val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("languageSelected", if (getPrefStringValue("selectedlangKey","") == "0") "en" else getPrefStringValue("selectedlangKey", default = "en"))
-            intent.putExtra("themeSelected", if (getPrefStringValue("selectedthemeKey","") == "1") TapTheme.light.name else  getPrefStringValue("selectedthemeKey","light"))
+            // "device" means follow the system; an explicit light/dark choice is kept.
+            intent.putExtra("themeSelected", getPrefStringValue("selectedthemeKey", "device"))
             intent.putExtra("selectedCardBrand", getPrefBooleanValue("displayPymtBrndKey",true))
             intent.putExtra("showHideScanner", getPrefBooleanValue("displayScannerKey",true))
             intent.putExtra("showHideNFC", getPrefBooleanValue("displayNFCKey",true))
             intent.putExtra("selectedCurrency", getPrefStringValue("selectedCurrencyKey","KWD"))
             intent.putExtra("selectedCardType", getPrefStringValue("supx`portedFundSourceKey","ALL"))
             intent.putExtra("showLoadingState", getPrefBooleanValue("showLoadingKey",true))
-            intent.putExtra("selectedCardEdge",if (getPrefStringValue("selectedcardedgeKey","") == "1")  "flat" else  getPrefStringValue("selectedcardedgeKey","flat"))
+            intent.putExtra("selectedCardEdge", getPrefStringValue("selectedcardedgeKey", "curved"))
             intent.putExtra("selectedCardDirection", if (getPrefStringValue("selectedcardirectKey","") == "0") "ltr" else getPrefStringValue("selectedcardirectKey","dynamic"))
             /**
              * new configs
@@ -468,13 +486,31 @@ class SettingsActivity : AppCompatActivity(), SimpleSettingsConfig.PreferenceCal
 
 
 
-            finish()
+            if (finishSettings) finish()
             startActivity(intent)
 
 
 
     }
 
+    /**
+     * Earlier builds persisted "light" and "flat" as the dropdown defaults, which would
+     * otherwise read as a deliberate user choice forever. Move those installs onto the
+     * new defaults once; anything the user picks afterwards is kept.
+     */
+    private fun migrateDefaults() {
+        val prefs = getPrefs()
+        if (prefs.getBoolean(MIGRATED_KEY, false)) return
+        prefs.edit()
+            .putString("selectedthemeKey", "device")
+            .putString("selectedcardedgeKey", "curved")
+            .putBoolean(MIGRATED_KEY, true)
+            .apply()
+    }
 
-
+    private companion object {
+        /** Survives Back from the card screen, so the auto-open happens once per launch. */
+        private var autoOpenedCardScreen = false
+        private const val MIGRATED_KEY = "defaultsMigratedToDeviceTheme"
+    }
 }

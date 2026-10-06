@@ -1,7 +1,10 @@
 package com.example.tapcardwebsdk.main_activity
 import android.Manifest
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -9,19 +12,34 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.tapcardwebsdk.R
+import com.chillibits.simplesettings.tool.getPrefs
 import com.example.tapcardwebsdk.select_choice.SettingsActivity
+import com.google.android.material.button.MaterialButtonToggleGroup
+import com.google.android.material.chip.Chip
 import company.tap.tapcardformkit.open.CardDataConfiguration
 import company.tap.tapcardformkit.open.TapCardStatusDelegate
 import company.tap.tapcardformkit.open.web_wrapper.TapCardConfiguration
 import company.tap.tapcardformkit.open.web_wrapper.TapCardKit
+import org.json.JSONObject
 import java.util.ArrayList
 class MainActivity : AppCompatActivity() {
+    private companion object {
+        const val THEME_DEVICE = "device"
+        const val THEME_LIGHT = "light"
+        const val THEME_DARK = "dark"
+    }
     lateinit var tapCardKit: TapCardKit
     val REQUEST_ID_MULTIPLE_PERMISSIONS = 7
+    private var configurationJson: String = ""
+    private var callbackCount = 0
     override fun onCreate(savedInstanceState: Bundle?){
+        // Light/Dark chosen in settings or on the Theme chip applies to this whole screen, not
+        // only to the card; "device" follows the system. Set before super so no extra recreate.
+        delegate.localNightMode = nightModeFor(intent.getStringExtra("themeSelected"))
         super.onCreate(savedInstanceState)
 
 
@@ -29,6 +47,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         checkAndroidVersion()
+        findViewById<View>(R.id.editConfigBtn).setOnClickListener { openSettings() }
+        findViewById<View>(R.id.copyConfigBtn).setOnClickListener { copyConfiguration() }
         findViewById<TextView>(R.id.tokenizeBtn).setOnClickListener {
         //    findViewById<TapCardKit>(R.id.tapCardForm).generateTapToken()
             CardDataConfiguration.generateToken(findViewById<TapCardKit>(R.id.tapCardForm))
@@ -50,7 +70,18 @@ class MainActivity : AppCompatActivity() {
         val lang = intent.getStringExtra("languageSelected").toString()
         val selectedLanguage: String = lang.toString()
         val selectedCurrency: String = intent.getStringExtra("selectedCurrency").toString()
-        val selectedTheme: String = intent.getStringExtra("themeSelected").toString()
+        // "device" - and an unset value - means the card follows whatever the system is
+        // set to, so it flips with the device light/dark toggle. An explicit light or
+        // dark choice in settings overrides it and is kept.
+        val requestedTheme = intent.getStringExtra("themeSelected")
+        val selectedTheme: String =
+            if (requestedTheme.isNullOrBlank() || requestedTheme == "null" ||
+                requestedTheme == "device" || requestedTheme == "dynamic"
+            ) {
+                deviceTheme()
+            } else {
+                requestedTheme
+            }
         val custId= intent.getStringExtra("custIdKey")
         val cardNameKey= intent.getStringExtra("cardNameKey")
         val cardNumber= intent.getStringExtra("cardNumberKey")
@@ -86,6 +117,9 @@ class MainActivity : AppCompatActivity() {
         val selectedColorStyle =  intent.getStringExtra("selectedColorStyle")
         val cardHolder =  intent.getBooleanExtra("cardHolder",true)
         val cvv =  intent.getBooleanExtra("cvv",true)
+        bindFieldToggles(cvv, cardHolder)
+        bindStyleToggles(monochrome = selectedColorStyle == "monochrome", arabic = selectedLanguage == "ar")
+        bindThemeSelector(requestedTheme)
 
         /**
          * operator
@@ -272,6 +306,7 @@ class MainActivity : AppCompatActivity() {
         configuration.put("redirect",redirect)
         configuration.put("post",post)
 
+        renderConfiguration(configuration)
         println("configuration here"+configuration)
         Log.e("cardPrefil", "cardnumber + $cardNumber + card + $cardExpiry")
         if (cardNumber != null) {
@@ -286,23 +321,20 @@ class MainActivity : AppCompatActivity() {
                             Toast.makeText(this@MainActivity, "onSuccess $data", Toast.LENGTH_SHORT).show()
                             Log.e("data",data.toString())
                             println("onSuccess $data")
-                            findViewById<TextView>(R.id.textView_Logs).visibility = View.VISIBLE
-                            findViewById<TextView>(R.id.textView_Logs).setText("onSuccess $data")
+                            logCallback("onCardSuccess  $data")
 
                         }
 
                         override fun onCardReady() {
                             //   Toast.makeText(this@MainActivity, "onReady", Toast.LENGTH_SHORT).show()
                             findViewById<TextView>(R.id.tokenizeBtn).visibility = View.VISIBLE
-                            findViewById<TextView>(R.id.textView_Logs).visibility = View.VISIBLE
-                            findViewById<TextView>(R.id.textView_Logs).setText("onCardReady>>>>> ")
+                            logCallback("onCardReady")
 
                         }
 
                         override fun onBindIdentification(data: String) {
                             Log.e("data",data.toString())
-                            findViewById<TextView>(R.id.textView_Logs).visibility = View.VISIBLE
-                            findViewById<TextView>(R.id.textView_Logs).setText("onBindIdentification>>>>> $data")
+                            logCallback("onBindIdentification  $data")
 
                         }
 
@@ -310,19 +342,18 @@ class MainActivity : AppCompatActivity() {
                         override fun onValidInput(isValid: String) {
 
                             Log.e("isValid",isValid.toString())
+                            logCallback("onValidInput  $isValid")
                         }
 
                         override fun onInValidInput(isValid: Boolean) {
 
-                            findViewById<TextView>(R.id.textView_Logs).visibility = View.VISIBLE
-                            findViewById<TextView>(R.id.textView_Logs).setText("onInValidInput status$isValid")
+                            logCallback("onInValidInput  $isValid")
                             println("onInValidInput status$isValid")
                         }
 
                         override fun onChangeSaveCard(enabled: Boolean) {
                             super.onChangeSaveCard(enabled)
-                            findViewById<TextView>(R.id.textView_Logs).visibility = View.VISIBLE
-                            findViewById<TextView>(R.id.textView_Logs).setText("onChangeSaveCard status>>>> $enabled")
+                            logCallback("onChangeSaveCard  $enabled")
                             println("onChangeSaveCard status$enabled")
                         }
 
@@ -330,8 +361,7 @@ class MainActivity : AppCompatActivity() {
                         override fun onCardError(error: String) {
                             Toast.makeText(this@MainActivity, "onError ${error}", Toast.LENGTH_SHORT).show()
                             Log.e("test",error.toString())
-                            findViewById<TextView>(R.id.textView_Logs).visibility = View.VISIBLE
-                            findViewById<TextView>(R.id.textView_Logs).setText("onError $error")
+                            logCallback("onCardError  $error")
 
                         }
 
@@ -380,14 +410,152 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onBackPressed() {
-        super.onBackPressed()
-     //   val intent = Intent(this, SettingsActivity::class.java)
+        if (isTaskRoot) {
+            // Launched on its own: there is no settings screen underneath to go back to.
+            startActivity(Intent(this, SettingsActivity::class.java))
+            finish()
+        } else {
+            super.onBackPressed()
+        }
+    }
 
-        val intent = Intent(this, SettingsActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        finish()
-        startActivity(intent)
+    /** "dark" or "light", straight from the device's current night-mode setting. */
+    private fun deviceTheme(): String =
+        if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
+            Configuration.UI_MODE_NIGHT_YES
+        ) "dark" else "light"
 
+    /** Shows the configuration the card was built with, beside the card itself. */
+    private fun renderConfiguration(configuration: Map<String, Any>) {
+        configurationJson = runCatching { JSONObject(configuration).toString(2) }
+            .getOrElse { configuration.toString() }
+        findViewById<TextView>(R.id.textView_Config).text = configurationJson
+
+        // The header reads back what the card was actually built with, which is the
+        // one thing worth seeing without scrolling.
+        @Suppress("UNCHECKED_CAST")
+        val ui = configuration["interface"] as? Map<String, Any> ?: emptyMap()
+        val order = configuration["order"] as? Map<*, *> ?: emptyMap<String, Any>()
+        findViewById<TextView>(R.id.textView_Readout).text = listOf(
+            ui["theme"], ui["locale"], "${order["currency"]} ${order["amount"]}"
+        ).joinToString("  ·  ")
+    }
+
+    /** One place for every delegate callback, so the panel can also count them. */
+    private fun logCallback(line: String) {
+        callbackCount++
+        findViewById<TextView>(R.id.textView_Logs).text = line
+        findViewById<TextView>(R.id.textView_CallbackCount).text =
+            getString(R.string.callbacks_count, callbackCount)
+    }
+
+    private fun copyConfiguration() {
+        val clipboard = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+        clipboard.setPrimaryClip(ClipData.newPlainText("configuration", configurationJson))
+        Toast.makeText(this, R.string.copied, Toast.LENGTH_SHORT).show()
+    }
+
+    /**
+     * CVV and card holder are part of the configuration the card is built from, so
+     * flipping one writes it back to settings and rebuilds the screen with it.
+     */
+    private fun bindFieldToggles(cvvEnabled: Boolean, cardHolderEnabled: Boolean) {
+        val cvvChip = findViewById<Chip>(R.id.chipCvv)
+        val holderChip = findViewById<Chip>(R.id.chipCardHolder)
+        // State first, listeners after: setting isChecked would otherwise recreate us.
+        cvvChip.isChecked = cvvEnabled
+        holderChip.isChecked = cardHolderEnabled
+        cvvChip.setOnCheckedChangeListener { _, checked ->
+            applyFieldToggle("cvv", "displayCVVKey", checked)
+        }
+        holderChip.setOnCheckedChangeListener { _, checked ->
+            applyFieldToggle("cardHolder", "displayHoldernameKey", checked)
+        }
+    }
+
+    /** Colour style and language, same idea as the field toggles: save, then rebuild the card. */
+    private fun bindStyleToggles(monochrome: Boolean, arabic: Boolean) {
+        val monoChip = findViewById<Chip>(R.id.chipMonochrome)
+        val arabicChip = findViewById<Chip>(R.id.chipArabic)
+        monoChip.isChecked = monochrome
+        arabicChip.isChecked = arabic
+        monoChip.setOnCheckedChangeListener { _, checked ->
+            applyStyleToggle("selectedColorStyle", "selectedcolorstyleKey", if (checked) "monochrome" else "colored")
+        }
+        arabicChip.setOnCheckedChangeListener { _, checked ->
+            applyStyleToggle("languageSelected", "selectedlangKey", if (checked) "ar" else "en")
+        }
+    }
+
+    /**
+     * Device / Light / Dark for the whole screen and the card. Changing the screen's own colours
+     * needs a recreate: the same path the system takes when the device switches light/dark.
+     */
+    private fun bindThemeSelector(current: String?) {
+        val theme = when (current) {
+            THEME_LIGHT, THEME_DARK -> current
+            else -> THEME_DEVICE
+        }
+        val group = findViewById<MaterialButtonToggleGroup>(R.id.themeSelector)
+        // Select first, listen after: rebinding on every card rebuild must not trigger itself.
+        group.clearOnButtonCheckedListeners()
+        group.check(
+            when (theme) {
+                THEME_LIGHT -> R.id.themeLight
+                THEME_DARK -> R.id.themeDark
+                else -> R.id.themeDevice
+            }
+        )
+        group.addOnButtonCheckedListener { _, checkedId, isChecked ->
+            if (!isChecked) return@addOnButtonCheckedListener
+            val next = when (checkedId) {
+                R.id.themeLight -> THEME_LIGHT
+                R.id.themeDark -> THEME_DARK
+                else -> THEME_DEVICE
+            }
+            if (next == theme) return@addOnButtonCheckedListener
+            getPrefs().edit().putString("selectedthemeKey", next).apply()
+            intent.putExtra("themeSelected", next)
+            recreate()
+        }
+    }
+
+    private fun nightModeFor(theme: String?) = when (theme) {
+        THEME_LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
+        THEME_DARK -> AppCompatDelegate.MODE_NIGHT_YES
+        else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+    }
+
+    private fun applyStyleToggle(extra: String, prefKey: String, value: String) {
+        getPrefs().edit().putString(prefKey, value).apply()
+        intent.putExtra(extra, value)
+        rebuildCard()
+    }
+
+    private fun applyFieldToggle(extra: String, prefKey: String, enabled: Boolean) {
+        getPrefs().edit().putBoolean(prefKey, enabled).apply()
+        intent.putExtra(extra, enabled)
+        rebuildCard()
+    }
+
+    private fun rebuildCard() {
+        // Rebuild the configuration against the card view already on screen rather than
+        // recreating the activity: TapCardKit.cardWebview is a companion (static) var and
+        // the SDK configures itself on an unscoped MainScope(), so a second TapCardKit
+        // would overwrite that static while the first load is still in flight.
+        callbackCount = 0
+        findViewById<TextView>(R.id.textView_Logs).setText(R.string.callbacks_empty)
+        findViewById<TextView>(R.id.textView_CallbackCount).text = ""
+        getDataFromHashMap()
+    }
+
+    /** The settings screen is normally already on the back stack underneath. */
+    private fun openSettings() {
+        if (isTaskRoot) {
+            startActivity(Intent(this, SettingsActivity::class.java))
+        } else {
+            finish()
+        }
     }
     private fun checkAndroidVersion() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

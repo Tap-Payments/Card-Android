@@ -236,7 +236,7 @@
             app:title="@string/choose_theme"
             app:entries="@array/Theme"
             app:entryValues="@array/Theme"
-            app:defaultValue="1"
+            app:defaultValue="device"
             app:useSimpleSummaryProvider="true"/>
 
         <DropDownPreference
@@ -245,7 +245,7 @@
 
             app:entries="@array/Edges"
             app:entryValues="@array/Edges"
-            app:defaultValue="1"
+            app:defaultValue="curved"
             app:useSimpleSummaryProvider="true"/>
 
         <DropDownPreference

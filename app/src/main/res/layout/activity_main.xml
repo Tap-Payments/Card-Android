@@ -1,59 +1,347 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  A test bench, not a checkout. The card form is the specimen on the stage; the
+  header reads back the configuration it was actually built with, and the panels
+  below instrument it. Chrome stays greyscale so the card is the only colour.
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:orientation="vertical"
     android:id="@+id/linear_layout"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bench"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:layoutDirection="ltr"
     tools:context=".main_activity.MainActivity">
 
+    <!-- Header: title, live readout of the resolved config, and the way back to settings. -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/screen_margin"
+        android:paddingTop="20dp"
+        android:paddingBottom="14dp">
 
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:letterSpacing="-0.02"
+                android:text="@string/app_title"
+                android:textColor="@color/ink"
+                android:textSize="23sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/liveDot"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_marginEnd="7dp"
+                    android:background="@drawable/dot_live" />
+
+                <TextView
+                    android:id="@+id/textView_Readout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/ink_muted"
+                    android:textSize="13sp"
+                    tools:text="Loading" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/editConfigBtn"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="0dp"
+            android:text="@string/edit_configuration"
+            android:textAllCaps="false"
+            android:textColor="@color/signal"
+            android:textSize="14sp"
+            app:cornerRadius="@dimen/corner_radius_small"
+            app:icon="@drawable/ic_settings"
+            app:iconGravity="textStart"
+            app:iconPadding="6dp"
+            app:iconSize="18dp"
+            app:iconTint="@color/signal" />
+    </LinearLayout>
+
+    <!--
+      The specimen. The SDK already draws its own surface, corner radius (from the
+      "edges" setting) and shadow, so it gets no background here: a container behind
+      it showed through as a halo around the card.
+    -->
     <company.tap.tapcardformkit.open.web_wrapper.TapCardKit
         android:id="@+id/tapCardForm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="40dp"
-        />
+        android:layout_marginHorizontal="@dimen/screen_margin" />
 
+    <!-- Field switches: flipping one rebuilds the card with the new configuration. -->
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/fieldToggles"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/screen_margin"
+        android:layout_marginTop="12dp"
+        app:chipSpacingHorizontal="8dp"
+        app:chipSpacingVertical="0dp"
+        app:singleLine="false"
+        app:singleSelection="false">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipCvv"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/field_cvv"
+            android:textColor="@color/ink"
+            app:checkedIconTint="@color/signal"
+            app:chipBackgroundColor="@color/stage"
+            app:chipStrokeColor="@color/rule"
+            app:chipStrokeWidth="1dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipCardHolder"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/field_card_holder"
+            android:textColor="@color/ink"
+            app:checkedIconTint="@color/signal"
+            app:chipBackgroundColor="@color/stage"
+            app:chipStrokeColor="@color/rule"
+            app:chipStrokeWidth="1dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipMonochrome"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/style_monochrome"
+            android:textColor="@color/ink"
+            app:checkedIconTint="@color/signal"
+            app:chipBackgroundColor="@color/stage"
+            app:chipStrokeColor="@color/rule"
+            app:chipStrokeWidth="1dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chipArabic"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/language_arabic"
+            android:textColor="@color/ink"
+            app:checkedIconTint="@color/signal"
+            app:chipBackgroundColor="@color/stage"
+            app:chipStrokeColor="@color/rule"
+            app:chipStrokeWidth="1dp" />
+    </com.google.android.material.chip.ChipGroup>
+
+    <!-- Theme for the whole screen and the card. Device follows the system setting. -->
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/themeSelector"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/screen_margin"
+        android:layout_marginTop="8dp"
+        app:selectionRequired="true"
+        app:singleSelection="true">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/themeDevice"
+            style="@style/ThemeSegment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/theme_device" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/themeLight"
+            style="@style/ThemeSegment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/theme_light" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/themeDark"
+            style="@style/ThemeSegment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/theme_dark" />
+    </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <com.google.android.material.button.MaterialButton
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/tokenizeBtn"
-        android:text="Tokenize"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginHorizontal="@dimen/screen_margin"
+        android:layout_marginTop="14dp"
+        android:backgroundTint="@color/signal"
+        android:text="@string/tokenize"
         android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="16sp"
         android:visibility="gone"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="20dp"
+        app:cornerRadius="@dimen/corner_radius_small"
+        app:elevation="0dp" />
 
-        />
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tokenizeBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
-    <TextView
-        android:layout_width="match_parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tokenizeBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_height="wrap_content"
-        android:textColor="#000000"
-        android:layout_marginHorizontal="10dp"
-        android:scrollbars="vertical"
-        android:id="@+id/textView_Logs"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="16dp"
+        android:clipToPadding="false"
+        android:paddingHorizontal="@dimen/screen_margin"
+        android:paddingBottom="20dp"
+        android:scrollbars="none">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Callbacks first: it is the thing that changes while you test. -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/stage"
+                app:cardCornerRadius="@dimen/corner_radius"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/rule"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="true"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/callbacks_title"
+                            android:textColor="@color/ink"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/textView_CallbackCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/ink_muted"
+                            android:textSize="13sp"
+                            tools:text="3 received" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textView_Logs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/bg_readout"
+                        android:fontFamily="monospace"
+                        android:textDirection="ltr"
+                        android:lineSpacingMultiplier="1.3"
+                        android:padding="12dp"
+                        android:text="@string/callbacks_empty"
+                        android:textColor="@color/ink_muted"
+                        android:textIsSelectable="true"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:cardBackgroundColor="@color/stage"
+                app:cardCornerRadius="@dimen/corner_radius"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/rule"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="true"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/configuration_title"
+                            android:textColor="@color/ink"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/copyConfigBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="?attr/selectableItemBackground"
+                            android:paddingHorizontal="6dp"
+                            android:text="@string/copy_configuration"
+                            android:textColor="@color/signal"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/textView_Config"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/bg_readout"
+                        android:fontFamily="monospace"
+                        android:textDirection="ltr"
+                        android:lineSpacingMultiplier="1.25"
+                        android:padding="12dp"
+                        android:textColor="@color/ink_muted"
+                        android:textIsSelectable="true"
+                        android:textSize="11sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
     </ScrollView>
-    <WebView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/default_webview"
-        />
 
+    <!-- Kept for the commented-out raw-wrapper debugging path in MainActivity. -->
+    <WebView
+        android:id="@+id/default_webview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone" />
 
 </LinearLayout>

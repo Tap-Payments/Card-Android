@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="corner_radius">22dp</dimen>
+    <dimen name="corner_radius_small">12dp</dimen>
+    <dimen name="screen_margin">18dp</dimen>
+</resources>
