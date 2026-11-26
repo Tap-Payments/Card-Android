@@ -10,6 +10,8 @@ import company.tap.tapcardformkit.open.CardDataConfiguration.configurationsAsHas
 import company.tap.tapcardformkit.open.TapCardStatusDelegate
 import company.tap.tapcardformkit.open.web_wrapper.ApiService.BASE_URL
 import company.tap.tapcardformkit.open.web_wrapper.data.*
+import company.tap.tapcardformkit.open.web_wrapper.data.cache.pref.Pref
+import company.tap.tapcardformkit.open.web_wrapper.data.network.model.TapSDKConfigUrlResponse
 import company.tap.tapnetworkkit.connection.NetworkApp
 import company.tap.tapnetworkkit.utils.CryptoUtil
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -37,14 +39,36 @@ class TapCardConfiguration {
         ) {
 
             MainScope().launch {
-                getTapSDKConfigUrls(
-                    tapMapConfiguration,
-                    tapCardInputViewWeb,
-                    context,
-                    tapCardStatusDelegate,
-                    cardNumber,
-                    cardExpiry
-                )
+                val cachedConfig = readCachedSDKConfig(context)
+                if (cachedConfig == null) {
+                    // First launch: nothing to start from, so wait for the config as before.
+                    getTapSDKConfigUrls(
+                        tapMapConfiguration,
+                        tapCardInputViewWeb,
+                        context,
+                        tapCardStatusDelegate,
+                        cardNumber,
+                        cardExpiry
+                    )
+                } else {
+                    // Start at once with the config of the last launch, then refresh it for the
+                    // next one. A change published on the CDN takes effect one launch later.
+                    applySDKConfig(cachedConfig)
+                    tapMapConfiguration.put("sdkVersion", 1)
+                    startSDKWithConfigs(
+                        tapMapConfiguration,
+                        tapCardInputViewWeb,
+                        context,
+                        tapCardStatusDelegate,
+                        cardNumber,
+                        cardExpiry
+                    )
+                    try {
+                        cacheSDKConfig(context, tapSDKConfigsUrl.getSDKConfigUrl())
+                    } catch (e: Exception) {
+                        Log.e("error Config", e.message.toString())
+                    }
+                }
             }
 
 
@@ -115,10 +139,8 @@ class TapCardConfiguration {
                  */
 
                 val tapSDKConfigUrlResponse = tapSDKConfigsUrl.getSDKConfigUrl()
-                BASE_URL = tapSDKConfigUrlResponse.baseURL
-                prodEncKey = tapSDKConfigUrlResponse.prodEncKey
-                testEncKey = tapSDKConfigUrlResponse.testEncKey
-               // urlWebStarter = tapSDKConfigUrlResponse.baseURL
+                applySDKConfig(tapSDKConfigUrlResponse)
+                cacheSDKConfig(context, tapSDKConfigUrlResponse)
 
                 tapMapConfiguration.put("sdkVersion",1)
                 startSDKWithConfigs(
@@ -129,8 +151,6 @@ class TapCardConfiguration {
                     cardNumber,
                     cardExpiry
                 )
-                urlWebStarter = BASE_URL
-                println("urlWebStarter>>>"+urlWebStarter)
 
             } catch (e: Exception) {
                 BASE_URL = urlWebStarter
@@ -148,6 +168,32 @@ class TapCardConfiguration {
                 Log.e("error Config", e.message.toString())
             }
         }
+
+        private fun applySDKConfig(config: TapSDKConfigUrlResponse) {
+            BASE_URL = config.baseURL
+            prodEncKey = config.prodEncKey
+            testEncKey = config.testEncKey
+            urlWebStarter = config.baseURL
+        }
+
+        private fun cacheSDKConfig(context: Context, config: TapSDKConfigUrlResponse) {
+            Pref.setValue(context, cachedBaseUrlKey, config.baseURL)
+            Pref.setValue(context, cachedTestEncKeyKey, config.testEncKey)
+            Pref.setValue(context, cachedProdEncKeyKey, config.prodEncKey)
+        }
+
+        /** @return the config stored by the last successful download, or null if there is none. */
+        private fun readCachedSDKConfig(context: Context): TapSDKConfigUrlResponse? {
+            val baseUrl = Pref.getValue(context, cachedBaseUrlKey, "")
+            val testKey = Pref.getValue(context, cachedTestEncKeyKey, "")
+            val prodKey = Pref.getValue(context, cachedProdEncKeyKey, "")
+            if (baseUrl.isBlank() || testKey.isBlank() || prodKey.isBlank()) return null
+            return TapSDKConfigUrlResponse(baseUrl, testKey, prodKey)
+        }
+
+        private const val cachedBaseUrlKey = "cachedSdkConfigBaseUrl"
+        private const val cachedTestEncKeyKey = "cachedSdkConfigTestEncKey"
+        private const val cachedProdEncKeyKey = "cachedSdkConfigProdEncKey"
 
         private fun startSDKWithConfigs(
             tapMapConfiguration: HashMap<String, Any>,

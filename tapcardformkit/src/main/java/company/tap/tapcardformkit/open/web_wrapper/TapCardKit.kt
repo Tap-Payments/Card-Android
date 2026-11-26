@@ -26,8 +26,6 @@ import company.tap.tapcardformkit.open.web_wrapper.data.CardWebUrlPrefix
 import company.tap.tapcardformkit.open.web_wrapper.data.network.model.ThreeDsResponse
 import company.tap.tapcardformkit.open.web_wrapper.presentation.nfc_activity.nfcbottomsheet.NFCBottomSheetActivity
 import company.tap.tapcardformkit.open.web_wrapper.presentation.nfc_activity.nfcbottomsheet.NfcBottomSheet
-import company.tap.tapcardformkit.open.web_wrapper.data.cache.pref.Pref
-import company.tap.tapcardformkit.open.web_wrapper.data.firstRunKeySharedPrefrence
 import company.tap.tapcardformkit.open.web_wrapper.data.keyValueName
 import company.tap.tapcardformkit.open.web_wrapper.data.urlWebStarter
 import company.tap.tapcardformkit.open.web_wrapper.internal.ThemeManager
@@ -36,8 +34,11 @@ import company.tap.tapcardformkit.open.web_wrapper.presentation.scanner_activity
 import company.tap.tapcardformkit.open.web_wrapper.presentation.threeDsWebView.ThreeDsWebViewActivity
 
 
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeoutOrNull
 import java.net.URLEncoder
 import java.util.*
 
@@ -52,7 +53,24 @@ class TapCardKit : LinearLayout {
     private val retrofit2 = RetrofitClient.getClient2()
     private val cardConfigurationApi = retrofit.create(UserApi::class.java)
     private val ipAddressConfiguration = retrofit2.create(IPaddressApi::class.java)
-    private lateinit var cardUrlPrefix: String
+    private val sdkScope = MainScope()
+
+    /**
+     * True once the web card reported onReady for the page that is currently loaded.
+     * Lets a late IP lookup hand its result to the page instead of being dropped.
+     */
+    private var isCardReady = false
+
+    /**
+     * Both lookups start as soon as the view exists, so they overlap with the merchant's
+     * setup and the config download instead of running one after another in front of the
+     * page load..
+     */
+    private val urlPrefixLookup: Deferred<String?> = sdkScope.async { fetchCardUrlPrefix() }
+
+    init {
+        sdkScope.launch { getDeviceLocation() }
+    }
 
 
     companion object {
@@ -135,18 +153,26 @@ class TapCardKit : LinearLayout {
         cardExpiry: String = ""
     ) {
 
-        MainScope().launch {
-            getCardUrlPrefixFromApi()
-            getDeviceLocation()
-            cardPrefillPair = Pair(cardNumber, cardExpiry)
+        cardPrefillPair = Pair(cardNumber, cardExpiry)
+        loadCard()
+    }
+
+    /**
+     * Loads the card page. The IP lookup is never waited for: the page does not need the IP
+     * to render, and it is handed over on onReady or as soon as it arrives after that.
+     */
+    private fun loadCard() {
+        sdkScope.launch {
+            isCardReady = false
             applyThemeForShimmer()
+            // The prefix decides which page is loaded, so it is waited for, but only briefly.
+            val cardUrlPrefix =
+                withTimeoutOrNull(URL_PREFIX_LOOKUP_TIMEOUT_MS) { urlPrefixLookup.await() }
+                    ?: defaultCardUrlPrefix()
             val url =
                 "${cardUrlPrefix}${encodeConfigurationMapToUrl(CardDataConfiguration.configurationsAsHashMap)}"
-            Log.e("url", url)
-             cardWebview.loadUrl(url)
+            cardWebview.loadUrl(url)
         }
-
-
     }
 
     private suspend fun getDeviceLocation() {
@@ -157,29 +183,40 @@ class TapCardKit : LinearLayout {
 
             val geoLocationResponse = ipAddressConfiguration.getGeoLocation()
             userIpAddress = geoLocationResponse.IPv4
+            // The page got ready before the lookup finished: hand the IP over now.
+            if (isCardReady && userIpAddress.isNotEmpty()) {
+                setIpAddress(userIpAddress)
+            }
 
         } catch (e: Exception) {
             Log.e("error", e.message.toString())
         }
     }
 
-    private suspend fun getCardUrlPrefixFromApi() {
-        try {
+    /**
+     * @return the card page prefix published for this SDK version, or null when there is none
+     * or the lookup fails. Callers fall back to [defaultCardUrlPrefix].
+     */
+    private suspend fun fetchCardUrlPrefix(): String? {
+        return try {
             val usersResponse = cardConfigurationApi.getCardConfiguration()
             if (usersResponse.android.toString()
                     .contains(BuildConfig.VERSION_CODE.toString())
             ) {
-                cardUrlPrefix = usersResponse.android.`50`
+                usersResponse.android.`50`
+            } else {
+                null
             }
-
         } catch (e: Exception) {
-            //   Log.e("error",e.message.toString())
-            if(urlWebStarter.isNullOrBlank()){
-                urlWebStarter  = "https://sdk.beta.tap.company/v2/card/wrapper?configurations="
-            }
-            cardUrlPrefix =  urlWebStarter
-            println("cardUrlPrefix>>>"+cardUrlPrefix)
+            null
         }
+    }
+
+    private fun defaultCardUrlPrefix(): String {
+        if (urlWebStarter.isNullOrBlank()) {
+            urlWebStarter = "https://sdk.beta.tap.company/v2/card/wrapper?configurations="
+        }
+        return urlWebStarter
     }
 
     private fun applyThemeForShimmer() {
@@ -262,45 +299,34 @@ class TapCardKit : LinearLayout {
                  * listen for states of cardWebStatus of onReady , onValidInput .. etc
                  */
                 if (request?.url.toString().contains(CardFormWebStatus.onReady.name)) {
+                    isCardReady = true
+                    CardDataConfiguration.getTapCardStatusListener()?.onCardReady()
                     /**
-                     * this scenario only for the first launch of the app , due to issue navigation
-                     * of webview after shimmering , if issue appears [in first install only] init function isCalled again .
-                     *
-                     *
+                     * here we send ip Address to front end
                      */
-                    val isFirstTime = Pref.getValue(context, firstRunKeySharedPrefrence, "true")
-                    if (isFirstTime == "true") {
-                        init()
-                        Pref.setValue(context, firstRunKeySharedPrefrence, "false")
-                    } else {
-                        CardDataConfiguration.getTapCardStatusListener()?.onCardReady()
-                        /**
-                         * here we send ip Address to front end
-                         */
-                        if (userIpAddress.isNotEmpty()) {
-                            setIpAddress(userIpAddress)
-                        }
-                        /**
-                         * here we ensure prefilling card with numbers passed from merchant
-                         * commented for now
-                         */
-
-                        when (cardPrefillPair.first.isNotBlank()) {
-                            true -> {
-                                if (cardPrefillPair.first.length >= 7) {
-                                    fillCardNumber(
-                                        cardNumber = cardPrefillPair.first,
-                                        expiryDate = cardPrefillPair.second,
-                                        "",
-                                        ""
-                                    )
-                                }
-                            }
-
-                            false -> {}
-                        }
-
+                    if (userIpAddress.isNotEmpty()) {
+                        setIpAddress(userIpAddress)
                     }
+                    /**
+                     * here we ensure prefilling card with numbers passed from merchant
+                     * commented for now
+                     */
+
+                    when (cardPrefillPair.first.isNotBlank()) {
+                        true -> {
+                            if (cardPrefillPair.first.length >= 7) {
+                                fillCardNumber(
+                                    cardNumber = cardPrefillPair.first,
+                                    expiryDate = cardPrefillPair.second,
+                                    "",
+                                    ""
+                                )
+                            }
+                        }
+
+                        false -> {}
+                    }
+
 
                 }
                 if (request?.url.toString().contains(CardFormWebStatus.onValidInput.name)) {
@@ -505,6 +531,9 @@ class TapCardKit : LinearLayout {
         super.onDetachedFromWindow()
     }
 }
+
+/** How long the page load may wait for the per-version url prefix before using the default. */
+private const val URL_PREFIX_LOOKUP_TIMEOUT_MS = 2000L
 
 fun  WebView.handleSSlError(error: SslError?, handler: SslErrorHandler?){
     val builder = AlertDialog.Builder(this.context)
